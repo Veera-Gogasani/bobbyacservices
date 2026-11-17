@@ -437,3 +437,38 @@ add({
  'rev.read': ("Read all reviews on Google", "అన్ని రివ్యూలు గూగుల్‌లో చదవండి", "सभी रिव्यू गूगल पर पढ़ें"),
  'brands.banner': ("We repair and service these popular brands", "ఈ ప్రముఖ బ్రాండ్లను మేము రిపేర్ మరియు సర్వీస్ చేస్తాము", "हम इन लोकप्रिय ब्रांड्स की रिपेयर और सर्विस करते हैं"),
 })
+
+# ---------- booking: location + modal ----------
+add({
+ 'btn.bookservice': ("Book Service", "సర్వీస్ బుక్ చేయండి", "सर्विस बुक करें"),
+ 'mbar.book': ("Book Service", "బుక్ చేయండి", "बुक करें"),
+ 'f.close': ("Close", "మూసివేయండి", "बंद करें"),
+ 'f.loc': ("Your location (helps the technician reach you)", "మీ లొకేషన్ (టెక్నీషియన్ మీ దగ్గరకు రావడానికి)", "आपकी लोकेशन (टेक्नीशियन को पहुँचने में मदद)"),
+ 'f.loc.cur': ("Use my current location", "నా ప్రస్తుత లొకేషన్", "मेरी मौजूदा लोकेशन"),
+ 'f.loc.map': ("Choose on map", "మ్యాప్‌లో ఎంచుకోండి", "मैप पर चुनें"),
+ 'f.loc.getting': ("Getting your location…", "మీ లొకేషన్ తీసుకుంటోంది…", "आपकी लोकेशन ली जा रही है…"),
+ 'f.loc.ok': ("Location added", "లొకేషన్ జోడించబడింది", "लोकेशन जुड़ गई"),
+ 'f.loc.view': ("View on map", "మ్యాప్‌లో చూడండి", "मैप पर देखें"),
+ 'f.loc.clear': ("Remove", "తీసివేయండి", "हटाएँ"),
+ 'f.loc.denied': ("Location access is blocked. Allow location for this site in your browser, or choose on the map.", "లొకేషన్ అనుమతి నిరాకరించబడింది. బ్రౌజర్‌లో ఈ సైట్‌కు లొకేషన్ అనుమతించండి, లేదా మ్యాప్‌లో ఎంచుకోండి.", "लोकेशन की अनुमति बंद है। ब्राउज़र में इस साइट के लिए लोकेशन चालू करें, या मैप पर चुनें।"),
+ 'f.loc.fail': ("Couldn't get your location. Please choose it on the map.", "మీ లొకేషన్ దొరకలేదు. దయచేసి మ్యాప్‌లో ఎంచుకోండి.", "आपकी लोकेशन नहीं मिल सकी। कृपया मैप पर चुनें।"),
+ 'f.loc.note': ("Optional. Your location is shared only when you send the WhatsApp message.", "ఐచ్ఛికం. మీరు వాట్సాప్ మెసేజ్ పంపినప్పుడు మాత్రమే మీ లొకేషన్ షేర్ అవుతుంది.", "वैकल्पिक। आपकी लोकेशन सिर्फ़ तब जाती है जब आप व्हाट्सऐप मैसेज भेजते हैं।"),
+ 'f.wa.loc': ("Location", "లొకేషన్", "लोकेशन"),
+ 'map.title': ("Choose your location", "మీ లొకేషన్ ఎంచుకోండి", "अपनी लोकेशन चुनें"),
+ 'map.hint': ("Tap the map to drop a pin, then drag it exactly onto your house.", "మ్యాప్‌పై నొక్కి పిన్ పెట్టండి, తర్వాత దాన్ని సరిగ్గా మీ ఇంటిపైకి లాగండి.", "मैप पर टैप करके पिन लगाएँ, फिर उसे ठीक अपने घर पर खींचें।"),
+ 'map.search': ("Search colony, street or landmark", "కాలనీ, వీధి లేదా ల్యాండ్‌మార్క్ వెతకండి", "कॉलोनी, गली या लैंडमार्क खोजें"),
+ 'map.go': ("Search", "వెతకండి", "खोजें"),
+ 'map.use': ("Use this location", "ఈ లొకేషన్ ఉపయోగించండి", "यह लोकेशन चुनें"),
+ 'map.me': ("My location", "నా లొకేషన్", "मेरी लोकेशन"),
+ 'map.noresult': ("No place found. Try a nearby landmark, or move the map and tap.", "ప్రదేశం దొరకలేదు. దగ్గరలోని ల్యాండ్‌మార్క్ ప్రయత్నించండి, లేదా మ్యాప్ కదిలించి నొక్కండి.", "जगह नहीं मिली। पास का लैंडमार्क आज़माएँ, या मैप खिसकाकर टैप करें।"),
+})
+_loc = {
+ 'en': '<h2>Location</h2><p>If you tap “Use my current location” or pick a point on the map, the location stays in the booking form on your device. It is added to your WhatsApp message as a map link and reaches us only if you send that message. The map is provided by OpenStreetMap.</p>\n<h2>Contact</h2>',
+ 'te': '<h2>లొకేషన్</h2><p>మీరు “నా ప్రస్తుత లొకేషన్” నొక్కినా లేదా మ్యాప్‌లో ఒక ప్రదేశాన్ని ఎంచుకున్నా, ఆ లొకేషన్ మీ ఫోన్‌లోని బుకింగ్ ఫారంలోనే ఉంటుంది. అది మ్యాప్ లింక్‌గా మీ వాట్సాప్ మెసేజ్‌లో జోడించబడుతుంది; మీరు ఆ మెసేజ్ పంపితేనే మాకు చేరుతుంది. మ్యాప్ OpenStreetMap ద్వారా అందించబడుతుంది.</p>\n<h2>సంప్రదింపు</h2>',
+ 'hi': '<h2>लोकेशन</h2><p>अगर आप “मेरी मौजूदा लोकेशन” दबाते हैं या मैप पर कोई जगह चुनते हैं, तो लोकेशन आपके ही फ़ोन पर बुकिंग फ़ॉर्म में रहती है। यह मैप लिंक के रूप में आपके व्हाट्सऐप मैसेज में जुड़ती है और हमें तभी मिलती है जब आप वह मैसेज भेजते हैं। मैप OpenStreetMap द्वारा दिया जाता है।</p>\n<h2>संपर्क</h2>',
+}
+_pv = list(S['priv.body'])
+for i, (l, head) in enumerate([('en', '<h2>Contact</h2>'), ('te', '<h2>సంప్రదింపు</h2>'), ('hi', '<h2>संपर्क</h2>')]):
+    assert head in _pv[i]
+    _pv[i] = _pv[i].replace(head, _loc[l], 1)
+S['priv.body'] = tuple(_pv)

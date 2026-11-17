@@ -106,6 +106,8 @@ ICONS = {
  'rupee': '<path d="M7 4h10M7 8.5h10M10 4c4.5 0 4.5 8 0 8H7l8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
  'heart': '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
  'star': '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+ 'cal': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 14.5l2.3 2.3 4.7-4.6"/></g>',
+ 'target': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></g>',
  'radius': '<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></g>',
 }
 def ic(name, cls=''):
@@ -117,6 +119,42 @@ SVC_ICON = {'ac_repair':'wrench','ac_servicing':'ac','ac_install':'install','ac_
 NAV = [('/', 'nav.home', 'home'), ('/about/', 'nav.about', 'about'), ('/ac-services/', 'nav.ac', 'ac'),
        ('/appliance-services/', 'nav.appliance', 'app'), ('/brands/', 'nav.brands', 'brands'),
        ('/faqs/', 'nav.faqs', 'faqs'), ('/contact/', 'nav.contact', 'contact')]
+
+
+# ---------------- booking form (used on Contact page and in the pop-up opened by every Book button) ----------------
+def booking_form(p, inline=False):
+    def opt(v, k): return f'<option value="{v}" data-i18n="{k}">{en(k)}</option>'
+    cls = 'form bookform reveal d2' if inline else 'form bookform'
+    hid = ' id="book"' if inline else ''
+    return f'''<form class="{cls}"{hid} novalidate data-prefix="{p}">
+<h2 id="{p}Title">{tx('f.h')}</h2><p class="fnote">{ic('info')}{tx('f.note')}</p>
+<div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+<div class="frow"><div class="field"><label for="{p}Name">{tx('f.name')} <span class="req">*</span></label><input id="{p}Name" name="name" autocomplete="name" maxlength="60" required placeholder="{esc(plain('f.ph.name'))}" data-i18n-ph="f.ph.name"><p class="emsg"></p></div>
+<div class="field"><label for="{p}Phone">{tx('f.phone')} <span class="req">*</span></label><input id="{p}Phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" required placeholder="{esc(plain('f.ph.phone'))}" data-i18n-ph="f.ph.phone"><p class="emsg"></p></div></div>
+<div class="frow"><div class="field"><label for="{p}Appliance">{tx('f.appliance')} <span class="req">*</span></label><select id="{p}Appliance" name="appliance" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('split','f.opt.splitac')}{opt('window','f.opt.windowac')}{opt('fridge','f.opt.fridge')}{opt('washer','f.opt.washer')}{opt('cooler','f.opt.cooler')}{opt('fan','f.opt.fan')}</select><p class="emsg"></p></div>
+<div class="field"><label for="{p}Service">{tx('f.service')} <span class="req">*</span></label><select id="{p}Service" name="service" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('repair','f.opt.repair')}{opt('service','f.opt.service')}{opt('install','f.opt.install')}{opt('uninstall','f.opt.uninstall')}{opt('gas','f.opt.gas')}{opt('notsure','f.opt.notsure')}</select><p class="emsg"></p></div></div>
+<div class="field loc-field"><span class="flabel">{tx('f.loc')}</span>
+<div class="loc-btns"><button type="button" class="btn btn-line btn-sm loc-cur">{ic('target')}{tx('f.loc.cur')}</button><button type="button" class="btn btn-line btn-sm loc-map">{ic('pin')}{tx('f.loc.map')}</button></div>
+<div class="loc-status" role="status" aria-live="polite"></div>
+<input type="hidden" name="lat"><input type="hidden" name="lng"><p class="hint">{tx('f.loc.note')}</p></div>
+<div class="field"><label for="{p}Area">{tx('f.area')} <span class="req">*</span></label><input id="{p}Area" name="area" maxlength="120" required placeholder="{esc(plain('f.ph.area'))}" data-i18n-ph="f.ph.area"><p class="emsg"></p></div>
+<div class="frow"><div class="field"><label for="{p}Brand">{tx('f.brand')}</label><input id="{p}Brand" name="brand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
+<div class="field"><label for="{p}Date">{tx('f.date')}</label><input id="{p}Date" name="date" type="date"><p class="emsg"></p></div></div>
+<div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
+<button class="btn btn-wa" type="submit">{ic('chat')}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p></form>'''
+
+def modals():
+    return f'''<div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
+<div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="mTitle"><button type="button" class="modal-x" data-close-modal aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>{booking_form('m')}</div></div>
+<div class="modal" id="mapModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
+<div class="modal-panel map-panel" role="dialog" aria-modal="true" aria-labelledby="mapTitle"><button type="button" class="modal-x" data-close-modal aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
+<h2 id="mapTitle">{tx('map.title')}</h2>
+<form class="map-search"><input type="search" placeholder="{esc(plain('map.search'))}" data-i18n-ph="map.search" aria-label="{esc(plain('map.search'))}" data-i18n-aria="map.search"><button class="btn btn-primary btn-sm" type="submit">{tx('map.go')}</button></form>
+<p class="map-hint">{tx('map.hint')}</p><div id="pickMap" class="pick-map"></div><p class="map-msg" role="status" aria-live="polite"></p>
+<div class="modal-foot"><button type="button" class="btn btn-line btn-sm map-me">{ic('target')}{tx('map.me')}</button><button type="button" class="btn btn-primary map-use" disabled>{ic('check')}{tx('map.use')}</button></div></div></div>'''
+
+def book_a(svc, cls, key='btn.book', icon='cal'):
+    return f'<a class="btn {cls}" href="/contact/#book" data-book="{svc}">{ic(icon)}{tx(key)}</a>'
 
 # ---------------- layout ----------------
 def business_ld():
@@ -165,7 +203,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=7">
+<link rel="stylesheet" href="/assets/css/style.css?v=8">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -194,7 +232,7 @@ def header(active):
 <div class="hdr-actions">
 {lang_switch()}
 <a class="btn btn-primary btn-sm btn-call" href="tel:{PHONE_TEL}">{ic('phone')}<span class="lbl" data-i18n="btn.call">{en('btn.call')}</span></a>
-<a class="btn btn-wa btn-sm" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wabook'))}" data-i18n-aria="btn.wabook">{ic('chat')}<span class="lbl" data-i18n="btn.wabook">{en('btn.wabook')}</span></a>
+<a class="btn btn-wa btn-sm" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice">{ic('cal')}<span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
 <button class="burger" type="button" aria-controls="drawer" aria-expanded="false" aria-label="{esc(plain('nav.menu'))}" data-i18n-aria="nav.menu"><span></span></button>
 </div></div></header>
 <div class="drawer" id="drawer" aria-hidden="true">
@@ -202,7 +240,7 @@ def header(active):
 <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="{esc(plain('nav.menu'))}">
 <div class="drawer-top"><a class="logo" href="/"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
 <nav aria-label="Mobile">{links}<a href="/blog/"{" aria-current=\"page\"" if active == "blog" else ""}>{tx('nav.blog')}</a></nav>
-<div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a><a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('btn.wabook')}</a></div>
+<div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div>
 </div></div>
 <main id="main">
 '''
@@ -230,8 +268,9 @@ def footer():
 <nav aria-label="Legal"><a href="/privacy-policy/">{tx('ft.privacy')}</a><a href="/terms/">{tx('ft.terms')}</a><a href="/sitemap/">{tx('ft.sitemap')}</a></nav>
 </div></div></footer>
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{ic('chat')}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
-<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('mbar.wa')}</a></div>
-<script src="/assets/js/main.js?v=5" defer></script>
+<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{ic('cal')}{tx('mbar.book')}</a></div>
+{modals()}
+<script src="/assets/js/main.js?v=8" defer></script>
 </body></html>
 '''
 
@@ -255,7 +294,7 @@ def quick_cards():
         appc = ' app' if s in ('fridge', 'washer', 'cooler', 'fan') else ''
         out.append(f'''<article class="qcard reveal d{i % 4}{appc}">
 <div class="ic">{ic(SVC_ICON[s])}</div><h3>{tx("svc.%s.name" % s)}</h3><p>{tx("svc.%s.desc" % s)}</p>{price(s)}
-<a class="btn btn-wa btn-sm" href="{wa_service(s)}" data-wa="{s}" target="_blank" rel="noopener">{ic('chat')}{tx("btn.book")}</a></article>''')
+{book_a(s, 'btn-wa btn-sm')}</article>''')
     return '<div class="quick-grid">' + ''.join(out) + '</div>'
 
 AC_BLOCKS = [  # letter, anchor, photo key, svc key for booking, bullet count, price key
@@ -275,7 +314,7 @@ def ac_cards(featured_first=False):
         out.append(f'''<article class="scard reveal d{i % 3}{feat}" id="{anchor}">
 <div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L)}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
 <div class="body"><h3>{tx("ac.%s.t" % L)}</h3><p>{tx("ac.%s.d" % L)}</p><ul class="ticks">{lis}</ul>{note}
-<div class="actions"><a class="btn btn-primary btn-sm" href="{wa_service(sk)}" data-wa="{sk}" target="_blank" rel="noopener">{ic('chat')}{tx("btn.book")}</a><a class="btn btn-line btn-sm" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.call")}</a></div></div></article>''')
+<div class="actions">{book_a(sk, 'btn-primary btn-sm')}<a class="btn btn-line btn-sm" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.call")}</a></div></div></article>''')
     pf = f'<p class="price-foot">{tx("price.note")}</p>' if any_price() else ''
     return '<div class="ac-grid">' + ''.join(out) + '</div>' + pf
 
@@ -287,7 +326,7 @@ def app_cards():
         out.append(f'''<article class="scard reveal d{i}" id="{anchor}">
 <div class="media">{img(k, 600, 450, "ap.%s.t" % k)}<span class="tag">{tx("svc.%s.name" % k)}</span>{price(k, "tag")}</div>
 <div class="body"><h3>{tx("ap.%s.t" % k)}</h3><ul class="ticks">{lis}</ul>
-<div class="actions"><a class="btn btn-orange btn-sm" href="{wa_service(k)}" data-wa="{k}" target="_blank" rel="noopener">{ic('chat')}{tx("btn.book")}</a></div></div></article>''')
+<div class="actions">{book_a(k, 'btn-orange btn-sm')}</div></div></article>''')
     return '<div class="app-grid app">' + ''.join(out) + '</div>'
 
 def brand_logo(name):
@@ -348,7 +387,7 @@ def blog_cards(posts):
 def cta_band():
     return f'''<section class="cta-band"><div class="wrap"><div class="cta-inner reveal">
 <div><h2>{tx("cta.h2")}</h2><p>{tx("cta.sub")}</p></div>
-<div class="btn-row"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a><a class="btn btn-ghost" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx("btn.wachat")}</a></div>
+<div class="btn-row"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a>{book_a('', 'btn-ghost', 'btn.bookservice')}</div>
 </div></div></section>'''
 
 # ---------------- pages ----------------
@@ -370,7 +409,7 @@ def build_home():
 <h1 id="h1" class="anim d1" data-i18n="hero.h1">{en('hero.h1')}</h1>
 <p class="sub anim d2">{tx('hero.sub')}</p>
 <div class="ctas anim d3">
-<a class="btn btn-orange" href="{wa_service('ac_servicing')}" data-wa="ac_servicing" target="_blank" rel="noopener">{ic('snow')}{tx('btn.bookac')}</a>
+{book_a('ac_servicing', 'btn-orange', 'btn.bookac', 'snow')}
 <a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>
 <a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('btn.wachat')}</a>
 </div>
@@ -411,7 +450,7 @@ def build_inner():
 <div class="ph reveal d2">{img('about', 640, 540, 'about.who.h')}</div></div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("why.eyebrow", "why.h2")}{why_cards()}</div></section>
 <section class="sec"><div class="wrap" style="max-width:860px;text-align:center"><div class="reveal"><h2>{tx('about.area.h')}</h2><p class="lead" style="margin:12px auto 22px">{tx('about.area.p')}</p>
-<div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a><a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('btn.wabook')}</a></div></div></div></section>''' +
+<div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>''' +
          steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # AC services
@@ -459,19 +498,7 @@ def build_inner():
 
     # Contact
     p = '/contact/'
-    def opt(v, k): return f'<option value="{v}" data-i18n="{k}">{en(k)}</option>'
-    form = f'''<form class="form reveal d2" id="bookForm" novalidate>
-<h2>{tx('f.h')}</h2><p class="fnote">{ic('info')}{tx('f.note')}</p>
-<div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
-<div class="frow"><div class="field"><label for="fName">{tx('f.name')} <span class="req">*</span></label><input id="fName" name="name" autocomplete="name" maxlength="60" required placeholder="{esc(plain('f.ph.name'))}" data-i18n-ph="f.ph.name"><p class="emsg"></p></div>
-<div class="field"><label for="fPhone">{tx('f.phone')} <span class="req">*</span></label><input id="fPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" required placeholder="{esc(plain('f.ph.phone'))}" data-i18n-ph="f.ph.phone"><p class="emsg"></p></div></div>
-<div class="frow"><div class="field"><label for="fAppliance">{tx('f.appliance')} <span class="req">*</span></label><select id="fAppliance" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('split','f.opt.splitac')}{opt('window','f.opt.windowac')}{opt('fridge','f.opt.fridge')}{opt('washer','f.opt.washer')}{opt('cooler','f.opt.cooler')}{opt('fan','f.opt.fan')}</select><p class="emsg"></p></div>
-<div class="field"><label for="fService">{tx('f.service')} <span class="req">*</span></label><select id="fService" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('repair','f.opt.repair')}{opt('service','f.opt.service')}{opt('install','f.opt.install')}{opt('uninstall','f.opt.uninstall')}{opt('gas','f.opt.gas')}{opt('notsure','f.opt.notsure')}</select><p class="emsg"></p></div></div>
-<div class="field"><label for="fArea">{tx('f.area')} <span class="req">*</span></label><input id="fArea" maxlength="120" required placeholder="{esc(plain('f.ph.area'))}" data-i18n-ph="f.ph.area"><p class="emsg"></p></div>
-<div class="frow"><div class="field"><label for="fBrand">{tx('f.brand')}</label><input id="fBrand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
-<div class="field"><label for="fDate">{tx('f.date')}</label><input id="fDate" type="date"><p class="emsg"></p></div></div>
-<div class="field"><label for="fMsg">{tx('f.msg')}</label><textarea id="fMsg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
-<button class="btn btn-wa" type="submit">{ic('chat')}{tx('f.submit')}</button><p class="form-msg" id="formMsg" role="status" aria-live="polite"></p></form>'''
+    form = booking_form('c', inline=True)
     cards = f'''<div class="ccards reveal">
 <a class="ccard" href="tel:{PHONE_TEL}"><span class="ic" style="background:linear-gradient(135deg,var(--blue),#0E6FB3)">{ic('phone')}</span><span><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b></span></a>
 <a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:var(--green)">{ic('chat')}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
@@ -507,7 +534,7 @@ def build_inner():
 <section class="sec"><article class="wrap article"><div class="cover-img reveal">{img(post['img'], 1200, 600, 'post.%s.title' % s, eager=True)}</div>
 <div class="prose" data-i18n="post.{s}.body">{en('post.%s.body' % s)}</div>
 <p class="disc">{tx('blog.disclaimer')}</p>
-<div class="cta-box reveal"><div><h3>{tx('blog.related')}</h3><p>{tx('blog.relatedp')}</p></div><div class="btn-row"><a class="btn btn-orange btn-sm" href="{wa_service(post['svc'])}" data-wa="{post['svc']}" target="_blank" rel="noopener">{ic('chat')}{tx('btn.book')}</a><a class="btn btn-ghost btn-sm" href="{post['link']}">{tx('blog.viewsvc')}</a></div></div>
+<div class="cta-box reveal"><div><h3>{tx('blog.related')}</h3><p>{tx('blog.relatedp')}</p></div><div class="btn-row">{book_a(post['svc'], 'btn-orange btn-sm')}<a class="btn btn-ghost btn-sm" href="{post['link']}">{tx('blog.viewsvc')}</a></div></div>
 </article></section>
 <section class="sec sec-alt"><div class="wrap"><div class="sec-head reveal"><h2>{tx('blog.more')}</h2></div>{blog_cards(others)}</div></section>''' + footer())
 
@@ -553,7 +580,7 @@ def write():
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
-    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n/assets/*\n  Cache-Control: public, max-age=604800\n')
+    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/*\n  Cache-Control: public, max-age=604800\n')
     print('Built %d pages -> %s' % (len(PAGES), out))
 
 if __name__ == '__main__':
