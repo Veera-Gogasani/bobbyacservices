@@ -241,3 +241,11 @@
 @media (max-width:1180px){.hero-duo .bh2s .bobby-hero-stage{margin-top:56px;top:auto}.hero-duo .bh2s .bobby-hero-bottom{bottom:auto;padding-bottom:84px}}
 @media (max-width:760px){.hero-duo-pager{right:auto;left:50%;top:auto;bottom:58px;transform:translateX(-50%);flex-direction:row;padding:7px 10px}.hero-duo-pager button.is-on{height:10px;width:28px}.hero-duo-pager button{transition:width .35s,background .35s}.hero-duo .bh2s .bobby-hero-bottom{padding-bottom:96px}}
 @media (prefers-reduced-motion:reduce){.hero-duo-panel,.hero-duo-panel.is-on{transition:none}}
+
+/* larger tap targets for hero pager (visual dot unchanged) */
+.hero-duo-pager{gap:4px;padding:6px 3px}
+.hero-duo-pager button{position:relative;width:24px;height:24px;background:none !important;display:grid;place-items:center}
+.hero-duo-pager button::before{content:"";width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.45);transition:height .35s,width .35s,background .35s}
+.hero-duo-pager button.is-on{height:34px}
+.hero-duo-pager button.is-on::before{height:28px;background:#FF9F43}
+@media (max-width:760px){.hero-duo-pager{padding:3px 6px}.hero-duo-pager button.is-on{height:24px;width:34px}.hero-duo-pager button.is-on::before{height:10px;width:28px}}

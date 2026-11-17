@@ -586,3 +586,13 @@ S['fw.ph'] = ("Type your town, e.g. Guntur", "మీ ఊరు టైప్ చ�
 S['fw.go'] = ("Show", "చూపించు", "दिखाएँ")
 S['fw.auto'] = ("Use my network location", "నా నెట్‌వర్క్ లొకేషన్ వాడండి", "मेरी नेटवर्क लोकेशन इस्तेमाल करें")
 S['fw.note'] = ("Weather: Open-Meteo · your location is approximate (from your connection, no GPS)", "వాతావరణం: Open-Meteo · మీ ప్రాంతం సుమారుగా (కనెక్షన్ ఆధారంగా, GPS కాదు)", "मौसम: Open-Meteo · आपकी लोकेशन अनुमानित है (कनेक्शन से, GPS नहीं)")
+
+# ---- Booking: accurate success wording (WhatsApp still needs Send) ----
+S['f.thanks.h'] = ("Almost done — press Send in WhatsApp", "దాదాపు పూర్తైంది — WhatsAppలో Send నొక్కండి", "लगभग हो गया — WhatsApp में Send दबाएँ")
+S['f.thanks.p'] = ("Your booking message is ready in WhatsApp. Please press Send to submit your service request. Our team will contact you to confirm the visit.",
+ "మీ బుకింగ్ సందేశం WhatsAppలో సిద్ధంగా ఉంది. మీ సర్వీస్ అభ్యర్థనను పంపడానికి దయచేసి Send నొక్కండి. విజిట్‌ను నిర్ధారించడానికి మా టీమ్ మిమ్మల్ని సంప్రదిస్తుంది.",
+ "आपका बुकिंग संदेश WhatsApp में तैयार है। अपनी सर्विस रिक्वेस्ट भेजने के लिए कृपया Send दबाएँ। विज़िट कन्फ़र्म करने के लिए हमारी टीम आपसे संपर्क करेगी।")
+S['f.thanks.tip'] = ("Didn't see WhatsApp open? Use the button below.", "WhatsApp ఓపెన్ కాలేదా? కింద ఉన్న బటన్ ఉపయోగించండి.", "WhatsApp नहीं खुला? नीचे दिया बटन इस्तेमाल करें।")
+
+# ---- Slider hero: distinct heading (no duplicate of the main H1) ----
+S['bh2.h2'] = ("One Call for AC, Fridge, Washing Machine, Cooler &amp; Fan Repair", "AC, ఫ్రిజ్, వాషింగ్ మెషిన్, కూలర్ &amp; ఫ్యాన్ రిపేర్ — ఒక్క కాల్ చాలు", "AC, फ्रिज, वॉशिंग मशीन, कूलर और पंखा रिपेयर — बस एक कॉल")

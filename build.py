@@ -198,6 +198,14 @@ def business_ld():
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
         'hasMap': GMAPS_URL, 'geo': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'sameAs': [GMAPS_URL],
         'areaServed': {'@type': 'City', 'name': CITY},
+        'email': OWNER_EMAIL,
+        'founder': {'@type': 'Person', 'name': OWNER_NAME, 'alternateName': 'Bobby'},
+        'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'AC & Home Appliance Services', 'itemListElement': [
+            {'@type': 'Offer', 'itemOffered': {'@type': 'Service', 'name': n, 'url': SITE + u}} for n, u in [
+                ('AC Installation', '/ac-services/#ac-installation'), ('AC Uninstallation', '/ac-services/#ac-uninstallation'), ('AC Repair', '/ac-services/#ac-repair'),
+                ('AC Servicing', '/ac-services/#ac-servicing'), ('AC Gas Filling', '/ac-services/#ac-gas-filling'), ('AC Deep Cleaning', '/ac-services/#ac-deep-cleaning'),
+                ('Refrigerator Repair', '/appliance-services/#refrigerator'), ('Washing Machine Repair', '/appliance-services/#washing-machine'),
+                ('Air Cooler Repair', '/appliance-services/#air-cooler'), ('Ceiling Fan Repair', '/appliance-services/#ceiling-fan')]]},
         'knowsLanguage': ['en', 'te', 'hi'],
     }
 def crumbs_ld(items):
@@ -233,8 +241,8 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=21">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
+<link rel="stylesheet" href="/assets/css/style.css?v=24">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -243,7 +251,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 
 def lang_switch():
     return f'''<div class="lang">
-<button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language / భాష / भाषा">{ic('globe')}<span class="code lang-code">EN</span>{ic('chev','chev')}</button>
+<button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false">{ic('globe')}<span class="sr-only">Language / భాష / भाषा: </span><span class="code lang-code">EN</span>{ic('chev','chev')}</button>
 <ul class="lang-menu" role="menu">
 <li><button type="button" role="menuitemradio" aria-checked="true" data-lang="en">English</button></li>
 <li><button type="button" role="menuitemradio" aria-checked="false" data-lang="te" class="te" lang="te">తెలుగు</button></li>
@@ -262,7 +270,7 @@ def header(active):
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
-<a class="btn btn-primary btn-sm btn-call" href="tel:{PHONE_TEL}">{ic('phone')}<span class="lbl" data-i18n="btn.call">{en('btn.call')}</span></a>
+<a class="btn btn-primary btn-sm btn-call" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))} {PHONE_TXT}">{ic('phone')}<span class="lbl" data-i18n="btn.call">{en('btn.call')}</span></a>
 <a class="btn btn-wa btn-sm" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice">{wa_ic()}<span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
 <button class="burger" type="button" aria-controls="drawer" aria-expanded="false" aria-label="{esc(plain('nav.menu'))}" data-i18n-aria="nav.menu"><span></span></button>
 </div></div></header>
@@ -353,7 +361,7 @@ def ac_cards(featured_first=False):
         note = f'<p class="note">{ic("info")}{tx("ac.E.note")}</p>' if L == 'E' else ''
         feat = ' ac-featured' if (featured_first and i == 0) else ''
         out.append(f'''<article class="scard reveal d{i % 3}{feat}" id="{anchor}">
-<div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L)}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
+<div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L, eager=bool(feat))}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
 <div class="body"><h3>{tx("ac.%s.t" % L)}</h3><p>{tx("ac.%s.d" % L)}</p><ul class="ticks">{lis}</ul>{note}
 <div class="actions">{book_a(sk, 'btn-primary btn-sm')}<a class="btn btn-line btn-sm" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.call")}</a></div></div></article>''')
     pf = f'<p class="price-foot">{tx("price.note")}</p>' if any_price() else ''
@@ -448,14 +456,14 @@ def location_block(h='h2'):
 <div class="map reveal d2"><iframe title="{esc(plain('loc.map'))}" data-i18n-aria="loc.map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div>
 </div></section>'''
 
-def faq_list(nums, first_open=True):
+def faq_list(nums, first_open=True, hq='h3'):
     return '<div class="faq">' + ''.join(
-        f'<details class="reveal"{" open" if (first_open and i == 0) else ""}><summary>{tx("faq.%d.q" % n, "h3", attrs="style=\"font-size:inherit;color:inherit;font-weight:inherit\"")}<span class="pm">{ic("plus")}</span></summary><div class="ans">{tx("faq.%d.a" % n, "p")}</div></details>'
+        f'<details class="reveal"{" open" if (first_open and i == 0) else ""}><summary>{tx("faq.%d.q" % n, hq, attrs="style=\"font-size:inherit;color:inherit;font-weight:inherit\"")}<span class="pm">{ic("plus")}</span></summary><div class="ans">{tx("faq.%d.a" % n, "p")}</div></details>'
         for i, n in enumerate(nums)) + '</div>'
 
-def blog_cards(posts):
+def blog_cards(posts, hq='h3'):
     return '<div class="blog-grid">' + ''.join(f'''<article class="bcard reveal d{i % 3}"><a class="media" href="/blog/{p['slug']}/" tabindex="-1" aria-hidden="true">{img(p['img'], 640, 360, 'post.%s.title' % p['slug'])}</a>
-<div class="body"><h3><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></h3><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
+<div class="body"><{hq}><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></{hq}><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}<span class="sr-only">: {esc(plain('post.%s.title' % p['slug']))}</span>{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
 
 def cta_band():
     return f'''<section class="cta-band"><div class="wrap"><div class="cta-inner reveal">
@@ -542,7 +550,7 @@ def build_home():
 </div>
 <div class="hero-visual anim d2">
 <svg class="airflow" viewBox="0 0 300 200" fill="none" stroke="#9FE6FF" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M10 40 C80 10 140 70 220 40 S290 20 300 30"/><path d="M0 80 C70 50 150 110 230 80 S290 60 300 70"/><path d="M20 120 C90 90 160 150 240 120"/><path d="M10 160 C80 130 140 190 220 160"/></svg>
-<div class="hero-photo">{img('hero', 640, 690, 'svc.ac_repair.name', eager=True)}</div>
+<div class="hero-photo">{img('hero', 640, 690, 'svc.ac_repair.name')}</div>
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
@@ -562,9 +570,9 @@ def build_home():
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
-    page('/', head('BOBBY AC Repair & Home Appliance Services in Narasaraopet | AC Installation & Repair',
+    page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
                    'Looking for AC repair in Narasaraopet? BOBBY provides AC servicing, installation, uninstallation, gas filling and home appliance repair. Call or WhatsApp +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=3">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=2" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=4">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=2" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
@@ -573,7 +581,7 @@ def service_ld(name, desc, path):
 def build_inner():
     # about
     p = '/about/'
-    page(p, head('About BOBBY AC Repair & Home Appliance Services | Narasaraopet', 'BOBBY AC Repair & Home Appliance Services is a local AC and home appliance service provider in Narasaraopet, Andhra Pradesh. Learn how we work.', p, 'nav.about',
+    page(p, head('About BOBBY – AC & Appliance Repair, Narasaraopet', 'BOBBY AC Repair & Home Appliance Services is a local AC and home appliance service provider in Narasaraopet, Andhra Pradesh. Learn how we work.', p, 'nav.about',
                  [business_ld(), crumbs_ld([('Home', '/'), ('About Us', p)])]) + header('about') +
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
          f'''<section class="sec"><div class="wrap about-grid"><div class="reveal"><h2>{tx('about.who.h')}</h2><p class="lead" style="margin-top:12px">{tx('about.who.p1')}</p><p class="lead" style="margin-top:12px">{tx('about.who.p2')}</p>
@@ -587,7 +595,7 @@ def build_inner():
     # AC services
     p = '/ac-services/'
     sl = [service_ld(plain('ac.%s.t' % L), plain('ac.%s.d' % L), p + '#' + a) for L, a, *_ in AC_BLOCKS]
-    page(p, head('AC Repair, Servicing, Installation & Gas Filling in Narasaraopet | BOBBY',
+    page(p, head('AC Repair, Servicing & Gas Filling in Narasaraopet | BOBBY',
                  'AC repair, servicing, installation, uninstallation, gas filling and deep cleaning for split and window ACs in Narasaraopet. Book BOBBY on call or WhatsApp: +91 83748 89163.',
                  p, 'nav.ac', [business_ld(), crumbs_ld([('Home', '/'), ('AC Services', p)])] + sl) + header('ac') +
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) +
@@ -599,7 +607,7 @@ def build_inner():
     # Appliance
     p = '/appliance-services/'
     sl = [service_ld(plain('ap.%s.t' % k), plain('svc.%s.desc' % k), p + '#' + a) for k, a in AP_BLOCKS]
-    page(p, head('Refrigerator, Washing Machine, Air Cooler & Fan Repair in Narasaraopet | BOBBY',
+    page(p, head('Fridge, Washer, Cooler & Fan Repair Narasaraopet | BOBBY',
                  'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services: +91 83748 89163.',
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) +
@@ -609,23 +617,23 @@ def build_inner():
 
     # Brands
     p = '/brands/'
-    page(p, head('Brands We Service | Multi-Brand AC & Appliance Repair in Narasaraopet',
+    page(p, head('Multi-Brand AC & Appliance Repair Narasaraopet | BOBBY',
                  'Independent multi-brand AC and home appliance service in Narasaraopet for LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas products.',
                  p, 'nav.brands', [business_ld(), crumbs_ld([('Home', '/'), ('Brands We Service', p)])]) + header('brands') +
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block(True)}</div></section>
-<section class="sec sec-alt"><div class="wrap">{faq_list([10])}</div></section>''' +
+<section class="sec sec-alt"><div class="wrap">{faq_list([10], hq='h2')}</div></section>''' +
          '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # FAQs (FAQPage schema: every Q&A here is visible on this page)
     p = '/faqs/'
     fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in range(1, FAQ_N + 1)]}
-    page(p, head('AC Repair FAQs Narasaraopet | Gas Filling, Servicing, Installation | BOBBY',
+    page(p, head('AC Repair & Service FAQs – Narasaraopet | BOBBY',
                  'Answers to common questions about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet from BOBBY AC Repair & Home Appliance Services.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
-         f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1))}</div></section>' + cta_band() + footer())
+         f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1), hq='h2')}</div></section>' + cta_band() + footer())
 
     # Contact
     p = '/contact/'
@@ -637,7 +645,7 @@ def build_inner():
 <div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
 <div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''
-    page(p, head('Contact BOBBY AC Repair & Home Appliance Services | Book AC Service in Narasaraopet',
+    page(p, head('Book AC Service in Narasaraopet | Contact BOBBY',
                  'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services on +91 83748 89163 or use the online booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
@@ -645,11 +653,11 @@ def build_inner():
 
     # Blog index + posts
     p = '/blog/'
-    page(p, head('AC & Appliance Care Tips | Knowledge Centre | BOBBY Narasaraopet',
+    page(p, head('AC & Appliance Care Tips | BOBBY Narasaraopet',
                  'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and refrigerator care from BOBBY AC Repair & Home Appliance Services, Narasaraopet.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
-         f'<section class="sec"><div class="wrap">{blog_cards(POSTS)}</div></section>' + cta_band() + footer())
+         f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2')}</div></section>' + cta_band() + footer())
     for post in POSTS:
         s = post['slug']; pp = '/blog/%s/' % s
         title_en = plain('post.%s.title' % s)
@@ -657,7 +665,7 @@ def build_inner():
                'datePublished': post['date'], 'dateModified': post['date'], 'inLanguage': 'en', 'mainEntityOfPage': SITE + pp,
                'image': SITE + art_url(post['img']), 'author': {'@id': SITE + '/#business'}, 'publisher': {'@id': SITE + '/#business'}}
         others = [x for x in POSTS if x['slug'] != s][:3]
-        page(pp, head(title_en + ' | BOBBY AC Repair Narasaraopet', plain('post.%s.excerpt' % s), pp, 'post.%s.title' % s,
+        page(pp, head(title_en + ' | BOBBY', plain('post.%s.excerpt' % s), pp, 'post.%s.title' % s,
                       [business_ld(), crumbs_ld([('Home', '/'), ('Blog', '/blog/'), (title_en, pp)]), art],
                       og_img=SITE + art_url(post['img'])) + header('blog') +
              f'''<section class="phero"><div class="wrap"><nav class="crumbs anim" aria-label="Breadcrumb"><ol><li><a href="/">{tx('crumb.home')}</a></li><li><a href="/blog/">{tx('nav.blog')}</a></li><li aria-current="page">{tx('post.%s.title' % s)}</li></ol></nav>
@@ -671,7 +679,7 @@ def build_inner():
 
     # legal + sitemap + 404
     for path, hk, bk, ttl, act in [('/privacy-policy/', 'p.privacy.h1', 'priv.body', 'Privacy Policy', 'privacy'), ('/terms/', 'p.terms.h1', 'terms.body', 'Terms & Conditions', 'terms')]:
-        page(path, head(ttl + ' | BOBBY AC Repair & Home Appliance Services', ttl + ' for the BOBBY AC Repair & Home Appliance Services website, Narasaraopet.', path, hk,
+        page(path, head(ttl + ' | BOBBY AC Repair', ttl + ' for the BOBBY AC Repair & Home Appliance Services website, Narasaraopet.', path, hk,
                         [crumbs_ld([('Home', '/'), (ttl, path)])]) + header(act) +
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
@@ -681,11 +689,11 @@ def build_inner():
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
     sm = ''.join(f'<div><h2>{tx(g)}</h2><ul>' + ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k in items) + '</ul></div>' for g, items in groups)
-    page('/sitemap/', head('Sitemap | BOBBY AC Repair & Home Appliance Services', 'All pages on the BOBBY AC Repair & Home Appliance Services website.', '/sitemap/', 'p.sitemap.h1',
+    page('/sitemap/', head('Sitemap | BOBBY AC Repair', 'All pages on the BOBBY AC Repair & Home Appliance Services website.', '/sitemap/', 'p.sitemap.h1',
                            [crumbs_ld([('Home', '/'), ('Sitemap', '/sitemap/')])]) + header('sitemap') +
          phero('p.sitemap.h1', None, [('crumb.home', '/'), ('p.sitemap.h1', '/sitemap/')]) +
          f'<section class="sec"><div class="wrap smap">{sm}</div></section>' + footer())
-    page('/404.html', head('Page not found | BOBBY AC Repair & Home Appliance Services', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex') + header('') +
+    page('/404.html', head('Page not found | BOBBY AC Repair', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex') + header('') +
          f'''<section class="phero" style="text-align:center"><div class="wrap"><h1>{tx('p.404.h1')}</h1><p style="margin:0 auto 24px">{tx('p.404.sub')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())
