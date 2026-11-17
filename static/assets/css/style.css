@@ -627,3 +627,8 @@ a.ccard:hover{transform:translateY(-3px)}
 .topbar .tb-right{flex-wrap:wrap}
 @media(max-width:980px){.topbar .tb-right{display:none}.topbar .wrap{justify-content:center}}
 @media(max-width:640px){.topbar{font-size:12px}.topbar .wrap{padding:6px 0;text-align:center}.topbar .tb-owner{justify-content:center}.topbar svg{width:13px;height:13px}}
+
+.rc-note{display:flex;align-items:center;justify-content:center;gap:8px;max-width:640px;margin:22px auto 0;padding:9px 16px;border-radius:999px;font-size:13.5px;color:#FFE2C2;background:rgba(255,159,67,.14);border:1px solid rgba(255,159,67,.45);text-align:center}
+.rc-note svg{width:16px;height:16px;color:#FF9F43;flex:none}
+.rc-card .rc-demo{background:#FFF1DE;color:#B45F06;letter-spacing:.08em}
+@media(max-width:640px){.rc-note{border-radius:16px;font-size:12.5px}}

@@ -546,3 +546,6 @@ S['bh2.mq.5'] = ("All major brands", "అన్ని ప్రధాన బ్�
 S['bh2.mq.6'] = ("Genuine spare parts", "నిజమైన స్పేర్ పార్ట్స్", "असली स्पेयर पार्ट्स")
 S['bh2.mq.7'] = ("500+ happy customers", "500+ సంతోషకరమైన కస్టమర్లు", "500+ खुश ग्राहक")
 S['bh2.mq.8'] = ("7+ years in Narasaraopet", "నరసరావుపేటలో 7+ సంవత్సరాలు", "नरसरावपेट में 7+ साल")
+
+S['rev.sample'] = ("SAMPLE", "నమూనా", "नमूना")
+S['rev.samplenote'] = ("Sample reviews shown for preview — genuine customer reviews will replace these soon.", "ప్రివ్యూ కోసం నమూనా రివ్యూలు చూపిస్తున్నాం — త్వరలో నిజమైన కస్టమర్ రివ్యూలు వస్తాయి.", "प्रीव्यू के लिए नमूना रिव्यू दिखाए गए हैं — जल्द ही असली ग्राहक रिव्यू आएँगे।")

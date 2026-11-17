@@ -34,6 +34,8 @@ PRICE_MARKUP = 100
 # Trust figures shown under the hero (as provided by the business owner). Keep these accurate.
 STATS = [('500', '+', 'stat.cust', 'heart'), ('7', '+', 'stat.years', 'shield'), ('10', '+', 'stat.brands', 'layers'), ('24/7', '', 'stat.support', 'phone')]
 GOOGLE_REVIEW_URL = 'https://g.page/r/CdusD2XE5xNnEBM/review'   # paste your Google Business Profile review link here once you have it
+# Temporary: show clearly labelled SAMPLE reviews until genuine reviews are added to REVIEWS (then set False).
+SHOW_SAMPLE_REVIEWS = True
 OWNER_NAME = 'Yalamanda Gogasani'
 OWNER_EMAIL = 'Yalamandagogasani@gmail.com'
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
@@ -229,7 +231,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=15">
+<link rel="stylesheet" href="/assets/css/style.css?v=16">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -393,7 +395,7 @@ def review_card(r):
     src = r.get('source', 'direct')
     initial = esc((r.get('initial') or r['name'][:1]).upper())
     g = (f'<span class="rc-src rc-g" title="Posted on Google">{ic("check")}Google review</span>' if src == 'google'
-         else '' if src == 'demo'
+         else f'<span class="rc-src rc-demo" data-i18n="rev.sample">{en("rev.sample")}</span>' if src == 'demo'
          else f'<span class="rc-src">{esc(SOURCE_LABEL["direct"])}</span>')
     return f'''<li class="rc-slide"><article class="rc-card">
 <span class="rc-q" aria-hidden="true">“</span><header><span class="rc-av" aria-hidden="true">{initial}</span><span class="rc-who"><b>{esc(r["name"])}</b><small>{ic("pin")}{esc(r.get("area", ""))}</small></span>{g}</header>
@@ -414,13 +416,14 @@ def review_buttons():
             f'<a class="btn btn-line" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.write")}{ic("arrow")}</a></div>')
 
 def reviews_block():
-    """Trust facts marquee + 'What Our Customers Say' carousel (genuine reviews only)."""
-    cards = ''.join(f'<figure class="tr-card"><span class="tr-ic">{ic(icn)}</span><figcaption><b>{tx("tr.%d.t" % n)}</b><span>{tx("tr.%d.d" % n)}</span></figcaption></figure>' for icn, n in TRUST)
-    body = review_carousel(REVIEWS) if REVIEWS else f'<div class="rc-empty reveal"><div class="rev-stars" aria-hidden="true">' + ''.join(f'<span style="--i:{i}">★</span>' for i in range(5)) + f'</div><p>{tx("rev.first")}</p></div>'
-    return f'''<section class="sec rev-sec" id="trust"><div class="wrap">
-<div class="sec-head center reveal"><p class="eyebrow">{tx("tr.eyebrow")}</p><h2>{tx("tr.h2")}</h2></div></div>
-<div class="rev-marquee reveal" aria-label="Why customers choose BOBBY"><div class="rev-belt">{cards}<div class="rev-dup" aria-hidden="true">{cards}</div></div></div></section>
-<section class="sec rc-sec" id="reviews"><div class="wrap">
+    """'What Our Customers Say' carousel. Genuine reviews when available; until then clearly labelled SAMPLE reviews."""
+    if REVIEWS:
+        body = review_carousel(REVIEWS)
+    elif SHOW_SAMPLE_REVIEWS:
+        body = f'<p class="rc-note reveal">{ic("star")}{tx("rev.samplenote")}</p>' + review_carousel(DEMO_REVIEWS, 'Sample reviews')
+    else:
+        body = f'<div class="rc-empty reveal"><p>{tx("rev.first")}</p></div>'
+    return f'''<section class="sec rc-sec" id="reviews" data-nosnippet><div class="wrap">
 <div class="sec-head center reveal"><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead">{tx("rev.sub2")}</p></div>
 {body}{review_buttons()}</div></section>'''
 
