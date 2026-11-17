@@ -325,12 +325,13 @@
       var step = slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : 0;
       track.style.transform = 'translate3d(' + (-idx * step) + 'px,0,0)';
       var p = per();
-      slides.forEach(function (s, k) { var vis = k >= idx && k < idx + p; s.setAttribute('aria-hidden', vis ? 'false' : 'true'); });
-      [].forEach.call(dotsBox.children, function (d, k) { d.setAttribute('aria-current', k === idx ? 'true' : 'false'); });
+      var mid = idx + Math.floor((p - 1) / 2);
+      slides.forEach(function (s, k) { var vis = k >= idx && k < idx + p; s.setAttribute('aria-hidden', vis ? 'false' : 'true'); s.classList.toggle('is-focus', p > 1 && k === mid); });
+      [].forEach.call(dotsBox.children, function (d, k) { d.setAttribute('aria-current', 'false'); }); var cd = dotsBox.children[idx]; if (cd) { void cd.offsetWidth; cd.setAttribute('aria-current', 'true'); }
       var single = m === 0; prev.disabled = single; next.disabled = single;
     }
-    function play() { clearInterval(timer); if (!reduce && !stopped && !hover && maxIdx() > 0) timer = setInterval(function () { go(idx + 1); }, DELAY); }
-    function pause() { clearInterval(timer); }
+    function play() { clearInterval(timer); rc.classList.toggle('is-paused', reduce || stopped || hover); if (!reduce && !stopped && !hover && maxIdx() > 0) timer = setInterval(function () { go(idx + 1); }, DELAY); }
+    function pause() { clearInterval(timer); rc.classList.add('is-paused'); }
     function userAct() { stopped = true; pause(); }
     prev.addEventListener('click', function () { userAct(); go(idx - 1); });
     next.addEventListener('click', function () { userAct(); go(idx + 1); });
@@ -353,6 +354,7 @@
     document.addEventListener('visibilitychange', function () { document.hidden ? pause() : play(); });
     var lastPer = per(), rt;
     window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (per() !== lastPer) { lastPer = per(); buildDots(); } go(Math.min(idx, maxIdx())); }, 120); });
+    rc.classList.add('is-js'); rc.style.setProperty('--rc-delay', DELAY / 1000 + 's');
     buildDots(); go(0); play();
   });
 })();
