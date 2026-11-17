@@ -158,18 +158,20 @@ def booking_form(p, inline=False):
 <h2 id="{p}Title">{tx('f.h')}</h2><p class="fnote">{ic('info')}{tx('f.note')}</p>
 <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
 <div class="frow"><div class="field"><label for="{p}Name">{tx('f.name')} <span class="req">*</span></label><input id="{p}Name" name="name" autocomplete="name" maxlength="60" required placeholder="{esc(plain('f.ph.name'))}" data-i18n-ph="f.ph.name"><p class="emsg"></p></div>
-<div class="field"><label for="{p}Phone">{tx('f.phone')} <span class="req">*</span></label><input id="{p}Phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" required placeholder="{esc(plain('f.ph.phone'))}" data-i18n-ph="f.ph.phone"><p class="emsg"></p></div></div>
+<div class="field"><label for="{p}Phone">{tx('f.phone')} <span class="req">*</span></label><div class="phone-wrap"><span class="cc" aria-hidden="true">+91</span><input id="{p}Phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" pattern="[6-9][0-9]{{9}}" required placeholder="98765 43210"><span class="pcount" aria-hidden="true"></span></div><p class="emsg"></p></div></div>
 <div class="frow"><div class="field"><label for="{p}Appliance">{tx('f.appliance')} <span class="req">*</span></label><select id="{p}Appliance" name="appliance" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('split','f.opt.splitac')}{opt('window','f.opt.windowac')}{opt('fridge','f.opt.fridge')}{opt('washer','f.opt.washer')}{opt('cooler','f.opt.cooler')}{opt('fan','f.opt.fan')}</select><p class="emsg"></p></div>
 <div class="field"><label for="{p}Service">{tx('f.service')} <span class="req">*</span></label><select id="{p}Service" name="service" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('repair','f.opt.repair')}{opt('service','f.opt.service')}{opt('install','f.opt.install')}{opt('uninstall','f.opt.uninstall')}{opt('gas','f.opt.gas')}{opt('notsure','f.opt.notsure')}</select><p class="emsg"></p></div></div>
 <div class="field loc-field"><span class="flabel">{tx('f.loc')}</span>
 <div class="loc-btns"><button type="button" class="btn btn-line btn-sm loc-cur">{ic('target')}{tx('f.loc.cur')}</button><button type="button" class="btn btn-line btn-sm loc-map">{ic('pin')}{tx('f.loc.map')}</button></div>
 <div class="loc-status" role="status" aria-live="polite"></div>
-<input type="hidden" name="lat"><input type="hidden" name="lng"><p class="hint">{tx('f.loc.note')}</p></div>
+<input type="hidden" name="lat"><input type="hidden" name="lng"><input type="hidden" name="addr"><p class="hint">{tx('f.loc.note')}</p></div>
 <div class="field"><label for="{p}Area">{tx('f.area')} <span class="req">*</span></label><input id="{p}Area" name="area" maxlength="120" required placeholder="{esc(plain('f.ph.area'))}" data-i18n-ph="f.ph.area"><p class="emsg"></p></div>
 <div class="frow"><div class="field"><label for="{p}Brand">{tx('f.brand')}</label><input id="{p}Brand" name="brand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
 <div class="field"><label for="{p}Date">{tx('f.date')}</label><input id="{p}Date" name="date" type="date"><p class="emsg"></p></div></div>
 <div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
-<button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p></form>'''
+<button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p>
+<div class="book-done" hidden tabindex="-1"><span class="bd-ic">{ic('check')}</span>{tx('f.thanks.h', 'h3')}{tx('f.thanks.p', 'p')}<p class="bd-sign" data-i18n="f.thanks.sign">{en('f.thanks.sign')}</p><p class="bd-tip">{tx('f.thanks.tip')}</p>
+<div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div></div></form>'''
 
 def modals():
     return f'''<div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
@@ -177,9 +179,10 @@ def modals():
 <div class="modal" id="mapModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
 <div class="modal-panel map-panel" role="dialog" aria-modal="true" aria-labelledby="mapTitle"><button type="button" class="modal-x" data-close-modal aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="mapTitle">{tx('map.title')}</h2>
-<form class="map-search"><input type="search" placeholder="{esc(plain('map.search'))}" data-i18n-ph="map.search" aria-label="{esc(plain('map.search'))}" data-i18n-aria="map.search"><button class="btn btn-primary btn-sm" type="submit">{tx('map.go')}</button></form>
-<p class="map-hint">{tx('map.hint')}</p><div id="pickMap" class="pick-map"></div><p class="map-msg" role="status" aria-live="polite"></p>
-<div class="modal-foot"><button type="button" class="btn btn-line btn-sm map-me">{ic('target')}{tx('map.me')}</button><button type="button" class="btn btn-primary map-use" disabled>{ic('check')}{tx('map.use')}</button></div></div></div>'''
+<div class="map-search" role="search"><input type="search" autocomplete="off" enterkeyhint="search" placeholder="{esc(plain('map.search'))}" data-i18n-ph="map.search" aria-label="{esc(plain('map.search'))}" data-i18n-aria="map.search" aria-autocomplete="list" aria-controls="mapSug"><button class="btn btn-primary btn-sm map-go" type="button">{tx('map.go')}</button><ul class="map-sug" id="mapSug" role="listbox" hidden></ul></div>
+<p class="map-hint">{tx('map.hint')}</p><div class="pick-wrap"><div id="pickMap" class="pick-map"></div><span class="pick-pin" aria-hidden="true">{ic('pin')}</span><div class="map-layers"><button type="button" class="on" data-layer="street">{tx('map.street')}</button><button type="button" data-layer="sat">{tx('map.sat')}</button></div></div>
+<p class="map-addr" aria-live="polite"></p><p class="map-msg" role="status" aria-live="polite"></p>
+<div class="modal-foot"><button type="button" class="btn btn-line btn-sm map-me">{ic('target')}{tx('map.me')}</button><button type="button" class="btn btn-primary map-use">{ic('check')}{tx('map.use')}</button></div></div></div>'''
 
 def book_a(svc, cls, key='btn.book', icon=None):
     return f'<a class="btn {cls}" href="/contact/#book" data-book="{svc}">{wa_ic()}{tx(key)}</a>'
@@ -231,7 +234,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=18">
+<link rel="stylesheet" href="/assets/css/style.css?v=19">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -298,7 +301,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=12" defer></script>
+<script src="/assets/js/main.js?v=13" defer></script>
 </body></html>
 '''
 
