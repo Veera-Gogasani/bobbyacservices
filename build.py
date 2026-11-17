@@ -18,8 +18,9 @@ UPDATED   = '2026-11-17'
 ADDRESS   = {'street': 'Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
 GMAPS_CID = int('6713e7c4650facdb', 16)            # Google Business Profile listing
 GMAPS_URL = 'https://maps.google.com/?cid=%d' % GMAPS_CID
-DIR_URL   = 'https://www.google.com/maps/dir/?api=1&destination=' + 'Bobby+AC+Repair+%26+Home+Appliance+Services%2C+Palapadu+Road%2C+Arundelpet%2C+Narasaraopeta+522601'
-MAP_EMBED = 'https://maps.google.com/maps?q=Bobby+AC+Repair+%26+Home+Appliance+Services,+Palapadu+Road,+Arundelpet,+Narasaraopeta+522601&amp;z=15&amp;output=embed'
+DIR_URL   = 'https://www.google.com/maps/dir/?api=1&destination=16.2371462,80.0339778'
+GEO = (16.2371462, 80.0339778)                     # from the Google Business Profile listing
+MAP_EMBED = 'https://maps.google.com/maps?q=%s,%s&amp;z=17&amp;output=embed' % GEO
 
 # Source prices (₹). The website automatically shows source + 100.
 # None = no price published yet -> card shows "Estimate after inspection".
@@ -126,7 +127,7 @@ def business_ld():
         'slogan': en('brand.tagline'),
         'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
-        'hasMap': GMAPS_URL, 'sameAs': [GMAPS_URL],
+        'hasMap': GMAPS_URL, 'geo': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'sameAs': [GMAPS_URL],
         'areaServed': {'@type': 'City', 'name': CITY},
         'knowsLanguage': ['en', 'te', 'hi'],
     }
