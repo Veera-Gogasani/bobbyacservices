@@ -388,7 +388,7 @@ def build_home():
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
         f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo tech reveal">{img('technician', 768, 512, 'why.h2')}<div class="badge"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt="" loading="lazy">{tx('brand.tagline')}</div></div>
 <div>{sec_head("why.eyebrow", "why.h2", None, center=False)}{why_cards()}</div></div></section>''' +
-        steps_block() + reviews_block() + location_block() +
+        steps_block() + reviews_block() +
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
