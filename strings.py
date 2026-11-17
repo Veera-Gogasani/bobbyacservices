@@ -481,3 +481,31 @@ add({
 })
 S['rev.eyebrow'] = ("Customer Reviews", "కస్టమర్ రివ్యూలు", "ग्राहक रिव्यू")
 S['rev.h2'] = ("What Our Customers Say", "మా కస్టమర్లు ఏమంటున్నారు", "हमारे ग्राहक क्या कहते हैं")
+
+# ---------- trust carousel (facts about the service, not customer quotes) ----------
+add({
+ 'tr.eyebrow': ("Why Narasaraopet trusts BOBBY", "నరసరావుపేట BOBBY ని ఎందుకు నమ్ముతుంది", "नरसरावपेट BOBBY पर क्यों भरोसा करता है"),
+ 'tr.h2': ("Why Families Call BOBBY", "కుటుంబాలు BOBBY కి ఎందుకు కాల్ చేస్తాయి", "परिवार BOBBY को क्यों बुलाते हैं"),
+ 'tr.1.t': ("Open 24 hours", "24 గంటలూ అందుబాటులో", "24 घंटे खुला"),
+ 'tr.1.d': ("Breakdowns don't wait. Call us any time, day or night.", "బ్రేక్‌డౌన్ ఎప్పుడైనా రావచ్చు. పగలు రాత్రి ఎప్పుడైనా కాల్ చేయండి.", "खराबी कभी भी आ सकती है। दिन हो या रात, कभी भी कॉल करें।"),
+ 'tr.2.t': ("Quick doorstep response", "త్వరిత ఇంటి వద్ద సేవ", "घर पर तुरंत सेवा"),
+ 'tr.2.d': ("We come to your home anywhere in Narasaraopet and within about 10 km.", "నరసరావుపేట మరియు సుమారు 10 కి.మీ. లోపు ఎక్కడైనా మీ ఇంటికే వస్తాము.", "नरसरावपेट और लगभग 10 किमी के भीतर कहीं भी हम आपके घर आते हैं।"),
+ 'tr.3.t': ("Inspection first", "ముందు తనిఖీ", "पहले जाँच"),
+ 'tr.3.d': ("We find the real cause before suggesting any repair or part.", "ఏ రిపేర్ లేదా విడిభాగం సూచించే ముందు అసలు కారణం కనుగొంటాము.", "कोई रिपेयर या पार्ट सुझाने से पहले असली कारण ढूँढते हैं।"),
+ 'tr.4.t': ("Estimate before work", "పనికి ముందే అంచనా", "काम से पहले अनुमान"),
+ 'tr.4.d': ("You approve the cost before any work begins. No surprises.", "ఏ పని మొదలయ్యే ముందే ఖర్చును మీరు ఆమోదిస్తారు. ఆశ్చర్యాలు ఉండవు.", "काम शुरू होने से पहले आप खर्च को मंज़ूरी देते हैं। कोई सरप्राइज़ नहीं।"),
+ 'tr.5.t': ("Gas only when needed", "అవసరమైతేనే గ్యాస్", "ज़रूरत हो तभी गैस"),
+ 'tr.5.d': ("Leak check first. Gas filling only if your AC really needs it.", "ముందు లీక్ చెక్. నిజంగా అవసరమైతేనే గ్యాస్ ఫిల్లింగ్.", "पहले लीक की जाँच। एसी को सच में ज़रूरत हो तभी गैस फिलिंग।"),
+ 'tr.6.t': ("All major brands", "అన్ని ప్రముఖ బ్రాండ్లు", "सभी प्रमुख ब्रांड"),
+ 'tr.6.d': ("LG, Daikin, Voltas, Samsung, Blue Star, Haier and more.", "LG, Daikin, Voltas, Samsung, Blue Star, Haier మరియు మరిన్ని.", "LG, Daikin, Voltas, Samsung, Blue Star, Haier और भी।"),
+ 'tr.7.t': ("7+ years of experience", "7+ సంవత్సరాల అనుభవం", "7+ साल का अनुभव"),
+ 'tr.7.d': ("Hands-on experience with ACs and home appliances.", "ఏసీలు మరియు గృహోపకరణాలపై ప్రత్యక్ష అనుభవం.", "एसी और घरेलू उपकरणों पर हाथों-हाथ अनुभव।"),
+ 'tr.8.t': ("500+ happy customers", "500+ సంతోషకరమైన కస్టమర్లు", "500+ संतुष्ट ग्राहक"),
+ 'tr.8.d': ("Homes across Narasaraopet trust us with their appliances.", "నరసరావుపేట అంతటా ఇళ్లు తమ ఉపకరణాల కోసం మమ్మల్ని నమ్ముతాయి.", "नरसरावपेट भर के घर अपने उपकरणों के लिए हम पर भरोसा करते हैं।"),
+ 'tr.9.t': ("Genuine spare parts", "నాణ్యమైన విడిభాగాలు", "असली स्पेयर पार्ट्स"),
+ 'tr.9.d': ("Quality parts for a longer appliance life.", "ఉపకరణం ఎక్కువ కాలం పనిచేయడానికి నాణ్యమైన భాగాలు.", "उपकरण की लंबी उम्र के लिए अच्छी क्वालिटी के पार्ट्स।"),
+ 'tr.10.t': ("Tested before we leave", "వెళ్ళే ముందు టెస్ట్", "जाने से पहले टेस्ट"),
+ 'tr.10.d': ("We check everything works properly before we finish.", "పని పూర్తి చేసే ముందు అన్నీ సరిగా పనిచేస్తున్నాయో చూస్తాము.", "काम खत्म करने से पहले जाँचते हैं कि सब ठीक चल रहा है।"),
+ 'tr.11.t': ("Easy booking", "సులభమైన బుకింగ్", "आसान बुकिंग"),
+ 'tr.11.d': ("Book in a minute by call, WhatsApp or our online form.", "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఫారం ద్వారా ఒక్క నిమిషంలో బుక్ చేయండి.", "कॉल, व्हाट्सऐप या ऑनलाइन फ़ॉर्म से एक मिनट में बुक करें।"),
+})

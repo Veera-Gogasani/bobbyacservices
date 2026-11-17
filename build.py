@@ -208,7 +208,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=11">
+<link rel="stylesheet" href="/assets/css/style.css?v=12">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -361,18 +361,22 @@ def steps_block():
     lis = ''.join(f'<li><span class="n">{i}</span><div><h3>{tx("how.%d.t" % i)}</h3><p>{tx("how.%d.d" % i)}</p></div></li>' for i in range(1, 5))
     return f'''<section class="sec steps" id="how"><div class="wrap">{sec_head("how.eyebrow", "how.h2")}<ol class="timeline">{lis}</ol></div></section>'''
 
+TRUST = [('star', 1), ('home', 2), ('wrench', 3), ('rupee', 4), ('gauge', 5), ('layers', 6), ('shield', 7), ('heart', 8), ('check', 9), ('ac', 10), ('cal', 11)]
 def reviews_block():
-    if REVIEWS:
-        def stars(n): return '<span class="stars" aria-label="%d out of 5 stars">%s</span>' % (n, '★' * n + '☆' * (5 - n))
-        cards = ''.join(f'''<figure class="rev-card">{stars(int(r.get("rating", 5)))}<blockquote>{esc(r["text"])}</blockquote>
-<figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{" · Google review" if r.get("google") else ""}</small></span></figcaption></figure>''' for r in REVIEWS)
-        link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
-        body = f'''<div class="rev-marquee" aria-label="Customer reviews"><div class="rev-belt">{cards}<div class="rev-dup" aria-hidden="true">{cards}</div></div></div>'''
-    else:
-        body = f'<p class="rev-empty">{tx("rev.first")}</p>'
+    """Trust carousel (facts about the service) + genuine customer reviews when available."""
+    cards = [f'<figure class="tr-card"><span class="tr-ic">{ic(icn)}</span><figcaption><b>{tx("tr.%d.t" % n)}</b><span>{tx("tr.%d.d" % n)}</span></figcaption></figure>' for icn, n in TRUST]
+    for r in REVIEWS:  # genuine reviews only
+        n = int(r.get("rating", 5))
+        src = " · Google review" if r.get("google") else (" · " + r["source"] if r.get("source") else "")
+        cards.append(f'''<figure class="rev-card"><span class="stars" aria-label="{n} out of 5 stars">{"★" * n}{"☆" * (5 - n)}</span><blockquote>{esc(r["text"])}</blockquote>
+<figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{src}</small></span></figcaption></figure>''')
+    belt = ''.join(cards)
     stars = '<div class="rev-stars" aria-hidden="true">' + ''.join(f'<span style="--i:{i}">★</span>' for i in range(5)) + '</div>'
-    return f'''<section class="sec rev-sec" id="reviews"><div class="wrap"><div class="rev-box reveal">{stars}
-<div><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead" style="margin-top:10px">{tx("rev.sub")}</p>{body}</div>
+    rev_line = '' if REVIEWS else f'<p class="rev-empty">{tx("rev.first")}</p>'
+    return f'''<section class="sec rev-sec" id="reviews"><div class="wrap">
+<div class="sec-head center reveal"><p class="eyebrow">{tx("tr.eyebrow")}</p><h2>{tx("tr.h2")}</h2></div></div>
+<div class="rev-marquee reveal" aria-label="Why customers choose BOBBY"><div class="rev-belt">{belt}<div class="rev-dup" aria-hidden="true">{belt}</div></div></div>
+<div class="wrap"><div class="rev-box reveal">{stars}<div><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead" style="margin-top:10px">{tx("rev.sub")}</p>{rev_line}</div>
 <div class="btn-row"><a class="btn btn-orange" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx("rev.google")}</a><a class="btn btn-line" href="{GMAPS_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic('arrow')}</a></div>
 </div></div></section>'''
 
