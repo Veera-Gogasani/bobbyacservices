@@ -142,9 +142,12 @@
   resetBtn.addEventListener('click', function () { bobbyFooterStore(null); input.value = ''; cards.you.classList.add('is-loading'); bobbyFooterPlace(cards.you, 'Detecting…'); bobbyFooterLoad(); });
   refreshBtn.addEventListener('click', bobbyFooterLoad);
 
-  /* load when the footer is about to appear */
+  /* load when the footer is about to appear – or shortly after the page has loaded, whichever comes first */
+  function bobbyFooterStart() { if (started) return; started = true; bobbyFooterLoad(); }
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting && !started) { started = true; io.disconnect(); bobbyFooterLoad(); } }, { rootMargin: '600px 0px' });
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); bobbyFooterStart(); } }, { rootMargin: '600px 0px' });
     io.observe(bobbyFooterRoot);
-  } else { started = true; bobbyFooterLoad(); }
+  }
+  function bobbyFooterLater() { setTimeout(bobbyFooterStart, 2500); }
+  if (document.readyState === 'complete') bobbyFooterLater(); else window.addEventListener('load', bobbyFooterLater);
 })();
