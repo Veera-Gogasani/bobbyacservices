@@ -420,7 +420,7 @@ def reviews_block():
     if REVIEWS:
         body = review_carousel(REVIEWS)
     elif SHOW_SAMPLE_REVIEWS:
-        body = f'<p class="rc-note reveal">{ic("star")}{tx("rev.samplenote")}</p>' + review_carousel(DEMO_REVIEWS, 'Sample reviews')
+        body = review_carousel(DEMO_REVIEWS, 'Sample reviews')  # each card carries a SAMPLE badge
     else:
         body = f'<div class="rc-empty reveal"><p>{tx("rev.first")}</p></div>'
     return f'''<section class="sec rc-sec" id="reviews" data-nosnippet><div class="wrap">
