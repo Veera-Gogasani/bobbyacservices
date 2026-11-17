@@ -413,7 +413,7 @@ a.ccard:hover{transform:translateY(-3px)}
 .contact-grid>*,.loc-grid>*,.about-grid>*,.why-split>*,.frow>*{min-width:0}
 .field input[type=date]{min-width:0;max-width:100%}
 
-.why-split .wcard:last-child:nth-child(odd){grid-column:1/-1}
+
 
 .why-photo.tech{aspect-ratio:auto;background:#fff;border:1px solid var(--line);padding:18px 18px 92px}
 .why-photo.tech img{height:auto;object-fit:contain}
@@ -632,3 +632,12 @@ a.ccard:hover{transform:translateY(-3px)}
 .rc-note svg{width:16px;height:16px;color:#FF9F43;flex:none}
 .rc-card .rc-demo{background:#FFF1DE;color:#B45F06;letter-spacing:.08em}
 @media(max-width:640px){.rc-note{border-radius:16px;font-size:12.5px}}
+
+/* Why Choose BOBBY – navy illustration + 6 cards in a clean 2x3 grid */
+.why-split{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:center}
+.why-split .why-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr}
+.why-photo{aspect-ratio:5/6;background:#0B1F3A;border:0}
+.why-photo img{object-fit:cover;object-position:50% 30%}
+.why-photo .badge{background:rgba(255,255,255,.95);backdrop-filter:blur(8px)}
+@media(max-width:960px){.why-photo{aspect-ratio:4/3}.why-photo img{object-position:50% 25%}}
+@media(max-width:560px){.why-split .why-grid{grid-template-columns:1fr;grid-auto-rows:auto}.why-photo{aspect-ratio:5/6}}

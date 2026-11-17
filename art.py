@@ -246,9 +246,36 @@ SC['about'] = (1600, 1280, f'<rect width="1600" height="1280" fill="url(#dusk)"/
     technician(560, 340, 1.6, 'hold') +
     outdoor(170, 720, 0.6, pipes=False) + split_ac(380, 300, 0.45) + badge(900, 380, 54, 'check'))
 
-def build(outdir='static/assets/img/art', srcdir='art-src'):
+
+def embed(path, x, y, w=None, h=None):
+    """Embed one of the BOBBY appliance renders (PNG data URI) into a scene."""
+    import base64, io
+    im = Image.open(path).convert('RGBA')
+    if h and not w: w = h * im.width / im.height
+    if w and not h: h = w * im.height / im.width
+    buf = io.BytesIO(); im.save(buf, 'PNG')
+    return f'<image x="{x}" y="{y}" width="{w}" height="{h}" href="data:image/png;base64,{base64.b64encode(buf.getvalue()).decode()}"/>'
+
+# 'Why choose BOBBY' scene – website navy theme, technician servicing a split AC, appliances on the floor
+_WHY_BG = (f'<defs><linearGradient id="nvbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16477A"/><stop offset=".55" stop-color="{NAVY}"/><stop offset="1" stop-color="{NAVY2}"/></linearGradient>'
+           f'<linearGradient id="nvfloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2747"/><stop offset="1" stop-color="#081629"/></linearGradient>'
+           f'<pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#FFFFFF" opacity=".10"/></pattern></defs>'
+           f'<rect width="1200" height="1440" fill="url(#nvbg)"/><rect width="1200" height="1150" fill="url(#dots)"/>')
+SC['why'] = (1200, 1440, _WHY_BG + glow(600, 330, 520) + glow(980, 900, 300, 'oglow') +
+    ''.join(f'<rect x="{x}" y="120" width="2" height="1030" fill="#FFFFFF" opacity=".05"/>' for x in (150, 1050)) +
+    split_ac(236, 150, 1.3) + airflow(270, 410, 680, 5, 46, 34) +
+    sparkle(1070, 140, 26, CYAN) + sparkle(180, 330, 18, CYAN) + sparkle(1110, 560, 14, '#FFFFFF') +
+    f'<rect y="1150" width="1200" height="290" fill="url(#nvfloor)"/><rect y="1146" width="1200" height="6" fill="{CYAN}" opacity=".25"/>' +
+    f'<ellipse cx="600" cy="1190" rx="560" ry="40" fill="{CYAN}" opacity=".06"/>' +
+    embed('static/hero-preview/assets/washer.webp', 40, 790, h=380) +
+    ladder(470, 520, 640, 1.4) + technician(400, 330, 1.75, 'up') + toolbox(640, 1080, 0.85) +
+    embed('static/hero-preview/assets/fridge.webp', 860, 600, h=570) +
+    badge(1080, 300, 46, 'check', '#1FA855') + badge(120, 700, 34, 'bolt', ORANGE))
+
+def build(outdir='static/assets/img/art', srcdir='art-src', only=None):
     os.makedirs(outdir, exist_ok=True); os.makedirs(srcdir, exist_ok=True)
     for name, (w, h, body) in SC.items():
+        if only and name not in only: continue
         sp = os.path.join(srcdir, name + '.svg'); open(sp, 'w').write(svg(w, h, body))
         png = f'/tmp/{name}.png'
         subprocess.run(['rsvg-convert', '-w', str(w), sp, '-o', png], check=True)
@@ -258,4 +285,5 @@ def build(outdir='static/assets/img/art', srcdir='art-src'):
     print('art built:', ', '.join(SC))
 
 if __name__ == '__main__':
-    build()
+    import sys
+    build(only=sys.argv[1:] or None)
