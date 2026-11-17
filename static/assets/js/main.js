@@ -303,4 +303,56 @@
   /* start */
   var saved = store('bobby-lang');
   loadDict('en').then(function () { if (saved && saved !== 'en' && LANGS[saved]) setLang(saved, false); else { updateWaLinks(); document.querySelectorAll('.bookform').forEach(function (f) { f._renderLoc(); }); } }).catch(function () {});
+
+  /* ---------- review carousel component ---------- */
+  document.querySelectorAll('[data-rc]').forEach(function (rc) {
+    var track = rc.querySelector('.rc-track'), slides = [].slice.call(track.children);
+    var prev = rc.querySelector('.rc-prev'), next = rc.querySelector('.rc-next'), dotsBox = rc.querySelector('.rc-dots');
+    var idx = 0, timer = null, stopped = false, hover = false, DELAY = 5500;
+    function per() { return parseInt(getComputedStyle(rc).getPropertyValue('--per'), 10) || 1; }
+    function maxIdx() { return Math.max(0, slides.length - per()); }
+    function buildDots() {
+      dotsBox.innerHTML = '';
+      for (var i = 0; i <= maxIdx(); i++) {
+        var d = document.createElement('button'); d.type = 'button'; d.className = 'rc-dot';
+        d.setAttribute('aria-label', 'Go to slide ' + (i + 1)); d.dataset.i = i;
+        d.addEventListener('click', function () { userAct(); go(+this.dataset.i); });
+        dotsBox.appendChild(d);
+      }
+    }
+    function go(i) {
+      var m = maxIdx(); idx = i > m ? 0 : (i < 0 ? m : i);
+      var step = slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : 0;
+      track.style.transform = 'translate3d(' + (-idx * step) + 'px,0,0)';
+      var p = per();
+      slides.forEach(function (s, k) { var vis = k >= idx && k < idx + p; s.setAttribute('aria-hidden', vis ? 'false' : 'true'); });
+      [].forEach.call(dotsBox.children, function (d, k) { d.setAttribute('aria-current', k === idx ? 'true' : 'false'); });
+      var single = m === 0; prev.disabled = single; next.disabled = single;
+    }
+    function play() { clearInterval(timer); if (!reduce && !stopped && !hover && maxIdx() > 0) timer = setInterval(function () { go(idx + 1); }, DELAY); }
+    function pause() { clearInterval(timer); }
+    function userAct() { stopped = true; pause(); }
+    prev.addEventListener('click', function () { userAct(); go(idx - 1); });
+    next.addEventListener('click', function () { userAct(); go(idx + 1); });
+    rc.addEventListener('mouseenter', function () { hover = true; pause(); });
+    rc.addEventListener('mouseleave', function () { hover = false; play(); });
+    rc.addEventListener('focusin', function () { hover = true; pause(); });
+    rc.addEventListener('focusout', function () { hover = false; play(); });
+    rc.setAttribute('tabindex', '0');
+    rc.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { userAct(); go(idx - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { userAct(); go(idx + 1); e.preventDefault(); }
+    });
+    var x0 = null, y0 = null;
+    track.addEventListener('pointerdown', function (e) { x0 = e.clientX; y0 = e.clientY; });
+    track.addEventListener('pointerup', function (e) {
+      if (x0 === null) return; var dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { userAct(); go(idx + (dx < 0 ? 1 : -1)); }
+    });
+    track.addEventListener('pointercancel', function () { x0 = null; });
+    document.addEventListener('visibilitychange', function () { document.hidden ? pause() : play(); });
+    var lastPer = per(), rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (per() !== lastPer) { lastPer = per(); buildDots(); } go(Math.min(idx, maxIdx())); }, 120); });
+    buildDots(); go(0); play();
+  });
 })();

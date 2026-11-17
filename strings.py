@@ -509,3 +509,9 @@ add({
  'tr.11.t': ("Easy booking", "సులభమైన బుకింగ్", "आसान बुकिंग"),
  'tr.11.d': ("Book in a minute by call, WhatsApp or our online form.", "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఫారం ద్వారా ఒక్క నిమిషంలో బుక్ చేయండి.", "कॉल, व्हाट्सऐप या ऑनलाइन फ़ॉर्म से एक मिनट में बुक करें।"),
 })
+
+S['rev.sub2'] = ("Customer feedback matters to us. Explore experiences shared by customers who have used our AC repair and home appliance services in Narasaraopet and surrounding areas.",
+ "కస్టమర్ల అభిప్రాయం మాకు చాలా ముఖ్యం. నరసరావుపేట మరియు చుట్టుపక్కల ప్రాంతాల్లో మా AC రిపేర్ మరియు గృహోపకరణ సేవలను ఉపయోగించిన కస్టమర్ల అనుభవాలను చూడండి.",
+ "ग्राहकों की राय हमारे लिए बहुत मायने रखती है। नरसरावपेट और आसपास के इलाकों में हमारी AC रिपेयर और होम अप्लायंस सेवाएँ लेने वाले ग्राहकों के अनुभव देखें।")
+S['rev.readall'] = ("Read All Google Reviews", "అన్ని గూగుల్ రివ్యూలు చదవండి", "सभी गूगल रिव्यू पढ़ें")
+S['rev.write'] = ("Write a Review", "రివ్యూ రాయండి", "रिव्यू लिखें")

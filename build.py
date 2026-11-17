@@ -35,6 +35,23 @@ PRICE_MARKUP = 100
 STATS = [('500', '+', 'stat.cust', 'heart'), ('7', '+', 'stat.years', 'shield'), ('10', '+', 'stat.brands', 'layers'), ('24/7', '', 'stat.support', 'phone')]
 GOOGLE_REVIEW_URL = 'https://g.page/r/CdusD2XE5xNnEBM/review'   # paste your Google Business Profile review link here once you have it
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
+
+# DEMO data — sample names & text for layout testing ONLY. Rendered only on the noindex /reviews-preview/ page.
+DEMO_REVIEWS = [{'name': n, 'area': a, 'service': s, 'rating': r, 'text': t, 'source': 'demo'} for n, a, s, r, t in [
+    ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, 'Sample text: AC stopped cooling in the afternoon; technician came the same evening, found the fault and fixed it.'),
+    ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, 'Sample text: Full jet-wash service, cleaned the filters and coil, explained everything before starting.'),
+    ('Srinivas R.', 'Barampet', 'AC Installation', 5, 'Sample text: New split AC installed neatly with proper drain slope and tidy piping.'),
+    ('Anusha M.', 'Ramireddypet', 'AC Uninstallation', 4, 'Sample text: Unit removed carefully before our house shift, gas pumped down first.'),
+    ('Venkatesh B.', 'Palnadu Road', 'AC Gas Filling', 5, 'Sample text: Checked for the leak first, fixed it, then refilled. Cooling is back to normal.'),
+    ('Padma S.', 'Satyanarayana Puram', 'AC Cooling Problem', 5, 'Sample text: Room was not getting cold; it was a blocked coil. Cleaned and working well now.'),
+    ('Naresh G.', 'Kotappakonda Road', 'Refrigerator Repair', 5, 'Sample text: Fridge was not cooling; thermostat replaced the same day with clear estimate.'),
+    ('Sujatha V.', 'Islampet', 'Washing Machine Repair', 4, 'Sample text: Drum was not spinning; belt replaced and machine tested with a full cycle.'),
+    ('Ramesh T.', 'Chilakaluripet Road', 'Air Cooler Repair', 5, 'Sample text: Cooler pump and motor checked, pump replaced, now running fine.'),
+    ('Kavitha N.', 'Vinukonda Road', 'Ceiling Fan Repair', 5, 'Sample text: Fan was slow and noisy; capacitor changed and bearing serviced.'),
+    ('Mahesh Y.', 'Narasaraopet', 'AC Repair', 5, 'Sample text: Outdoor unit was tripping; wiring fault found and repaired quickly.'),
+    ('Divya L.', 'Gurazala Road', 'AC Servicing', 5, 'Sample text: Booked on WhatsApp, technician arrived on time and left the place clean.'),
+]]
+
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
 # ======================================================
 
@@ -208,7 +225,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=12">
+<link rel="stylesheet" href="/assets/css/style.css?v=13">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -275,7 +292,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=10" defer></script>
+<script src="/assets/js/main.js?v=11" defer></script>
 </body></html>
 '''
 
@@ -362,23 +379,46 @@ def steps_block():
     return f'''<section class="sec steps" id="how"><div class="wrap">{sec_head("how.eyebrow", "how.h2")}<ol class="timeline">{lis}</ol></div></section>'''
 
 TRUST = [('star', 1), ('home', 2), ('wrench', 3), ('rupee', 4), ('gauge', 5), ('layers', 6), ('shield', 7), ('heart', 8), ('check', 9), ('ac', 10), ('cal', 11)]
+# ---- Reusable review carousel component ----
+# Review fields: name, area (verified service location), rating (actual), text (original words),
+# service (category), source: 'google' (genuinely posted on Google) or 'direct' (feedback given to us directly).
+SOURCE_LABEL = {'google': 'Google review', 'direct': 'Direct customer feedback', 'demo': 'DEMO – sample only'}
+
+def review_card(r):
+    n = max(1, min(5, int(r.get('rating', 5))))
+    src = r.get('source', 'direct')
+    initial = esc((r.get('initial') or r['name'][:1]).upper())
+    g = (f'<span class="rc-src rc-g" title="Posted on Google">{ic("check")}Google review</span>' if src == 'google'
+         else f'<span class="rc-src rc-demo">DEMO</span>' if src == 'demo'
+         else f'<span class="rc-src">{esc(SOURCE_LABEL["direct"])}</span>')
+    return f'''<li class="rc-slide"><article class="rc-card{' is-demo' if src == 'demo' else ''}">
+<header><span class="rc-av" aria-hidden="true">{initial}</span><span class="rc-who"><b>{esc(r["name"])}</b><small>{ic("pin")}{esc(r.get("area", ""))}</small></span>{g}</header>
+<p class="rc-stars" role="img" aria-label="Rated {n} out of 5">{"<i>★</i>" * n}{"<i class=off>★</i>" * (5 - n)}</p>
+<blockquote>{esc(r["text"])}</blockquote>
+<footer><span class="rc-svc">{esc(r.get("service", ""))}</span></footer></article></li>'''
+
+def review_carousel(reviews, label='Customer reviews'):
+    if not reviews: return ''
+    return f'''<div class="rc" data-rc role="region" aria-roledescription="carousel" aria-label="{esc(label)}">
+<div class="rc-viewport"><ul class="rc-track">{''.join(review_card(r) for r in reviews)}</ul></div>
+<div class="rc-nav"><button type="button" class="rc-btn rc-prev" aria-label="Previous reviews">{ic("arrow")}</button>
+<div class="rc-dots" role="group" aria-label="Choose slide"></div>
+<button type="button" class="rc-btn rc-next" aria-label="Next reviews">{ic("arrow")}</button></div></div>'''
+
+def review_buttons():
+    return (f'<div class="btn-row rc-cta"><a class="btn btn-primary" href="{GMAPS_URL}" target="_blank" rel="noopener">{ic("star")}{tx("rev.readall")}</a>'
+            f'<a class="btn btn-line" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.write")}{ic("arrow")}</a></div>')
+
 def reviews_block():
-    """Trust carousel (facts about the service) + genuine customer reviews when available."""
-    cards = [f'<figure class="tr-card"><span class="tr-ic">{ic(icn)}</span><figcaption><b>{tx("tr.%d.t" % n)}</b><span>{tx("tr.%d.d" % n)}</span></figcaption></figure>' for icn, n in TRUST]
-    for r in REVIEWS:  # genuine reviews only
-        n = int(r.get("rating", 5))
-        src = " · Google review" if r.get("google") else (" · " + r["source"] if r.get("source") else "")
-        cards.append(f'''<figure class="rev-card"><span class="stars" aria-label="{n} out of 5 stars">{"★" * n}{"☆" * (5 - n)}</span><blockquote>{esc(r["text"])}</blockquote>
-<figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{src}</small></span></figcaption></figure>''')
-    belt = ''.join(cards)
-    stars = '<div class="rev-stars" aria-hidden="true">' + ''.join(f'<span style="--i:{i}">★</span>' for i in range(5)) + '</div>'
-    rev_line = '' if REVIEWS else f'<p class="rev-empty">{tx("rev.first")}</p>'
-    return f'''<section class="sec rev-sec" id="reviews"><div class="wrap">
+    """Trust facts marquee + 'What Our Customers Say' carousel (genuine reviews only)."""
+    cards = ''.join(f'<figure class="tr-card"><span class="tr-ic">{ic(icn)}</span><figcaption><b>{tx("tr.%d.t" % n)}</b><span>{tx("tr.%d.d" % n)}</span></figcaption></figure>' for icn, n in TRUST)
+    body = review_carousel(REVIEWS) if REVIEWS else f'<div class="rc-empty reveal"><div class="rev-stars" aria-hidden="true">' + ''.join(f'<span style="--i:{i}">★</span>' for i in range(5)) + f'</div><p>{tx("rev.first")}</p></div>'
+    return f'''<section class="sec rev-sec" id="trust"><div class="wrap">
 <div class="sec-head center reveal"><p class="eyebrow">{tx("tr.eyebrow")}</p><h2>{tx("tr.h2")}</h2></div></div>
-<div class="rev-marquee reveal" aria-label="Why customers choose BOBBY"><div class="rev-belt">{belt}<div class="rev-dup" aria-hidden="true">{belt}</div></div></div>
-<div class="wrap"><div class="rev-box reveal">{stars}<div><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead" style="margin-top:10px">{tx("rev.sub")}</p>{rev_line}</div>
-<div class="btn-row"><a class="btn btn-orange" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx("rev.google")}</a><a class="btn btn-line" href="{GMAPS_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic('arrow')}</a></div>
-</div></div></section>'''
+<div class="rev-marquee reveal" aria-label="Why customers choose BOBBY"><div class="rev-belt">{cards}<div class="rev-dup" aria-hidden="true">{cards}</div></div></div></section>
+<section class="sec rc-sec" id="reviews"><div class="wrap">
+<div class="sec-head center reveal"><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead">{tx("rev.sub2")}</p></div>
+{body}{review_buttons()}</div></section>'''
 
 def location_block(h='h2'):
     return f'''<section class="sec sec-alt" id="service-area"><div class="wrap loc-grid">
@@ -572,6 +612,12 @@ def build_inner():
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())
 
+    # DEMO preview of the review carousel (noindex, not in sitemap, not linked). Replace with genuine reviews before use.
+    page('/reviews-preview/', head('Review carousel preview (DEMO) | BOBBY', 'Internal preview of the review carousel with sample data.', '/reviews-preview/', None).replace('index, follow', 'noindex, nofollow') + header('') +
+         f'''<div class="demo-banner" role="note"><b>DEMO PREVIEW</b> — sample layout only. These are NOT real customers or real reviews. Not shown on the live site and hidden from search engines.</div>
+<section class="sec rc-sec"><div class="wrap"><div class="sec-head center"><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead">{tx("rev.sub2")}</p></div>
+{review_carousel(DEMO_REVIEWS, 'Demo sample reviews')}{review_buttons()}</div></section>''' + footer())
+
 # ---------------- write ----------------
 def write():
     out = os.path.join(os.path.dirname(__file__), 'dist')
@@ -585,7 +631,7 @@ def write():
     os.makedirs(os.path.join(out, 'assets/i18n'), exist_ok=True)
     for i, l in enumerate(['en', 'te', 'hi']):
         json.dump({k: v[i] for k, v in S.items()}, open(os.path.join(out, 'assets/i18n/%s.json' % l), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    urls = [p for p in PAGES if p.endswith('/')]
+    urls = [p for p in PAGES if p.endswith('/') and p != '/reviews-preview/']
     pri = lambda p: '1.0' if p == '/' else ('0.9' if p in ('/ac-services/', '/contact/') else ('0.6' if p.startswith('/blog/') or p in ('/privacy-policy/', '/terms/', '/sitemap/') else '0.8'))
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
         f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
