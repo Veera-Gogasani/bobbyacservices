@@ -31,6 +31,8 @@ PRICE_SRC = {
 PRICE_MARKUP = 100
 
 # Images: original BOBBY artwork in static/assets/img/art (regenerate with: python3 art.py)
+# Trust figures shown under the hero (as provided by the business owner). Keep these accurate.
+STATS = [('500', '+', 'stat.cust', 'heart'), ('7', '+', 'stat.years', 'shield'), ('10', '+', 'stat.brands', 'layers'), ('24/7', '', 'stat.support', 'phone')]
 GOOGLE_REVIEW_URL = 'https://g.page/r/CdusD2XE5xNnEBM/review'   # paste your Google Business Profile review link here once you have it
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
@@ -206,7 +208,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=9">
+<link rel="stylesheet" href="/assets/css/style.css?v=10">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -273,7 +275,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=8" defer></script>
+<script src="/assets/js/main.js?v=10" defer></script>
 </body></html>
 '''
 
@@ -351,6 +353,10 @@ def why_cards():
         f'<div class="wcard reveal d{i % 4}"><div class="ic">{ic(WHY_ICONS[i])}</div><h3>{tx("why.%d.t" % (i + 1))}</h3><p>{tx("why.%d.d" % (i + 1))}</p></div>'
         for i in range(7)) + '</div>'
 
+def stats_block():
+    items = ''.join(f'<div class="stat reveal d{i}"><span class="s-ic">{ic(icn)}</span><b><span class="count" data-to="{n if n.isdigit() else ""}">{n}</span>{suf}</b><small>{tx(k)}</small></div>' for i, (n, suf, k, icn) in enumerate(STATS))
+    return f'<section class="stats-wrap" aria-label="Why customers trust us"><div class="wrap"><div class="stats">{items}</div></div></section>'
+
 def steps_block():
     lis = ''.join(f'<li><span class="n">{i}</span><div><h3>{tx("how.%d.t" % i)}</h3><p>{tx("how.%d.d" % i)}</p></div></li>' for i in range(1, 5))
     return f'''<section class="sec steps" id="how"><div class="wrap">{sec_head("how.eyebrow", "how.h2")}<ol class="timeline">{lis}</ol></div></section>'''
@@ -361,8 +367,7 @@ def reviews_block():
         cards = ''.join(f'''<figure class="rev-card">{stars(int(r.get("rating", 5)))}<blockquote>{esc(r["text"])}</blockquote>
 <figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{" · Google review" if r.get("google") else ""}</small></span></figcaption></figure>''' for r in REVIEWS)
         link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
-        body = f'''<div class="rev-carousel"><div class="rev-track" tabindex="0" aria-label="Customer reviews">{cards}</div>
-<div class="rev-nav"><button type="button" class="rev-prev" aria-label="Previous review">‹</button><button type="button" class="rev-next" aria-label="Next review">›</button>{link}</div></div>'''
+        body = f'''<div class="rev-marquee" aria-label="Customer reviews"><div class="rev-belt">{cards}<div class="rev-dup" aria-hidden="true">{cards}</div></div></div>'''
     else:
         body = f'<p class="rev-empty">{ic("star")}{tx("rev.first")}</p>'
     return f'''<section class="sec" id="reviews"><div class="wrap"><div class="rev-box reveal">
@@ -424,7 +429,7 @@ def build_home():
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
-    body = (hero +
+    body = (hero + stats_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +

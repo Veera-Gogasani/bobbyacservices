@@ -273,6 +273,20 @@
     });
   });
 
+  /* ---------- count-up stats ---------- */
+  var counts = document.querySelectorAll('.count[data-to]');
+  function runCount(el) {
+    var to = +el.getAttribute('data-to'); if (!to) return;
+    if (reduce) { el.textContent = to; return; }
+    var t0 = null; el.textContent = '0';
+    function f(ts) { if (!t0) t0 = ts; var k = Math.min(1, (ts - t0) / 1400); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); }
+    requestAnimationFrame(f);
+  }
+  if ('IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { runCount(e.target); cio.unobserve(e.target); } }); }, { threshold: 0.6 });
+    counts.forEach(function (c) { if (c.getAttribute('data-to')) cio.observe(c); });
+  }
+
   /* ---------- reviews carousel ---------- */
   document.querySelectorAll('.rev-carousel').forEach(function (car) {
     var tr = car.querySelector('.rev-track');

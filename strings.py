@@ -472,3 +472,12 @@ for i, (l, head) in enumerate([('en', '<h2>Contact</h2>'), ('te', '<h2>సంప
     assert head in _pv[i]
     _pv[i] = _pv[i].replace(head, _loc[l], 1)
 S['priv.body'] = tuple(_pv)
+
+add({
+ 'stat.cust': ("Happy Customers", "సంతోషకరమైన కస్టమర్లు", "संतुष्ट ग्राहक"),
+ 'stat.years': ("Years Experience", "సంవత్సరాల అనుభవం", "साल का अनुभव"),
+ 'stat.brands': ("Brands Serviced", "బ్రాండ్లకు సర్వీస్", "ब्रांड्स की सर्विस"),
+ 'stat.support': ("Emergency Support", "అత్యవసర సహాయం", "इमरजेंसी सपोर्ट"),
+})
+S['rev.eyebrow'] = ("Customer Reviews", "కస్టమర్ రివ్యూలు", "ग्राहक रिव्यू")
+S['rev.h2'] = ("What Our Customers Say", "మా కస్టమర్లు ఏమంటున్నారు", "हमारे ग्राहक क्या कहते हैं")

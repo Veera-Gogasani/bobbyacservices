@@ -485,3 +485,27 @@ a.ccard:hover{transform:translateY(-3px)}
 .fab .w{background:#fff}
 .fab .w .wa-ic{width:40px;height:40px;border-radius:11px;box-shadow:none}
 .mbar .wa-ic{width:22px;height:22px}
+
+/* trust stats under hero */
+.stats-wrap{position:relative;z-index:3;margin-top:-46px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:24px;box-shadow:var(--shadow-lg);border:1px solid var(--line);overflow:hidden}
+.stat{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:24px 26px;position:relative}
+.stat+.stat::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--line)}
+.stat .s-ic{grid-row:1/3;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#E6F4FD,#D3ECFB);color:var(--blue)}
+.stat:nth-child(even) .s-ic{background:linear-gradient(135deg,#FFF1E3,#FFE3C7);color:var(--orange-d)}
+.stat .s-ic svg{width:26px;height:26px}
+.stat b{font-size:clamp(26px,2.6vw,34px);font-weight:800;color:var(--navy);line-height:1.1}
+.stat small{font-size:14px;color:var(--muted);font-weight:500}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3)::before{display:none}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:420px){.stat{padding:18px 16px;column-gap:10px}.stat .s-ic{width:42px;height:42px}}
+
+/* reviews: continuous left-to-right marquee */
+.rev-marquee{margin-top:24px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rev-belt{display:flex;gap:18px;width:max-content;animation:revLTR 60s linear infinite;padding:6px 0 14px}
+.rev-dup{display:contents}
+.rev-marquee:hover .rev-belt,.rev-marquee:focus-within .rev-belt{animation-play-state:paused}
+.rev-belt .rev-card{flex:0 0 340px;transition:transform .3s var(--ease)}
+.rev-belt .rev-card:hover{transform:translateY(-6px) rotate(-.4deg)}
+@keyframes revLTR{from{transform:translateX(calc(-50% - 9px))}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){.rev-belt{animation:none}.rev-marquee{overflow-x:auto}}
+@media(max-width:960px){.stats-wrap{margin-top:24px}}
