@@ -35,15 +35,15 @@ add({
  'price.from': ("Starting from", "ప్రారంభ ధర", "शुरुआती कीमत"),
  'price.note': ("Final price is confirmed after inspection, before work begins.", "తనిఖీ తర్వాత, పని మొదలయ్యే ముందే తుది ధర నిర్ధారించబడుతుంది.", "अंतिम कीमत जाँच के बाद, काम शुरू होने से पहले तय होती है।"),
  'price.onvisit': ("Estimate after inspection", "తనిఖీ తర్వాత అంచనా", "जाँच के बाद अनुमान"),
- 'wa.default': ("Hello BOBBY AC REPAIR & SERVICES, I need AC/appliance service in Narasaraopet. Please contact me.",
-                "హలో BOBBY AC REPAIR & SERVICES, నాకు నరసరావుపేటలో ఏసీ/అప్లయెన్స్ సర్వీస్ కావాలి. దయచేసి నన్ను సంప్రదించండి.",
-                "नमस्ते BOBBY AC REPAIR & SERVICES, मुझे नरसरावपेट में एसी/अप्लायंस सर्विस चाहिए। कृपया मुझसे संपर्क करें।"),
- 'wa.service': ("Hello BOBBY AC REPAIR & SERVICES, I need {service} in Narasaraopet. Please contact me.",
-                "హలో BOBBY AC REPAIR & SERVICES, నాకు నరసరావుపేటలో {service} కావాలి. దయచేసి నన్ను సంప్రదించండి.",
-                "नमस्ते BOBBY AC REPAIR & SERVICES, मुझे नरसरावपेट में {service} चाहिए। कृपया मुझसे संपर्क करें।"),
- 'wa.feedback': ("Hello BOBBY AC REPAIR & SERVICES, I would like to share feedback about my service.",
-                 "హలో BOBBY AC REPAIR & SERVICES, నా సర్వీస్ గురించి అభిప్రాయం చెప్పాలనుకుంటున్నాను.",
-                 "नमस्ते BOBBY AC REPAIR & SERVICES, मैं अपनी सर्विस के बारे में राय देना चाहता/चाहती हूँ।"),
+ 'wa.default': ("Hello BOBBY AC REPAIR & HOME APPLIANCE SERVICES, I need AC/appliance service in Narasaraopet. Please contact me.",
+                "హలో BOBBY AC REPAIR & HOME APPLIANCE SERVICES, నాకు నరసరావుపేటలో ఏసీ/అప్లయెన్స్ సర్వీస్ కావాలి. దయచేసి నన్ను సంప్రదించండి.",
+                "नमस्ते BOBBY AC REPAIR & HOME APPLIANCE SERVICES, मुझे नरसरावपेट में एसी/अप्लायंस सर्विस चाहिए। कृपया मुझसे संपर्क करें।"),
+ 'wa.service': ("Hello BOBBY AC REPAIR & HOME APPLIANCE SERVICES, I need {service} in Narasaraopet. Please contact me.",
+                "హలో BOBBY AC REPAIR & HOME APPLIANCE SERVICES, నాకు నరసరావుపేటలో {service} కావాలి. దయచేసి నన్ను సంప్రదించండి.",
+                "नमस्ते BOBBY AC REPAIR & HOME APPLIANCE SERVICES, मुझे नरसरावपेट में {service} चाहिए। कृपया मुझसे संपर्क करें।"),
+ 'wa.feedback': ("Hello BOBBY AC REPAIR & HOME APPLIANCE SERVICES, I would like to share feedback about my service.",
+                 "హలో BOBBY AC REPAIR & HOME APPLIANCE SERVICES, నా సర్వీస్ గురించి అభిప్రాయం చెప్పాలనుకుంటున్నాను.",
+                 "नमस्ते BOBBY AC REPAIR & HOME APPLIANCE SERVICES, मैं अपनी सर्विस के बारे में राय देना चाहता/चाहती हूँ।"),
  'crumb.home': ("Home", "హోమ్", "होम"),
  'skip': ("Skip to main content", "ప్రధాన విషయానికి వెళ్ళండి", "मुख्य सामग्री पर जाएँ"),
  'loc.short': ("Narasaraopet, Andhra Pradesh", "నరసరావుపేట, ఆంధ్రప్రదేశ్", "नरसरावपेट, आंध्र प्रदेश"),
@@ -144,9 +144,9 @@ add({
  'rev.empty': ("Genuine customer reviews will appear here.", "నిజమైన కస్టమర్ రివ్యూలు ఇక్కడ కనిపిస్తాయి.", "असली ग्राहकों के रिव्यू यहाँ दिखेंगे।"),
  'loc.eyebrow': ("Service area", "సర్వీస్ ప్రాంతం", "सर्विस क्षेत्र"),
  'loc.h2': ("AC Repair &amp; Services in Narasaraopet", "నరసరావుపేటలో ఏసీ రిపేర్ &amp; సర్వీసులు", "नरसरावपेट में एसी रिपेयर और सर्विस"),
- 'loc.p1': ("BOBBY AC REPAIR &amp; SERVICES provides doorstep AC repair, installation, servicing and home appliance repair support in Narasaraopet and nearby areas within approximately 10 km.",
-            "BOBBY AC REPAIR &amp; SERVICES నరసరావుపేట మరియు సుమారు 10 కి.మీ. పరిధిలోని సమీప ప్రాంతాల్లో ఇంటి వద్దకే ఏసీ రిపేర్, ఇన్‌స్టాలేషన్, సర్వీసింగ్ మరియు గృహోపకరణాల రిపేర్ సేవలు అందిస్తుంది.",
-            "BOBBY AC REPAIR &amp; SERVICES नरसरावपेट और लगभग 10 किमी के दायरे में आसपास के इलाकों में घर पर एसी रिपेयर, इंस्टॉलेशन, सर्विसिंग और घरेलू उपकरण रिपेयर की सेवा देता है।"),
+ 'loc.p1': ("BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES provides doorstep AC repair, installation, servicing and home appliance repair support in Narasaraopet and nearby areas within approximately 10 km.",
+            "BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES నరసరావుపేట మరియు సుమారు 10 కి.మీ. పరిధిలోని సమీప ప్రాంతాల్లో ఇంటి వద్దకే ఏసీ రిపేర్, ఇన్‌స్టాలేషన్, సర్వీసింగ్ మరియు గృహోపకరణాల రిపేర్ సేవలు అందిస్తుంది.",
+            "BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES नरसरावपेट और लगभग 10 किमी के दायरे में आसपास के इलाकों में घर पर एसी रिपेयर, इंस्टॉलेशन, सर्विसिंग और घरेलू उपकरण रिपेयर की सेवा देता है।"),
  'loc.p2': ("Whether your split AC has stopped cooling in peak summer, your window AC is making a strange noise, or you need an AC installed in a new home, help is a local call away. We also repair refrigerators, washing machines, air coolers and ceiling fans for homes across Narasaraopet.",
             "వేసవిలో మీ స్ప్లిట్ ఏసీ చల్లబడకపోయినా, విండో ఏసీ వింత శబ్దం చేస్తున్నా, లేదా కొత్త ఇంట్లో ఏసీ పెట్టించాలన్నా, ఒక్క లోకల్ కాల్ చాలు. నరసరావుపేటలోని ఇళ్లకు ఫ్రిజ్, వాషింగ్ మెషిన్, ఎయిర్ కూలర్ మరియు సీలింగ్ ఫ్యాన్ రిపేర్లు కూడా చేస్తాము.",
             "चाहे गर्मी में आपका स्प्लिट एसी ठंडा करना बंद कर दे, विंडो एसी अजीब आवाज़ करे, या नए घर में एसी लगवाना हो, मदद बस एक लोकल कॉल दूर है। हम नरसरावपेट के घरों के लिए फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फैन भी रिपेयर करते हैं।"),
@@ -278,7 +278,7 @@ add({
 
 # ---------- page heroes / meta ----------
 add({
- 'p.about.h1': ("About BOBBY AC Repair &amp; Services", "BOBBY AC Repair &amp; Services గురించి", "BOBBY AC Repair &amp; Services के बारे में"),
+ 'p.about.h1': ("About BOBBY AC Repair &amp; Home Appliance Services", "BOBBY AC Repair &amp; Home Appliance Services గురించి", "BOBBY AC Repair &amp; Home Appliance Services के बारे में"),
  'p.about.sub': ("A local AC and home appliance service provider in Narasaraopet.", "నరసరావుపేటలోని స్థానిక ఏసీ మరియు గృహోపకరణాల సర్వీస్ ప్రొవైడర్.", "नरसरावपेट का स्थानीय एसी और घरेलू उपकरण सर्विस प्रोवाइडर।"),
  'p.ac.h1': ("AC Repair &amp; Services in Narasaraopet", "నరసరావుపేటలో ఏసీ రిపేర్ &amp; సర్వీసులు", "नरसरावपेट में एसी रिपेयर और सर्विस"),
  'p.ac.sub': ("Repair, servicing, installation, uninstallation, gas filling and deep cleaning for split and window ACs.", "స్ప్లిట్ మరియు విండో ఏసీలకు రిపేర్, సర్వీసింగ్, ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్, గ్యాస్ ఫిల్లింగ్ మరియు డీప్ క్లీనింగ్.", "स्प्लिट और विंडो एसी के लिए रिपेयर, सर्विसिंग, इंस्टॉलेशन, अनइंस्टॉलेशन, गैस फिलिंग और डीप क्लीनिंग।"),
@@ -302,9 +302,9 @@ add({
 # ---------- about ----------
 add({
  'about.who.h': ("Who we are", "మేము ఎవరం", "हम कौन हैं"),
- 'about.who.p1': ("BOBBY AC REPAIR &amp; SERVICES is a local service provider based in Narasaraopet, Andhra Pradesh. Our main work is AC repair, servicing, installation, uninstallation and gas filling for split and window ACs.",
-                  "BOBBY AC REPAIR &amp; SERVICES ఆంధ్రప్రదేశ్‌లోని నరసరావుపేటలో ఉన్న స్థానిక సర్వీస్ ప్రొవైడర్. స్ప్లిట్ మరియు విండో ఏసీలకు రిపేర్, సర్వీసింగ్, ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్ మరియు గ్యాస్ ఫిల్లింగ్ మా ప్రధాన పని.",
-                  "BOBBY AC REPAIR &amp; SERVICES आंध्र प्रदेश के नरसरावपेट में स्थित एक स्थानीय सर्विस प्रोवाइडर है। स्प्लिट और विंडो एसी की रिपेयर, सर्विसिंग, इंस्टॉलेशन, अनइंस्टॉलेशन और गैस फिलिंग हमारा मुख्य काम है।"),
+ 'about.who.p1': ("BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES is a local service provider based in Narasaraopet, Andhra Pradesh. Our main work is AC repair, servicing, installation, uninstallation and gas filling for split and window ACs.",
+                  "BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES ఆంధ్రప్రదేశ్‌లోని నరసరావుపేటలో ఉన్న స్థానిక సర్వీస్ ప్రొవైడర్. స్ప్లిట్ మరియు విండో ఏసీలకు రిపేర్, సర్వీసింగ్, ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్ మరియు గ్యాస్ ఫిల్లింగ్ మా ప్రధాన పని.",
+                  "BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES आंध्र प्रदेश के नरसरावपेट में स्थित एक स्थानीय सर्विस प्रोवाइडर है। स्प्लिट और विंडो एसी की रिपेयर, सर्विसिंग, इंस्टॉलेशन, अनइंस्टॉलेशन और गैस फिलिंग हमारा मुख्य काम है।"),
  'about.who.p2': ("We also repair refrigerators, washing machines, air coolers and ceiling fans, so families can call one trusted local number for most home appliance problems.",
                   "ఫ్రిజ్‌లు, వాషింగ్ మెషిన్లు, ఎయిర్ కూలర్లు మరియు సీలింగ్ ఫ్యాన్లను కూడా రిపేర్ చేస్తాము; అందువల్ల చాలా గృహోపకరణాల సమస్యలకు కుటుంబాలు ఒకే నమ్మకమైన లోకల్ నంబర్‌కు కాల్ చేయవచ్చు.",
                   "हम फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फैन भी रिपेयर करते हैं, ताकि परिवार ज़्यादातर घरेलू उपकरणों की समस्या के लिए एक भरोसेमंद लोकल नंबर पर कॉल कर सकें।"),
@@ -382,25 +382,25 @@ add({
 
 # ---------- legal ----------
 add({
- 'priv.body': ("""<p>This website is run by BOBBY AC REPAIR &amp; SERVICES, Narasaraopet, Andhra Pradesh. We respect your privacy and collect as little information as possible.</p>
+ 'priv.body': ("""<p>This website is run by BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES, Narasaraopet, Andhra Pradesh. We respect your privacy and collect as little information as possible.</p>
 <h2>What we collect</h2><p>The website does not have user accounts and does not store your booking details on a server. When you use the booking form, your details are placed into a WhatsApp message on your own device. Nothing is sent until you choose to send it.</p>
 <h2>How we use your details</h2><p>Information you send by phone or WhatsApp (such as your name, number, area and appliance problem) is used only to arrange and carry out your service. We do not sell or share it for marketing.</p>
 <h2>Third-party services</h2><p>The site loads fonts from Google Fonts, and a map from Google Maps. These services may receive basic technical information such as your IP address. WhatsApp is governed by its own privacy policy.</p>
 <h2>Your language choice</h2><p>We save your chosen language in your browser so the site remembers it. You can clear it at any time from your browser settings.</p>
 <h2>Contact</h2><p>For any privacy question, call or WhatsApp +91 83748 89163.</p>""",
-"""<p>ఈ వెబ్‌సైట్‌ను నరసరావుపేట, ఆంధ్రప్రదేశ్‌లోని BOBBY AC REPAIR &amp; SERVICES నిర్వహిస్తుంది. మేము మీ గోప్యతను గౌరవిస్తాము మరియు వీలైనంత తక్కువ సమాచారం మాత్రమే సేకరిస్తాము.</p>
+"""<p>ఈ వెబ్‌సైట్‌ను నరసరావుపేట, ఆంధ్రప్రదేశ్‌లోని BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES నిర్వహిస్తుంది. మేము మీ గోప్యతను గౌరవిస్తాము మరియు వీలైనంత తక్కువ సమాచారం మాత్రమే సేకరిస్తాము.</p>
 <h2>మేము ఏమి సేకరిస్తాము</h2><p>ఈ వెబ్‌సైట్‌లో యూజర్ అకౌంట్లు లేవు; మీ బుకింగ్ వివరాలను సర్వర్‌లో సేవ్ చేయదు. బుకింగ్ ఫారం ఉపయోగించినప్పుడు, మీ వివరాలు మీ ఫోన్‌లోనే వాట్సాప్ మెసేజ్‌గా సిద్ధమవుతాయి. మీరు పంపే వరకు ఏదీ పంపబడదు.</p>
 <h2>మీ వివరాలను ఎలా ఉపయోగిస్తాము</h2><p>ఫోన్ లేదా వాట్సాప్ ద్వారా మీరు ఇచ్చే సమాచారం (పేరు, నంబర్, ప్రాంతం, ఉపకరణ సమస్య) మీ సర్వీస్‌ను ఏర్పాటు చేసి పూర్తి చేయడానికి మాత్రమే ఉపయోగిస్తాము. మార్కెటింగ్ కోసం అమ్మము లేదా పంచుకోము.</p>
 <h2>ఇతర సేవలు</h2><p>ఈ సైట్ Google Fonts నుండి ఫాంట్లు, Google Maps నుండి మ్యాప్‌ను లోడ్ చేస్తుంది. ఈ సేవలకు మీ IP అడ్రస్ వంటి ప్రాథమిక సాంకేతిక సమాచారం చేరవచ్చు. వాట్సాప్‌కు దాని స్వంత గోప్యతా విధానం వర్తిస్తుంది.</p>
 <h2>మీ భాష ఎంపిక</h2><p>మీరు ఎంచుకున్న భాషను సైట్ గుర్తుంచుకోవడానికి మీ బ్రౌజర్‌లో సేవ్ చేస్తాము. బ్రౌజర్ సెట్టింగ్స్ నుండి ఎప్పుడైనా తొలగించవచ్చు.</p>
 <h2>సంప్రదింపు</h2><p>గోప్యతకు సంబంధించిన ఏ ప్రశ్నకైనా +91 83748 89163 కి కాల్ లేదా వాట్సాప్ చేయండి.</p>""",
-"""<p>यह वेबसाइट नरसरावपेट, आंध्र प्रदेश के BOBBY AC REPAIR &amp; SERVICES द्वारा चलाई जाती है। हम आपकी निजता का सम्मान करते हैं और जितनी कम हो सके उतनी जानकारी लेते हैं।</p>
+"""<p>यह वेबसाइट नरसरावपेट, आंध्र प्रदेश के BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES द्वारा चलाई जाती है। हम आपकी निजता का सम्मान करते हैं और जितनी कम हो सके उतनी जानकारी लेते हैं।</p>
 <h2>हम क्या लेते हैं</h2><p>इस वेबसाइट पर कोई यूज़र अकाउंट नहीं है और यह आपकी बुकिंग जानकारी सर्वर पर सेव नहीं करती। बुकिंग फ़ॉर्म इस्तेमाल करने पर आपकी जानकारी आपके ही फ़ोन पर व्हाट्सऐप मैसेज में भर जाती है। जब तक आप भेजें नहीं, कुछ नहीं जाता।</p>
 <h2>हम जानकारी का उपयोग कैसे करते हैं</h2><p>फ़ोन या व्हाट्सऐप पर दी गई जानकारी (नाम, नंबर, इलाका, उपकरण की समस्या) सिर्फ़ आपकी सर्विस तय करने और पूरी करने के लिए इस्तेमाल होती है। हम इसे मार्केटिंग के लिए न बेचते हैं न साझा करते हैं।</p>
 <h2>तीसरे पक्ष की सेवाएँ</h2><p>साइट Google Fonts से फ़ॉन्ट, Google Maps से नक्शा लोड करती है। इन सेवाओं को आपका IP पता जैसी बुनियादी तकनीकी जानकारी मिल सकती है। व्हाट्सऐप पर उसकी अपनी गोपनीयता नीति लागू होती है।</p>
 <h2>आपकी भाषा</h2><p>आपकी चुनी हुई भाषा आपके ब्राउज़र में सेव होती है ताकि साइट उसे याद रखे। आप इसे कभी भी ब्राउज़र सेटिंग्स से हटा सकते हैं।</p>
 <h2>संपर्क</h2><p>गोपनीयता से जुड़े किसी भी सवाल के लिए +91 83748 89163 पर कॉल या व्हाट्सऐप करें।</p>"""),
- 'terms.body': ("""<p>By using this website or booking a service with BOBBY AC REPAIR &amp; SERVICES, you agree to these terms.</p>
+ 'terms.body': ("""<p>By using this website or booking a service with BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES, you agree to these terms.</p>
 <h2>Bookings</h2><p>A booking request by phone, WhatsApp or the website form is confirmed only when we reply with a visit time. Visit times depend on availability and location.</p>
 <h2>Inspection and estimates</h2><p>The technician inspects the appliance first. Any price shown on this website is a starting price; the final estimate is shared with you before work begins, and work starts only with your approval.</p>
 <h2>Parts</h2><p>If a part needs replacing, we explain why and confirm the cost with you first. Availability of parts can vary by brand and model.</p>
@@ -408,7 +408,7 @@ add({
 <h2>Payment</h2><p>Payment is due when the agreed work is completed.</p>
 <h2>Website content</h2><p>Articles on this site are general guidance, not a substitute for an inspection by a technician. Please do not open electrical parts of appliances yourself.</p>
 <h2>Contact</h2><p>Questions about these terms: +91 83748 89163.</p>""",
-"""<p>ఈ వెబ్‌సైట్ ఉపయోగించడం లేదా BOBBY AC REPAIR &amp; SERVICES తో సర్వీస్ బుక్ చేయడం ద్వారా మీరు ఈ నిబంధనలకు అంగీకరిస్తున్నారు.</p>
+"""<p>ఈ వెబ్‌సైట్ ఉపయోగించడం లేదా BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES తో సర్వీస్ బుక్ చేయడం ద్వారా మీరు ఈ నిబంధనలకు అంగీకరిస్తున్నారు.</p>
 <h2>బుకింగ్‌లు</h2><p>ఫోన్, వాట్సాప్ లేదా వెబ్‌సైట్ ఫారం ద్వారా చేసిన బుకింగ్ అభ్యర్థన, మేము విజిట్ సమయంతో సమాధానం ఇచ్చినప్పుడే నిర్ధారించబడుతుంది. విజిట్ సమయాలు లభ్యత మరియు ప్రాంతంపై ఆధారపడి ఉంటాయి.</p>
 <h2>తనిఖీ మరియు అంచనాలు</h2><p>టెక్నీషియన్ ముందుగా ఉపకరణాన్ని తనిఖీ చేస్తారు. ఈ వెబ్‌సైట్‌లో చూపిన ధరలు ప్రారంభ ధరలు మాత్రమే; తుది అంచనా పని మొదలయ్యే ముందే మీకు తెలియజేయబడుతుంది, మీ ఆమోదంతోనే పని మొదలవుతుంది.</p>
 <h2>విడిభాగాలు</h2><p>ఏదైనా విడిభాగం మార్చాల్సి వస్తే, ఎందుకో వివరించి ముందుగా ఖర్చు నిర్ధారిస్తాము. విడిభాగాల లభ్యత బ్రాండ్ మరియు మోడల్‌ను బట్టి మారవచ్చు.</p>
@@ -416,7 +416,7 @@ add({
 <h2>చెల్లింపు</h2><p>అంగీకరించిన పని పూర్తయిన తర్వాత చెల్లింపు చేయాలి.</p>
 <h2>వెబ్‌సైట్ విషయం</h2><p>ఈ సైట్‌లోని వ్యాసాలు సాధారణ మార్గదర్శకం మాత్రమే; టెక్నీషియన్ తనిఖీకి ప్రత్యామ్నాయం కాదు. దయచేసి ఉపకరణాల ఎలక్ట్రికల్ భాగాలను మీరే తెరవకండి.</p>
 <h2>సంప్రదింపు</h2><p>ఈ నిబంధనలపై ప్రశ్నలకు: +91 83748 89163.</p>""",
-"""<p>इस वेबसाइट का उपयोग करके या BOBBY AC REPAIR &amp; SERVICES से सर्विस बुक करके आप इन शर्तों से सहमत होते हैं।</p>
+"""<p>इस वेबसाइट का उपयोग करके या BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES से सर्विस बुक करके आप इन शर्तों से सहमत होते हैं।</p>
 <h2>बुकिंग</h2><p>फ़ोन, व्हाट्सऐप या वेबसाइट फ़ॉर्म से भेजा गया बुकिंग अनुरोध तभी पक्का होता है जब हम विज़िट का समय बताकर जवाब देते हैं। विज़िट का समय उपलब्धता और लोकेशन पर निर्भर करता है।</p>
 <h2>जाँच और अनुमान</h2><p>टेक्नीशियन पहले उपकरण की जाँच करते हैं। इस वेबसाइट पर दिखाई गई कीमतें शुरुआती कीमतें हैं; अंतिम अनुमान काम शुरू होने से पहले बताया जाता है और आपकी मंज़ूरी के बाद ही काम शुरू होता है।</p>
 <h2>पार्ट्स</h2><p>अगर कोई पार्ट बदलना हो, तो हम कारण बताकर पहले खर्च की पुष्टि करते हैं। पार्ट्स की उपलब्धता ब्रांड और मॉडल के अनुसार बदल सकती है।</p>
@@ -424,4 +424,16 @@ add({
 <h2>भुगतान</h2><p>तय काम पूरा होने पर भुगतान करना होता है।</p>
 <h2>वेबसाइट सामग्री</h2><p>इस साइट के लेख सामान्य जानकारी हैं, टेक्नीशियन की जाँच का विकल्प नहीं। कृपया उपकरणों के इलेक्ट्रिकल हिस्से ख़ुद न खोलें।</p>
 <h2>संपर्क</h2><p>इन शर्तों पर सवाल के लिए: +91 83748 89163।</p>"""),
+})
+
+add({
+ 'addr.full': ("Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet, Narasaraopeta, Andhra Pradesh 522601",)*3,
+ 'hours.open': ("Open 24 hours", "24 గంటలూ అందుబాటులో", "24 घंटे खुला"),
+ 'c.hours.h': ("Working hours", "పని వేళలు", "काम के घंटे"),
+ 'btn.dir': ("Get Directions", "దారి చూపించు", "रास्ता देखें"),
+ 'btn.maps': ("View on Google Maps", "గూగుల్ మ్యాప్స్‌లో చూడండి", "गूगल मैप्स पर देखें"),
+ 'rev.google': ("Write a Google Review", "గూగుల్ రివ్యూ రాయండి", "गूगल रिव्यू लिखें"),
+ 'rev.first': ("Be one of our first Google reviewers. Your honest feedback helps other families in Narasaraopet choose with confidence.", "మా మొదటి గూగుల్ రివ్యూయర్లలో ఒకరు కండి. మీ నిజాయితీ అభిప్రాయం నరసరావుపేటలోని ఇతర కుటుంబాలకు నమ్మకంగా ఎంచుకోవడానికి సహాయపడుతుంది.", "हमारे पहले गूगल रिव्यूअर्स में से एक बनें। आपकी सच्ची राय नरसरावपेट के दूसरे परिवारों को भरोसे से चुनने में मदद करती है।"),
+ 'rev.read': ("Read all reviews on Google", "అన్ని రివ్యూలు గూగుల్‌లో చదవండి", "सभी रिव्यू गूगल पर पढ़ें"),
+ 'brands.banner': ("We repair and service these popular brands", "ఈ ప్రముఖ బ్రాండ్లను మేము రిపేర్ మరియు సర్వీస్ చేస్తాము", "हम इन लोकप्रिय ब्रांड्स की रिपेयर और सर्विस करते हैं"),
 })

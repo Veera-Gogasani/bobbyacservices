@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Static site generator for BOBBY AC Repair & Services.
+"""Static site generator for BOBBY AC Repair & Home Appliance Services.
 Run:  python3 build.py   ->  writes the finished site into ./dist
 Edit business details, prices and photos in the CONFIG block below."""
 import json, os, shutil, html
@@ -8,13 +8,18 @@ from blog import POSTS, add_strings
 
 # ======================= CONFIG =======================
 SITE      = 'https://www.bobbyacservices.com'      # change here if the domain changes
-BRAND     = 'BOBBY AC Repair & Services'
+BRAND     = 'BOBBY AC Repair & Home Appliance Services'
 PHONE_TXT = '+91 83748 89163'
 PHONE_TEL = '+918374889163'
 WA_NUM    = '918374889163'
 CITY      = 'Narasaraopet'
 REGION    = 'Andhra Pradesh'
 UPDATED   = '2026-11-17'
+ADDRESS   = {'street': 'Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
+GMAPS_CID = int('6713e7c4650facdb', 16)            # Google Business Profile listing
+GMAPS_URL = 'https://maps.google.com/?cid=%d' % GMAPS_CID
+DIR_URL   = 'https://www.google.com/maps/dir/?api=1&destination=' + 'Bobby+AC+Repair+%26+Home+Appliance+Services%2C+Palapadu+Road%2C+Arundelpet%2C+Narasaraopeta+522601'
+MAP_EMBED = 'https://maps.google.com/maps?q=Bobby+AC+Repair+%26+Home+Appliance+Services,+Palapadu+Road,+Arundelpet,+Narasaraopeta+522601&amp;z=15&amp;output=embed'
 
 # Source prices (₹). The website automatically shows source + 100.
 # None = no price published yet -> card shows "Estimate after inspection".
@@ -25,7 +30,7 @@ PRICE_SRC = {
 PRICE_MARKUP = 100
 
 # Images: original BOBBY artwork in static/assets/img/art (regenerate with: python3 art.py)
-GOOGLE_REVIEW_URL = ''   # paste your Google Business Profile review link here once you have it
+GOOGLE_REVIEW_URL = 'https://g.page/r/CdusD2XE5xNnEBM/review'   # paste your Google Business Profile review link here once you have it
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
 # ======================================================
@@ -116,10 +121,12 @@ NAV = [('/', 'nav.home', 'home'), ('/about/', 'nav.about', 'about'), ('/ac-servi
 def business_ld():
     return {
         '@context': 'https://schema.org', '@type': 'HVACBusiness', '@id': SITE + '/#business',
-        'name': BRAND, 'alternateName': 'BOBBY AC REPAIR & SERVICES', 'url': SITE + '/',
+        'name': BRAND, 'alternateName': 'Bobby AC Repair', 'url': SITE + '/',
         'telephone': PHONE_TEL, 'image': SITE + '/assets/img/og-image.jpg', 'logo': SITE + '/assets/img/bobby-logo-640.webp',
         'slogan': en('brand.tagline'),
-        'address': {'@type': 'PostalAddress', 'addressLocality': CITY, 'addressRegion': REGION, 'addressCountry': 'IN'},
+        'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
+        'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
+        'hasMap': GMAPS_URL, 'sameAs': [GMAPS_URL],
         'areaServed': {'@type': 'City', 'name': CITY},
         'knowsLanguage': ['en', 'te', 'hi'],
     }
@@ -157,7 +164,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=4">
+<link rel="stylesheet" href="/assets/css/style.css?v=5">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -176,12 +183,12 @@ def lang_switch():
 def header(active):
     links = ''.join(f'<a href="{u}"{" aria-current=\"page\"" if a == active else ""}>{tx(k)}</a>' for u, k, a in NAV)
     return f'''<div class="topbar"><div class="wrap">
-<span>{ic('pin')}{tx('loc.short')}</span>
+<span>{ic('pin')}{tx('loc.short')} · {tx('hours.open')}</span>
 <span>{ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · <a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('btn.wa')}</a></span>
 </div></div>
 <header class="hdr">
 <div class="wrap">
-<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Services – Home"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt=""><span><b>BOBBY</b><small>AC Repair &amp; Services</small></span></a>
+<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt=""><span><b>BOBBY</b><small>AC Repair &amp; Home Appliance Services</small></span></a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
@@ -208,22 +215,22 @@ def footer():
     return f'''</main>
 <footer class="ftr">
 <div class="wrap grid">
-<div><a class="logo" href="/"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt="" loading="lazy"><span><b>BOBBY</b><small>AC Repair &amp; Services</small></span></a>
+<div><a class="logo" href="/"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt="" loading="lazy"><span><b>BOBBY</b><small>AC Repair &amp; Home Appliance Services</small></span></a>
 <p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
 <li class="ci">{ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a></li>
 <li class="ci">{ic('chat')}<a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('c.wa.h')}</a></li>
-<li class="ci">{ic('pin')}{tx('loc.short')}</li>
+<li class="ci">{ic('pin')}<a href="{GMAPS_URL}" target="_blank" rel="noopener">{tx('addr.full')}</a></li><li class="ci">{ic('star')}{tx('hours.open')}</li>
 <li class="ci">{ic('radius')}{tx('ft.area')}</li></ul></div>
 <div class="bottom" style="grid-column:1/-1">
-<div>© <span class="yr">2026</span> BOBBY AC Repair &amp; Services. {tx('ft.rights')}<p class="indep">{tx('ft.indep')}</p></div>
+<div>© <span class="yr">2026</span> BOBBY AC Repair &amp; Home Appliance Services. {tx('ft.rights')}<p class="indep">{tx('ft.indep')}</p></div>
 <nav aria-label="Legal"><a href="/privacy-policy/">{tx('ft.privacy')}</a><a href="/terms/">{tx('ft.terms')}</a><a href="/sitemap/">{tx('ft.sitemap')}</a></nav>
 </div></div></footer>
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{ic('chat')}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('mbar.wa')}</a></div>
-<script src="/assets/js/main.js?v=4" defer></script>
+<script src="/assets/js/main.js?v=5" defer></script>
 </body></html>
 '''
 
@@ -288,9 +295,11 @@ def brand_logo(name):
         if os.path.exists(os.path.join(os.path.dirname(__file__), 'static/assets/img/brands/%s.%s' % (slug, ext))):
             return f'<img src="/assets/img/brands/{slug}.{ext}" alt="{esc(name)}" loading="lazy" width="140" height="56">'
     return name
-def brands_block():
+def brands_block(tiles_too=False):
+    banner = f'''<figure class="brand-banner reveal"><img src="/assets/img/brands-banner-lg.webp" srcset="/assets/img/brands-banner-sm.webp 836w, /assets/img/brands-banner-lg.webp 1672w" sizes="(max-width: 1240px) 100vw, 1200px" width="1672" height="941" loading="lazy" decoding="async" alt="BOBBY AC Repair &amp; Home Appliance Services banner: we repair and service LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas" data-i18n-alt="brands.banner"></figure>'''
     tiles = ''.join(f'<div class="brand reveal d{i % 4}">{brand_logo(b)}</div>' for i, b in enumerate(BRANDS))
-    return f'''<div class="brands">{tiles}</div>
+    grid = f'<div class="brands" style="margin-top:22px">{tiles}</div>' if tiles_too else ''
+    return f'''{banner}{grid}
 <p class="brand-note reveal">{ic('info')}<span>{tx('brands.note')} <a class="link-arrow" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('brands.ask')}</a></span></p>'''
 
 WHY_ICONS = ['home', 'ac', 'layers', 'talk', 'rupee', 'chat', 'heart']
@@ -308,22 +317,22 @@ def reviews_block():
         def stars(n): return '<span class="stars" aria-label="%d out of 5 stars">%s</span>' % (n, '★' * n + '☆' * (5 - n))
         cards = ''.join(f'''<figure class="rev-card">{stars(int(r.get("rating", 5)))}<blockquote>{esc(r["text"])}</blockquote>
 <figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{" · Google review" if r.get("google") else ""}</small></span></figcaption></figure>''' for r in REVIEWS)
-        link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">Read all reviews on Google{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
+        link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
         body = f'''<div class="rev-carousel"><div class="rev-track" tabindex="0" aria-label="Customer reviews">{cards}</div>
 <div class="rev-nav"><button type="button" class="rev-prev" aria-label="Previous review">‹</button><button type="button" class="rev-next" aria-label="Next review">›</button>{link}</div></div>'''
     else:
-        body = f'<p class="rev-empty">{ic("star")}{tx("rev.empty")}</p>'
+        body = f'<p class="rev-empty">{ic("star")}{tx("rev.first")}</p>'
     return f'''<section class="sec" id="reviews"><div class="wrap"><div class="rev-box reveal">
 <div><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead" style="margin-top:10px">{tx("rev.sub")}</p>{body}</div>
-<a class="btn btn-wa" href="https://wa.me/{WA_NUM}" data-wa="feedback" target="_blank" rel="noopener">{ic('chat')}{tx("rev.btn")}</a>
+<div class="btn-row"><a class="btn btn-orange" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx("rev.google")}</a><a class="btn btn-line" href="{GMAPS_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic('arrow')}</a></div>
 </div></div></section>'''
 
 def location_block(h='h2'):
     return f'''<section class="sec sec-alt" id="service-area"><div class="wrap loc-grid">
 <div class="reveal"><p class="eyebrow">{tx("loc.eyebrow")}</p><{h}>{tx("loc.h2")}</{h}><p style="margin-top:14px">{tx("loc.p1")}</p><p>{tx("loc.p2")}</p>
-<ul class="cover"><li><span class="ci-ic">{ic('pin')}</span>{tx("loc.c1")}</li><li><span class="ci-ic">{ic('radius')}</span>{tx("loc.c2")}</li><li><span class="ci-ic">{ic('phone')}</span>{tx("loc.c3")}</li></ul>
-<div class="btn-row"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a><a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx("btn.wabook")}</a></div></div>
-<div class="map reveal d2"><iframe title="{esc(plain('loc.map'))}" data-i18n-aria="loc.map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Narasaraopet,+Andhra+Pradesh&amp;z=13&amp;output=embed"></iframe></div>
+<ul class="cover"><li><span class="ci-ic">{ic('pin')}</span>{tx("addr.full")}</li><li><span class="ci-ic">{ic('star')}</span>{tx("hours.open")}</li><li><span class="ci-ic">{ic('radius')}</span>{tx("loc.c2")}</li><li><span class="ci-ic">{ic('phone')}</span>{tx("loc.c3")}</li></ul>
+<div class="btn-row"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a><a class="btn btn-line" href="{DIR_URL}" target="_blank" rel="noopener">{ic('pin')}{tx("btn.dir")}</a></div></div>
+<div class="map reveal d2"><iframe title="{esc(plain('loc.map'))}" data-i18n-aria="loc.map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div>
 </div></section>'''
 
 def faq_list(nums, first_open=True):
@@ -382,7 +391,7 @@ def build_home():
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
-    page('/', head('BOBBY AC Repair & Services in Narasaraopet | AC Installation & Repair',
+    page('/', head('BOBBY AC Repair & Home Appliance Services in Narasaraopet | AC Installation & Repair',
                    'Looking for AC repair in Narasaraopet? BOBBY provides AC servicing, installation, uninstallation, gas filling and home appliance repair. Call or WhatsApp +91 83748 89163.',
                    '/', None, ld) + header('home') + body + footer())
 
@@ -393,7 +402,7 @@ def service_ld(name, desc, path):
 def build_inner():
     # about
     p = '/about/'
-    page(p, head('About BOBBY AC Repair & Services | Narasaraopet', 'BOBBY AC Repair & Services is a local AC and home appliance service provider in Narasaraopet, Andhra Pradesh. Learn how we work.', p, 'nav.about',
+    page(p, head('About BOBBY AC Repair & Home Appliance Services | Narasaraopet', 'BOBBY AC Repair & Home Appliance Services is a local AC and home appliance service provider in Narasaraopet, Andhra Pradesh. Learn how we work.', p, 'nav.about',
                  [business_ld(), crumbs_ld([('Home', '/'), ('About Us', p)])]) + header('about') +
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
          f'''<section class="sec"><div class="wrap about-grid"><div class="reveal"><h2>{tx('about.who.h')}</h2><p class="lead" style="margin-top:12px">{tx('about.who.p1')}</p><p class="lead" style="margin-top:12px">{tx('about.who.p2')}</p>
@@ -420,7 +429,7 @@ def build_inner():
     p = '/appliance-services/'
     sl = [service_ld(plain('ap.%s.t' % k), plain('svc.%s.desc' % k), p + '#' + a) for k, a in AP_BLOCKS]
     page(p, head('Refrigerator, Washing Machine, Air Cooler & Fan Repair in Narasaraopet | BOBBY',
-                 'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Services: +91 83748 89163.',
+                 'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services: +91 83748 89163.',
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) +
          f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>
@@ -433,7 +442,7 @@ def build_inner():
                  'Independent multi-brand AC and home appliance service in Narasaraopet for LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas products.',
                  p, 'nav.brands', [business_ld(), crumbs_ld([('Home', '/'), ('Brands We Service', p)])]) + header('brands') +
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
-         f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>
+         f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block(True)}</div></section>
 <section class="sec sec-alt"><div class="wrap">{faq_list([10])}</div></section>''' +
          '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
@@ -442,7 +451,7 @@ def build_inner():
     fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in range(1, FAQ_N + 1)]}
     page(p, head('AC Repair FAQs Narasaraopet | Gas Filling, Servicing, Installation | BOBBY',
-                 'Answers to common questions about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet from BOBBY AC Repair & Services.',
+                 'Answers to common questions about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet from BOBBY AC Repair & Home Appliance Services.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
          f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1))}</div></section>' + cta_band() + footer())
@@ -465,11 +474,12 @@ def build_inner():
     cards = f'''<div class="ccards reveal">
 <a class="ccard" href="tel:{PHONE_TEL}"><span class="ic" style="background:linear-gradient(135deg,var(--blue),#0E6FB3)">{ic('phone')}</span><span><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b></span></a>
 <a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:var(--green)">{ic('chat')}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
-<div class="ccard"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')}</small><b>{tx('loc.short')}</b></span></div>
+<a class="ccard" href="{DIR_URL}" target="_blank" rel="noopener"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')} · {tx('btn.dir')}</small><b style="font-size:14.5px;font-weight:600">{tx('addr.full')}</b></span></a>
+<div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
-<div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Narasaraopet,+Andhra+Pradesh&amp;z=13&amp;output=embed"></iframe></div></div>'''
-    page(p, head('Contact BOBBY AC Repair & Services | Book AC Service in Narasaraopet',
-                 'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Services on +91 83748 89163 or use the online booking form.',
+<div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''
+    page(p, head('Contact BOBBY AC Repair & Home Appliance Services | Book AC Service in Narasaraopet',
+                 'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services on +91 83748 89163 or use the online booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
          f'<section class="sec"><div class="wrap contact-grid">{cards}{form}</div></section>' + footer())
@@ -477,7 +487,7 @@ def build_inner():
     # Blog index + posts
     p = '/blog/'
     page(p, head('AC & Appliance Care Tips | Knowledge Centre | BOBBY Narasaraopet',
-                 'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and refrigerator care from BOBBY AC Repair & Services, Narasaraopet.',
+                 'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and refrigerator care from BOBBY AC Repair & Home Appliance Services, Narasaraopet.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
          f'<section class="sec"><div class="wrap">{blog_cards(POSTS)}</div></section>' + cta_band() + footer())
@@ -502,7 +512,7 @@ def build_inner():
 
     # legal + sitemap + 404
     for path, hk, bk, ttl, act in [('/privacy-policy/', 'p.privacy.h1', 'priv.body', 'Privacy Policy', 'privacy'), ('/terms/', 'p.terms.h1', 'terms.body', 'Terms & Conditions', 'terms')]:
-        page(path, head(ttl + ' | BOBBY AC Repair & Services', ttl + ' for the BOBBY AC Repair & Services website, Narasaraopet.', path, hk,
+        page(path, head(ttl + ' | BOBBY AC Repair & Home Appliance Services', ttl + ' for the BOBBY AC Repair & Home Appliance Services website, Narasaraopet.', path, hk,
                         [crumbs_ld([('Home', '/'), (ttl, path)])]) + header(act) +
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
@@ -512,11 +522,11 @@ def build_inner():
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
     sm = ''.join(f'<div><h2>{tx(g)}</h2><ul>' + ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k in items) + '</ul></div>' for g, items in groups)
-    page('/sitemap/', head('Sitemap | BOBBY AC Repair & Services', 'All pages on the BOBBY AC Repair & Services website.', '/sitemap/', 'p.sitemap.h1',
+    page('/sitemap/', head('Sitemap | BOBBY AC Repair & Home Appliance Services', 'All pages on the BOBBY AC Repair & Home Appliance Services website.', '/sitemap/', 'p.sitemap.h1',
                            [crumbs_ld([('Home', '/'), ('Sitemap', '/sitemap/')])]) + header('sitemap') +
          phero('p.sitemap.h1', None, [('crumb.home', '/'), ('p.sitemap.h1', '/sitemap/')]) +
          f'<section class="sec"><div class="wrap smap">{sm}</div></section>' + footer())
-    page('/404.html', head('Page not found | BOBBY AC Repair & Services', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex') + header('') +
+    page('/404.html', head('Page not found | BOBBY AC Repair & Home Appliance Services', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex') + header('') +
          f'''<section class="phero" style="text-align:center"><div class="wrap"><h1>{tx('p.404.h1')}</h1><p style="margin:0 auto 24px">{tx('p.404.sub')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())

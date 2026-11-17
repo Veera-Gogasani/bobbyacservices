@@ -49,7 +49,7 @@
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { var v = d[el.getAttribute('data-i18n-aria')]; if (v) el.setAttribute('aria-label', strip(v)); });
     document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { var v = d[el.getAttribute('data-i18n-alt')]; if (v) el.setAttribute('alt', strip(v)); });
     var tk = root.getAttribute('data-title-key');
-    if (tk && d[tk]) document.title = strip(d[tk]) + ' | BOBBY AC Repair & Services';
+    if (tk && d[tk]) document.title = strip(d[tk]) + ' | BOBBY AC Repair & Home Appliance Services';
     root.setAttribute('lang', lang);
     document.querySelectorAll('.lang-code').forEach(function (el) { el.textContent = lang.toUpperCase(); });
     document.querySelectorAll('.lang-menu button').forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
@@ -138,7 +138,7 @@
       if (!/^[6-9]\d{9}$/.test(phone)) { var p = fieldErr('fPhone', 'f.err.phone'); first = first || p; }
       if (first) { first.focus(); return; }
       function val(id) { var el = document.getElementById(id); return el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value.trim(); }
-      var lines = ['*' + strip(t('f.wa.title')) + ' – BOBBY AC Repair & Services*',
+      var lines = ['*' + strip(t('f.wa.title')) + ' – BOBBY AC Repair & Home Appliance Services*',
         strip(t('f.name')) + ': ' + val('fName'),
         strip(t('f.phone')) + ': ' + phone,
         strip(t('f.appliance')) + ': ' + val('fAppliance') + (val('fBrand') ? ' (' + val('fBrand') + ')' : ''),
