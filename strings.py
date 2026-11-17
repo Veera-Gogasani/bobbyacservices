@@ -576,3 +576,13 @@ S['f.thanks.tip'] = ("WhatsApp has opened with your booking — just tap Send th
 S['f.thanks.again'] = ("Open WhatsApp again", "WhatsApp మళ్లీ ఓపెన్ చేయండి", "WhatsApp फिर से खोलें")
 S['f.thanks.new'] = ("Book another service", "మరో సేవ బుక్ చేయండి", "दूसरी सेवा बुक करें")
 S['f.wa.addr'] = ("Address (from map)", "చిరునామా (మ్యాప్ నుండి)", "पता (मैप से)")
+
+# ---- Footer: compact live weather ----
+S['fw.h'] = ("Live weather", "ప్రత్యక్ష వాతావరణం", "लाइव मौसम")
+S['fw.you'] = ("Your location", "మీ ప్రాంతం", "आपकी लोकेशन")
+S['fw.detect'] = ("Detecting…", "గుర్తిస్తున్నాం…", "पता लगा रहे हैं…")
+S['fw.change'] = ("Change location", "ప్రాంతం మార్చండి", "लोकेशन बदलें")
+S['fw.ph'] = ("Type your town, e.g. Guntur", "మీ ఊరు టైప్ చేయండి, ఉదా. గుంటూరు", "अपना शहर लिखें, जैसे गुंटूर")
+S['fw.go'] = ("Show", "చూపించు", "दिखाएँ")
+S['fw.auto'] = ("Use my network location", "నా నెట్‌వర్క్ లొకేషన్ వాడండి", "मेरी नेटवर्क लोकेशन इस्तेमाल करें")
+S['fw.note'] = ("Weather: Open-Meteo · your location is approximate (from your connection, no GPS)", "వాతావరణం: Open-Meteo · మీ ప్రాంతం సుమారుగా (కనెక్షన్ ఆధారంగా, GPS కాదు)", "मौसम: Open-Meteo · आपकी लोकेशन अनुमानित है (कनेक्शन से, GPS नहीं)")
