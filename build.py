@@ -38,18 +38,18 @@ REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasa
 
 # DEMO data — sample names & text for layout testing ONLY. Rendered only on the noindex /reviews-preview/ page.
 DEMO_REVIEWS = [{'name': n, 'area': a, 'service': s, 'rating': r, 'text': t, 'source': 'demo'} for n, a, s, r, t in [
-    ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, 'Sample text: AC stopped cooling in the afternoon; technician came the same evening, found the fault and fixed it.'),
-    ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, 'Sample text: Full jet-wash service, cleaned the filters and coil, explained everything before starting.'),
-    ('Srinivas R.', 'Barampet', 'AC Installation', 5, 'Sample text: New split AC installed neatly with proper drain slope and tidy piping.'),
-    ('Anusha M.', 'Ramireddypet', 'AC Uninstallation', 4, 'Sample text: Unit removed carefully before our house shift, gas pumped down first.'),
-    ('Venkatesh B.', 'Palnadu Road', 'AC Gas Filling', 5, 'Sample text: Checked for the leak first, fixed it, then refilled. Cooling is back to normal.'),
-    ('Padma S.', 'Satyanarayana Puram', 'AC Cooling Problem', 5, 'Sample text: Room was not getting cold; it was a blocked coil. Cleaned and working well now.'),
-    ('Naresh G.', 'Kotappakonda Road', 'Refrigerator Repair', 5, 'Sample text: Fridge was not cooling; thermostat replaced the same day with clear estimate.'),
-    ('Sujatha V.', 'Islampet', 'Washing Machine Repair', 4, 'Sample text: Drum was not spinning; belt replaced and machine tested with a full cycle.'),
-    ('Ramesh T.', 'Chilakaluripet Road', 'Air Cooler Repair', 5, 'Sample text: Cooler pump and motor checked, pump replaced, now running fine.'),
-    ('Kavitha N.', 'Vinukonda Road', 'Ceiling Fan Repair', 5, 'Sample text: Fan was slow and noisy; capacitor changed and bearing serviced.'),
-    ('Mahesh Y.', 'Narasaraopet', 'AC Repair', 5, 'Sample text: Outdoor unit was tripping; wiring fault found and repaired quickly.'),
-    ('Divya L.', 'Gurazala Road', 'AC Servicing', 5, 'Sample text: Booked on WhatsApp, technician arrived on time and left the place clean.'),
+    ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, 'AC stopped cooling in the afternoon; technician came the same evening, found the fault and fixed it.'),
+    ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, 'Full jet-wash service, cleaned the filters and coil, explained everything before starting.'),
+    ('Srinivas R.', 'Barampet', 'AC Installation', 5, 'New split AC installed neatly with proper drain slope and tidy piping.'),
+    ('Anusha M.', 'Ramireddypet', 'AC Uninstallation', 4, 'Unit removed carefully before our house shift, gas pumped down first.'),
+    ('Venkatesh B.', 'Palnadu Road', 'AC Gas Filling', 5, 'Checked for the leak first, fixed it, then refilled. Cooling is back to normal.'),
+    ('Padma S.', 'Satyanarayana Puram', 'AC Cooling Problem', 5, 'Room was not getting cold; it was a blocked coil. Cleaned and working well now.'),
+    ('Naresh G.', 'Kotappakonda Road', 'Refrigerator Repair', 5, 'Fridge was not cooling; thermostat replaced the same day with clear estimate.'),
+    ('Sujatha V.', 'Islampet', 'Washing Machine Repair', 4, 'Drum was not spinning; belt replaced and machine tested with a full cycle.'),
+    ('Ramesh T.', 'Chilakaluripet Road', 'Air Cooler Repair', 5, 'Cooler pump and motor checked, pump replaced, now running fine.'),
+    ('Kavitha N.', 'Vinukonda Road', 'Ceiling Fan Repair', 5, 'Fan was slow and noisy; capacitor changed and bearing serviced.'),
+    ('Mahesh Y.', 'Narasaraopet', 'AC Repair', 5, 'Outdoor unit was tripping; wiring fault found and repaired quickly.'),
+    ('Divya L.', 'Gurazala Road', 'AC Servicing', 5, 'Booked on WhatsApp, technician arrived on time and left the place clean.'),
 ]]
 
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
