@@ -110,6 +110,9 @@ ICONS = {
  'target': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></g>',
  'radius': '<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></g>',
 }
+def wa_ic(cls='wa-ic'):
+    return f'<img class="{cls}" src="/assets/img/whatsapp.png" width="22" height="22" alt="" aria-hidden="true">'
+
 def ic(name, cls=''):
     c = f' class="{cls}"' if cls else ''
     return f'<svg{c} viewBox="0 0 24 24" aria-hidden="true" focusable="false">{ICONS[name]}</svg>'
@@ -141,7 +144,7 @@ def booking_form(p, inline=False):
 <div class="frow"><div class="field"><label for="{p}Brand">{tx('f.brand')}</label><input id="{p}Brand" name="brand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
 <div class="field"><label for="{p}Date">{tx('f.date')}</label><input id="{p}Date" name="date" type="date"><p class="emsg"></p></div></div>
 <div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
-<button class="btn btn-wa" type="submit">{ic('chat')}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p></form>'''
+<button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p></form>'''
 
 def modals():
     return f'''<div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
@@ -153,8 +156,8 @@ def modals():
 <p class="map-hint">{tx('map.hint')}</p><div id="pickMap" class="pick-map"></div><p class="map-msg" role="status" aria-live="polite"></p>
 <div class="modal-foot"><button type="button" class="btn btn-line btn-sm map-me">{ic('target')}{tx('map.me')}</button><button type="button" class="btn btn-primary map-use" disabled>{ic('check')}{tx('map.use')}</button></div></div></div>'''
 
-def book_a(svc, cls, key='btn.book', icon='cal'):
-    return f'<a class="btn {cls}" href="/contact/#book" data-book="{svc}">{ic(icon)}{tx(key)}</a>'
+def book_a(svc, cls, key='btn.book', icon=None):
+    return f'<a class="btn {cls}" href="/contact/#book" data-book="{svc}">{wa_ic()}{tx(key)}</a>'
 
 # ---------------- layout ----------------
 def business_ld():
@@ -203,7 +206,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=8">
+<link rel="stylesheet" href="/assets/css/style.css?v=9">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -232,7 +235,7 @@ def header(active):
 <div class="hdr-actions">
 {lang_switch()}
 <a class="btn btn-primary btn-sm btn-call" href="tel:{PHONE_TEL}">{ic('phone')}<span class="lbl" data-i18n="btn.call">{en('btn.call')}</span></a>
-<a class="btn btn-wa btn-sm" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice">{ic('cal')}<span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
+<a class="btn btn-wa btn-sm" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice">{wa_ic()}<span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
 <button class="burger" type="button" aria-controls="drawer" aria-expanded="false" aria-label="{esc(plain('nav.menu'))}" data-i18n-aria="nav.menu"><span></span></button>
 </div></div></header>
 <div class="drawer" id="drawer" aria-hidden="true">
@@ -260,15 +263,15 @@ def footer():
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
 <li class="ci">{ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a></li>
-<li class="ci">{ic('chat')}<a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('c.wa.h')}</a></li>
+<li class="ci">{wa_ic()}<a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('c.wa.h')}</a></li>
 <li class="ci">{ic('pin')}<a href="{GMAPS_URL}" target="_blank" rel="noopener">{tx('addr.full')}</a></li><li class="ci">{ic('star')}{tx('hours.open')}</li>
 <li class="ci">{ic('radius')}{tx('ft.area')}</li></ul></div>
 <div class="bottom" style="grid-column:1/-1">
 <div>© <span class="yr">2026</span> BOBBY AC Repair &amp; Home Appliance Services. {tx('ft.rights')}<p class="indep">{tx('ft.indep')}</p></div>
 <nav aria-label="Legal"><a href="/privacy-policy/">{tx('ft.privacy')}</a><a href="/terms/">{tx('ft.terms')}</a><a href="/sitemap/">{tx('ft.sitemap')}</a></nav>
 </div></div></footer>
-<div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{ic('chat')}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
-<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{ic('cal')}{tx('mbar.book')}</a></div>
+<div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
+<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
 <script src="/assets/js/main.js?v=8" defer></script>
 </body></html>
@@ -411,7 +414,7 @@ def build_home():
 <div class="ctas anim d3">
 {book_a('ac_servicing', 'btn-orange', 'btn.bookac', 'snow')}
 <a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>
-<a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('btn.wachat')}</a>
+<a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wachat')}</a>
 </div>
 <p class="trust anim d4">{ic('check')}{tx('hero.trust')}</p>
 </div>
@@ -501,7 +504,7 @@ def build_inner():
     form = booking_form('c', inline=True)
     cards = f'''<div class="ccards reveal">
 <a class="ccard" href="tel:{PHONE_TEL}"><span class="ic" style="background:linear-gradient(135deg,var(--blue),#0E6FB3)">{ic('phone')}</span><span><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b></span></a>
-<a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:var(--green)">{ic('chat')}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
+<a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:#fff;border:1px solid var(--line)">{wa_ic()}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
 <a class="ccard" href="{DIR_URL}" target="_blank" rel="noopener"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')} · {tx('btn.dir')}</small><b style="font-size:14.5px;font-weight:600">{tx('addr.full')}</b></span></a>
 <div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>

@@ -476,3 +476,12 @@ a.ccard:hover{transform:translateY(-3px)}
 .loc-clear{color:#B03030;font-weight:600;text-decoration:underline;font-size:14px}
 .hint{font-size:12.5px;color:var(--muted);margin-top:6px}
 .mbar .w{background:var(--green)}
+
+/* WhatsApp icon (supplied) */
+.wa-ic{width:22px;height:22px;flex:none;border-radius:6px;box-shadow:0 0 0 2px rgba(255,255,255,.95)}
+.btn-line .wa-ic,.ccard .wa-ic,.ftr .wa-ic,.topbar .wa-ic{box-shadow:none}
+.ccard .ic .wa-ic{width:30px;height:30px}
+.ftr .ci .wa-ic{width:18px;height:18px;margin-top:2px}
+.fab .w{background:#fff}
+.fab .w .wa-ic{width:40px;height:40px;border-radius:11px;box-shadow:none}
+.mbar .wa-ic{width:22px;height:22px}
