@@ -25,7 +25,8 @@ PRICE_SRC = {
 PRICE_MARKUP = 100
 
 # Images: original BOBBY artwork in static/assets/img/art (regenerate with: python3 art.py)
-REVIEWS = []   # add genuine reviews later: {'name': 'Customer name', 'service': 'AC Repair', 'text': '...'}
+GOOGLE_REVIEW_URL = ''   # paste your Google Business Profile review link here once you have it
+REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
 # ======================================================
 
@@ -49,7 +50,7 @@ def wa_service(svc):
     msg = html.unescape(en('wa.service')).replace('{service}', html.unescape(strip_tags(en('svc.%s.name' % svc))))
     return 'https://wa.me/%s?text=%s' % (WA_NUM, quote(msg))
 
-ART_W = {'hero': 1200, 'about': 1600}
+ART_W = {'hero': 1200, 'about': 1600, 'technician': 1536}
 def art_url(key, size='lg'): return f'/assets/img/art/{key}-{size}.webp'
 def img(key, w, h, alt_key, eager=False, cls='', sizes='(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 600px'):
     """Original BOBBY artwork (WebP, 2 sizes)."""
@@ -156,7 +157,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=3">
+<link rel="stylesheet" href="/assets/css/style.css?v=4">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -222,7 +223,7 @@ def footer():
 </div></div></footer>
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{ic('chat')}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('mbar.wa')}</a></div>
-<script src="/assets/js/main.js?v=3" defer></script>
+<script src="/assets/js/main.js?v=4" defer></script>
 </body></html>
 '''
 
@@ -281,8 +282,14 @@ def app_cards():
 <div class="actions"><a class="btn btn-orange btn-sm" href="{wa_service(k)}" data-wa="{k}" target="_blank" rel="noopener">{ic('chat')}{tx("btn.book")}</a></div></div></article>''')
     return '<div class="app-grid app">' + ''.join(out) + '</div>'
 
+def brand_logo(name):
+    slug = name.lower().replace(' ', '-')
+    for ext in ('svg', 'webp', 'png'):
+        if os.path.exists(os.path.join(os.path.dirname(__file__), 'static/assets/img/brands/%s.%s' % (slug, ext))):
+            return f'<img src="/assets/img/brands/{slug}.{ext}" alt="{esc(name)}" loading="lazy" width="140" height="56">'
+    return name
 def brands_block():
-    tiles = ''.join(f'<div class="brand reveal d{i % 4}">{b}</div>' for i, b in enumerate(BRANDS))
+    tiles = ''.join(f'<div class="brand reveal d{i % 4}">{brand_logo(b)}</div>' for i, b in enumerate(BRANDS))
     return f'''<div class="brands">{tiles}</div>
 <p class="brand-note reveal">{ic('info')}<span>{tx('brands.note')} <a class="link-arrow" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('brands.ask')}</a></span></p>'''
 
@@ -298,8 +305,12 @@ def steps_block():
 
 def reviews_block():
     if REVIEWS:
-        cards = ''.join(f'<figure class="rev-card"><blockquote>{esc(r["text"])}</blockquote><figcaption><b>{esc(r["name"])}</b> · {esc(r.get("service",""))}</figcaption></figure>' for r in REVIEWS)
-        body = f'<div class="rev-track">{cards}</div>'
+        def stars(n): return '<span class="stars" aria-label="%d out of 5 stars">%s</span>' % (n, '★' * n + '☆' * (5 - n))
+        cards = ''.join(f'''<figure class="rev-card">{stars(int(r.get("rating", 5)))}<blockquote>{esc(r["text"])}</blockquote>
+<figcaption><span class="av">{esc(r["name"][:1])}</span><span><b>{esc(r["name"])}</b><small>{esc(r.get("service", ""))}{" · " + esc(r["area"]) if r.get("area") else ""}{" · Google review" if r.get("google") else ""}</small></span></figcaption></figure>''' for r in REVIEWS)
+        link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">Read all reviews on Google{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
+        body = f'''<div class="rev-carousel"><div class="rev-track" tabindex="0" aria-label="Customer reviews">{cards}</div>
+<div class="rev-nav"><button type="button" class="rev-prev" aria-label="Previous review">‹</button><button type="button" class="rev-next" aria-label="Next review">›</button>{link}</div></div>'''
     else:
         body = f'<p class="rev-empty">{ic("star")}{tx("rev.empty")}</p>'
     return f'''<section class="sec" id="reviews"><div class="wrap"><div class="rev-box reveal">
@@ -362,11 +373,10 @@ def build_home():
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
     body = (hero +
-        f'<section class="sec" id="book"><div class="wrap">{sec_head("quick.eyebrow", "quick.h2", "quick.sub")}{quick_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
-        f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo reveal">{img('about', 600, 750, 'why.h2')}<div class="badge"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt="" loading="lazy">{tx('brand.tagline')}</div></div>
+        f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo tech reveal">{img('technician', 768, 512, 'why.h2')}<div class="badge"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt="" loading="lazy">{tx('brand.tagline')}</div></div>
 <div>{sec_head("why.eyebrow", "why.h2", None, center=False)}{why_cards()}</div></div></section>''' +
         steps_block() + reviews_block() + location_block() +
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +

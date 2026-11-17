@@ -42,3 +42,8 @@ If the domain changes, edit `SITE` at the top of `build.py` and rebuild.
 - Google Search Console: add the domain, submit `https://www.bobbyacservices.com/sitemap.xml`.
 - Google Business Profile: create/verify the listing and link the website. Once you have a verified map pin,
   replace the town-level map on the site with your exact business location.
+
+### Brand logos
+Put official logo files (from each brand's press/media kit) in `static/assets/img/brands/`, named
+`lg`, `daikin`, `blue-star`, `samsung`, `panasonic`, `hitachi`, `carrier`, `godrej`, `haier`, `voltas`
+(`.svg`, `.webp` or `.png`), then run `python3 build.py`. Brands without a file show their name as text.

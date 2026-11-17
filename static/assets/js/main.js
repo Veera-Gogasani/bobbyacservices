@@ -151,6 +151,17 @@
     });
   }
 
+  /* reviews carousel */
+  document.querySelectorAll('.rev-carousel').forEach(function (car) {
+    var tr = car.querySelector('.rev-track');
+    function step(dir) { var card = tr.querySelector('.rev-card'); var w = card ? card.getBoundingClientRect().width + 18 : 300;
+      if (dir > 0 && tr.scrollLeft + tr.clientWidth >= tr.scrollWidth - 4) tr.scrollTo({ left: 0 }); else tr.scrollBy({ left: dir * w }); }
+    car.querySelector('.rev-prev').addEventListener('click', function () { step(-1); });
+    car.querySelector('.rev-next').addEventListener('click', function () { step(1); });
+    if (!reduce) { var t = setInterval(function () { step(1); }, 5000);
+      ['pointerdown', 'focusin', 'mouseenter'].forEach(function (ev) { car.addEventListener(ev, function () { clearInterval(t); }); }); }
+  });
+
   /* year */
   document.querySelectorAll('.yr').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
