@@ -165,7 +165,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=6">
+<link rel="stylesheet" href="/assets/css/style.css?v=7">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -189,7 +189,7 @@ def header(active):
 </div></div>
 <header class="hdr">
 <div class="wrap">
-<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt=""><span><b>BOBBY</b><small>AC Repair &amp; Home Appliance Services</small></span></a>
+<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
@@ -200,7 +200,7 @@ def header(active):
 <div class="drawer" id="drawer" aria-hidden="true">
 <div class="drawer-bg" data-close></div>
 <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="{esc(plain('nav.menu'))}">
-<div class="drawer-top"><a class="logo" href="/"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt=""><span><b>BOBBY</b></span></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
+<div class="drawer-top"><a class="logo" href="/"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
 <nav aria-label="Mobile">{links}<a href="/blog/"{" aria-current=\"page\"" if active == "blog" else ""}>{tx('nav.blog')}</a></nav>
 <div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a><a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{ic('chat')}{tx('btn.wabook')}</a></div>
 </div></div>
@@ -216,7 +216,7 @@ def footer():
     return f'''</main>
 <footer class="ftr">
 <div class="wrap grid">
-<div><a class="logo" href="/"><img src="/assets/img/bobby-logo-160.webp" width="50" height="50" alt="" loading="lazy"><span><b>BOBBY</b><small>AC Repair &amp; Home Appliance Services</small></span></a>
+<div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
 <p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>

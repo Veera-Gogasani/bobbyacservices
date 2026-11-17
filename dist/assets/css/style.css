@@ -438,3 +438,8 @@ a.ccard:hover{transform:translateY(-3px)}
 .logo small{max-width:190px;line-height:1.3}
 .rev-empty{max-width:640px}
 @media(max-width:900px){.hdr .logo small{display:none}.hdr .wrap{gap:10px}}
+
+.logo img.wm{width:auto;height:58px;border-radius:12px;filter:none;box-shadow:0 6px 16px rgba(16,44,80,.22)}
+.ftr .logo img.wm{height:64px}
+.drawer .logo img.wm{height:48px}
+@media(max-width:560px){.logo img.wm{height:46px}}
