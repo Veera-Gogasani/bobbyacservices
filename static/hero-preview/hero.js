@@ -1,4 +1,4 @@
-/* THE BOBBY COOLING EXPERIENCE – isolated hero preview script (no libraries; everything namespaced bobby-hero) */
+/* BOBBY – motion hero preview v2 (no libraries). Everything namespaced bobby-hero. */
 (function () {
   'use strict';
   var bobbyHeroRoot = document.documentElement;
@@ -7,139 +7,106 @@
   bobbyHeroRoot.classList.remove('bobby-hero-nojs');
   bobbyHeroRoot.classList.add('bobby-hero-js');
 
-  /* intro plays once per browser session; later visits get the resting state quickly */
-  try {
-    if (sessionStorage.getItem('bobby-hero-seen')) bobbyHeroRoot.classList.add('bobby-hero-quick');
-    sessionStorage.setItem('bobby-hero-seen', '1');
-  } catch (e) {}
-  var bobbyHeroQuick = bobbyHeroRoot.classList.contains('bobby-hero-quick') || bobbyHeroReduce;
+  var hero = document.getElementById('bobby-hero');
+  var slides = [].slice.call(hero.querySelectorAll('.bobby-hero-slide'));
+  var caps = [].slice.call(hero.querySelectorAll('.bobby-hero-cap'));
+  var tabs = [].slice.call(hero.querySelectorAll('.bobby-hero-tab'));
+  var cur = hero.querySelector('.bobby-hero-cur');
+  var bar = hero.querySelector('.bobby-hero-progress span');
+  var DELAY = 5500, idx = 0, timer = null, hold = false, busy = false;
+  hero.style.setProperty('--bh-delay', DELAY / 1000 + 's');
 
-  /* ---------- AC display: 32° summer heat → 24° comfort ---------- */
-  function bobbyHeroTemp() {
-    var el = document.querySelector('.bobby-hero-temp');
-    if (!el) return;
-    if (bobbyHeroQuick) { el.textContent = '24°'; return; }
-    var from = 32, to = 24, start = null, dur = 1600;
-    setTimeout(function () {
-      requestAnimationFrame(function step(ts) {
-        if (!start) start = ts;
-        var k = Math.min(1, (ts - start) / dur);
-        el.textContent = Math.round(from - (from - to) * (1 - Math.pow(1 - k, 3))) + '°';
-        if (k < 1) requestAnimationFrame(step);
-      });
-    }, 2000);
+  function setColors(s) { hero.style.setProperty('--bh-bg', s.dataset.bg); hero.style.setProperty('--bh-bg2', s.dataset.bg2); }
+
+  function bobbyHeroGo(n, user) {
+    n = (n + slides.length) % slides.length;
+    if (n === idx || busy) return;
+    busy = true;
+    var old = slides[idx], nxt = slides[n];
+    old.classList.remove('is-active'); old.classList.add('is-leaving'); old.setAttribute('aria-hidden', 'true');
+    setTimeout(function () { old.classList.remove('is-leaving'); busy = false; }, 900);
+    nxt.classList.add('is-active'); nxt.setAttribute('aria-hidden', 'false');
+    caps[idx].classList.remove('is-active'); caps[n].classList.add('is-active');
+    tabs[idx].classList.remove('is-active'); tabs[idx].setAttribute('aria-selected', 'false');
+    tabs[n].classList.add('is-active'); tabs[n].setAttribute('aria-selected', 'true');
+    cur.textContent = ('0' + (n + 1)).slice(-2);
+    setColors(nxt);
+    var img = nxt.querySelector('img'); if (img && img.loading === 'lazy') img.loading = 'eager';
+    idx = n;
+    if (user) hold = true;
+    bobbyHeroPlay();
+  }
+  function bobbyHeroPlay() {
+    clearTimeout(timer);
+    bar.classList.remove('is-run'); void bar.offsetWidth;
+    if (bobbyHeroReduce || hold) { hero.classList.add('is-paused'); bar.style.transform = 'scaleX(1)'; return; }
+    bar.style.transform = ''; bar.classList.add('is-run'); hero.classList.remove('is-paused');
+    timer = setTimeout(function () { bobbyHeroGo(idx + 1); }, DELAY);
   }
 
-  /* ---------- airflow particles & snowflakes ---------- */
-  function bobbyHeroParticles() {
-    var box = document.querySelector('.bobby-hero-particles');
-    if (!box || bobbyHeroReduce) return;
-    var n = 18, html = '';
-    for (var i = 0; i < n; i++) {
-      var flake = i % 4 === 0;
-      var x0 = 4 + Math.random() * 18, y0 = 2 + Math.random() * 14;
-      var x1 = 45 + Math.random() * 55, y1 = 30 + Math.random() * 65;
-      var style = '--x0:' + x0 + 'cqw;--y0:' + y0 + 'cqh;' +
-        '--s:' + (flake ? (10 + Math.random() * 8) + 'px' : (3 + Math.random() * 5) + 'px') + ';' +
-        '--t:' + (5 + Math.random() * 4).toFixed(1) + 's;' +
-        '--dl:' + ((bobbyHeroQuick ? 0 : 2.4) + Math.random() * 4).toFixed(2) + 's;';
-      /* percentages of the airflow box (fallback for browsers without container units handled below) */
-      style = style.replace('cqw', '%').replace('cqh', '%');
-      html += '<i class="' + (flake ? 'bobby-hero-flake' : '') + '" style="' + style +
-        '--x1:' + 0 + 'px;--y1:0px" data-x1="' + x1 + '" data-y1="' + y1 + '" data-x0="' + x0 + '" data-y0="' + y0 + '">' + (flake ? '❄' : '') + '</i>';
-    }
-    box.innerHTML = html;
-    /* convert % paths into pixels of the airflow box so translate() works everywhere */
-    function size() {
-      var w = box.clientWidth, h = box.clientHeight;
-      [].forEach.call(box.children, function (p) {
-        p.style.setProperty('--x0', (p.dataset.x0 / 100 * w) + 'px');
-        p.style.setProperty('--y0', (p.dataset.y0 / 100 * h) + 'px');
-        p.style.setProperty('--x1', (p.dataset.x1 / 100 * w) + 'px');
-        p.style.setProperty('--y1', (p.dataset.y1 / 100 * h) + 'px');
-      });
-    }
-    size();
-    window.addEventListener('resize', size);
+  hero.querySelector('.bobby-hero-next').addEventListener('click', function () { bobbyHeroGo(idx + 1, true); });
+  hero.querySelector('.bobby-hero-prev').addEventListener('click', function () { bobbyHeroGo(idx - 1, true); });
+  tabs.forEach(function (t) { t.addEventListener('click', function () { bobbyHeroGo(+t.dataset.go, true); }); });
+  hero.addEventListener('keydown', function (e) {
+    if (e.target.closest('a,input')) return;
+    if (e.key === 'ArrowRight') { bobbyHeroGo(idx + 1, true); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { bobbyHeroGo(idx - 1, true); e.preventDefault(); }
+  });
+  /* swipe */
+  var sx = null, sy = null;
+  hero.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  hero.addEventListener('touchend', function (e) {
+    if (sx === null) return; var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) bobbyHeroGo(idx + (dx < 0 ? 1 : -1), true);
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimeout(timer); else bobbyHeroPlay(); });
+
+  /* pointer parallax for product + floating objects */
+  if (!bobbyHeroReduce && window.matchMedia('(pointer: fine)').matches) {
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+    });
+    hero.addEventListener('pointerleave', function () { hero.style.setProperty('--mx', 0); hero.style.setProperty('--my', 0); });
   }
 
-  /* ---------- scroll-responsive hero + nav ---------- */
-  var bobbyHeroEl = document.getElementById('bobby-hero');
-  var bobbyHeroNav = document.querySelector('.bobby-hero-nav');
-  var bobbyHeroTicking = false;
-  function bobbyHeroOnScroll() {
-    if (bobbyHeroTicking) return;
-    bobbyHeroTicking = true;
+  /* scroll: hero stage recedes, nav turns frosted */
+  var nav = document.querySelector('.bobby-hero-nav'), ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
     requestAnimationFrame(function () {
       var y = window.scrollY || 0;
-      bobbyHeroNav.classList.toggle('is-scrolled', y > 30);
-      if (!bobbyHeroReduce && !bobbyHeroSmall.matches && bobbyHeroEl) {
-        var p = Math.max(0, Math.min(1, y / (bobbyHeroEl.offsetHeight * 0.9)));
-        bobbyHeroEl.style.setProperty('--bobby-hero-p', p.toFixed(3));
-      }
-      bobbyHeroTicking = false;
+      nav.classList.toggle('is-scrolled', y > hero.offsetHeight - 90);
+      if (!bobbyHeroReduce && !bobbyHeroSmall.matches) hero.style.setProperty('--bobby-hero-p', Math.min(1, y / (hero.offsetHeight * 0.85)).toFixed(3));
+      ticking = false;
     });
   }
-  window.addEventListener('scroll', bobbyHeroOnScroll, { passive: true });
-  bobbyHeroOnScroll();
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- layered pointer parallax (desktop only) ---------- */
-  function bobbyHeroParallax() {
-    if (bobbyHeroReduce || !window.matchMedia('(pointer: fine)').matches) return;
-    var layers = [].slice.call(document.querySelectorAll('.bobby-hero-layer[data-depth]'));
-    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
-    function loop() {
-      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
-      layers.forEach(function (l) {
-        var d = parseFloat(l.dataset.depth);
-        l.style.translate = (cx * d * -28).toFixed(2) + 'px ' + (cy * d * -18).toFixed(2) + 'px';
-      });
-      raf = (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) ? requestAnimationFrame(loop) : null;
-    }
-    bobbyHeroEl.addEventListener('pointermove', function (e) {
-      if (bobbyHeroSmall.matches) return;
-      var r = bobbyHeroEl.getBoundingClientRect();
-      tx = (e.clientX - r.left) / r.width - 0.5; ty = (e.clientY - r.top) / r.height - 0.5;
-      if (!raf) raf = requestAnimationFrame(loop);
-    });
-    bobbyHeroEl.addEventListener('pointerleave', function () { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(loop); });
-  }
-
-  /* ---------- scroll reveals ---------- */
-  function bobbyHeroReveals() {
-    var items = document.querySelectorAll('.bobby-hero-reveal');
-    if (!('IntersectionObserver' in window) || bobbyHeroReduce) { [].forEach.call(items, function (i) { i.classList.add('is-in'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+  /* section reveals */
+  var items = document.querySelectorAll('.bobby-hero-reveal');
+  if (!('IntersectionObserver' in window) || bobbyHeroReduce) [].forEach.call(items, function (i) { i.classList.add('is-in'); });
+  else {
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -10% 0px', threshold: .12 });
     [].forEach.call(items, function (i) { io.observe(i); });
   }
 
-  /* ---------- mobile menu ---------- */
-  var bobbyHeroBurger = document.querySelector('.bobby-hero-burger');
-  var bobbyHeroMenu = document.getElementById('bobby-hero-menu');
-  function bobbyHeroCloseMenu() { bobbyHeroMenu.classList.remove('is-open'); bobbyHeroBurger.setAttribute('aria-expanded', 'false'); bobbyHeroBurger.setAttribute('aria-label', 'Open menu'); }
-  bobbyHeroBurger.addEventListener('click', function () {
-    var open = !bobbyHeroMenu.classList.contains('is-open');
-    bobbyHeroMenu.classList.toggle('is-open', open);
-    bobbyHeroBurger.setAttribute('aria-expanded', String(open));
-    bobbyHeroBurger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-  });
-  bobbyHeroMenu.addEventListener('click', function (e) { if (e.target.closest('a')) bobbyHeroCloseMenu(); });
+  /* mobile menu */
+  var burger = document.querySelector('.bobby-hero-burger'), menu = document.getElementById('bobby-hero-menu');
+  function closeMenu() { menu.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); }
+  burger.addEventListener('click', function () { var o = !menu.classList.contains('is-open'); menu.classList.toggle('is-open', o); burger.setAttribute('aria-expanded', String(o)); burger.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
 
-  /* ---------- language selector (Telugu/Hindi live on the main site) ---------- */
-  var bobbyHeroLangBtn = document.querySelector('.bobby-hero-lang-btn');
-  var bobbyHeroLangMenu = document.getElementById('bobby-hero-lang-menu');
-  function bobbyHeroLangToggle(open) { bobbyHeroLangMenu.hidden = !open; bobbyHeroLangBtn.setAttribute('aria-expanded', String(open)); }
-  bobbyHeroLangBtn.addEventListener('click', function (e) { e.stopPropagation(); bobbyHeroLangToggle(bobbyHeroLangMenu.hidden); });
-  document.addEventListener('click', function (e) { if (!e.target.closest('.bobby-hero-lang')) bobbyHeroLangToggle(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { bobbyHeroLangToggle(false); bobbyHeroCloseMenu(); } });
-  [].forEach.call(document.querySelectorAll('[data-bobby-hero-lang]'), function (a) {
-    a.addEventListener('click', function () { try { localStorage.setItem('bobby-lang', a.getAttribute('data-bobby-hero-lang')); } catch (e) {} });
-  });
+  /* language selector – Telugu/Hindi live on the main site */
+  var lb = document.querySelector('.bobby-hero-lang-btn'), lm = document.getElementById('bobby-hero-lang-menu');
+  function lang(o) { lm.hidden = !o; lb.setAttribute('aria-expanded', String(o)); }
+  lb.addEventListener('click', function (e) { e.stopPropagation(); lang(lm.hidden); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.bobby-hero-lang')) lang(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { lang(false); closeMenu(); } });
+  [].forEach.call(document.querySelectorAll('[data-bobby-hero-lang]'), function (a) { a.addEventListener('click', function () { try { localStorage.setItem('bobby-lang', a.dataset.bobbyHeroLang); } catch (e) {} }); });
 
-  bobbyHeroTemp();
-  bobbyHeroParticles();
-  bobbyHeroParallax();
-  bobbyHeroReveals();
+  setColors(slides[0]);
+  hero.setAttribute('tabindex', '-1');
+  bobbyHeroPlay();
 })();
