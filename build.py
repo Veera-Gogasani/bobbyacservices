@@ -34,6 +34,8 @@ PRICE_MARKUP = 100
 # Trust figures shown under the hero (as provided by the business owner). Keep these accurate.
 STATS = [('500', '+', 'stat.cust', 'heart'), ('7', '+', 'stat.years', 'shield'), ('10', '+', 'stat.brands', 'layers'), ('24/7', '', 'stat.support', 'phone')]
 GOOGLE_REVIEW_URL = 'https://g.page/r/CdusD2XE5xNnEBM/review'   # paste your Google Business Profile review link here once you have it
+OWNER_NAME = 'Yalamanda Gogasani'
+OWNER_EMAIL = 'Yalamandagogasani@gmail.com'
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
 
 # DEMO data — sample names & text for layout testing ONLY. Rendered only on the noindex /reviews-preview/ page.
@@ -119,6 +121,8 @@ ICONS = {
  'cooler': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5.5" y="2.5" width="13" height="19" rx="3"/><path d="M8.5 6h7M8.5 9h7M8.5 12h7"/><circle cx="12" cy="17.5" r="1.4"/></g>',
  'fan': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v5"/><circle cx="12" cy="10" r="2.2"/><path d="M10 10C6 9 3 10 2 11.5c3 1 6 .5 8 0M14 10c4-1 7 0 8 1.5-3 1-6 .5-8 0M12 12.2c-.5 3.5.5 7 1.8 8.3 1-2.6.4-5.8-.3-8.3"/></g>',
  'home': '<path d="M3 11l9-7 9 7v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+ 'user': '<circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+ 'mail': '<rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
  'shield': '<path d="M12 2.5l8 3.5v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
  'layers': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></g>',
  'talk': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M19 9h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v3l-4-3h-3"/></g>',
@@ -225,7 +229,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=14">
+<link rel="stylesheet" href="/assets/css/style.css?v=15">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -244,8 +248,8 @@ def lang_switch():
 def header(active):
     links = ''.join(f'<a href="{u}"{" aria-current=\"page\"" if a == active else ""}>{tx(k)}</a>' for u, k, a in NAV)
     return f'''<div class="topbar"><div class="wrap">
-<span>{ic('pin')}{tx('loc.short')} · {tx('hours.open')}</span>
-<span>{ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · <a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('btn.wa')}</a></span>
+<span class="tb-owner">{ic('user')}<b>{OWNER_NAME}</b><i class="tb-sep">|</i><span data-i18n="pre.known">{en('pre.known')}</span> <b class="tb-bobby">Bobby</b><i class="tb-sep">·</i><a class="tb-mail" href="mailto:{OWNER_EMAIL}">{ic('mail')}{OWNER_EMAIL}</a></span>
+<span class="tb-right">{ic('pin')}{tx('loc.short')} · {tx('hours.open')} · {ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · <a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('btn.wa')}</a></span>
 </div></div>
 <header class="hdr">
 <div class="wrap">
@@ -443,6 +447,58 @@ def cta_band():
 <div class="btn-row"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a>{book_a('', 'btn-ghost', 'btn.bookservice')}</div>
 </div></div></section>'''
 
+
+# ---- Home: animated service slider ("2nd hero"). Appliance drawings are inline SVG so their parts can animate. ----
+H2_SVG = json.load(open(os.path.join(os.path.dirname(__file__), 'art-src', 'hero2-svgs.json'), encoding='utf-8'))
+H2_SLIDES = [('ac', 'COOL', '#102C50', '#1688D4', ['flake', 'ice', 'flake', 'ice', 'flake', 'ice', 'flake']),
+             ('fridge', 'FRESH', '#0E6FB3', '#56C8FF', ['ice', 'flake', 'ice', 'ice', 'ice', 'flake', 'flake']),
+             ('washer', 'CLEAN', '#0B1F3A', '#1688D4', ['bubble', 'drop', 'bubble', 'bubble', 'bubble', 'drop', 'bubble']),
+             ('cooler', 'CHILL', '#102C50', '#0E6FB3', ['drop', 'ice', 'drop', 'drop', 'ice', 'drop', 'drop']),
+             ('fan', 'BREEZE', '#0B1F3A', '#16477A', ['swirl'] * 7)]
+H2_FL = [(16, 14, 74, .5, 0), (80, 12, 56, .4, 0), (24, 64, 48, .6, 0), (74, 62, 66, .55, 0), (6, 46, 130, 1.2, 7), (88, 36, 104, 1.0, 6), (58, 6, 34, .3, 0)]
+H2_EXTRA = {
+    'ac': '<svg class="bh2-air" viewBox="0 0 600 260" aria-hidden="true"><defs><linearGradient id="bh2-airgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3F6FF" stop-opacity=".95"/><stop offset="1" stop-color="#56C8FF" stop-opacity="0"/></linearGradient></defs>'
+          + ''.join(f'<path class="bh2-stream" style="--s:{i}" d="M{60+i*80} 0 C{40+i*80} 70 {110+i*80} 120 {80+i*80} 190 S{90+i*80} 250 {120+i*80} 260"/>' for i in range(7)) + '</svg><span class="bh2-mist"></span>',
+    'fridge': '<span class="bh2-fog"><i></i><i></i><i></i></span>', 'washer': '',
+    'cooler': '<span class="bh2-spray"><i></i><i></i><i></i><i></i><i></i></span>', 'fan': '<span class="bh2-ripple"><i></i><i></i><i></i></span>'}
+H2_SYMBOLS = '''<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="bh-g-ice" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".5" stop-color="#CFF0FF" stop-opacity=".7"/><stop offset="1" stop-color="#7FD6FF" stop-opacity=".55"/></linearGradient>
+<radialGradient id="bh-g-drop" cx=".35" cy=".6" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#BDEBFF"/><stop offset="1" stop-color="#56C8FF"/></radialGradient>
+<radialGradient id="bh-g-bub" cx=".5" cy=".5" r=".5"><stop offset=".7" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".8"/></radialGradient>
+<symbol id="bh-ice" viewBox="0 0 100 100"><path d="M22 30 L58 14 L86 32 L80 72 L44 88 L16 70Z" fill="url(#bh-g-ice)" stroke="#fff" stroke-opacity=".9" stroke-width="2"/><path d="M22 30 L52 46 L86 32 M52 46 L44 88" stroke="#fff" stroke-opacity=".7" stroke-width="2" fill="none"/><path d="M30 34 L48 26" stroke="#fff" stroke-width="5" stroke-linecap="round"/></symbol>
+<symbol id="bh-flake" viewBox="0 0 100 100"><g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M50 8V92M14 29L86 71M14 71L86 29"/><path d="M40 16L50 26L60 16M40 84L50 74L60 84M16 42L28 40L24 28M84 58L72 60L76 72M16 58L28 60L24 72M84 42L72 40L76 28"/></g></symbol>
+<symbol id="bh-drop" viewBox="0 0 100 100"><path d="M50 6 C66 34 82 50 82 68 A32 32 0 0 1 18 68 C18 50 34 34 50 6Z" fill="url(#bh-g-drop)"/><ellipse cx="38" cy="62" rx="7" ry="12" fill="#fff" opacity=".85"/></symbol>
+<symbol id="bh-bubble" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="url(#bh-g-bub)" stroke="#fff" stroke-opacity=".7" stroke-width="2"/><path d="M28 36 A26 26 0 0 1 46 22" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/></symbol>
+<symbol id="bh-swirl" viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M8 40 H62 A14 14 0 1 0 48 26"/><path d="M8 60 H74 A14 14 0 1 1 60 74"/><path d="M18 50 H44"/></g></symbol>
+</defs></svg>'''
+
+def home_slider():
+    slides, caps, tabs = '', '', ''
+    for i, (k, word, bg, bg2, fl) in enumerate(H2_SLIDES):
+        act = ' is-active' if i == 0 else ''
+        flo = ''.join(f'<span class="bobby-hero-fl{" is-front" if bl else ""}" style="--x:{x}%;--y:{y}%;--sz:{sz}px;--dp:{d};--bl:{bl}px;--fi:{j}"><svg viewBox="0 0 100 100"><use href="#bh-{t}"/></svg></span>'
+                      for j, (t, (x, y, sz, d, bl)) in enumerate(zip(fl, H2_FL)))
+        letters = ''.join(f'<span style="--li:{j}">{c}</span>' for j, c in enumerate(word))
+        svg = H2_SVG[k].replace('class="bh2-svg"', f'class="bh2-svg bh2-svg-{k}"')
+        slides += (f'<div class="bobby-hero-slide bobby-hero-slide-{k}{act}" data-bg="{bg}" data-bg2="{bg2}" aria-hidden="{"false" if i == 0 else "true"}">'
+                   f'<div class="bobby-hero-word" aria-hidden="true">{letters}</div><div class="bobby-hero-floats">{flo}</div>'
+                   f'<div class="bobby-hero-product"><div class="bobby-hero-bob"><div class="bh2-tilt">{svg}{H2_EXTRA[k]}</div></div><span class="bobby-hero-pshadow"></span></div></div>')
+        caps += f'<div class="bobby-hero-cap{act}"><p class="bobby-hero-cap-n">0{i + 1} — {tx("bh2.tab." + k)}</p>{tx("bh2.%s.t" % k, "h3")}{tx("bh2.%s.d" % k, "p")}</div>'
+        tabs += f'<button type="button" role="tab" class="bobby-hero-tab{act}" aria-selected="{"true" if i == 0 else "false"}" data-go="{i}">{tx("bh2.tab." + k)}</button>'
+    mq = ''.join(f'{tx("bh2.mq.%d" % n)}<i aria-hidden="true">✦</i>' for n in range(1, 9))
+    return f'''<section class="bh2s bobby-hero" id="services-showcase" aria-roledescription="carousel" aria-labelledby="bh2-h2">{H2_SYMBOLS}
+<div class="bobby-hero-bg" aria-hidden="true"><span class="bobby-hero-grid"></span><span class="bobby-hero-beam"></span><span class="bobby-hero-glow"></span><span class="bh2-spot"></span><span class="bh2-frost"></span></div>
+<div class="bobby-hero-stage">{slides}</div>
+<div class="bobby-hero-bottom">
+<div class="bobby-hero-copy"><p class="bobby-hero-trust">{ic('shield')}{tx('bh2.trust')}</p><h2 id="bh2-h2" class="bobby-hero-h1" data-i18n="bh2.h2">{en('bh2.h2')}</h2><div class="bobby-hero-caps" aria-live="polite">{caps}</div></div>
+<div class="bobby-hero-mid"><div class="bobby-hero-tabs" role="tablist">{tabs}</div>
+<div class="bobby-hero-ctas"><a class="bobby-hero-btn bobby-hero-btn-orange bh2-magnet" href="/contact/#book" data-book="">{tx('btn.bookservice')}{ic('arrow')}</a><a class="bobby-hero-btn bobby-hero-btn-glass bh2-magnet" href="tel:{PHONE_TEL}">{ic('phone')}{PHONE_TXT}</a><a class="bobby-hero-btn bobby-hero-btn-wa bh2-magnet" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wa')}</a></div></div>
+<div class="bobby-hero-ctrl"><p class="bobby-hero-count"><b class="bobby-hero-cur">01</b> / 0{len(H2_SLIDES)}</p><div class="bobby-hero-progress"><span></span></div>
+<div class="bobby-hero-arrows"><button type="button" class="bobby-hero-arrow bobby-hero-prev" aria-label="{esc(plain('bh2.prev'))}" data-i18n-aria="bh2.prev">{ic('arrow')}</button><button type="button" class="bobby-hero-arrow bobby-hero-next" aria-label="{esc(plain('bh2.next'))}" data-i18n-aria="bh2.next">{ic('arrow')}</button></div></div>
+</div>
+<div class="bobby-hero-marquee"><div class="bobby-hero-mq-track"><span class="bh2-mq">{mq}</span><span class="bh2-mq" aria-hidden="true">{mq}</span></div></div>
+</section>'''
+
 # ---------------- pages ----------------
 PAGES = {}
 def page(path, html_):
@@ -474,7 +530,7 @@ def build_home():
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
-    body = (hero + stats_block() + reviews_block() +
+    body = (hero + stats_block() + home_slider() + reviews_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
@@ -486,7 +542,7 @@ def build_home():
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
     page('/', head('BOBBY AC Repair & Home Appliance Services in Narasaraopet | AC Installation & Repair',
                    'Looking for AC repair in Narasaraopet? BOBBY provides AC servicing, installation, uninstallation, gas filling and home appliance repair. Call or WhatsApp +91 83748 89163.',
-                   '/', None, ld) + header('home') + body + footer())
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=2">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=1" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,

@@ -1,0 +1,105 @@
+/* Home "2nd hero": animated service slider (no libraries). Plays only while on screen. */
+(function () {
+  'use strict';
+  var hero = document.getElementById('services-showcase');
+  if (!hero) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var slides = [].slice.call(hero.querySelectorAll('.bobby-hero-slide'));
+  var caps = [].slice.call(hero.querySelectorAll('.bobby-hero-cap'));
+  var tabs = [].slice.call(hero.querySelectorAll('.bobby-hero-tab'));
+  var cur = hero.querySelector('.bobby-hero-cur');
+  var bar = hero.querySelector('.bobby-hero-progress span');
+  var DELAY = 5500, idx = 0, timer = null, hold = false, busy = false, inView = false, washer = null;
+  hero.style.setProperty('--bh-delay', DELAY / 1000 + 's');
+
+  function colors(s) { hero.style.setProperty('--bh-bg', s.dataset.bg); hero.style.setProperty('--bh-bg2', s.dataset.bg2); }
+  function tick(el, from, to, dur, fmt) {
+    if (!el) return; if (reduce) { el.textContent = fmt(to); return; }
+    var t0 = null;
+    requestAnimationFrame(function step(ts) {
+      if (!t0) t0 = ts; var k = Math.min(1, (ts - t0) / dur);
+      el.textContent = fmt(Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(step);
+    });
+  }
+  function onActive(s) {
+    clearInterval(washer);
+    if (s.classList.contains('bobby-hero-slide-ac')) {
+      var t = s.querySelector('.bh2-temp'); t.textContent = '30°';
+      setTimeout(function () { tick(t, 30, 24, 1800, function (v) { return v + '°'; }); }, 700);
+    }
+    if (s.classList.contains('bobby-hero-slide-washer')) {
+      var w = s.querySelector('.bh2-timer'), sec = 42;
+      washer = setInterval(function () { sec = sec > 1 ? sec - 1 : 42; w.textContent = '0:' + ('0' + sec).slice(-2); }, 1000);
+    }
+  }
+  function go(n, user) {
+    n = (n + slides.length) % slides.length;
+    if (n === idx || busy) return;
+    busy = true;
+    var old = slides[idx], nxt = slides[n];
+    old.classList.remove('is-active'); old.classList.add('is-leaving'); old.setAttribute('aria-hidden', 'true');
+    setTimeout(function () { old.classList.remove('is-leaving'); busy = false; }, 900);
+    nxt.classList.add('is-active'); nxt.setAttribute('aria-hidden', 'false');
+    caps[idx].classList.remove('is-active'); caps[n].classList.add('is-active');
+    tabs[idx].classList.remove('is-active'); tabs[idx].setAttribute('aria-selected', 'false');
+    tabs[n].classList.add('is-active'); tabs[n].setAttribute('aria-selected', 'true');
+    cur.textContent = ('0' + (n + 1)).slice(-2);
+    colors(nxt); idx = n; onActive(nxt);
+    if (user) hold = true;
+    play();
+  }
+  function play() {
+    clearTimeout(timer);
+    bar.classList.remove('is-run'); void bar.offsetWidth;
+    if (reduce || hold || !inView) { hero.classList.add('is-paused'); if (hold || reduce) bar.style.transform = 'scaleX(1)'; return; }
+    bar.style.transform = ''; bar.classList.add('is-run'); hero.classList.remove('is-paused');
+    timer = setTimeout(function () { go(idx + 1); }, DELAY);
+  }
+
+  hero.querySelector('.bobby-hero-next').addEventListener('click', function () { go(idx + 1, true); });
+  hero.querySelector('.bobby-hero-prev').addEventListener('click', function () { go(idx - 1, true); });
+  tabs.forEach(function (t) { t.addEventListener('click', function () { go(+t.dataset.go, true); }); });
+  hero.addEventListener('keydown', function (e) {
+    if (e.target.closest('a,input')) return;
+    if (e.key === 'ArrowRight') { go(idx + 1, true); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { go(idx - 1, true); e.preventDefault(); }
+  });
+  var sx = null, sy = null;
+  hero.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  hero.addEventListener('touchend', function (e) {
+    if (sx === null) return; var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) go(idx + (dx < 0 ? 1 : -1), true);
+  });
+
+  /* autoplay + heavy animation only while visible */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      inView = en[0].isIntersecting;
+      hero.classList.toggle('bh2-off', !inView);
+      play();
+    }, { threshold: 0.35 }).observe(hero);
+  } else { inView = true; }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimeout(timer); else play(); });
+
+  if (fine && !reduce) {
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      hero.style.setProperty('--cx', (e.clientX - r.left) + 'px');
+      hero.style.setProperty('--cy', (e.clientY - r.top) + 'px');
+    });
+    hero.addEventListener('pointerleave', function () { hero.style.setProperty('--mx', 0); hero.style.setProperty('--my', 0); });
+    [].forEach.call(hero.querySelectorAll('.bh2-magnet'), function (b) {
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px,' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px)';
+      });
+      b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+    });
+  }
+
+  colors(slides[0]); onActive(slides[0]); play();
+})();

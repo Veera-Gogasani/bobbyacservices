@@ -63,7 +63,7 @@ html[lang="te"] .eyebrow,html[lang="hi"] .eyebrow{letter-spacing:.02em;font-size
 .topbar span{display:inline-flex;align-items:center;gap:7px}
 .topbar svg{width:15px;height:15px;color:var(--orange)}
 .topbar a:hover{color:#fff}
-@media(max-width:640px){.topbar{display:none}}
+
 .hdr{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px);border-bottom:1px solid transparent;transition:box-shadow .25s,border-color .25s}
 .hdr.scrolled{box-shadow:0 8px 28px rgba(16,44,80,.08);border-color:var(--line)}
 .hdr .wrap{display:flex;align-items:center;gap:18px;height:var(--hdr);width:min(1320px,100% - 40px)}
@@ -616,3 +616,14 @@ a.ccard:hover{transform:translateY(-3px)}
 .rc-sec .rc-empty p{color:#CFE2F5}
 @media(max-width:640px){.rc{--gap:14px}.rc-card{padding:26px 20px 18px}.rc.is-js .rc-slide[aria-hidden="true"]{opacity:1}}
 @media(prefers-reduced-motion:reduce){.rc-dot[aria-current="true"]::after{animation:none;transform:scaleX(1)}.rc-slide.is-focus .rc-card{transform:none}}
+
+/* pre-header: owner name + email */
+.topbar .tb-owner{flex-wrap:wrap;gap:6px 8px}
+.topbar .tb-owner b{color:#fff;font-weight:600}
+.topbar .tb-owner .tb-bobby{color:var(--orange)}
+.topbar .tb-sep{font-style:normal;opacity:.4}
+.topbar .tb-mail{display:inline-flex;align-items:center;gap:6px}
+.topbar .tb-mail:hover{text-decoration:underline}
+.topbar .tb-right{flex-wrap:wrap}
+@media(max-width:980px){.topbar .tb-right{display:none}.topbar .wrap{justify-content:center}}
+@media(max-width:640px){.topbar{font-size:12px}.topbar .wrap{padding:6px 0;text-align:center}.topbar .tb-owner{justify-content:center}.topbar svg{width:13px;height:13px}}
