@@ -231,7 +231,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=17">
+<link rel="stylesheet" href="/assets/css/style.css?v=18">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -543,7 +543,7 @@ def build_home():
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
-        f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo reveal">{img('why', 1200, 1440, 'why.h2')}<div class="badge"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt="" loading="lazy">{tx('brand.tagline')}</div></div>
+        f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo reveal">{img('why', 1200, 1440, 'why.h2')}</div>
 <div>{sec_head("why.eyebrow", "why.h2", None, center=False)}{why_cards()}</div></div></section>''' +
         steps_block() +
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +

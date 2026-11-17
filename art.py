@@ -256,21 +256,45 @@ def embed(path, x, y, w=None, h=None):
     buf = io.BytesIO(); im.save(buf, 'PNG')
     return f'<image x="{x}" y="{y}" width="{w}" height="{h}" href="data:image/png;base64,{base64.b64encode(buf.getvalue()).decode()}"/>'
 
-# 'Why choose BOBBY' scene – website navy theme, technician servicing a split AC, appliances on the floor
-_WHY_BG = (f'<defs><linearGradient id="nvbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16477A"/><stop offset=".55" stop-color="{NAVY}"/><stop offset="1" stop-color="{NAVY2}"/></linearGradient>'
-           f'<linearGradient id="nvfloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2747"/><stop offset="1" stop-color="#081629"/></linearGradient>'
-           f'<pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#FFFFFF" opacity=".10"/></pattern></defs>'
-           f'<rect width="1200" height="1440" fill="url(#nvbg)"/><rect width="1200" height="1150" fill="url(#dots)"/>')
-SC['why'] = (1200, 1440, _WHY_BG + glow(600, 330, 520) + glow(980, 900, 300, 'oglow') +
-    ''.join(f'<rect x="{x}" y="120" width="2" height="1030" fill="#FFFFFF" opacity=".05"/>' for x in (150, 1050)) +
-    split_ac(236, 150, 1.3) + airflow(270, 410, 680, 5, 46, 34) +
-    sparkle(1070, 140, 26, CYAN) + sparkle(180, 330, 18, CYAN) + sparkle(1110, 560, 14, '#FFFFFF') +
-    f'<rect y="1150" width="1200" height="290" fill="url(#nvfloor)"/><rect y="1146" width="1200" height="6" fill="{CYAN}" opacity=".25"/>' +
-    f'<ellipse cx="600" cy="1190" rx="560" ry="40" fill="{CYAN}" opacity=".06"/>' +
-    embed('static/hero-preview/assets/washer.webp', 40, 790, h=380) +
-    ladder(470, 520, 640, 1.4) + technician(400, 330, 1.75, 'up') + toolbox(640, 1080, 0.85) +
-    embed('static/hero-preview/assets/fridge.webp', 860, 600, h=570) +
-    badge(1080, 300, 46, 'check', '#1FA855') + badge(120, 700, 34, 'bolt', ORANGE))
+# 'Why choose BOBBY' scene – flat illustration in the website navy theme
+def flat_fridge(x, y, s=1):
+    W, H = 300*s, 560*s
+    return (f'<g><rect x="{x+10*s}" y="{y+H-6*s}" width="{W-20*s}" height="{14*s}" rx="{7*s}" fill="#081629" opacity=".5"/>'
+            f'<rect x="{x}" y="{y}" width="{W}" height="{H}" rx="{22*s}" fill="#EEF3F8"/>'
+            f'<rect x="{x+W/2}" y="{y}" width="{W/2}" height="{H}" rx="{22*s}" fill="#DFE8F1"/><rect x="{x+W/2}" y="{y}" width="{24*s}" height="{H}" fill="#DFE8F1"/>'
+            f'<rect x="{x+W/2-2*s}" y="{y}" width="{4*s}" height="{H}" fill="#C3D1DE"/>'
+            f'<rect x="{x+W/2-26*s}" y="{y+110*s}" width="{12*s}" height="{170*s}" rx="{6*s}" fill="#AFC0D0"/><rect x="{x+W/2+14*s}" y="{y+110*s}" width="{12*s}" height="{170*s}" rx="{6*s}" fill="#AFC0D0"/>'
+            f'<rect x="{x+30*s}" y="{y+110*s}" width="{70*s}" height="{100*s}" rx="{10*s}" fill="{NAVY}"/>'
+            f'<text x="{x+65*s}" y="{y+152*s}" font-family="Arial,Helvetica" font-weight="700" font-size="{20*s}" fill="{CYAN}" text-anchor="middle">3°</text>'
+            f'<rect x="{x+48*s}" y="{y+166*s}" width="{34*s}" height="{30*s}" rx="{5*s}" fill="#081629"/>'
+            f'<rect x="{x+18*s}" y="{y+H}" width="{30*s}" height="{10*s}" rx="{3*s}" fill="#56677A"/><rect x="{x+W-48*s}" y="{y+H}" width="{30*s}" height="{10*s}" rx="{3*s}" fill="#56677A"/></g>')
+
+def flat_washer(x, y, s=1):
+    W, H = 300*s, 340*s
+    cx, cy = x + W/2, y + 200*s
+    return (f'<g><rect x="{x}" y="{y}" width="{W}" height="{H}" rx="{24*s}" fill="#EEF3F8"/>'
+            f'<rect x="{x}" y="{y}" width="{W}" height="{70*s}" rx="{24*s}" fill="#FFFFFF"/><rect x="{x}" y="{y+46*s}" width="{W}" height="{24*s}" fill="#FFFFFF"/>'
+            f'<rect x="{x+24*s}" y="{y+20*s}" width="{80*s}" height="{30*s}" rx="{7*s}" fill="{NAVY}"/>'
+            f'<text x="{x+64*s}" y="{y+41*s}" font-family="Arial,Helvetica" font-weight="700" font-size="{16*s}" fill="{CYAN}" text-anchor="middle">0:42</text>'
+            + ''.join(f'<circle cx="{x+130*s+i*24*s}" cy="{y+35*s}" r="{6*s}" fill="{ORANGE if i == 3 else "#C3D1DE"}"/>' for i in range(4)) +
+            f'<circle cx="{x+W-36*s}" cy="{y+35*s}" r="{17*s}" fill="#DFE8F1"/><rect x="{x+W-38*s}" y="{y+22*s}" width="{4*s}" height="{12*s}" rx="{2*s}" fill="{NAVY}"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="{108*s}" fill="#C9D6E3"/><circle cx="{cx}" cy="{cy}" r="{88*s}" fill="{BLUE}"/>'
+            f'<path d="M{cx-88*s} {cy+10*s} q{44*s} -{26*s} {88*s} 0 t{88*s} 0 A{88*s} {88*s} 0 0 1 {cx-88*s} {cy+10*s}z" fill="{CYAN}"/>'
+            f'<path d="M{cx-52*s} {cy-48*s} a{70*s} {70*s} 0 0 1 {50*s} -{20*s}" stroke="#FFFFFF" stroke-width="{10*s}" fill="none" stroke-linecap="round" opacity=".8"/>'
+            f'<circle cx="{cx+40*s}" cy="{cy+40*s}" r="{7*s}" fill="#FFFFFF" opacity=".85"/><circle cx="{cx+18*s}" cy="{cy+56*s}" r="{4*s}" fill="#FFFFFF" opacity=".85"/></g>')
+
+_WHY_BG = (f'<defs><linearGradient id="nvbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16477A"/><stop offset=".6" stop-color="{NAVY}"/><stop offset="1" stop-color="{NAVY2}"/></linearGradient>'
+           f'<pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#FFFFFF" opacity=".09"/></pattern></defs>'
+           f'<rect width="1200" height="1440" fill="url(#nvbg)"/><rect width="1200" height="1260" fill="url(#dots)"/>')
+SC['why'] = (1200, 1440, _WHY_BG + f'<circle cx="600" cy="360" r="460" fill="{CYAN}" opacity=".08"/><circle cx="600" cy="360" r="300" fill="{CYAN}" opacity=".07"/>' +
+    split_ac(236, 190, 1.3) + airflow(270, 450, 680, 5, 48, 34) +
+    sparkle(1070, 170, 26, CYAN) + sparkle(170, 380, 18, CYAN) + sparkle(1120, 620, 14, '#FFFFFF') +
+    f'<rect y="1260" width="1200" height="180" fill="#0A1B33"/><rect y="1256" width="1200" height="6" fill="{CYAN}" opacity=".3"/>' +
+    f'<ellipse cx="600" cy="1300" rx="520" ry="26" fill="#000" opacity=".18"/>' +
+    flat_washer(40, 920, 1.05) +
+    ladder(470, 630, 640, 1.4) + technician(400, 440, 1.75, 'up') + toolbox(650, 1180, 0.85) +
+    flat_fridge(850, 690, 1.0) +
+    badge(1080, 330, 46, 'check', '#1FA855') + badge(110, 800, 34, 'bolt', ORANGE))
 
 def build(outdir='static/assets/img/art', srcdir='art-src', only=None):
     os.makedirs(outdir, exist_ok=True); os.makedirs(srcdir, exist_ok=True)
