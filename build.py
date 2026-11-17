@@ -530,7 +530,13 @@ def build_home():
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
-    body = (hero + stats_block() + home_slider() + reviews_block() +
+    duo = ('<div class="hero-duo" id="hero-duo" aria-roledescription="carousel" aria-label="Featured">'
+           + home_slider().replace('<section class="bh2s bobby-hero"', '<section class="bh2s bobby-hero hero-duo-panel is-on"', 1)
+           + hero.replace('<section class="hero"', '<section class="hero hero-duo-panel" aria-hidden="true" inert', 1)
+           + '<div class="hero-duo-pager" role="tablist" aria-label="Choose hero">'
+           + '<button type="button" role="tab" class="is-on" aria-selected="true" data-duo="0" aria-label="Services showcase"></button>'
+           + '<button type="button" role="tab" aria-selected="false" data-duo="1" aria-label="AC repair at your doorstep"></button></div></div>')
+    body = (duo + stats_block() + reviews_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
@@ -542,7 +548,7 @@ def build_home():
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
     page('/', head('BOBBY AC Repair & Home Appliance Services in Narasaraopet | AC Installation & Repair',
                    'Looking for AC repair in Narasaraopet? BOBBY provides AC servicing, installation, uninstallation, gas filling and home appliance repair. Call or WhatsApp +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=2">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=1" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=3">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=2" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,

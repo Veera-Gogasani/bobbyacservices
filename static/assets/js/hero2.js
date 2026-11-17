@@ -53,9 +53,13 @@
   function play() {
     clearTimeout(timer);
     bar.classList.remove('is-run'); void bar.offsetWidth;
-    if (reduce || hold || !inView) { hero.classList.add('is-paused'); if (hold || reduce) bar.style.transform = 'scaleX(1)'; return; }
+    var shown = !hero.classList.contains('hero-duo-panel') || hero.classList.contains('is-on');
+    if (reduce || hold || !inView || !shown) { hero.classList.add('is-paused'); if (hold || reduce) bar.style.transform = 'scaleX(1)'; return; }
     bar.style.transform = ''; bar.classList.add('is-run'); hero.classList.remove('is-paused');
-    timer = setTimeout(function () { go(idx + 1); }, DELAY);
+    timer = setTimeout(function () {
+      if (idx === slides.length - 1 && window.bobbyDuo && window.bobbyDuo.next()) return;
+      go(idx + 1);
+    }, DELAY);
   }
 
   hero.querySelector('.bobby-hero-next').addEventListener('click', function () { go(idx + 1, true); });
@@ -102,4 +106,38 @@
   }
 
   colors(slides[0]); onActive(slides[0]); play();
+
+  /* ---- two heroes sliding one after the other ---- */
+  var duo = document.getElementById('hero-duo');
+  if (!duo) return;
+  var panels = [].slice.call(duo.querySelectorAll('.hero-duo-panel'));
+  var dots = [].slice.call(duo.querySelectorAll('.hero-duo-pager button'));
+  var cur2 = 0, duoTimer = null, duoHold = false, HOLD2 = 9000, duoHover = false;
+  function show(n) {
+    if (n === cur2) return;
+    var old = panels[cur2], nxt = panels[n], fwd = n > cur2 || (cur2 === panels.length - 1 && n === 0);
+    if (!fwd) { nxt.classList.add('is-back'); void nxt.offsetWidth; nxt.classList.remove('is-back'); }
+    old.classList.remove('is-on'); old.classList.toggle('is-out', fwd);
+    if (!fwd) old.style.transform = 'translate3d(100%,0,0)';
+    nxt.classList.remove('is-out'); nxt.style.transform = ''; nxt.classList.add('is-on');
+    setTimeout(function () { old.classList.remove('is-out'); old.style.transform = ''; }, 1150);
+    old.setAttribute('aria-hidden', 'true'); old.inert = true;
+    nxt.removeAttribute('aria-hidden'); nxt.inert = false;
+    dots[cur2].classList.remove('is-on'); dots[cur2].setAttribute('aria-selected', 'false');
+    dots[n].classList.add('is-on'); dots[n].setAttribute('aria-selected', 'true');
+    cur2 = n;
+    clearTimeout(duoTimer); clearTimeout(timer);
+    if (n === 0) {                       /* back on the showcase: restart its slides */
+      hold = false; if (idx !== 0) { busy = false; go(0); } else play();
+    } else {
+      hero.classList.add('is-paused');
+      var restart = nxt.querySelectorAll('.anim'); [].forEach.call(restart, function (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
+      if (!duoHold && !reduce) duoTimer = setTimeout(function back() { if (!duoHover) show(0); else duoTimer = setTimeout(back, 2000); }, HOLD2);
+    }
+  }
+  window.bobbyDuo = { next: function () { if (duoHold || reduce) return false; show(1); return true; } };
+  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; show(+d.dataset.duo); }); });
+  panels[1].addEventListener('pointerenter', function () { duoHover = true; });
+  panels[1].addEventListener('pointerleave', function () { duoHover = false; });
+  panels[1].inert = true;
 })();

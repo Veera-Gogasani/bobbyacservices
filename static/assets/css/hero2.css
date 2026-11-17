@@ -220,3 +220,24 @@
 @media (max-width:760px){.bh2s .bobby-hero-stage{height:clamp(330px,52vh,440px);margin-top:10px}.bh2s .bobby-hero-bottom{padding:4px 18px 66px}}
 .bh2s.bh2-off *,.bh2s.bh2-off *::before,.bh2s.bh2-off *::after{animation-play-state:paused !important}
 @media (min-width:1181px){.bh2s .bobby-hero-bottom{right:clamp(110px,8vw,130px)}}
+
+/* ===== Two heroes, sliding one after the other ===== */
+.hero-duo{position:relative;display:grid;overflow:hidden;background:#0B1F3A}
+.hero-duo-panel{grid-area:1/1;min-width:0;transform:translate3d(100%,0,0);visibility:hidden;transition:transform 1.1s cubic-bezier(.75,0,.2,1),visibility 0s linear 1.1s}
+.hero-duo-panel.is-on{transform:none;visibility:visible;transition:transform 1.1s cubic-bezier(.75,0,.2,1),visibility 0s}
+.hero-duo-panel.is-out{transform:translate3d(-100%,0,0)}
+.hero-duo-panel.is-back{transform:translate3d(-100%,0,0);transition:none}
+.hero-duo .hero{display:flex;align-items:center}
+.hero-duo .hero>.wrap{width:min(1200px,100% - 40px)}
+.hero-duo-pager{position:absolute;right:18px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:10px;padding:10px 7px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hero-duo-pager button{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.45);cursor:pointer;transition:height .35s,background .35s}
+.hero-duo-pager button.is-on{height:28px;background:#FF9F43}
+.hero-duo-pager button:focus-visible{outline:3px solid #56C8FF;outline-offset:3px}
+/* trust ticker moves to the top of the slider so the stats card can overlap the bottom */
+.hero-duo .bh2s .bobby-hero-marquee{top:0;bottom:auto;border-top:0;border-bottom:1px solid rgba(255,255,255,.14)}
+.hero-duo .bh2s .bobby-hero-stage{top:62px}
+.hero-duo .bh2s .bobby-hero-bottom{bottom:78px}
+.hero-duo .bh2s .bobby-hero-slide-ac .bobby-hero-product{margin-top:-26vh}
+@media (max-width:1180px){.hero-duo .bh2s .bobby-hero-stage{margin-top:56px;top:auto}.hero-duo .bh2s .bobby-hero-bottom{bottom:auto;padding-bottom:84px}}
+@media (max-width:760px){.hero-duo-pager{right:auto;left:50%;top:auto;bottom:58px;transform:translateX(-50%);flex-direction:row;padding:7px 10px}.hero-duo-pager button.is-on{height:10px;width:28px}.hero-duo-pager button{transition:width .35s,background .35s}.hero-duo .bh2s .bobby-hero-bottom{padding-bottom:96px}}
+@media (prefers-reduced-motion:reduce){.hero-duo-panel,.hero-duo-panel.is-on{transition:none}}
