@@ -38,18 +38,18 @@ REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasa
 
 # DEMO data — sample names & text for layout testing ONLY. Rendered only on the noindex /reviews-preview/ page.
 DEMO_REVIEWS = [{'name': n, 'area': a, 'service': s, 'rating': r, 'text': t, 'source': 'demo'} for n, a, s, r, t in [
-    ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, 'AC stopped cooling in the afternoon; technician came the same evening, found the fault and fixed it.'),
-    ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, 'Full jet-wash service, cleaned the filters and coil, explained everything before starting.'),
-    ('Srinivas R.', 'Barampet', 'AC Installation', 5, 'New split AC installed neatly with proper drain slope and tidy piping.'),
-    ('Anusha M.', 'Ramireddypet', 'AC Uninstallation', 4, 'Unit removed carefully before our house shift, gas pumped down first.'),
-    ('Venkatesh B.', 'Palnadu Road', 'AC Gas Filling', 5, 'Checked for the leak first, fixed it, then refilled. Cooling is back to normal.'),
-    ('Padma S.', 'Satyanarayana Puram', 'AC Cooling Problem', 5, 'Room was not getting cold; it was a blocked coil. Cleaned and working well now.'),
-    ('Naresh G.', 'Kotappakonda Road', 'Refrigerator Repair', 5, 'Fridge was not cooling; thermostat replaced the same day with clear estimate.'),
-    ('Sujatha V.', 'Islampet', 'Washing Machine Repair', 4, 'Drum was not spinning; belt replaced and machine tested with a full cycle.'),
-    ('Ramesh T.', 'Chilakaluripet Road', 'Air Cooler Repair', 5, 'Cooler pump and motor checked, pump replaced, now running fine.'),
-    ('Kavitha N.', 'Vinukonda Road', 'Ceiling Fan Repair', 5, 'Fan was slow and noisy; capacitor changed and bearing serviced.'),
-    ('Mahesh Y.', 'Narasaraopet', 'AC Repair', 5, 'Outdoor unit was tripping; wiring fault found and repaired quickly.'),
-    ('Divya L.', 'Gurazala Road', 'AC Servicing', 5, 'Booked on WhatsApp, technician arrived on time and left the place clean.'),
+    ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, "AC suddenly stopped cooling on a hot afternoon. Called around 3 pm and the technician reached by evening. Found the capacitor was gone, replaced it and showed me the old one too. Back to normal in under an hour."),
+    ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, "Got both bedroom ACs serviced before summer. They covered the wall and floor properly before the jet wash, so no mess at all. Cooling is noticeably better now. Thank you BOBBY team, will call you again next year."),
+    ('Srinivas R.', 'Barampet', 'AC Installation', 5, "Bought a new split AC and was worried about the installation. They fixed the outdoor unit firmly, kept the pipes neat and checked the drain before leaving. Clean work."),
+    ('Anusha M.', 'Ramireddypet', 'AC Uninstallation', 4, "We were shifting houses and needed the AC removed carefully. They pumped down the gas first and packed the pipes properly. Came a little later than the time given, but the work was good."),
+    ('Venkatesh B.', 'Palnadu Road', 'AC Gas Filling', 5, "Another shop just refilled gas last year and it leaked again in two months. This time they found the leak at the joint, fixed it and only then filled gas. No problem since."),
+    ('Padma S.', 'Satyanarayana Puram', 'AC Cooling Problem', 5, "AC was running all day but the room never got cold. They checked and said the coil was fully blocked with dust. After cleaning, the room cools within 10 minutes. Didn't push any unnecessary parts."),
+    ('Naresh G.', 'Kotappakonda Road', 'Refrigerator Repair', 5, "Fridge stopped cooling and we had milk and vegetables inside. Technician came the same day, changed the thermostat and told the price before starting. Very thankful for the quick help."),
+    ('Sujatha V.', 'Islampet', 'Washing Machine Repair', 4, "Washing machine drum was not spinning. Belt was worn out, they replaced it and ran a full cycle to check. Good work, reasonable charges."),
+    ('Ramesh T.', 'Chilakaluripet Road', 'Air Cooler Repair', 5, "Cooler fan was running but no water flow on the pads. Pump was gone. Replaced the same visit and cleaned the tank also. Simple and honest service."),
+    ('Kavitha N.', 'Vinukonda Road', 'Ceiling Fan Repair', 5, "Hall fan was very slow and making noise. Capacitor changed and bearing oiled, now it runs quietly at full speed. Didn't expect such small work to be taken so seriously."),
+    ('Mahesh Y.', 'Narasaraopet', 'AC Repair', 5, "Outdoor unit kept tripping the MCB. They traced it to a loose wire and fixed it properly. Explained everything clearly. Thanks a lot, saved me from buying a new stabiliser."),
+    ('Divya L.', 'Gurazala Road', 'AC Servicing', 5, "Booked on WhatsApp in the morning, technician came on time in the afternoon. Polite, cleaned up after the work and shared photos of the filters before and after."),
 ]]
 
 BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carrier', 'Godrej', 'Haier', 'Voltas']
