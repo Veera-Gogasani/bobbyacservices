@@ -208,7 +208,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap">
-<link rel="stylesheet" href="/assets/css/style.css?v=10">
+<link rel="stylesheet" href="/assets/css/style.css?v=11">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -369,8 +369,9 @@ def reviews_block():
         link = f'<a class="link-arrow" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic("arrow")}</a>' if GOOGLE_REVIEW_URL else ''
         body = f'''<div class="rev-marquee" aria-label="Customer reviews"><div class="rev-belt">{cards}<div class="rev-dup" aria-hidden="true">{cards}</div></div></div>'''
     else:
-        body = f'<p class="rev-empty">{ic("star")}{tx("rev.first")}</p>'
-    return f'''<section class="sec" id="reviews"><div class="wrap"><div class="rev-box reveal">
+        body = f'<p class="rev-empty">{tx("rev.first")}</p>'
+    stars = '<div class="rev-stars" aria-hidden="true">' + ''.join(f'<span style="--i:{i}">★</span>' for i in range(5)) + '</div>'
+    return f'''<section class="sec rev-sec" id="reviews"><div class="wrap"><div class="rev-box reveal">{stars}
 <div><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead" style="margin-top:10px">{tx("rev.sub")}</p>{body}</div>
 <div class="btn-row"><a class="btn btn-orange" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx("rev.google")}</a><a class="btn btn-line" href="{GMAPS_URL}" target="_blank" rel="noopener">{tx("rev.read")}{ic('arrow')}</a></div>
 </div></div></section>'''
@@ -429,13 +430,13 @@ def build_home():
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
-    body = (hero + stats_block() +
+    body = (hero + stats_block() + reviews_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
         f'<section class="sec sec-alt" id="brands"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block()}</div></section>' +
         f'''<section class="sec" id="why"><div class="wrap why-split"><div class="why-photo tech reveal">{img('technician', 768, 512, 'why.h2')}<div class="badge"><img src="/assets/img/bobby-logo-160.webp" width="44" height="44" alt="" loading="lazy">{tx('brand.tagline')}</div></div>
 <div>{sec_head("why.eyebrow", "why.h2", None, center=False)}{why_cards()}</div></div></section>''' +
-        steps_block() + reviews_block() +
+        steps_block() +
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
