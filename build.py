@@ -246,7 +246,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=28">
+<link rel="stylesheet" href="/assets/css/style.css?v=29">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -298,7 +298,23 @@ def footer():
 <footer class="ftr">
 <div class="wrap grid">
 <div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
-<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
+<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p>
+<form class="acc" id="acCalc" aria-labelledby="accH" onsubmit="return false">
+<p class="acc-h" id="accH">{ic('rupee')}{tx('acc.h')}</p>
+<div class="acc-grid">
+<label><span data-i18n="acc.cap">{en('acc.cap')}</span><select name="ton"><option value="1">1 Ton</option><option value="1.5" selected>1.5 Ton</option><option value="2">2 Ton</option></select></label>
+<label><span data-i18n="acc.type">{en('acc.type')}</span><select name="type"><option value="inv" data-i18n="acc.inv">{en('acc.inv')}</option><option value="non" data-i18n="acc.noninv">{en('acc.noninv')}</option></select></label>
+<label><span data-i18n="acc.hours">{en('acc.hours')}</span><input name="hours" type="number" inputmode="decimal" min="0" max="24" step="0.5" value="8"></label>
+<label><span data-i18n="acc.days">{en('acc.days')}</span><input name="days" type="number" inputmode="numeric" min="1" max="31" step="1" value="30"></label>
+<label><span data-i18n="acc.tariff">{en('acc.tariff')}</span><input name="tariff" type="number" inputmode="decimal" min="0" max="30" step="0.1" value="7"></label>
+<label><span data-i18n="acc.watts">{en('acc.watts')}</span><input name="watts" type="number" inputmode="numeric" min="200" max="5000" step="10" placeholder="e.g. 1450"></label>
+</div>
+<output class="acc-out" name="out" for="acCalc" aria-live="polite">
+<span class="acc-row"><span data-i18n="acc.day">{en('acc.day')}</span><b data-acc="ud">7.6</b> <small data-i18n="acc.units">{en('acc.units')}</small></span>
+<span class="acc-row"><span data-i18n="acc.month">{en('acc.month')}</span><b data-acc="um">228</b> <small data-i18n="acc.units">{en('acc.units')}</small></span>
+<span class="acc-row acc-big"><span data-i18n="acc.cost">{en('acc.cost')}</span><b data-acc="cm">₹1,596</b></span>
+</output>
+<p class="acc-note">{tx('acc.note')} {tx('acc.tip')}</p></form></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
@@ -313,6 +329,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
+<script src="/assets/js/ac-cost.js?v=1" defer></script>
 <script src="/assets/js/main.js?v=13" defer></script>
 </body></html>
 '''

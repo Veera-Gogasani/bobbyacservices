@@ -2,6 +2,24 @@
 """Strings for /ac-spare-parts/  (en, te, hi). Part names/descriptions live in spare_parts.py (English)."""
 
 SP = {
+    # footer AC electricity cost calculator
+    'acc.h': ("AC electricity cost calculator", "ఏసీ కరెంట్ ఖర్చు లెక్కింపు", "एसी बिजली खर्च कैलकुलेटर"),
+    'acc.cap': ("AC capacity", "ఏసీ కెపాసిటీ", "एसी क्षमता"),
+    'acc.type': ("AC type", "ఏసీ రకం", "एसी प्रकार"),
+    'acc.inv': ("Inverter", "ఇన్వర్టర్", "इन्वर्टर"),
+    'acc.noninv': ("Non-inverter", "నాన్-ఇన్వర్టర్", "नॉन-इन्वर्टर"),
+    'acc.hours': ("Hours per day", "రోజుకు గంటలు", "प्रतिदिन घंटे"),
+    'acc.days': ("Days per month", "నెలకు రోజులు", "महीने में दिन"),
+    'acc.tariff': ("Tariff (₹ per unit)", "టారిఫ్ (యూనిట్‌కు ₹)", "टैरिफ़ (₹ प्रति यूनिट)"),
+    'acc.watts': ("Power from AC label (W, optional)", "ఏసీ లేబుల్‌పై పవర్ (W, ఐచ్ఛికం)", "एसी लेबल पर पावर (W, वैकल्पिक)"),
+    'acc.day': ("Per day", "రోజుకు", "प्रतिदिन"),
+    'acc.month': ("Per month", "నెలకు", "प्रति माह"),
+    'acc.units': ("units", "యూనిట్లు", "यूनिट"),
+    'acc.cost': ("Estimated bill for AC", "ఏసీకి అంచనా బిల్లు", "एसी का अनुमानित बिल"),
+    'acc.note': ("Estimate only. Uses average running power (1 / 1.5 / 2 ton: about 1.0 / 1.45 / 1.9 kW non-inverter, about 0.65 / 0.95 / 1.25 kW inverter) unless you enter the power from your AC label. Actual use depends on star rating, room size, outside heat and thermostat setting.",
+                 "అంచనా మాత్రమే. మీరు ఏసీ లేబుల్ పవర్ ఇవ్వకపోతే సగటు రన్నింగ్ పవర్ వాడుతుంది (1 / 1.5 / 2 టన్: నాన్-ఇన్వర్టర్ సుమారు 1.0 / 1.45 / 1.9 kW, ఇన్వర్టర్ సుమారు 0.65 / 0.95 / 1.25 kW). అసలు వినియోగం స్టార్ రేటింగ్, గది సైజ్, బయటి వేడి, థర్మోస్టాట్ సెట్టింగ్‌పై ఆధారపడి ఉంటుంది.",
+                 "केवल अनुमान। अगर आप एसी लेबल की पावर नहीं डालते तो औसत चलने की पावर ली जाती है (1 / 1.5 / 2 टन: नॉन-इन्वर्टर लगभग 1.0 / 1.45 / 1.9 kW, इन्वर्टर लगभग 0.65 / 0.95 / 1.25 kW)। असली खपत स्टार रेटिंग, कमरे के आकार, बाहर की गर्मी और थर्मोस्टैट सेटिंग पर निर्भर करती है।"),
+    'acc.tip': ("Tip: setting 24–26 °C and a yearly service usually lowers the bill.", "చిట్కా: 24–26 °C సెట్టింగ్, ఏటా సర్వీస్ చేయిస్తే సాధారణంగా బిల్లు తగ్గుతుంది.", "सुझाव: 24–26 °C सेटिंग और साल में एक बार सर्विस से आमतौर पर बिल घटता है।"),
     'ft.parts': ("AC Spare Parts", "ఏసీ స్పేర్ పార్ట్స్", "एसी स्पेयर पार्ट्स"),
     'sp.crumb': ("AC Spare Parts", "ఏసీ స్పేర్ పార్ట్స్", "एसी स्पेयर पार्ट्स"),
     'sp.h1': ("Residential Air Conditioner Spare Parts", "ఇంటి ఏసీ స్పేర్ పార్ట్స్", "घरेलू एयर कंडीशनर स्पेयर पार्ट्स"),
