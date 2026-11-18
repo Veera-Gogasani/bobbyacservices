@@ -844,3 +844,4 @@ a.ccard:hover{transform:translateY(-3px)}
   .sp-act .btn{width:100%;justify-content:center;min-height:46px}
   .sp-promo{flex-wrap:wrap}
 }
+.sp-photo img{object-fit:contain;background:#fff;padding:6px}

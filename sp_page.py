@@ -34,9 +34,10 @@ def build(B):
                 price = f'<b class="sp-amt sp-por">{tx("sp.por")}</b><span class="sp-unit">model-specific quotation</span>'
             srcs = ', '.join(D.SOURCES[s][0].split(' – ')[0] for s in p['src']) or 'No verified public price'
             price += f'<span class="sp-basis b-{p["basis"] if p["price"] else "none"}" title="{esc(p["note"])}">{D.BASIS_LABEL[p["basis"]] if p["price"] else "Quoted after model check"}</span><span class="sp-src">Source: {esc(srcs)}</span>'
+            imgcell = (f'<td class="sp-img sp-photo"><img src="{esc(D.photo_url(p))}" width="120" height="120" loading="lazy" decoding="async" referrerpolicy="no-referrer" alt="{esc(p["name"])} – representative product photo" onerror="this.onerror=null;this.src=\'/assets/img/parts/{p["img"]}.webp\';this.parentNode.classList.remove(\'sp-photo\')"></td>' if D.photo_url(p) else
+                       f'<td class="sp-img"><img src="/assets/img/parts/{p["img"]}.webp" width="120" height="120" loading="lazy" decoding="async" alt="Illustration of {esc(p["name"])}"></td>')
             search = esc((p['name'] + ' ' + p['desc'] + ' ' + p['cat']).lower())
-            rows += (f'<tr class="sp-row" id="{p["id"]}" data-cat="{c}" data-q="{search}">'
-                     f'<td class="sp-img"><img src="/assets/img/parts/{p["img"]}.webp" width="120" height="120" loading="lazy" decoding="async" alt="Illustration of {esc(p["name"])}"></td>'
+            rows += (f'<tr class="sp-row" id="{p["id"]}" data-cat="{c}" data-q="{search}">' + imgcell +
                      f'<th scope="row" class="sp-name">{esc(p["name"])}{badge}</th>'
                      f'<td class="sp-desc">{esc(p["desc"])}</td>'
                      f'<td class="sp-price">{price}</td>'
@@ -69,7 +70,7 @@ def build(B):
     item_ld = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': 'Residential AC spare parts – indicative price guide',
                'numberOfItems': len(D.PARTS), 'itemListElement': [
                    {'@type': 'ListItem', 'position': i + 1, 'name': p['name'], 'url': SITE + PATH + '#' + p['id'],
-                    'image': SITE + '/assets/img/parts/%s.webp' % p['img']} for i, p in enumerate(D.PARTS)]}
+                    'image': D.photo_url(p) or SITE + '/assets/img/parts/%s.webp' % p['img']} for i, p in enumerate(D.PARTS)]}
     crumbs = B.crumbs_ld([('Home', '/'), ('AC Services', '/ac-services/'), ('AC Spare Parts', PATH)])
 
     html_ = (B.head('AC Spare Parts Price List in India | BOBBY Narasaraopet',
@@ -89,7 +90,7 @@ def build(B):
 <details class="sp-sources"><summary>{tx("sp.src.h")} <small>· {D.PRICE_REVIEW}</small></summary>
 <p>{tx("sp.src.p")} Prices were checked on <b>{D.PRICE_REVIEW}</b>.</p><ul class="sp-srcl">{sources}</ul>
 <h3>{tx("sp.basis.h")}</h3><ul class="sp-basisl">{basis}</ul>
-<p class="sp-muted">Product images are original BOBBY illustrations made for this guide, not photos of a specific branded part.</p></details>
+<p class="sp-muted">Product photos courtesy of <a href="https://apnaspare.com/" target="_blank" rel="noopener">ApnaSpare</a>; parts without a matching photo are shown as BOBBY illustrations. Images are representative — your AC may need a different rating or model of the part.</p></details>
 </div></section>
 <section class="sec"><div class="wrap sp-two">
 <div class="reveal"><h2>{tx("sp.br.h")}</h2><p class="lead" style="margin-top:10px">{tx("sp.br.p")}</p><ul class="sp-brands">{brands}</ul>

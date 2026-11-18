@@ -15,6 +15,27 @@ Price basis (shown on the page as a small tag):
 
 PRICE_REVIEW = '18 November 2026'
 
+# Product photos courtesy of ApnaSpare (used with the site owner's permission), served at 256px via their image CDN.
+# Parts without a matching ApnaSpare product keep the BOBBY illustration (static/assets/img/parts/).
+PHOTO_BASE = 'https://apnaspare.com/_next/image?url=https%3A%2F%2Fapnaspare.s3.ap-south-1.amazonaws.com%2Fproduct%2F{f}&w=256&q=75'
+PHOTOS = {
+    'run-capacitor': 'bced9846-3752-45e6-9897-fa07a9693985-IMG_2116_nobg.jpg',
+    'fan-capacitor': '05f9fdc5-dbe5-452f-862f-135b5a0fd23e-IMG_2118_nobg.jpg',
+    'dual-capacitor': '3fe6c438-8b6b-453c-adbb-39a2887bd605-IMG_2190_nobg.jpg',
+    'start-capacitor': '79627c81-dc07-411a-947e-eb43ec5d97c8-IMG_2132_nobg.jpg',
+    'universal-pcb': '83b9461b-9fa1-4363-a403-1668eaad89bb-IMG_20260906_123053_nobg.jpg',
+    'contactor': '77bf2bb3-6d69-4ce9-b2c4-75707383ea31-IMG_20260419_113312_nobg.jpg',
+    'outdoor-fan-motor': '78878c94-af81-4ad7-91bf-db119ee2d59d-IMG_20260419_144028_nobg.jpg',
+    'service-valve': '74660846-92ec-4442-beb6-ca65c4b2c1e2-IMG_20260905_164413_nobg.jpg',
+    'flare-nut': 'd1c11e45-f7cd-4c0a-8e8f-354fc5023b31-IMG_20260620_100414_nobg.jpg',
+    'remote': 'b5430528-3749-4c88-8d1a-8b1ae565eb9a-ve309-light_nobg.jpg',
+    'coil-cleaner': 'd6ccb2cb-e2f9-41bc-9263-f013246f889e-IMG_20260419_142053_nobg.jpg',
+}
+
+def photo_url(part):
+    f = PHOTOS.get(part['id'])
+    return PHOTO_BASE.format(f=f) if f else None
+
 SOURCES = {
     'apna':   ('ApnaSpare – Air Conditioner spare parts listing (online retail, part-only prices)', 'https://apnaspare.com/products?parent_category=air-conditioner-spare-parts'),
     'royal':  ('Royal Aircon Services – Spare Parts Rate Card (incl. GST)', 'https://royalairconservices.com/spare-parts-price-list/'),
