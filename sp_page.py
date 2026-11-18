@@ -80,7 +80,7 @@ def build(B):
     crumbs = B.crumbs_ld([('Home', '/'), ('AC Services', '/ac-services/'), ('AC Spare Parts', PATH)])
 
     html_ = (B.head('AC Spare Parts Price List in India | BOBBY Narasaraopet',
-                    'Check approximate prices for common residential AC spare parts in India, including capacitors, PCBs, fan motors, compressors, sensors, valves and installation accessories.',
+                    'Approximate prices for residential AC spare parts in India: capacitors, PCBs, fan motors, compressors, sensors, valves, remotes and installation accessories.',
                     PATH, 'sp.crumb', [crumbs, item_ld]) +
              B.header('ac') +
              B.phero('sp.h1', 'sp.sub', [('crumb.home', '/'), ('nav.ac', '/ac-services/'), ('sp.crumb', PATH)]) +

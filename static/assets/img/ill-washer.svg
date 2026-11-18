@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8F4FD"/><stop offset="1" stop-color="#CFE7F8"/></linearGradient>
-<linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E3ECF5"/></linearGradient>
-<linearGradient id="m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F7FA"/><stop offset=".5" stop-color="#C9D3DE"/><stop offset="1" stop-color="#E9EEF3"/></linearGradient></defs>
-<rect width="640" height="480" fill="url(#bg)"/><circle cx="520" cy="90" r="120" fill="#56C8FF" opacity=".18"/><circle cx="90" cy="420" r="140" fill="#1688D4" opacity=".10"/><rect x="200" y="80" width="240" height="330" rx="22" fill="url(#w)" stroke="#BCD3E6" stroke-width="3"/>
-<line x1="200" y1="140" x2="440" y2="140" stroke="#BCD3E6" stroke-width="3"/><rect x="222" y="100" width="70" height="22" rx="6" fill="#102C50"/><circle cx="400" cy="111" r="13" fill="#E3ECF5" stroke="#9FB6CB" stroke-width="3"/><circle cx="360" cy="111" r="6" fill="#56C8FF"/>
-<circle cx="320" cy="270" r="96" fill="#E3ECF5" stroke="#9FB6CB" stroke-width="6"/><circle cx="320" cy="270" r="74" fill="#1688D4" opacity=".85"/>
-<path d="M250 285 q35 -30 70 0 t70 0 v40 q-70 45 -140 0z" fill="#56C8FF" opacity=".9"/><circle cx="292" cy="238" r="10" fill="#fff" opacity=".7"/><circle cx="340" cy="230" r="6" fill="#fff" opacity=".6"/></svg>

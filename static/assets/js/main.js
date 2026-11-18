@@ -34,7 +34,7 @@
   /* ---------- i18n ---------- */
   function loadDict(l) {
     if (dict[l]) return Promise.resolve(dict[l]);
-    return fetch('/assets/i18n/' + l + '.json', { cache: 'force-cache' }).then(function (r) { return r.json(); }).then(function (j) { dict[l] = j; return j; });
+    return fetch('/assets/i18n/' + l + '.json?v=' + (document.documentElement.getAttribute('data-iv') || '1'), { cache: 'force-cache' }).then(function (r) { return r.json(); }).then(function (j) { dict[l] = j; return j; });
   }
   function loadFont(l) {
     if (!FONTS[l] || document.getElementById('font-' + l)) return;

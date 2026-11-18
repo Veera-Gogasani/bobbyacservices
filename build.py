@@ -14,7 +14,7 @@ PHONE_TEL = '+918374889163'
 WA_NUM    = '918374889163'
 CITY      = 'Narasaraopet'
 REGION    = 'Andhra Pradesh'
-UPDATED   = '2026-11-17'
+UPDATED   = '2026-11-18'
 ADDRESS   = {'street': 'Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
 GMAPS_CID = int('6713e7c4650facdb', 16)            # Google Business Profile listing
 GMAPS_URL = 'https://maps.google.com/?cid=%d' % GMAPS_CID
@@ -40,7 +40,8 @@ OWNER_NAME = 'Yalamanda Gogasani'
 OWNER_EMAIL = 'Yalamandagogasani@gmail.com'
 REVIEWS = []   # genuine reviews only: {'name': 'Customer name', 'area': 'Narasaraopet', 'service': 'AC Repair', 'rating': 5, 'text': 'exact words', 'google': True}
 
-# DEMO data — sample names & text for layout testing ONLY. Rendered only on the noindex /reviews-preview/ page.
+# SAMPLE reviews (labelled "SAMPLE" on every card) shown on the home page while SHOW_SAMPLE_REVIEWS is True.
+# Replace with genuine customer reviews in REVIEWS and set SHOW_SAMPLE_REVIEWS = False before relying on them.
 DEMO_REVIEWS = [{'name': n, 'area': a, 'service': s, 'rating': r, 'text': t, 'source': 'demo'} for n, a, s, r, t in [
     ('Ravi K.', 'Prakash Nagar', 'AC Repair', 5, "AC suddenly stopped cooling on a hot afternoon. Called around 3 pm and the technician reached by evening. Found the capacitor was gone, replaced it and showed me the old one too. Back to normal in under an hour."),
     ('Lakshmi P.', 'Arundelpet', 'AC Servicing', 5, "Got both bedroom ACs serviced before summer. They covered the wall and floor properly before the jet wash, so no mess at all. Cooling is noticeably better now. Thank you BOBBY team, will call you again next year."),
@@ -216,13 +217,16 @@ def crumbs_ld(items):
     return {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': SITE + u} for i, (n, u) in enumerate(items)]}
 
+import hashlib as _hl
+I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
+
 def head(title, desc, path, title_key=None, ld=(), og_img=None):
     url = SITE + path
     og = og_img or SITE + '/assets/img/og-image.jpg'
     tk = f' data-title-key="{title_key}"' if title_key else ''
     lds = ''.join('<script type="application/ld+json">%s</script>\n' % json.dumps(x, ensure_ascii=False) for x in ld)
     return f'''<!DOCTYPE html>
-<html lang="en" class="no-js"{tk}>
+<html lang="en" class="no-js" data-iv="{I18N_V}"{tk}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -313,7 +317,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=13" defer></script>
+<script src="/assets/js/main.js?v=14" defer></script>
 </body></html>
 '''
 
@@ -348,26 +352,26 @@ AC_BLOCKS = [  # letter, anchor, photo key, svc key for booking, bullet count, p
     ('E', 'ac-gas-filling', 'ac_gas', 'ac_gas', 4, 'ac_gas'),
     ('F', 'ac-deep-cleaning', 'ac_deepclean', 'ac_servicing', 3, 'ac_deepclean'),
 ]
-def ac_cards(featured_first=False):
+def ac_cards(featured_first=False, eager_first=False):
     out = []
     for i, (L, anchor, pk, sk, n, prk) in enumerate(AC_BLOCKS):
         lis = ''.join(f'<li>{tx("ac.%s.%d" % (L, j))}</li>' for j in range(1, n + 1))
         note = f'<p class="note">{ic("info")}{tx("ac.E.note")}</p>' if L == 'E' else ''
         feat = ' ac-featured' if (featured_first and i == 0) else ''
         out.append(f'''<article class="scard reveal d{i % 3}{feat}" id="{anchor}">
-<div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L, eager=bool(feat))}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
+<div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L, eager=bool(feat) or (eager_first and i == 0))}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
 <div class="body"><h3>{tx("ac.%s.t" % L)}</h3><p>{tx("ac.%s.d" % L)}</p><ul class="ticks">{lis}</ul>{note}
 <div class="actions">{book_a(sk, 'btn-primary btn-sm')}<a class="btn btn-line btn-sm" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.call")}</a></div></div></article>''')
     pf = f'<p class="price-foot">{tx("price.note")}</p>' if any_price() else ''
     return '<div class="ac-grid">' + ''.join(out) + '</div>' + pf
 
 AP_BLOCKS = [('fridge', 'refrigerator'), ('washer', 'washing-machine'), ('cooler', 'air-cooler'), ('fan', 'ceiling-fan')]
-def app_cards():
+def app_cards(eager_first=False):
     out = []
     for i, (k, anchor) in enumerate(AP_BLOCKS):
         lis = ''.join(f'<li>{tx("ap.%s.%d" % (k, j))}</li>' for j in range(1, 4))
         out.append(f'''<article class="scard reveal d{i}" id="{anchor}">
-<div class="media">{img(k, 600, 450, "ap.%s.t" % k)}<span class="tag">{tx("svc.%s.name" % k)}</span>{price(k, "tag")}</div>
+<div class="media">{img(k, 600, 450, "ap.%s.t" % k, eager=eager_first and i == 0)}<span class="tag">{tx("svc.%s.name" % k)}</span>{price(k, "tag")}</div>
 <div class="body"><h3>{tx("ap.%s.t" % k)}</h3><ul class="ticks">{lis}</ul>
 <div class="actions">{book_a(k, 'btn-orange btn-sm')}</div></div></article>''')
     return '<div class="app-grid app">' + ''.join(out) + '</div>'
@@ -379,7 +383,7 @@ def brand_logo(name):
             return f'<img src="/assets/img/brands/{slug}.{ext}" alt="{esc(name)}" loading="lazy" width="140" height="56">'
     return name
 def brands_block(tiles_too=False):
-    banner = f'''<figure class="brand-banner reveal"><img src="/assets/img/brands-banner-lg.webp" srcset="/assets/img/brands-banner-sm.webp 836w, /assets/img/brands-banner-lg.webp 1672w" sizes="(max-width: 1240px) 100vw, 1200px" width="1672" height="941" loading="lazy" decoding="async" alt="BOBBY AC Repair &amp; Home Appliance Services banner: we repair and service LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas" data-i18n-alt="brands.banner"></figure>'''
+    banner = f'''<figure class="brand-banner reveal"><img src="/assets/img/brands-banner-lg.webp" srcset="/assets/img/brands-banner-sm.webp 836w, /assets/img/brands-banner-lg.webp 1672w" sizes="(max-width: 1240px) 100vw, 1200px" width="1672" height="941" fetchpriority="high" decoding="async" alt="BOBBY AC Repair &amp; Home Appliance Services banner: we repair and service LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas" data-i18n-alt="brands.banner"></figure>'''
     tiles = ''.join(f'<div class="brand reveal d{i % 4}">{brand_logo(b)}</div>' for i, b in enumerate(BRANDS))
     grid = f'<div class="brands" style="margin-top:22px">{tiles}</div>' if tiles_too else ''
     return f'''{banner}{grid}
@@ -478,8 +482,8 @@ def faq_list(nums, first_open=True, hq='h3'):
         f'<details class="reveal"{" open" if (first_open and i == 0) else ""}><summary>{tx("faq.%d.q" % n, hq, attrs="style=\"font-size:inherit;color:inherit;font-weight:inherit\"")}<span class="pm">{ic("plus")}</span></summary><div class="ans">{tx("faq.%d.a" % n, "p")}</div></details>'
         for i, n in enumerate(nums)) + '</div>'
 
-def blog_cards(posts, hq='h3'):
-    return '<div class="blog-grid">' + ''.join(f'''<article class="bcard reveal d{i % 3}"><a class="media" href="/blog/{p['slug']}/" tabindex="-1" aria-hidden="true">{img(p['img'], 640, 360, 'post.%s.title' % p['slug'])}</a>
+def blog_cards(posts, hq='h3', eager_first=False):
+    return '<div class="blog-grid">' + ''.join(f'''<article class="bcard reveal d{i % 3}"><a class="media" href="/blog/{p['slug']}/" tabindex="-1" aria-hidden="true">{img(p['img'], 640, 360, 'post.%s.title' % p['slug'], eager=eager_first and i == 0)}</a>
 <div class="body"><{hq}><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></{hq}><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}<span class="sr-only">: {esc(plain('post.%s.title' % p['slug']))}</span>{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
 
 def cta_band():
@@ -588,7 +592,7 @@ def build_home():
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
     page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
-                   'Looking for AC repair in Narasaraopet? BOBBY provides AC servicing, installation, uninstallation, gas filling and home appliance repair. Call or WhatsApp +91 83748 89163.',
+                   'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
                    '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=4">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=2" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
@@ -613,10 +617,10 @@ def build_inner():
     p = '/ac-services/'
     sl = [service_ld(plain('ac.%s.t' % L), plain('ac.%s.d' % L), p + '#' + a) for L, a, *_ in AC_BLOCKS]
     page(p, head('AC Repair, Servicing & Gas Filling in Narasaraopet | BOBBY',
-                 'AC repair, servicing, installation, uninstallation, gas filling and deep cleaning for split and window ACs in Narasaraopet. Book BOBBY on call or WhatsApp: +91 83748 89163.',
+                 'AC repair, servicing, installation, gas filling and deep cleaning for split and window ACs in Narasaraopet. Call or WhatsApp BOBBY: +91 83748 89163.',
                  p, 'nav.ac', [business_ld(), crumbs_ld([('Home', '/'), ('AC Services', p)])] + sl) + header('ac') +
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) +
-         f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}</div></section>
+         f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
 <div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
          steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
@@ -625,17 +629,17 @@ def build_inner():
     p = '/appliance-services/'
     sl = [service_ld(plain('ap.%s.t' % k), plain('svc.%s.desc' % k), p + '#' + a) for k, a in AP_BLOCKS]
     page(p, head('Fridge, Washer, Cooler & Fan Repair Narasaraopet | BOBBY',
-                 'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services: +91 83748 89163.',
+                 'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY on +91 83748 89163.',
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) +
-         f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>
+         f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([7, 8, 9, 13])}</div></section>''' +
          '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # Brands
     p = '/brands/'
     page(p, head('Multi-Brand AC & Appliance Repair Narasaraopet | BOBBY',
-                 'Independent multi-brand AC and home appliance service in Narasaraopet for LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas products.',
+                 'Independent multi-brand AC and appliance service in Narasaraopet for LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas.',
                  p, 'nav.brands', [business_ld(), crumbs_ld([('Home', '/'), ('Brands We Service', p)])]) + header('brands') +
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block(True)}</div></section>
@@ -647,7 +651,7 @@ def build_inner():
     fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in range(1, FAQ_N + 1)]}
     page(p, head('AC Repair & Service FAQs – Narasaraopet | BOBBY',
-                 'Answers to common questions about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet from BOBBY AC Repair & Home Appliance Services.',
+                 'Answers about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet, plus a free AC electricity cost calculator.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
          f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1), hq='h2')}</div></section>' + acc_widget() + cta_band() + footer())
@@ -663,7 +667,7 @@ def build_inner():
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
 <div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''
     page(p, head('Book AC Service in Narasaraopet | Contact BOBBY',
-                 'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY AC Repair & Home Appliance Services on +91 83748 89163 or use the online booking form.',
+                 'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY on +91 83748 89163, or use the online booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
          f'<section class="sec"><div class="wrap contact-grid">{cards}{form}</div></section>' + footer())
@@ -671,10 +675,10 @@ def build_inner():
     # Blog index + posts
     p = '/blog/'
     page(p, head('AC & Appliance Care Tips | BOBBY Narasaraopet',
-                 'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and refrigerator care from BOBBY AC Repair & Home Appliance Services, Narasaraopet.',
+                 'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and fridge care from BOBBY, Narasaraopet.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
-         f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2')}</div></section>' + cta_band() + footer())
+         f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2', eager_first=True)}</div></section>' + cta_band() + footer())
     for post in POSTS:
         s = post['slug']; pp = '/blog/%s/' % s
         title_en = plain('post.%s.title' % s)
@@ -717,17 +721,20 @@ def build_inner():
 
     sp_page.build(sys.modules[__name__])
 
-    # DEMO preview of the review carousel (noindex, not in sitemap, not linked). Replace with genuine reviews before use.
-    page('/reviews-preview/', head('Review carousel preview (DEMO) | BOBBY', 'Internal preview of the review carousel with sample data.', '/reviews-preview/', None).replace('index, follow', 'noindex, nofollow') + header('') +
-         f'''<div class="demo-banner" role="note"><b>DEMO PREVIEW</b> — sample layout only. These are NOT real customers or real reviews. Not shown on the live site and hidden from search engines.</div>
-<section class="sec rc-sec"><div class="wrap"><div class="sec-head center"><p class="eyebrow">{tx("rev.eyebrow")}</p><h2>{tx("rev.h2")}</h2><p class="lead">{tx("rev.sub2")}</p></div>
-{review_carousel(DEMO_REVIEWS, 'Demo sample reviews')}{review_buttons()}</div></section>''' + footer())
-
 # ---------------- write ----------------
 def write():
     out = os.path.join(os.path.dirname(__file__), 'dist')
     if os.path.exists(out): shutil.rmtree(out)
     shutil.copytree(os.path.join(os.path.dirname(__file__), 'static'), out)
+    import rcssmin, rjsmin
+    for sub, fn in (('assets/css', rcssmin.cssmin), ('assets/js', rjsmin.jsmin)):
+        for f in os.listdir(os.path.join(out, sub)):
+            fp = os.path.join(out, sub, f)
+            if os.path.isfile(fp) and f.endswith(('.css', '.js')):
+                src = open(fp, encoding='utf-8').read()
+                mini = fn(src)
+                assert len(mini) > len(src) * 0.3, fp
+                open(fp, 'w', encoding='utf-8').write(mini)
     for path, content in PAGES.items():
         fp = os.path.join(out, path.strip('/'), 'index.html') if path.endswith('/') else os.path.join(out, path.strip('/'))
         if path == '/': fp = os.path.join(out, 'index.html')
@@ -736,7 +743,7 @@ def write():
     os.makedirs(os.path.join(out, 'assets/i18n'), exist_ok=True)
     for i, l in enumerate(['en', 'te', 'hi']):
         json.dump({k: v[i] for k, v in S.items()}, open(os.path.join(out, 'assets/i18n/%s.json' % l), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    urls = [p for p in PAGES if p.endswith('/') and p != '/reviews-preview/']
+    urls = [p for p in PAGES if p.endswith('/')]
     pri = lambda p: '1.0' if p == '/' else ('0.9' if p in ('/ac-services/', '/contact/') else ('0.6' if p.startswith('/blog/') or p in ('/privacy-policy/', '/terms/', '/sitemap/') else '0.8'))
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
         f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
@@ -744,7 +751,7 @@ def write():
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
-    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/*\n  Cache-Control: public, max-age=604800\n')
+    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/img/*\n  Cache-Control: public, max-age=2592000\n/assets/vendor/*\n  Cache-Control: public, max-age=2592000\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/i18n/*\n  Cache-Control: public, max-age=31536000, immutable\n')
     print('Built %d pages -> %s' % (len(PAGES), out))
 
 if __name__ == '__main__':

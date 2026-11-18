@@ -164,8 +164,6 @@ A['wire'] = frame('<circle cx="230" cy="230" r="128" fill="none" stroke="#3A4654
 
 # ---------- Motors ----------
 A['motor_indoor'] = frame(motor(240, 250, 92, 90, label='SPLIT') + wires(300, 330, ['#E14B3B', '#1F6FD1', '#F0C419', '#1B1B1B'], 70, 40, 10), (240, 392, 140, 18))
-A['motor_blower'] = frame(motor(240, 250, 100, 84, body='url(#darkv)', label='BLDC DC') +
-                          '<rect x="150" y="334" width="70" height="26" rx="4" fill="#F7F7F7" stroke="#AEB9C5"/>' + wires(185, 360, ['#E14B3B', '#1B1B1B', '#F0C419', '#1F6FD1', '#FFFFFF'], 40, -10, 8), (240, 396, 150, 18))
 A['motor_outdoor'] = frame(motor(240, 250, 110, 92, label='54W') +
                            ''.join(f'<rect x="{160 + k * 160}" y="320" width="10" height="56" fill="url(#steel)"/>' for k in range(2)) +
                            wires(330, 320, ['#1B1B1B', '#E14B3B', '#1F6FD1'], 70, 50, 10), (240, 398, 160, 18))

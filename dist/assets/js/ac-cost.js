@@ -1,24 +1,4 @@
-/* Footer AC electricity cost calculator — runs entirely in the browser, nothing is sent anywhere. */
-(function () {
-  var f = document.getElementById('acCalc');
-  if (!f) return;
-  var KW = { inv: { '1': 0.65, '1.5': 0.95, '2': 1.25 }, non: { '1': 1.0, '1.5': 1.45, '2': 1.9 } };
-  function num(el, lo, hi, def) {
-    var v = parseFloat(el.value);
-    if (isNaN(v)) return def;
-    return Math.min(hi, Math.max(lo, v));
-  }
-  function fmt(n, d) { return n.toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d }); }
-  function calc() {
-    var hours = num(f.hours, 0, 24, 0), days = num(f.days, 1, 31, 30), tariff = num(f.tariff, 0, 30, 0);
-    var w = parseFloat(f.watts.value), kw = (w >= 200 && w <= 5000) ? w / 1000 : KW[f.type.value][f.ton.value];
-    f.watts.setAttribute('aria-invalid', f.watts.value && !(w >= 200 && w <= 5000) ? 'true' : 'false');
-    var ud = kw * hours, um = ud * days, cm = um * tariff;
-    f.querySelector('[data-acc=ud]').textContent = fmt(ud, ud < 10 ? 1 : 0);
-    f.querySelector('[data-acc=um]').textContent = fmt(um, 0);
-    f.querySelector('[data-acc=cm]').textContent = '₹' + fmt(Math.round(cm), 0);
-  }
-  f.addEventListener('input', calc);
-  f.addEventListener('change', calc);
-  calc();
-})();
+(function(){var f=document.getElementById('acCalc');if(!f)return;var KW={inv:{'1':0.65,'1.5':0.95,'2':1.25},non:{'1':1.0,'1.5':1.45,'2':1.9}};function num(el,lo,hi,def){var v=parseFloat(el.value);if(isNaN(v))return def;return Math.min(hi,Math.max(lo,v));}
+function fmt(n,d){return n.toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function calc(){var hours=num(f.hours,0,24,0),days=num(f.days,1,31,30),tariff=num(f.tariff,0,30,0);var w=parseFloat(f.watts.value),kw=(w>=200&&w<=5000)?w/1000:KW[f.type.value][f.ton.value];f.watts.setAttribute('aria-invalid',f.watts.value&&!(w>=200&&w<=5000)?'true':'false');var ud=kw*hours,um=ud*days,cm=um*tariff;f.querySelector('[data-acc=ud]').textContent=fmt(ud,ud<10?1:0);f.querySelector('[data-acc=um]').textContent=fmt(um,0);f.querySelector('[data-acc=cm]').textContent='₹'+fmt(Math.round(cm),0);}
+f.addEventListener('input',calc);f.addEventListener('change',calc);calc();})();
