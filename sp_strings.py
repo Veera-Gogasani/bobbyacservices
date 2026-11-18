@@ -2,7 +2,7 @@
 """Strings for /ac-spare-parts/  (en, te, hi). Part names/descriptions live in spare_parts.py (English)."""
 
 SP = {
-    'ft.parts': ("Spare parts", "స్పేర్ పార్ట్స్", "स्पेयर पार्ट्स"),
+    'ft.parts': ("AC Spare Parts", "ఏసీ స్పేర్ పార్ట్స్", "एसी स्पेयर पार्ट्स"),
     'sp.crumb': ("AC Spare Parts", "ఏసీ స్పేర్ పార్ట్స్", "एसी स्पेयर पार्ट्स"),
     'sp.h1': ("Residential Air Conditioner Spare Parts", "ఇంటి ఏసీ స్పేర్ పార్ట్స్", "घरेलू एयर कंडीशनर स्पेयर पार्ट्स"),
     'sp.sub': ("Indicative market prices for common split and window AC spare parts in India, with guidance on what to share before a replacement.",

@@ -605,7 +605,7 @@ def build_inner():
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
-<div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' + sp_page.promo(sys.modules[__name__]) +
+<div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
          steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # Appliance
@@ -688,7 +688,7 @@ def build_inner():
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
     groups = [('nav.home', [('/', 'nav.home'), ('/about/', 'nav.about'), ('/contact/', 'nav.contact'), ('/faqs/', 'nav.faqs')]),
-              ('nav.ac', [('/ac-services/', 'nav.ac')] + [('/ac-services/#' + a, 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS] + [('/ac-spare-parts/', 'sp.crumb')]),
+              ('nav.ac', [('/ac-services/', 'nav.ac')] + [('/ac-services/#' + a, 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS]),
               ('nav.appliance', [('/appliance-services/', 'nav.appliance')] + [('/appliance-services/#' + a, 'ap.%s.t' % k) for k, a in AP_BLOCKS] + [('/brands/', 'nav.brands')]),
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
