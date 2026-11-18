@@ -588,3 +588,7 @@ S['f.thanks.tip'] = ("Didn't see WhatsApp open? Use the button below.", "WhatsAp
 S['bh2.h2'] = ("One Call for AC, Fridge, Washing Machine, Cooler &amp; Fan Repair", "AC, ఫ్రిజ్, వాషింగ్ మెషిన్, కూలర్ &amp; ఫ్యాన్ రిపేర్ — ఒక్క కాల్ చాలు", "AC, फ्रिज, वॉशिंग मशीन, कूलर और पंखा रिपेयर — बस एक कॉल")
 
 S['duo.trust'] = ("Why customers choose BOBBY", "కస్టమర్లు BOBBYని ఎందుకు ఎంచుకుంటారు", "ग्राहक BOBBY को क्यों चुनते हैं")
+S['ft.more'] = ("More about BOBBY", "BOBBY గురించి మరింత", "BOBBY के बारे में और जानें")
+S['ft.about'] = ("Local doorstep AC repair, servicing, installation and home appliance repair in Narasaraopet, Andhra Pradesh. Run by Yalamanda Gogasani (Bobby), we service split and window ACs, refrigerators, washing machines, air coolers and ceiling fans of all major brands — with inspection first and a clear estimate before any work.",
+ "నరసరావుపేట, ఆంధ్రప్రదేశ్‌లో ఇంటి వద్దకే ఏసీ రిపేర్, సర్వీసింగ్, ఇన్‌స్టాలేషన్ మరియు గృహోపకరణాల రిపేర్. యలమంద గోగసాని (బాబీ) నిర్వహణలో, అన్ని ప్రముఖ బ్రాండ్ల స్ప్లిట్ & విండో ఏసీలు, ఫ్రిజ్‌లు, వాషింగ్ మెషీన్లు, ఎయిర్ కూలర్లు, సీలింగ్ ఫ్యాన్లకు సర్వీస్ చేస్తాం — ముందుగా తనిఖీ, పని ముందు స్పష్టమైన అంచనా.",
+ "नरसरावपेट, आंध्र प्रदेश में घर पर एसी रिपेयर, सर्विसिंग, इंस्टॉलेशन और घरेलू उपकरण रिपेयर। यलमंदा गोगासानी (बॉबी) द्वारा संचालित — हम सभी प्रमुख ब्रांड्स के स्प्लिट व विंडो एसी, फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फैन की सर्विस करते हैं — पहले जाँच, काम से पहले साफ़ अनुमान।")

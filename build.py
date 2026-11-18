@@ -250,7 +250,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=30">
+<link rel="stylesheet" href="/assets/css/style.css?v=31">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -293,7 +293,7 @@ def header(active):
 '''
 
 def footer():
-    q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV) + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>'
+    q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV if a != 'ac') + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>'  # AC Services has its own column
     acl = [('/ac-services/#ac-repair','svc.ac_repair.name'),('/ac-services/#ac-servicing','svc.ac_servicing.name'),
            ('/ac-services/#ac-installation','svc.ac_install.name'),('/ac-services/#ac-uninstallation','svc.ac_uninstall.name'),
            ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
@@ -302,7 +302,8 @@ def footer():
 <footer class="ftr">
 <div class="wrap grid">
 <div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
-<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
+<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p>
+<a class="ft-more" href="/about/">{tx('ft.more')}{ic('arrow')}</a></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
