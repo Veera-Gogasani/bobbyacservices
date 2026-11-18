@@ -306,15 +306,15 @@ def footer():
 <label><span data-i18n="acc.type">{en('acc.type')}</span><select name="type"><option value="inv" data-i18n="acc.inv">{en('acc.inv')}</option><option value="non" data-i18n="acc.noninv">{en('acc.noninv')}</option></select></label>
 <label><span data-i18n="acc.hours">{en('acc.hours')}</span><input name="hours" type="number" inputmode="decimal" min="0" max="24" step="0.5" value="8"></label>
 <label><span data-i18n="acc.days">{en('acc.days')}</span><input name="days" type="number" inputmode="numeric" min="1" max="31" step="1" value="30"></label>
-<label><span data-i18n="acc.tariff">{en('acc.tariff')}</span><input name="tariff" type="number" inputmode="decimal" min="0" max="30" step="0.1" value="7"></label>
+<label><span data-i18n="acc.tariff">{en('acc.tariff')}</span><input name="tariff" type="number" inputmode="decimal" min="0" max="30" step="0.05" value="8.75"></label>
 <label><span data-i18n="acc.watts">{en('acc.watts')}</span><input name="watts" type="number" inputmode="numeric" min="200" max="5000" step="10" placeholder="e.g. 1450"></label>
 </div>
 <output class="acc-out" name="out" for="acCalc" aria-live="polite">
 <span class="acc-row"><span data-i18n="acc.day">{en('acc.day')}</span><b data-acc="ud">7.6</b> <small data-i18n="acc.units">{en('acc.units')}</small></span>
 <span class="acc-row"><span data-i18n="acc.month">{en('acc.month')}</span><b data-acc="um">228</b> <small data-i18n="acc.units">{en('acc.units')}</small></span>
-<span class="acc-row acc-big"><span data-i18n="acc.cost">{en('acc.cost')}</span><b data-acc="cm">₹1,596</b></span>
+<span class="acc-row acc-big"><span data-i18n="acc.cost">{en('acc.cost')}</span><b data-acc="cm">₹1,995</b></span>
 </output>
-<p class="acc-note">{tx('acc.note')} {tx('acc.tip')}</p></form></div>
+<p class="acc-note">{tx('acc.note')} {tx('acc.tariffnote')} {tx('acc.tip')}</p></form></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
