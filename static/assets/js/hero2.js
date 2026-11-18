@@ -10,7 +10,7 @@
   var tabs = [].slice.call(hero.querySelectorAll('.bobby-hero-tab'));
   var cur = hero.querySelector('.bobby-hero-cur');
   var bar = hero.querySelector('.bobby-hero-progress span');
-  var DELAY = 5500, idx = 0, timer = null, hold = false, busy = false, inView = false, washer = null;
+  var DELAY = 5500, RESUME = 12000, idx = 0, timer = null, hold = false, busy = false, inView = false, washer = null;
   hero.style.setProperty('--bh-delay', DELAY / 1000 + 's');
 
   function colors(s) { hero.style.setProperty('--bh-bg', s.dataset.bg); hero.style.setProperty('--bh-bg2', s.dataset.bg2); }
@@ -54,7 +54,7 @@
     clearTimeout(timer);
     bar.classList.remove('is-run'); void bar.offsetWidth;
     var shown = !hero.classList.contains('hero-duo-panel') || hero.classList.contains('is-on');
-    if (reduce || hold || !inView || !shown) { hero.classList.add('is-paused'); if (hold || reduce) bar.style.transform = 'scaleX(1)'; return; }
+    if (hold || !inView || !shown) { hero.classList.add('is-paused'); if (hold) { bar.style.transform = 'scaleX(1)'; timer = setTimeout(function () { hold = false; play(); }, RESUME); } return; }
     bar.style.transform = ''; bar.classList.add('is-run'); hero.classList.remove('is-paused');
     timer = setTimeout(function () {
       if (idx === slides.length - 1 && window.bobbyDuo && window.bobbyDuo.next()) return;
@@ -115,9 +115,8 @@
   var SHOW = panels.indexOf(hero), cur2 = 0, duoTimer = null, duoHold = false, HOLD_CLASSIC = 8000, duoHover = false, duoVisible = true;
   function scheduleBack() {                 /* while the classic hero is shown, switch to the showcase after a pause */
     clearTimeout(duoTimer);
-    if (duoHold || reduce) return;
     duoTimer = setTimeout(function again() {
-      if (duoHover || !duoVisible || document.hidden) { duoTimer = setTimeout(again, 1500); return; }
+      if (!duoVisible || document.hidden) { duoTimer = setTimeout(again, 1500); return; }
       show(SHOW);
     }, HOLD_CLASSIC);
   }
@@ -145,12 +144,9 @@
     }
   }
   /* called by the showcase after its last slide: go back to the classic hero */
-  window.bobbyDuo = { next: function () { if (duoHold || reduce) return false; show(1 - SHOW); return true; } };
-  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; clearTimeout(duoTimer); show(+d.dataset.duo); }); });
-  panels.forEach(function (p) {
-    p.addEventListener('pointerenter', function () { duoHover = true; });
-    p.addEventListener('pointerleave', function () { duoHover = false; });
-  });
+  window.bobbyDuo = { next: function () { show(1 - SHOW); return true; } };
+  /* a pager click shows that hero; auto-switching resumes on its own after a short pause */
+  dots.forEach(function (d) { d.addEventListener('click', function () { var n = +d.dataset.duo; if (n === cur2) return; show(n); if (n !== SHOW) { clearTimeout(duoTimer); duoTimer = setTimeout(scheduleBack, RESUME - HOLD_CLASSIC); } }); });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { duoVisible = en[0].isIntersecting; }, { threshold: 0.35 }).observe(duo);
   panels.forEach(function (p, i) { p.inert = i !== cur2; });
   scheduleBack();
