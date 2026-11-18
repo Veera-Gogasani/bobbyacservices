@@ -15,7 +15,7 @@ WA_NUM    = '918374889163'
 CITY      = 'Narasaraopet'
 REGION    = 'Andhra Pradesh'
 UPDATED   = '2026-11-18'
-ADDRESS   = {'street': 'Door 28-32/5, Employees Colony, Isha Zen Enclave, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
+ADDRESS   = {'street': 'Door 11-28-32/5, Employees Colony, Isha Zen Enclave, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
 GMAPS_CID = int('6713e7c4650facdb', 16)            # Google Business Profile listing
 GMAPS_URL = 'https://maps.google.com/?cid=%d' % GMAPS_CID
 DIR_URL   = 'https://www.google.com/maps/dir/?api=1&destination=16.2371462,80.0339778'
