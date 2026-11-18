@@ -1,0 +1,92 @@
+/* Home: scroll-pinned 3D split-AC assembly story */
+.asm{position:relative;background:#071A33;color:#EAF3FF;isolation:isolate}
+.asm-track{position:relative;height:720vh}
+.asm-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;contain:layout paint}
+.asm-canvas,.asm-canvas canvas,.asm-poster,.asm-lines,.asm-tags,.asm-hud{position:absolute;inset:0;width:100%;height:100%}
+.asm-canvas canvas{display:block}
+.asm-poster{z-index:0;transition:opacity .6s ease}
+.asm-poster img{width:100%;height:100%;object-fit:cover;display:block}
+.asm-ready .asm-poster{opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s .6s}
+.asm-canvas{z-index:1}
+.asm-lines{z-index:3;pointer-events:none;opacity:0;overflow:visible}
+.asm-lines path{fill:none;stroke:#8FD3FF;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.asm-lines circle{fill:#8FD3FF;stroke:#fff;stroke-width:2}
+.asm-tags{z-index:3;pointer-events:none}
+.asm-tags span{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-size:11.5px;font-weight:600;letter-spacing:.01em;color:#DDEEFF;padding:3px 8px 3px 14px;border-radius:99px;background:rgba(9,32,60,.72);border:1px solid rgba(143,211,255,.28);will-change:transform,opacity}
+.asm-tags span::before{content:"";position:absolute;left:5px;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:#8FD3FF}
+.asm-hud{z-index:4;pointer-events:none}
+.asm-hud>*{pointer-events:auto}
+.asm-intro{position:absolute;left:clamp(20px,5vw,72px);top:calc(var(--hdr,76px) + clamp(22px,5vh,56px));max-width:520px;transition:opacity .2s linear}
+.asm-kicker{margin:0 0 10px;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8FD3FF}
+.asm-intro h2{margin:0 0 12px;color:#fff;font-size:clamp(28px,3.6vw,46px);line-height:1.1;letter-spacing:-.02em}
+.asm-intro p:last-child{margin:0;color:#B9CCE3;font-size:clamp(14.5px,1.2vw,16.5px);line-height:1.6;max-width:440px}
+.asm-note{position:absolute;left:50%;top:calc(var(--hdr,76px) + 26px);transform:translateX(-50%);margin:0;max-width:min(560px,90vw);text-align:center;font-size:13.5px;line-height:1.5;color:#C9DAEE;padding:8px 16px;border-radius:12px;background:rgba(9,32,60,.6);border:1px solid rgba(143,211,255,.2);opacity:0;pointer-events:none}
+.asm-nav{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(760px,calc(100% - 380px));padding:6px 14px 10px;border-radius:14px;background:rgba(7,26,51,.78);border:1px solid rgba(143,211,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.asm-cur{display:none}
+.asm-steps{list-style:none;margin:0 0 10px;padding:0;display:flex;justify-content:space-between;gap:6px}
+.asm-steps button{all:unset;cursor:pointer;display:flex;gap:7px;align-items:baseline;font-size:13px;font-weight:600;color:#7F98B6;padding:6px 8px;border-radius:8px;transition:color .25s}
+.asm-steps button small{font-size:11px;font-weight:700;color:inherit;opacity:.8}
+.asm-steps button small::after{content:" /"}
+.asm-steps button:hover{color:#DDEEFF}
+.asm-steps button:focus-visible{outline:2px solid #8FD3FF;outline-offset:2px}
+.asm-steps button.on{color:#fff}
+.asm-steps button.on small{color:#8FD3FF;opacity:1}
+.asm-bar{height:3px;border-radius:3px;background:rgba(143,211,255,.16);overflow:hidden}
+.asm-bar i{display:block;height:100%;background:linear-gradient(90deg,#1688D4,#8FD3FF);transform-origin:0 50%;transform:scaleX(0)}
+.asm-skip{position:absolute;left:clamp(16px,3vw,40px);bottom:24px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#CFE3F8;text-decoration:none;padding:8px 14px;border-radius:99px;border:1px solid rgba(143,211,255,.3);background:rgba(9,32,60,.55);transition:background .2s,color .2s}
+.asm-skip svg{width:15px;height:15px}
+.asm-skip:hover{background:rgba(22,136,212,.35);color:#fff}
+.asm-skip:focus-visible{outline:2px solid #8FD3FF;outline-offset:2px}
+.asm-card{position:absolute;left:0;top:0;z-index:5;width:300px;padding:16px 18px 15px;border-radius:14px;background:rgba(8,28,54,.86);border:1px solid rgba(143,211,255,.26);box-shadow:0 18px 50px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;pointer-events:none;will-change:transform,opacity}
+.asm-card .n{display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#8FD3FF;margin-bottom:6px}
+.asm-card .n:empty{display:none}
+.asm-card .t{display:block;font-size:18px;line-height:1.25;color:#fff;margin-bottom:6px}
+.asm-card .d{margin:0;font-size:14px;line-height:1.55;color:#C3D5EA}
+.asm-final{position:absolute;z-index:6;padding:clamp(18px,2.4vw,30px) clamp(18px,3vw,40px);border-radius:20px;background:rgba(7,26,51,.8);border:1px solid rgba(143,211,255,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 24px 70px rgba(0,10,30,.4);left:50%;top:calc(var(--hdr,76px) + clamp(26px,6vh,70px));transform:translate(-50%,10px);width:min(820px,92vw);text-align:center;opacity:0;pointer-events:none;transition:transform .5s ease}
+.asm-final.on{transform:translate(-50%,0)}
+.asm-final h2{margin:0 0 12px;color:#fff;font-size:clamp(24px,3.2vw,42px);line-height:1.12;letter-spacing:-.02em;text-shadow:0 4px 30px rgba(0,20,50,.6)}
+.asm-final .sub{margin:0 0 16px;color:#CFE3F8;font-size:clamp(15px,1.3vw,18px)}
+.asm-final .sig{margin:0;font-weight:800;color:#fff;font-size:15px;letter-spacing:.06em}
+.asm-final .sig span{font-weight:600;letter-spacing:.01em;color:#B9CCE3}
+.asm-final .tg{margin:4px 0 0;font-size:13.5px;color:#8FD3FF}
+#asm-end{scroll-margin-top:var(--hdr,76px);outline:none}
+.asm-data{padding:0 clamp(20px,5vw,72px) 56px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;max-width:1240px;margin:0 auto}
+.asm-data[hidden]{display:none}
+.asm-data h3{color:#fff;font-size:18px;margin:0 0 12px}
+.asm-data ol{margin:0;padding-left:20px;color:#B9CCE3;font-size:14px;line-height:1.5}
+.asm-data li{margin:0 0 9px}
+.asm-data li b{display:block;color:#EAF3FF;font-size:14.5px}
+.asm-fn{font-size:12.5px;color:#8FA8C4;margin:8px 0 0}
+@media (max-width:1100px){
+ .asm-nav{width:calc(100% - 330px);left:auto;right:96px;transform:none}
+ .asm-steps{display:none}
+ .asm-cur{display:block;margin:2px 0 8px;font-size:13px;font-weight:700;letter-spacing:.06em;color:#fff}
+ .asm-card{width:270px}
+}
+@media (max-width:760px){
+ .asm-track{height:640vh}
+ .asm-intro{left:18px;right:18px;top:auto;bottom:calc(96px + env(safe-area-inset-bottom))}
+ .asm-intro h2{font-size:27px}
+ .asm-intro p:last-child{font-size:14px}
+ .asm-nav{left:12px;right:12px;width:auto;top:calc(var(--hdr,76px) + 8px);bottom:auto;transform:none;padding:8px 12px 9px}
+ .asm-cur{margin:0 130px 8px 0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .asm-steps{display:none}
+ .asm-skip{top:calc(var(--hdr,76px) + 8px);bottom:auto;left:auto;right:22px;font-size:12px;padding:5px 11px}
+ .asm-note{top:auto;bottom:calc(84px + env(safe-area-inset-bottom));font-size:12.5px;width:calc(100% - 32px)}
+ .asm-card{width:calc(100% - 32px);max-width:440px;padding:13px 15px}
+ .asm-card .t{font-size:16.5px}
+ .asm-card .d{font-size:13.5px}
+ .asm-tags{display:none}
+ .asm-final{top:calc(var(--hdr,76px) + 54px)}
+ .asm-data{grid-template-columns:1fr;gap:18px}
+}
+/* static version: reduced motion, no WebGL or the 3D file failed to load */
+.asm-static .asm-track{height:auto}
+.asm-static .asm-stage{position:relative;height:auto;overflow:visible;contain:none;display:flex;flex-direction:column;align-items:center;padding:clamp(48px,7vw,88px) clamp(20px,5vw,72px) 32px;gap:26px}
+.asm-static .asm-canvas,.asm-static .asm-lines,.asm-static .asm-tags,.asm-static .asm-card,.asm-static .asm-nav,.asm-static .asm-skip,.asm-static .asm-note{display:none}
+.asm-static .asm-hud,.asm-static .asm-intro,.asm-static .asm-final,.asm-static .asm-poster{position:relative;inset:auto;width:auto;height:auto;opacity:1;transform:none;left:auto;top:auto;visibility:visible}
+.asm-static .asm-hud{order:0;align-self:stretch;max-width:1240px;margin:0 auto;width:100%}
+.asm-static .asm-intro{max-width:640px;opacity:1!important}
+.asm-static .asm-poster{order:1;width:100%;max-width:1240px;border-radius:18px;overflow:hidden;aspect-ratio:16/9}
+.asm-static .asm-final{order:2;width:min(820px,100%);opacity:1!important}
+.asm-static .asm-intro p:last-child{display:none}

@@ -63,6 +63,8 @@ BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carri
 for k, v in add_strings.items(): S[k] = v
 from sp_strings import SP
 for k, v in SP.items(): S[k] = v
+from asm_strings import ASM
+for k, v in ASM.items(): S[k] = v
 import sp_page
 for p in POSTS:
     for f in ('title', 'excerpt', 'body'):
@@ -518,6 +520,40 @@ H2_SYMBOLS = '''<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="bh-swirl" viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M8 40 H62 A14 14 0 1 0 48 26"/><path d="M8 60 H74 A14 14 0 1 1 60 74"/><path d="M18 50 H44"/></g></symbol>
 </defs></svg>'''
 
+ASM_V = 1
+def asm_section(ticker=''):
+    """Home: scroll-pinned 3D split-AC assembly & installation story (replaces the old bottom CTA)."""
+    lis = lambda pre, n: ''.join(f'<li data-k="{pre}{i}"><b data-i18n="asm.{pre}{i}">{en("asm.%s%d" % (pre, i))}</b><span data-i18n="asm.{pre}{i}.d">{en("asm.%s%d.d" % (pre, i))}</span></li>' for i in range(1, n + 1))
+    steps = ''.join(f'<li><button type="button"><small>0{i}</small>{tx("asm.st%d" % i)}</button></li>' for i in range(1, 6))
+    return f'''<section id="ac-assembly" class="asm" aria-label="{esc(plain("asm.aria"))}">
+<div class="asm-track"><div class="asm-stage">
+<picture class="asm-poster"><img src="/assets/img/ac-assembly-poster.webp?v={ASM_V}" width="1600" height="900" loading="lazy" decoding="async" alt="{esc(plain("asm.poster.alt"))}" data-i18n-alt="asm.poster.alt"></picture>
+<div class="asm-canvas" aria-hidden="true"></div>
+<div class="asm-tags" aria-hidden="true"></div>
+<svg class="asm-lines" aria-hidden="true"><path d=""/><circle r="4.5" cx="-9" cy="-9"/></svg>
+<div class="asm-hud">
+ <div class="asm-intro"><p class="asm-kicker">{tx("asm.kicker")}</p><h2>{tx("asm.intro.h")}</h2><p>{tx("asm.intro.p")}</p></div>
+ <p class="asm-note">{tx("asm.out.note")}</p>
+ <div class="asm-nav"><p class="asm-cur" aria-hidden="true"></p><ol class="asm-steps">{steps}</ol><div class="asm-bar" aria-hidden="true"><i></i></div></div>
+ <a class="asm-skip" href="#asm-end">{tx("asm.skip")}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+<div class="asm-card" aria-live="polite" aria-hidden="true"><small class="n"></small><b class="t"></b><p class="d"></p></div>
+<div class="asm-final"><h2>{tx("asm.final.h")}</h2><p class="sub">{tx("asm.final.p")}</p><p class="sig">BOBBY <span>AC Repair &amp; Home Appliance Services</span></p><p class="tg">{tx("brand.tagline")}</p></div>
+</div></div>
+<div class="asm-data" hidden>
+ <div><h3>{tx("asm.list.in")}</h3><ol>{lis("in", 12)}</ol></div>
+ <div><h3>{tx("asm.list.out")}</h3><ol>{lis("out", 10)}</ol><p class="asm-fn">{tx("asm.out.note")}</p></div>
+ <div><h3>{tx("asm.list.inst")}</h3><ol>{lis("ins", 7)}</ol></div>
+<p hidden>{tx("asm.indoor.done")}{tx("asm.indoor.done.p")}{tx("asm.cool")}{tx("asm.cool.d")}</p>
+</div>
+<div id="asm-end" tabindex="-1">{ticker}</div>
+<script>(function(){{var s=document.getElementById('ac-assembly'),ok=false;try{{var c=document.createElement('canvas');ok=!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}}catch(e){{}}
+var st=function(){{s.classList.add('asm-static');s.querySelector('.asm-data').hidden=false;}};
+if(!ok||matchMedia('(prefers-reduced-motion: reduce)').matches){{st();return;}}
+var go=function(){{var j=document.createElement('script');j.src='/assets/js/ac-assembly.js?v={ASM_V}';j.async=true;j.onerror=st;document.body.appendChild(j);}};
+if('IntersectionObserver'in window){{var io=new IntersectionObserver(function(e){{if(e[0].isIntersecting){{io.disconnect();go();}}}},{{rootMargin:'150% 0px'}});io.observe(s);}}else go();}})();</script>
+</section>'''
+
 def trust_strip():
     """Moving trust ticker (moved from the hero to just above the footer)."""
     mq = ''.join(f'{tx("bh2.mq.%d" % n)}<i aria-hidden="true">✦</i>' for n in range(1, 9))
@@ -594,7 +630,6 @@ def build_home():
            + 'if(m)s("--hero-bar",getComputedStyle(m).display!=="none"?m.offsetHeight:0)}'
            + 'f();addEventListener("DOMContentLoaded",f);addEventListener("load",f);addEventListener("resize",f);'
            + 'if(document.fonts)document.fonts.ready.then(f)})();</script>')
-    hero_switch = trust_strip()
     body = (duo + stats_block() + reviews_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
@@ -604,10 +639,10 @@ def build_home():
         steps_block() +
         f'<section class="sec" id="faq"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([1, 4, 5, 10, 11, 12])}<p style="text-align:center;margin-top:20px" class="reveal"><a class="btn btn-line" href="/faqs/">{tx("btn.allfaq")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
-        '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
+        asm_section(trust_strip()))
     page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
                    'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=6">\n</head>') + header('home') + body + hero_switch + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=5" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=6">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=5" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
@@ -744,7 +779,7 @@ def write():
     for sub, fn in (('assets/css', rcssmin.cssmin), ('assets/js', rjsmin.jsmin)):
         for f in os.listdir(os.path.join(out, sub)):
             fp = os.path.join(out, sub, f)
-            if os.path.isfile(fp) and f.endswith(('.css', '.js')):
+            if os.path.isfile(fp) and f.endswith(('.css', '.js')) and f != 'ac-assembly.js':  # bundle is pre-minified by esbuild
                 src = open(fp, encoding='utf-8').read()
                 mini = fn(src)
                 assert len(mini) > len(src) * 0.3, fp

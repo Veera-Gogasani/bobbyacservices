@@ -1,0 +1,12 @@
+{
+  "name": "bobby-site-tools",
+  "private": true,
+  "description": "Build tools for the 3D AC assembly section (bundled output is committed to static/assets/js/)",
+  "scripts": {
+    "build:asm": "esbuild src/ac-assembly/main.js --bundle --minify --format=iife --target=es2019 --outfile=static/assets/js/ac-assembly.js --legal-comments=none"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.170.0"
+  }
+}
