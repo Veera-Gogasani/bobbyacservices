@@ -267,7 +267,7 @@ def lang_switch():
 </ul></div>'''
 
 def header(active):
-    links = ''.join(f'<a href="{u}"{" aria-current=\"page\"" if a == active else ""}>{tx(k)}</a>' for u, k, a in NAV)
+    links = ''.join(f'<a href="{u}"{" aria-current=\"page\"" if a == active else ""}>{tx(k)}</a>' for u, k, a in NAV if a != 'brands')  # Brands is in the footer + home page only
     return f'''<div class="topbar"><div class="wrap">
 <span class="tb-owner">{ic('user')}<b>{OWNER_NAME}</b><i class="tb-sep">|</i><span data-i18n="pre.known">{en('pre.known')}</span> <b class="tb-bobby">Bobby</b><i class="tb-sep">·</i><a class="tb-mail" href="mailto:{OWNER_EMAIL}">{ic('mail')}{OWNER_EMAIL}</a></span>
 <span class="tb-right">{ic('pin')}{tx('loc.short')} · {tx('hours.open')} · {ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · <a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('btn.wa')}</a></span>
