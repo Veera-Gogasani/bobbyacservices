@@ -2,7 +2,7 @@
 """Static site generator for BOBBY AC Repair & Home Appliance Services.
 Run:  python3 build.py   ->  writes the finished site into ./dist
 Edit business details, prices and photos in the CONFIG block below."""
-import json, os, shutil, html
+import json, os, shutil, html, sys
 from strings import S, SERVICES, FAQ_N
 from blog import POSTS, add_strings
 
@@ -60,6 +60,9 @@ BRANDS = ['LG', 'Daikin', 'Blue Star', 'Samsung', 'Panasonic', 'Hitachi', 'Carri
 # ======================================================
 
 for k, v in add_strings.items(): S[k] = v
+from sp_strings import SP
+for k, v in SP.items(): S[k] = v
+import sp_page
 for p in POSTS:
     for f in ('title', 'excerpt', 'body'):
         S['post.%s.%s' % (p['slug'], f)] = p[f]
@@ -109,6 +112,7 @@ ICONS = {
  'globe': '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" fill="none" stroke="currentColor" stroke-width="2"/>',
  'chev': '<path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
  'arrow': '<path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+ 'search': '<circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>',
  'plus': '<path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
  'info': '<circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>',
  'check': '<path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -242,7 +246,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=25">
+<link rel="stylesheet" href="/assets/css/style.css?v=26">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -288,7 +292,7 @@ def footer():
     q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV) + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>'
     acl = [('/ac-services/#ac-repair','svc.ac_repair.name'),('/ac-services/#ac-servicing','svc.ac_servicing.name'),
            ('/ac-services/#ac-installation','svc.ac_install.name'),('/ac-services/#ac-uninstallation','svc.ac_uninstall.name'),
-           ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint')]
+           ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
     a = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k in acl)
     return f'''</main>
 <footer class="ftr">
@@ -601,7 +605,7 @@ def build_inner():
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
-<div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
+<div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' + sp_page.promo(sys.modules[__name__]) +
          steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # Appliance
@@ -684,7 +688,7 @@ def build_inner():
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
     groups = [('nav.home', [('/', 'nav.home'), ('/about/', 'nav.about'), ('/contact/', 'nav.contact'), ('/faqs/', 'nav.faqs')]),
-              ('nav.ac', [('/ac-services/', 'nav.ac')] + [('/ac-services/#' + a, 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS]),
+              ('nav.ac', [('/ac-services/', 'nav.ac')] + [('/ac-services/#' + a, 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS] + [('/ac-spare-parts/', 'sp.crumb')]),
               ('nav.appliance', [('/appliance-services/', 'nav.appliance')] + [('/appliance-services/#' + a, 'ap.%s.t' % k) for k, a in AP_BLOCKS] + [('/brands/', 'nav.brands')]),
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
@@ -697,6 +701,8 @@ def build_inner():
          f'''<section class="phero" style="text-align:center"><div class="wrap"><h1>{tx('p.404.h1')}</h1><p style="margin:0 auto 24px">{tx('p.404.sub')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())
+
+    sp_page.build(sys.modules[__name__])
 
     # DEMO preview of the review carousel (noindex, not in sitemap, not linked). Replace with genuine reviews before use.
     page('/reviews-preview/', head('Review carousel preview (DEMO) | BOBBY', 'Internal preview of the review carousel with sample data.', '/reviews-preview/', None).replace('index, follow', 'noindex, nofollow') + header('') +
