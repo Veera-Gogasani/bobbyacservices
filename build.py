@@ -577,16 +577,16 @@ def build_home():
 </div>
 <div class="hero-visual anim d2">
 <svg class="airflow" viewBox="0 0 300 200" fill="none" stroke="#9FE6FF" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M10 40 C80 10 140 70 220 40 S290 20 300 30"/><path d="M0 80 C70 50 150 110 230 80 S290 60 300 70"/><path d="M20 120 C90 90 160 150 240 120"/><path d="M10 160 C80 130 140 190 220 160"/></svg>
-<div class="hero-photo">{img('hero', 640, 690, 'svc.ac_repair.name')}</div>
+<div class="hero-photo">{img('hero', 640, 690, 'svc.ac_repair.name', eager=True)}</div>
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
     duo = ('<div class="hero-duo" id="hero-duo" aria-roledescription="carousel" aria-label="Featured">'
-           + home_slider().replace('<section class="bh2s bobby-hero"', '<section class="bh2s bobby-hero hero-duo-panel is-on"', 1)
-           + hero.replace('<section class="hero"', '<section class="hero hero-duo-panel" aria-hidden="true" inert', 1)
+           + hero.replace('<section class="hero"', '<section class="hero hero-duo-panel is-on"', 1)
+           + home_slider().replace('<section class="bh2s bobby-hero"', '<section class="bh2s bobby-hero hero-duo-panel" aria-hidden="true" inert', 1)
            + '<div class="hero-duo-pager" role="tablist" aria-label="Choose hero">'
-           + '<button type="button" role="tab" class="is-on" aria-selected="true" data-duo="0" aria-label="Services showcase"></button>'
-           + '<button type="button" role="tab" aria-selected="false" data-duo="1" aria-label="AC repair at your doorstep"></button></div></div>'
+           + '<button type="button" role="tab" class="is-on" aria-selected="true" data-duo="0" aria-label="AC repair at your doorstep"></button>'
+           + '<button type="button" role="tab" aria-selected="false" data-duo="1" aria-label="Services showcase"></button></div></div>'
            + '<script>(function(){var d=document.getElementById("hero-duo"),r=document.documentElement;'
            + 'function s(k,v){var c=parseFloat(getComputedStyle(r).getPropertyValue(k));if(isNaN(c)||Math.abs(c-v)>1)r.style.setProperty(k,v+"px")}'
            + 'function f(){var m=document.querySelector(".mbar");s("--hero-top",Math.round(d.getBoundingClientRect().top+scrollY));'
@@ -606,7 +606,7 @@ def build_home():
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
     page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
                    'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=6">\n</head>') + header('home') + body + hero_switch + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=4" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=6">\n</head>') + header('home') + body + hero_switch + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=5" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
