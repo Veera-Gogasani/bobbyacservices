@@ -136,7 +136,7 @@
     }
   }
   window.bobbyDuo = { next: function () { if (duoHold || reduce) return false; show(1); return true; } };
-  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; show(+d.dataset.duo); if (d.closest('.hero-switch')) { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); } }); });
+  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; show(+d.dataset.duo); }); });
   panels[1].addEventListener('pointerenter', function () { duoHover = true; });
   panels[1].addEventListener('pointerleave', function () { duoHover = false; });
   panels[1].inert = true;
