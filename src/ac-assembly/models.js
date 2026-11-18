@@ -81,6 +81,10 @@ export function buildIndoor(low) {
   }
   coilG.add(box(0.012, 0.2, 0.04, m.steel, -0.405, 0, 0)); coilG.add(box(0.012, 0.2, 0.04, m.steel, 0.405, 0, 0));
   P.coil.add(coilG);
+  for (const [z, r] of [[-0.035, 0.0048], [-0.06, 0.0034]]) {
+    P.coil.add(tube([[0.405, -0.02, 0.02], [0.43, -0.08, z + 0.03], [0.44, -0.12, z], [0.44, -0.125, z - 0.06]], r, m.copper, 24, 8));
+    const nut = cylZ(r + 0.006, 0.016, m.brass, 0.44, -0.125, z - 0.065, 6); P.coil.add(nut);
+  }
 
   /* 3 cross-flow blower */
   P.blower = part('blower');
@@ -150,6 +154,7 @@ export function buildIndoor(low) {
   const lgeo = new THREE.ExtrudeGeometry(lshape, { depth: 0.78, bevelEnabled: false }); lgeo.rotateY(-Math.PI / 2); lgeo.translate(0.39, 0, 0.0);
   const lv = mesh(lgeo, m.white, 0, 0, 0); lv.rotation.x = 0; P.louverPivot.add(lv); P.louver.add(P.louverPivot);
   P.louver.add(box(0.028, 0.026, 0.02, m.dark, -0.41, -0.112, 0.07));
+  for (let i = 0; i < 14; i++) P.louver.add(box(0.003, 0.03, 0.035, m.whiteMatte, -0.35 + i * 0.054, -0.118, 0.06));
 
   /* 12 front panel (hinged at the top) */
   P.front = part('front');
@@ -196,7 +201,10 @@ export function buildOutdoor(low) {
   cp.add(box(0.05, 0.03, 0.03, m.dark, 0.0, 0.07, 0.075));
   cp.add(tube([[0.0, 0.14, 0.0], [0.0, 0.2, 0.0], [0.05, 0.22, -0.02], [0.08, 0.2, -0.06]], 0.006, m.copper, 24, 8));
   cp.add(tube([[-0.07, 0.0, 0.0], [-0.1, 0.05, 0.0], [-0.1, 0.12, -0.04]], 0.008, m.copper, 24, 8));
-  P.compressor.add(cp);
+  cp.add(cylY(0.028, 0.12, m.black, -0.115, 0.03, -0.05, 24));
+  cp.add(tube([[-0.115, 0.09, -0.05], [-0.115, 0.13, -0.05], [-0.07, 0.15, -0.02], [-0.03, 0.12, 0.0]], 0.006, m.copper, 24, 8));
+  for (let i = 0; i < 3; i++) { const a = i / 3 * Math.PI * 2 + 0.4; cp.add(cylY(0.012, 0.016, m.foam, Math.cos(a) * 0.08, -0.14, Math.sin(a) * 0.08, 12)); }
+  P.compressor.add(cp); P.compSpin = cp;
 
   /* 3 condenser coil (L-shaped, back + left side) */
   P.condenser = part('condenser');
@@ -242,7 +250,7 @@ export function buildOutdoor(low) {
     const v = new THREE.Group(); v.position.set(W / 2 + 0.02, -0.17, z);
     v.add(box(0.04, 0.05, 0.035, m.brass, 0, 0, 0)); v.add(cylX(r * 0.75, 0.03, m.brass, 0.032, 0, 0, 6)); v.add(cylY(0.01, 0.03, m.brass, 0, 0.038, 0, 6));
     v.add(tube([[-0.02, 0, 0], [-0.06, 0.02, 0], [-0.1, 0.06, 0]], r * 0.45, m.copper, 16, 8));
-    P.valves.add(v);
+    P.valves.add(v); (P.valveList = P.valveList || []).push(v);
   }
   P.valveTip = new THREE.Vector3(W / 2 + 0.055, -0.17, 0.02);
 
@@ -262,6 +270,7 @@ export function buildOutdoor(low) {
   P.close.add(mesh(fpg, m.cabinet, -0.115, 0, D / 2 - 0.01));
   P.close.add(rbox(0.245, H, 0.012, 0.004, m.cabinet, 0.278, 0, D / 2 - 0.004));
   for (let i = 0; i < 5; i++) P.close.add(box(0.2, 0.006, 0.004, m.grey, 0.278, 0.05 - i * 0.03, D / 2 + 0.004)); /* louvres on the right panel */
+  for (const [x, y] of [[-0.37, 0.26], [0.14, 0.26], [-0.37, -0.26], [0.14, -0.26], [0.39, 0.26], [0.39, -0.26]]) P.close.add(cylZ(0.006, 0.004, m.steel, x, y, D / 2 + 0.003, 8));
   const lg = canvasTex(256, 48, (c, w, h) => { c.fillStyle = '#7A8C9E'; c.font = 'bold 34px Arial'; c.fillText('BOBBY', 4, 36); });
   const lgm = new THREE.Mesh(new THREE.PlaneGeometry(0.11, 0.02), new THREE.MeshBasicMaterial({ map: lg, transparent: true })); lgm.position.set(0.278, 0.2, D / 2 + 0.003); P.close.add(lgm);
 

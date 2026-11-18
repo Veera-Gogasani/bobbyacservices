@@ -520,7 +520,7 @@ H2_SYMBOLS = '''<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="bh-swirl" viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M8 40 H62 A14 14 0 1 0 48 26"/><path d="M8 60 H74 A14 14 0 1 1 60 74"/><path d="M18 50 H44"/></g></symbol>
 </defs></svg>'''
 
-ASM_V = 1
+ASM_V = 2
 def asm_section(ticker=''):
     """Home: scroll-pinned 3D split-AC assembly & installation story (replaces the old bottom CTA)."""
     lis = lambda pre, n: ''.join(f'<li data-k="{pre}{i}"><b data-i18n="asm.{pre}{i}">{en("asm.%s%d" % (pre, i))}</b><span data-i18n="asm.{pre}{i}.d">{en("asm.%s%d.d" % (pre, i))}</span></li>' for i in range(1, n + 1))
@@ -532,7 +532,7 @@ def asm_section(ticker=''):
 <div class="asm-tags" aria-hidden="true"></div>
 <svg class="asm-lines" aria-hidden="true"><path d=""/><circle r="4.5" cx="-9" cy="-9"/></svg>
 <div class="asm-hud">
- <div class="asm-intro"><p class="asm-kicker">{tx("asm.kicker")}</p><h2>{tx("asm.intro.h")}</h2><p>{tx("asm.intro.p")}</p></div>
+ <div class="asm-intro"><p class="asm-kicker">{tx("asm.kicker")}</p><h2>{tx("asm.intro.h")}</h2><p>{tx("asm.intro.p")}</p><p class="asm-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{tx("asm.hint")}</p></div>
  <p class="asm-note">{tx("asm.out.note")}</p>
  <div class="asm-nav"><p class="asm-cur" aria-hidden="true"></p><ol class="asm-steps">{steps}</ol><div class="asm-bar" aria-hidden="true"><i></i></div></div>
  <a class="asm-skip" href="#asm-end">{tx("asm.skip")}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
