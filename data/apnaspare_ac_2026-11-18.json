@@ -1,0 +1,1705 @@
+{
+ "source": "https://apnaspare.com/products?parent_category=air-conditioner-spare-parts",
+ "checked": "2026-11-18",
+ "note": "Selling price (p) and MRP (mrp) in INR as listed; c = family key",
+ "items": [
+  {
+   "t": "Split AC Service Valve 5/8\" L-Type – Brass 3-Way Valve with Copper L-Bend Tube | Outdoor Unit Suction Line Valve, Flare Nut Connection",
+   "p": 490,
+   "mrp": 613,
+   "c": "svalve"
+  },
+  {
+   "t": "Split AC Service Valve 3/8\" L-Type – Brass 3-Way Valve with Copper L-Bend Tube | Outdoor Unit Suction/Liquid Line Valve, Flare Nut Connection",
+   "p": 350,
+   "mrp": 438,
+   "c": "svalve"
+  },
+  {
+   "t": "3/8 Inch Inner Spring Tube Bender – 3 Feet Long Refrigeration Pipe Bending Tool for AC & Fridge Copper Tubing",
+   "p": 190,
+   "mrp": 244,
+   "c": "bender"
+  },
+  {
+   "t": "3/8 Inch Inner Spring Tube Bender – 6 Feet Long Refrigeration Pipe Bending Tool for AC & Fridge Copper Tubing",
+   "p": 270,
+   "mrp": 360,
+   "c": "bender"
+  },
+  {
+   "t": "5/8 Inch Inner Spring Tube Bender – 3 Feet Long Refrigeration Pipe Bending Tool for AC & Fridge Copper Tubing",
+   "p": 200,
+   "mrp": 250,
+   "c": "bender"
+  },
+  {
+   "t": "Inner Spring Tube Bender, 1/2 Inch, 6FT, Copper Pipe Bending Coil for AC & Refrigeration",
+   "p": 300,
+   "mrp": 375,
+   "c": "bender"
+  },
+  {
+   "t": "Inner Spring Tube Bender, 5/8 Inch, 6FT, Copper Pipe Bending Coil for AC & Refrigeration",
+   "p": 320,
+   "mrp": 390,
+   "c": "bender"
+  },
+  {
+   "t": "Voltas AC Outdoor Fan Motor, 54W, KFD-55H, Genuine, CW Rotation, 1.5-2 Ton Split AC",
+   "p": 1320,
+   "mrp": 1714,
+   "c": "odmotor"
+  },
+  {
+   "t": "ADN9000 Universal AC Control System PCB Board with PG Motor, Split AC Controller, Double Sensor",
+   "p": 1300,
+   "mrp": 1831,
+   "c": "upcb"
+  },
+  {
+   "t": "Vinam Air Conditioner Coil Cleaner Foam Spray – Removes Dust, Odor & Improves Cooling | 350g / 450ml | For Split & Window AC Indoor and Outdoor Units",
+   "p": 240,
+   "mrp": 400,
+   "c": "cleaner"
+  },
+  {
+   "t": "DVM Gold 11+5 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 418,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 11+6 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 418,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 9+5 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 348,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 8+5 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 319,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 9+4 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 288,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 12+5 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 329,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 10+4 MFD Dual Run Capacitor – 440V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 329,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 8+6 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 354,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 9+6 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 307,
+   "c": "dualsmall"
+  },
+  {
+   "t": "DVM Gold 10+6 MFD Dual Run Capacitor – 450V AC Twin Capacitor for AC Compressor & Fan Motor | CE, RoHS, ISO 9001:2015 Certified",
+   "p": 230,
+   "mrp": 307,
+   "c": "dualsmall"
+  },
+  {
+   "t": "Indtech 40-60 MFD Motor Start Capacitor – 230/275V AC Electrolytic Starting Capacitor for Single Phase Motors, Compressors & Pumps | CE Certified",
+   "p": 200,
+   "mrp": 267,
+   "c": "startcap"
+  },
+  {
+   "t": "Indtech 60-80 MFD Motor Start Capacitor – 230/275V AC Electrolytic Starting Capacitor for Single Phase Motors, Compressors & Pumps | CE Certified",
+   "p": 200,
+   "mrp": 294,
+   "c": "startcap"
+  },
+  {
+   "t": "Indtech 8 MFD Capacitor with Pin Terminals – 440V AC Motor Run Capacitor for Pump, AC & Single Phase Motors | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 176,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 10 MFD Capacitor with Wire Leads – 450V AC Motor Run Capacitor for Pump, AC & Single Phase Motors | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 200,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 3.15 MFD Capacitor with Wire Leads – 440V AC Fan & Motor Run Capacitor | ISI Marked IS 1709",
+   "p": 130,
+   "mrp": 173,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 10 MFD Capacitor with Pin Terminals – 440V AC Motor Run Capacitor for Pump, AC & Single Phase Motors | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 188,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 5 MFD Capacitor with Wire Leads – 440V AC Motor Run Capacitor for Fan, Cooler & Single Phase Motors | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 231,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 6 MFD Capacitor with Pin Terminals – 450V AC Motor Run Capacitor for Pump, AC & Single Phase Motors (HD) | ISI Marked IS 2993",
+   "p": 160,
+   "mrp": 229,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 5 MFD Capacitor with Pin Terminals – 440V AC Motor Run Capacitor for Pump, AC & Single Phase Motors (HD) | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 214,
+   "c": "fancap"
+  },
+  {
+   "t": "Seacon 8 MFD Capacitor with Wire Leads – 440V AC Motor Run Capacitor for Fan, Cooler & Single Phase Motors | ISO 9001:2015, RoHS",
+   "p": 160,
+   "mrp": 229,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 6 MFD Capacitor with Wire Leads – 450V AC Motor Run Capacitor for Cooler, Fan & Single Phase Motors | ISI Marked IS 2993",
+   "p": 160,
+   "mrp": 200,
+   "c": "fancap"
+  },
+  {
+   "t": "Indtech 4 MFD Capacitor with Wire Leads – 440V AC Motor Run Capacitor for Ceiling Fan & Single Phase Motors | ISI Marked IS 2993",
+   "p": 150,
+   "mrp": 188,
+   "c": "fancap"
+  },
+  {
+   "t": "AC Nut 3/8 Inch Heavy – Heavy Duty Brass Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 110,
+   "mrp": 129,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 3/8 Inch – Standard Brass Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut (Gas/Liquid Line)",
+   "p": 100,
+   "mrp": 125,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/2 x 5/8 Inch Heavy – Heavy Duty Brass Reducing Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 160,
+   "mrp": 222,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 5/16 Inch – Standard Brass Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 90,
+   "mrp": 141,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/2 x 3/8 Inch Heavy – Heavy Duty Brass Reducing Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 140,
+   "mrp": null,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/4 Inch – Standard Brass Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut (Liquid Line)",
+   "p": 100,
+   "mrp": 115,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/4 x 3/8 Inch Heavy – Heavy Duty Brass Reducing Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 120,
+   "mrp": 141,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 5/8 Inch Heavy – Heavy Duty Brass Flare Nut for Split AC Copper Pipe | Universal Refrigerant Line Union Nut",
+   "p": 150,
+   "mrp": null,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/2 Inch Heavy – Heavy Duty Brass Flare Nut for Split AC Copper Pipe | Refrigerant Line Union Nut",
+   "p": 120,
+   "mrp": 141,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 5/8 Inch – Brass Flare Nut for Split AC Copper Pipe | Refrigerant Line Union Nut (Gas & Liquid Side)",
+   "p": 120,
+   "mrp": null,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Flare Nut 1/2\" to 1/2\" – Brass Flare Nut for Split AC Copper Pipe Refrigerant Line Connection",
+   "p": 100,
+   "mrp": 120,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Nut 1/4 Inch Heavy – Heavy Duty Brass Flare Nut for Split AC Copper Pipe | Refrigerant Line Union Nut",
+   "p": 100,
+   "mrp": 125,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Flare Reducing Nut 1/2\" to 3/8\" – Brass Flare Nut for Split AC Copper Pipe Refrigerant Line Connection",
+   "p": 110,
+   "mrp": 131,
+   "c": "flarenut"
+  },
+  {
+   "t": "AC Remote Control - Compact LCD Split AC Remote with iSense, Mode and Fan | YY236 | Compatible Replacement Remote",
+   "p": 320,
+   "mrp": 368,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Blow, Turbo and Clock | YB1F2 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 336,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool MagiCool AC Remote Control - LCD Split AC Remote with 6th Sense, Around U and Eco | WHIRLPOOL-225 | Compatible Replacement Remote",
+   "p": 349,
+   "mrp": 431,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control - LCD Split AC Remote with AQi, WiFi/ADJ and Saver | VE248 | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 570,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control Suitable for Voltas - LCD Split AC Remote with Air Flow, Turbo and Clean | VE49 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 378,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control - LCD Split AC Remote with Turbo, Sleep and HR/MIN Clock | VE102 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 498,
+   "c": "remote"
+  },
+  {
+   "t": "5000-in-1 Universal AC Remote Control - Intelligent LCD Remote with Brand Search, Eco Save and Heat/Cool | VE-309 | Multi-Brand Compatible",
+   "p": 299,
+   "mrp": 369,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with 5-in-1 Convert, i-Sense and V-Swing | VE307 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 410,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - Dark Body LCD Split AC Remote with Health, Flexi and Ambience | VE273 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control - LCD Split AC Remote with My Mode, Ambience and Good Sleep | VE272A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 378,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with WiFi, InstaCool and AI Mode | VE261 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 453,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with 5-in-1 Convert, i-Sense and Hygiene+ | VE259 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 415,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Start/Stop, Eco/CL and Swing | VE231B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 440,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with H.Swing, V.Swing and Filter/Reset Lock | VE224 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 365,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with WiFi, Energy Meter and Auto Clean | VE215 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Powerchill, Econo and Good Sleep Timer | VE202A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 360,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Eco Sleep, I Feel and Shortcut | VE201B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Smart Saver, Good Sleep and Auto Clean | VE200 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 352,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with WiFi, I Feel and Quiet | VE193A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 388,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Mildew, Turbo and Health | VE191-LIGHT | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 421,
+   "c": "remote"
+  },
+  {
+   "t": "Onida AC Remote Control - LCD Split AC Remote with Mute, I Feel and Turbo | VE191A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 475,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Remote with Econavi, Nanoe-G and Mild Dry Cooling | VE187-LIGHT | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 352,
+   "c": "remote"
+  },
+  {
+   "t": "Inverter AC Remote Control - LCD Split AC Remote with iFresh, Super Cool and LED/Filter | VE168F-LIGHT | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 369,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control Suitable for Lloyd - Simple 5-Button LCD Split AC Remote | VE162 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 498,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with I-Cool, C.F. Fresh Air and Energy Saver | VE160 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 415,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Ion, Eco, Dry and Auto Clean | VE156A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 427,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Eco, Timer On/Off Icons and LED Display | VE156 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 378,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control - LCD Split AC Remote with Follow Me, My Mode and LED | VE148A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 623,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Health, Lock and AUH | VE145A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 369,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control - LCD Split AC Remote with Powerchill, Econo and Good Sleep Timer | ARC484A1 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 440,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Econo Cool, Powerful Cool and I Feel | VE122A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 388,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Circular Mode Pad, Turbo and Sleep | VE102A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 369,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Energy Saver, Sweep and Daily Timer | VE100B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - Simple 4-Button LCD Split AC Remote with On/Off, Up/Down and Fan | VE92B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Bio Sleep, Turbo and Set/Cancel | VE87 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 388,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Fungusproof, Health and Feeling | VE45 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 352,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Turbo, Send and I/O Power | VE31 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 410,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Master Control, Fan Control and Coil Dry | VE22 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Air, Light and On/Off Slide Switch | VE19 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 360,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control - LCD Split AC Remote with 5 Way, Turbo/Good Sleep and Set/Cancel | VE11 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 453,
+   "c": "remote"
+  },
+  {
+   "t": "5000-in-1 Universal AC Remote Control - LCD Remote with Eco, F.Cool, F.Heat and Lock | UNIVERSAL-5000 | Multi-Brand Compatible",
+   "p": 299,
+   "mrp": 352,
+   "c": "remote"
+  },
+  {
+   "t": "Universal AC Remote Control - Simple 3-Button LCD Split AC Remote with Power and Temp | UNI-SW-02-AC246 | Multi-Brand Compatible",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control Suitable for Samsung - Non-Display Split AC Remote with Energy Saver and Swing | SAMSUNG-5 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control - LCD Split AC Remote with Flexi Cool 6-in-1, InstaCool and WiFi Opt | RG56CMI-B2 | Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 726,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control - LCD Inverter AC Remote with Nanoe-G, Powerful/Eco and Air Swing | A75C3623 | Compatible Replacement Remote",
+   "p": 350,
+   "mrp": 583,
+   "c": "remote"
+  },
+  {
+   "t": "Onida AC Remote Control - LCD Split AC Remote with 5-in-1, HC 5-in-1 and Menu/OK Dial | ONIDA-260 | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 623,
+   "c": "remote"
+  },
+  {
+   "t": "MarQ AC Remote Control - LCD Split AC Remote with 4-in-1 Convertible, Turbo Cool and iFeel | MARQ-210E | Compatible Replacement Remote",
+   "p": 400,
+   "mrp": 615,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control LCD Split AC Remote with 6-in-1 H'Capa, Comfort Air and Diagnosis | LG Compatible Replacement Remote 36S",
+   "p": 450,
+   "mrp": 643,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control - LCD Split AC Remote with H'Cool, M'Soon and Fan Speed | LG Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 662,
+   "c": "remote"
+  },
+  {
+   "t": "Kelvinator AC Remote Control - LCD Split AC Remote with iFeel, iFollow WiFi and iFavor | KSAILM01 | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 676,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control - LCD Split AC Remote with My Mode, Ambience and Good Sleep | HITACHI-272A | Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 692,
+   "c": "remote"
+  },
+  {
+   "t": "Hisense AC Remote Control - LCD Split AC Remote with Convertible, Turbo and Eco/Silent | HISENSE-31G | Compatible Replacement Remote",
+   "p": 400,
+   "mrp": 580,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control - LCD Split AC Remote with Powerchill, Coanda and Dew Clean | ARC484B44 | Compatible Replacement Remote",
+   "p": 349,
+   "mrp": 492,
+   "c": "remote"
+  },
+  {
+   "t": "Croma AC Remote Control - LCD Split AC Remote with Turbo Cool, Convertible and E.Saver | CROMA-ORIGINAL | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 633,
+   "c": "remote"
+  },
+  {
+   "t": "Croma AC Remote Control - LCD Split AC Remote with WiFi, Convertible and E.Saver | CROMA-2 | Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 776,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control - LCD Split AC Remote with Flexi Cool 3-Zone Buttons and Turbo | CARRIER-B0 | Compatible Replacement Remote",
+   "p": 400,
+   "mrp": 727,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control - LCD Split AC Remote with Turbo, Step and My Button | CARRIER-56B1 | Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 750,
+   "c": "remote"
+  },
+  {
+   "t": "BPL AC Remote Control - LCD Split AC Remote with WiFi, InstaCool and AI Mode | BPL-261 | Compatible Replacement Remote",
+   "p": 349,
+   "mrp": 506,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control - LCD Split AC Remote with Conv, Max Fan and i-Self Clean | BLUESTAR-310 | Compatible Replacement Remote",
+   "p": 400,
+   "mrp": 615,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control - LCD Split AC Remote with i-Self Clean, Turbo and Fix & Lock | BLUESTAR-31D | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 623,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with ADJ, Super, Fav and Follow-Me Sensor | AZONE-255 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Humicon, WiFi and Turbo Mode | AZONE-233B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 388,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote Control - LCD Split AC Remote with Powerful Cooling, Mode and Swing | AR-RHA2E | AZONE-203 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "Azone AC Remote Control - LCD Split AC Remote with Fast/5min Clean, Swing Icons and C/F Set | AZONE-144B | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 374,
+   "c": "remote"
+  },
+  {
+   "t": "Azone AC Remote Control - LCD Split AC Remote with Master Control, Fan Control and Coil Dry | AZONE-107 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 410,
+   "c": "remote"
+  },
+  {
+   "t": "Azone AC Remote Control - Non-Display Split AC Remote with Sweep, Turbo, Dry and Energy Saving | AZONE-100A | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "Azone AC Remote Control - LCD Split AC Remote with Powerful, Sensor, Auto Clean and Light | AZONE-222 | Compatible Replacement Remote",
+   "p": 299,
+   "mrp": 378,
+   "c": "remote"
+  },
+  {
+   "t": "Azone Universal AC Remote Control - LCD Split AC Remote with Turbo, Auto, Good Sleep and Timer | AZONE-202 | Multi-Brand Compatible",
+   "p": 299,
+   "mrp": 393,
+   "c": "remote"
+  },
+  {
+   "t": "Amstrad AC Remote Control - LCD Split AC Remote with Turbo, Speed and Swing Mode | AMSTRAD230 | Compatible Replacement Remote",
+   "p": 450,
+   "mrp": 750,
+   "c": "remote"
+  },
+  {
+   "t": "Acer AC Remote Control - LCD Split AC Remote with Turbo, Quad Cool and Convert Mode | ACER287 | Compatible Replacement Remote",
+   "p": 399,
+   "mrp": 570,
+   "c": "remote"
+  },
+  {
+   "t": "Lloyd Smart Inverter AC Remote Control AC253 – Compatible Replacement Remote with Humidity, My Mode, 5-in-1 & Wi-Fi for Split Air Conditioners",
+   "p": 299,
+   "mrp": 399,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control AC252A (AR-RPA1E) – Compatible Replacement Remote with Economy, Powerful, Service Check & Test Run for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control AC252 (AR-RRA2E) – Compatible Replacement Remote with Outdoor Low Noise, WLAN, Energy Saving & Test Run for Inverter Split Air Conditioners",
+   "p": 300,
+   "mrp": 375,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas Inverter AC Remote Control AC248 – Compatible Replacement Remote with Wi-Fi/ADJ, Saver, Lamp & Dual Swing for Split, Window & Cassette Air Conditioners",
+   "p": 300,
+   "mrp": 405,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool & Blue Star AC Remote Control AC223 – Compatible Replacement Remote with H-Sweep, V-Sweep, Health & Quiet for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi Inverter AC Remote Control AC220 – Compatible Replacement Remote with H.Swing, Filter, Fan Speed & Timer for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin Smart Wi-Fi AC Remote Control AC214B ARC484B21 – Compatible Replacement Remote with Coanda, Smell Proof, Powerchill & Childlock for Split Air Conditioners",
+   "p": 300,
+   "mrp": 411,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC214 ARC480A1 – Compatible Replacement Remote with Comfort, Powerful, Econo & Heat Mode for Split Air Conditioners",
+   "p": 300,
+   "mrp": 423,
+   "c": "remote"
+  },
+  {
+   "t": "Gree AC Remote Control AC206 – Compatible Replacement Remote with X-Fan, I Feel, T-ON/T-OFF Timer for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 390,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control AC201A – Compatible Replacement Remote with Shortcut, I Feel, Blow & Turbo for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 385,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC190 – Compatible Replacement Remote with Horizontal Form, Operation Mode, Manual Override & Swing for Window & Split Air Conditioners",
+   "p": 349,
+   "mrp": 499,
+   "c": "remote"
+  },
+  {
+   "t": "Videocon & Kenstar AC Remote Control AC175 – Compatible Replacement Remote with Auto Clean, LED Display & HR/MIN Clock Timer for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic Inverter AC Remote Control AC157F – Compatible Replacement Remote with ECONAVI, nanoe, Jet Stream & Smart Wi-Fi for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic Inverter AC Remote Control AC157C – Compatible Replacement Remote with nanoe-G, Jet Stream, Smart Wi-Fi & Clean for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "IFB, Godrej & MARQ AC Remote Control AC145 – Compatible Replacement Remote with Health, Dual Swing, ECO & Turbo for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Onida iCool AC Remote Control AC143A – Compatible Replacement Remote with Ceiling Fan Control, iCool & Oval Dial for Split Air Conditioners",
+   "p": 300,
+   "mrp": 411,
+   "c": "remote"
+  },
+  {
+   "t": "Midea AC Remote Control AC142A – Compatible Replacement Remote with Preset, Swing Direct, Economy & Turbo for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 385,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC133 – Compatible Replacement Remote with I Feel, Blow, Turbo & Clock for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC131F – Compatible Replacement Remote with Turbo/Quiet, Self Clean, ECO & Dual Swing for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 385,
+   "c": "remote"
+  },
+  {
+   "t": "Godrej & Lloyd AC Remote Control AC125 – Compatible Replacement Remote with Fungusproof, Dual Swing & Health for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Mitsubishi Electric AC Remote Control AC122 – Compatible Replacement Remote with Too Warm/Too Cool, I Feel Cool, Econo Cool & Powerful Cool for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control AC116 – Compatible Replacement Remote with Feel, Super, Econo & Heat Mode for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Onida i-Cool AC Remote Control AC111 – Compatible Replacement Remote with Money Saved, Energy Saver & Comfort Factor for Split Air Conditioners",
+   "p": 300,
+   "mrp": 441,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC92 – Compatible Replacement Remote with Home Leave, Powerful & Flip Cover for Split Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control AC90A – Compatible Replacement Remote with 2nd F, d'light Cool, Temp/Humi & Filter Reset for Split Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control AC90 – Compatible Replacement Remote with Smart Saver, Auto Clean & Good Sleep for Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "BABA 2001 Universal AC Remote Control AC77 – Compatible with Multiple AC Brands | Hot/Cool/Fast Modes | Timer & Clock",
+   "p": 249,
+   "mrp": 377,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control AC44A – Compatible Replacement Remote with Air Swing, Fan Speed & Timer for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control AC29A – Compatible Replacement Remote with E-Ion, Patrol & Quiet/Powerful for Split Air Conditioners",
+   "p": 300,
+   "mrp": 390,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control AC29 – Compatible Replacement Remote with 3-Slot Timer, Air Swing & Fan Speed for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 411,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC18A – Compatible Replacement Remote with Clock, Blow, Temp & Turbo for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "IFB AC Remote Control 273 – Compatible Replacement Remote with Flexi, Super/ECO, AMB & Health Mode for Split Air Conditioners",
+   "p": 399,
+   "mrp": 562,
+   "c": "remote"
+  },
+  {
+   "t": "Kelvinator AC Remote Control 261 – Compatible Replacement Remote with AI Mode, SwitchTon, Wi-Fi & I Feel for Split Air Conditioners",
+   "p": 399,
+   "mrp": null,
+   "c": "remote"
+  },
+  {
+   "t": "Hisense AC Remote Control 254 – Compatible Replacement Remote with SwitchTon, iFEEL, iFOLLOW & iCLEAN for Split Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control 237 – Compatible Replacement Remote with I Feel, Dual Swing & Self Clean for Split Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier Flexi Cool AC Remote Control 235 – Compatible Replacement Remote (RG56CMI-B0/B2) with 3-Step Capacity Control for Split Air Conditioners",
+   "p": 400,
+   "mrp": 741,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control 234 – Compatible Replacement Remote (RG56CMI-W1) with Step & OPT for Split Air Conditioners",
+   "p": 350,
+   "mrp": 538,
+   "c": "remote"
+  },
+  {
+   "t": "4Pole Contactor Relay",
+   "p": 320,
+   "mrp": 400,
+   "c": "contactor"
+  },
+  {
+   "t": "3Pole Contactor Relay",
+   "p": 310,
+   "mrp": 388,
+   "c": "contactor"
+  },
+  {
+   "t": "2Pole Contactor Relay",
+   "p": 300,
+   "mrp": 375,
+   "c": "contactor"
+  },
+  {
+   "t": "1Pole Contactor Relay",
+   "p": 280,
+   "mrp": 350,
+   "c": "contactor"
+  },
+  {
+   "t": "Lloyd AC Remote Control 233A – Compatible Replacement Remote with HUMICON Humidity Control for Split Air Conditioners",
+   "p": 450,
+   "mrp": 692,
+   "c": "remote"
+  },
+  {
+   "t": "Lloyd AC Remote Control 233 – Compatible Replacement Remote with My Mode, Aux Heat & Health for Split Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Croma & Cruise AC Remote Control 231C – Compatible Replacement Remote with Convertible Mode for Split & Window Air Conditioners",
+   "p": 330,
+   "mrp": 452,
+   "c": "remote"
+  },
+  {
+   "t": "MARQ & Blue Star AC Remote Control 231B – Compatible Replacement Remote with Eco/CL Mode for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 411,
+   "c": "remote"
+  },
+  {
+   "t": "Godrej, MARQ & Croma AC Remote Control 231A – Compatible Replacement Remote with Blow & Silent Mode for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 405,
+   "c": "remote"
+  },
+  {
+   "t": "AmazonBasics & MARQ AC Remote Control 231 – Compatible Replacement Remote with Turbo Cool for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control 226B – Compatible Replacement Remote with 5-in-1 Conv & Turbo for Convertible Split Air Conditioners",
+   "p": 300,
+   "mrp": 429,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control 226A – Compatible Replacement Remote with Fix & Lock for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 405,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool Magicool AC Remote Control 225 – Compatible Replacement Remote with 6th Sense & Around U for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 417,
+   "c": "remote"
+  },
+  {
+   "t": "Lloyd, Godrej, Voltas & Blue Star AC Remote Control AC223A – Compatible Replacement Remote with E-Saving, H-Swing, V-Swing & Clean for Split Air Conditioners",
+   "p": 349,
+   "mrp": 401,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control 220A – Compatible Replacement Remote for Voltas & Lloyd Split Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Godrej AC Remote Control 210A – Compatible Replacement Remote with Backlight for Split & Window Air Conditioners",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "IFB AC Remote Control AC-204 — Health, Super & Dual Swing for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control 201 — I Feel, Ion & Turbo for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "197A AC Remote Control — Hisense, Blue Star, Whirlpool & York Compatible with i Feel & Smart",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool AC Remote Control 192 — Climate Control with 6th Sense & Around U (DG11J1-52)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-188 AC Remote Control — Gree, iBell, Cruise & Chigo Compatible (ZH/JA-03)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control 184B — Fast, Self Clean, Follow Me & Eco for Split AC",
+   "p": 400,
+   "mrp": 571,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control 184 — Short Cut, Swing Direct & Turbo for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-182 AC Remote Control — Voltas, Lloyd, Gree & Godrej Compatible with I Feel (YAN1F1)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Electrolux AC Remote Control 174 — Clean, Turbo & LED Display for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool Magicool AC Remote Control 173 — 6th Sense, Eco & Turbo (KKG15B-C1)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control 172 — iFeel, Blow & Quiet for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control 168B — Zzz Sleep, Silent & My Clean for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control 168A — iSense, My Clean & Silent for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control 157 — i AUTO-X, Econavi, Nanoe-G & Quiet for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control AC-144A — Fast, Swing & Settings for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control AC-144 — Single User & Options for Split Inverter AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Onida AC Remote Control AC-143 — iCOOL, Turbo & Eco for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Condenser Union 5/8",
+   "p": 220,
+   "mrp": 262,
+   "c": "union"
+  },
+  {
+   "t": "Condenser Union 3/4",
+   "p": 270,
+   "mrp": 273,
+   "c": "union"
+  },
+  {
+   "t": "Condenser Union 1/4",
+   "p": 99,
+   "mrp": 110,
+   "c": "union"
+  },
+  {
+   "t": "3.5Mfd Capacitor Square",
+   "p": 70,
+   "mrp": 88,
+   "c": "squarecap"
+  },
+  {
+   "t": "4Mfd Square Capacitor",
+   "p": 70,
+   "mrp": 88,
+   "c": "squarecap"
+  },
+  {
+   "t": "1Mfd Square Capacitor",
+   "p": 59,
+   "mrp": 66,
+   "c": "squarecap"
+  },
+  {
+   "t": "8Mfd Capacitor Square",
+   "p": 100,
+   "mrp": 125,
+   "c": "squarecap"
+  },
+  {
+   "t": "2Mfd Square Capacitor",
+   "p": 65,
+   "mrp": null,
+   "c": "squarecap"
+  },
+  {
+   "t": "5Mfd 4Pin Capacitor Square",
+   "p": 70,
+   "mrp": 88,
+   "c": "squarecap"
+  },
+  {
+   "t": "5Mfd Square Capacitor 2Pin",
+   "p": 70,
+   "mrp": 88,
+   "c": "squarecap"
+  },
+  {
+   "t": "2Mfd Capacitor Pcb",
+   "p": 50,
+   "mrp": 63,
+   "c": "squarecap"
+  },
+  {
+   "t": "AC-142 AC Remote Control — Voltas & Lloyd Compatible with Short Cut & Follow Me (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control 133B — WiFi, Turbo & Saver for Split & Window AC",
+   "p": 450,
+   "mrp": 750,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control 133A — X-Fan, I Feel & Turbo for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC-131A — Turbo, Extra Function & Lock for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool AC Remote Control 129 — 3D Cool, 6th Sense & Around U (DG11J1-11/34)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control 113A — AR-RCE3E for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Whirlpool AC Remote Control 110A — 6th Sense, Turbo & Sleep for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control 107A — AR-RAJ1E Powerful, Sleep & Test Run for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC-98 — Compatible for YR-H03, YR-H07, YR-H08 & YR-H10",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC-92C — Home Leave, Powerful & Comfort Air Swing for Split AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC-88 — Aux Heat, Light Wave, Plasma & Fresh Air (also fits Lloyd)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control AC-75 — Air Purifier, Auto Swing & Sleep for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control AC-82 — Economic Running & Air Direction (Model 82 R14A/E)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote Control 67 — Bio Sleep, Smart Saver & Comfort Care (ARH-2215)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-41 AC Remote Control — Voltas, Lloyd, Godrej, TCL, Videocon & Panasonic Compatible (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control 36U — Dual Inverter 6-in-1 Viraat Mode & Wi-Fi (AKB75215411)",
+   "p": 450,
+   "mrp": 900,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control 29D — nanoe-G Purifier & Powerful for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic AC Remote Control 29C — Powerful (Power Chill) for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Panasonic Inverter AC Remote Control 29B — Nanoe-G, Econavi & Mild Dry Cooling",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General Window AC Remote Control 23W — Super Wave Replacement (AR-JE11)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control 23S — AR-JE6 / AR-JE06 Replacement for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote Control AC-22 — Coil Dry, Heat & Test Run for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control 18A — Turbo, Clock & Blow for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-18 AC Remote Control — Videocon, Onida & Voltas Compatible with Health & Humidity (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-17 AC Remote Control — TCL, Videocon & Godrej Compatible with FEEL Mode & Heat (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control 7B — Smart Split with Lamp Function (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control 36L — Jet Cool, Plasma & Vane Angle for Split & Window AC (AKB73315616)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Azure AC Remote Control No. 69 — 6 in 1 Replacement for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG Window AC Remote Control No. 65 — Simple Icon-Based Replacement Remote",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Lloyd AC Remote Control 36B — Turbo, Quiet & Sleep for Split & Window AC Brand front-loaded with key features",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Videocon AC Remote Control 170A — H-Sweep, V-Sweep, Health & Turbo for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC Remote No. 170 — Universal Replacement with Wall Mount Stand (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control 16A — Jet Cool, Plasma with Wall Mount Stand (AKB72955306)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi Inverter AC Remote Control 168D — No Backlight, Super Cool & Silent Mode",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi Inverter AC Remote Control 168D — with Backlight, Super Cool & Silent Mode",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Blue Star AC Remote Control Model 149A — IFeel, Eco Mode, Turbo & Ionizer for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control No. 148 — Follow Me, Self Clean, Smart Eye & Ionizer (also fits Midea)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control 133B — WiFi Smart Split AC Replacement with Turbo & Sleep",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "60+2 Capacitor Mfd",
+   "p": 280,
+   "mrp": 350,
+   "c": "dual"
+  },
+  {
+   "t": "Godrej AC Remote Control — Eco, Turbo, Blow & Silent for Split, Window & Inverter AC (1 / 1.5 / 2 Ton)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Akabishi (Mitsubishi Electric India) AC Remote Control AC-290B — Turbo Cool & Energy Saver",
+   "p": 450,
+   "mrp": 600,
+   "c": "remote"
+  },
+  {
+   "t": "Carrier AC Remote Control AC-82A — Turbo, Air Direction & F/C for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control AC-68A — My Clean, Kaimin & Backlight for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control AC-68 — Kaimin & Backlight Replacement for Split & Window AC (VE-68)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Hitachi AC Remote Control AC-59 — Revolve / Strong Revolve Replacement for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-55 AC Remote Control — Voltas, Videocon, Vertex, Kenstar & Blue Star Compatible (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "60+4 Capacitor Mfd",
+   "p": 300,
+   "mrp": 375,
+   "c": "dual"
+  },
+  {
+   "t": "55+4 Capacitor Mfd",
+   "p": 295,
+   "mrp": 369,
+   "c": "dual"
+  },
+  {
+   "t": "55+2 Capacitor Mfd",
+   "p": 280,
+   "mrp": 350,
+   "c": "dual"
+  },
+  {
+   "t": "55 Capacitor Mfd",
+   "p": 260,
+   "mrp": 325,
+   "c": "compcap"
+  },
+  {
+   "t": "50 Capacitor Mfd",
+   "p": 250,
+   "mrp": 313,
+   "c": "compcap"
+  },
+  {
+   "t": "50+4 Capacitor Mfd",
+   "p": 290,
+   "mrp": 363,
+   "c": "dual"
+  },
+  {
+   "t": "50+2 Capacitor Mfd",
+   "p": 280,
+   "mrp": 350,
+   "c": "dual"
+  },
+  {
+   "t": "LG AC Remote Control AC-36I — M'Soon, H'Cool & Auto Clean Replacement for Split & Window AC (AKB73975614)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC-36D — H-Sweep, V-Sweep, Health & Turbo Replacement for Split & Window AC (VE-36E)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control AC-36A — M'Soon, H'Cool, Mosquito Away & Auto Clean for Split & Window AC (AKB73975615)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Mitsubishi Heavy Industries AC Remote Control AC-25A — Without 3D Auto, Hi Power & Econo (RKX502A001)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC-132D — ARC484B12 Backlit Replacement for Split & Window AC (1/1.5/2 Ton)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC-132B — ARC470A1 Replacement for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC-132A — Powerchill & Econo Replacement for Inverter Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Daikin AC Remote Control AC-132 — Turbo, Good Sleep & Econo Replacement for Split & Window AC (ARC470A1)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC-131C — Self Clean & Turbo/Quiet Replacement for Split & Window AC",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Haier AC Remote Control AC-131 — Health & Turbo/Quiet Replacement for Split & Window AC (YY-131)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC-12 — R51/ME Replacement with Turbo, Heat & Fresh (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC-119 — Smart, Air Refresh, Fan Sweep & Quiet (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Samsung AC Remote AC-104 — Good Sleep (ARH-2201 / 2218)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "LG AC Remote Control AC-36 — Jet Cool Replacement for Split & Window AC (AKB73975615)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Mitsubishi Heavy Industries AC Remote Control AC-25 — 3D Auto, Hi Power & Econo (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "AC-39 AC Remote Control — Onida, Voltas, Godrej, Videocon & Blue Star Compatible (Split & Window)",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "Voltas AC Remote Control AC-31A — ION / Turbo Replacement (Split, Window & Inverter)",
+   "p": 399,
+   "mrp": 499,
+   "c": "remote"
+  },
+  {
+   "t": "Ryoku AC Remote AC-137C — Compatible Replacement Remote",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "O General AC Remote AC-47 with Double Swing Function",
+   "p": 300,
+   "mrp": 400,
+   "c": "remote"
+  },
+  {
+   "t": "36+2 Capacitor Mfd",
+   "p": 265,
+   "mrp": 331,
+   "c": "dual"
+  },
+  {
+   "t": "36+4 Capacitor Mfd",
+   "p": 270,
+   "mrp": 333,
+   "c": "dual"
+  },
+  {
+   "t": "45+4 Capacitor Mfd",
+   "p": 278,
+   "mrp": 335,
+   "c": "dual"
+  },
+  {
+   "t": "45+2 Capacitor Mfd",
+   "p": 275,
+   "mrp": 344,
+   "c": "dual"
+  },
+  {
+   "t": "40+4 Capacitor Mfd",
+   "p": 270,
+   "mrp": 338,
+   "c": "dual"
+  },
+  {
+   "t": "36+6 Capacitor Mfd",
+   "p": 249,
+   "mrp": 311,
+   "c": "dual"
+  },
+  {
+   "t": "30 Mfd Capacitor",
+   "p": 230,
+   "mrp": 288,
+   "c": "compcap"
+  },
+  {
+   "t": "40+2 Capacitor Mfd",
+   "p": 266,
+   "mrp": 333,
+   "c": "dual"
+  },
+  {
+   "t": "40 Mfd Capacitor",
+   "p": 250,
+   "mrp": 313,
+   "c": "compcap"
+  },
+  {
+   "t": "45+6 Mfd Capacitor",
+   "p": 290,
+   "mrp": 322,
+   "c": "dual"
+  },
+  {
+   "t": "50+6 Mfd Capacitor",
+   "p": 270,
+   "mrp": 318,
+   "c": "dual"
+  },
+  {
+   "t": "Voltas AC Outdoor Fan Motor 54W – Model KFD-55H | 900 RPM, ACW (also fits Haier/Lloyd/Vestar)",
+   "p": 1200,
+   "mrp": null,
+   "c": "odmotor"
+  },
+  {
+   "t": "Samsung AC Outdoor Fan Motor 45W – Model 2710 | 1160 RPM Condenser Motor",
+   "p": 1200,
+   "mrp": 1644,
+   "c": "odmotor"
+  },
+  {
+   "t": "LG / Haier AC Outdoor Fan Motor 68W – Model YDK681022 | 1100 RPM Condenser Motor with 3µF Capacitor Spec",
+   "p": 1200,
+   "mrp": 1600,
+   "c": "odmotor"
+  },
+  {
+   "t": "Panasonic AC Outdoor Fan Motor 58W – Model 95FH075 | 1160 RPM Condenser Motor",
+   "p": 1200,
+   "mrp": 1622,
+   "c": "odmotor"
+  }
+ ]
+}

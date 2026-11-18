@@ -29,6 +29,7 @@ SP = {
     'sp.cat.motors': ("Motors &amp; Fans", "మోటార్లు &amp; ఫ్యాన్లు", "मोटर और पंखे"),
     'sp.cat.refrigeration': ("Refrigeration Components", "రిఫ్రిజిరేషన్ భాగాలు", "रेफ्रिजरेशन पार्ट्स"),
     'sp.cat.install': ("Installation Accessories", "ఇన్‌స్టాలేషన్ యాక్సెసరీస్", "इंस्टॉलेशन एक्सेसरीज़"),
+    'sp.cat.remote': ("AC Remote Controls", "ఏసీ రిమోట్ కంట్రోల్స్", "एसी रिमोट कंट्रोल"),
     'sp.th.img': ("Image", "చిత్రం", "चित्र"),
     'sp.th.name': ("Spare part", "స్పేర్ పార్ట్", "स्पेयर पार्ट"),
     'sp.th.desc': ("Application / description", "ఉపయోగం / వివరణ", "उपयोग / विवरण"),

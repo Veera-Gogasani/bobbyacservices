@@ -845,3 +845,10 @@ a.ccard:hover{transform:translateY(-3px)}
   .sp-promo{flex-wrap:wrap}
 }
 .sp-photo img{object-fit:contain;background:#fff;padding:6px}
+.sp-var{margin-top:8px}
+.sp-var summary{cursor:pointer;color:#0E6FB3;font-weight:600;font-size:13.5px;min-height:32px;display:inline-flex;align-items:center}
+.sp-var ul{list-style:none;margin-top:6px;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:#FAFCFE}
+.sp-var li{display:flex;justify-content:space-between;gap:12px;padding:6px 10px;font-size:12.5px;color:var(--text);border-top:1px solid var(--line)}
+.sp-var li:first-child{border-top:0}
+.sp-var li b{white-space:nowrap;color:var(--navy)}
+.sp-var li.hit{background:#FFF5DA}

@@ -36,10 +36,16 @@ def build(B):
             price += f'<span class="sp-basis b-{p["basis"] if p["price"] else "none"}" title="{esc(p["note"])}">{D.BASIS_LABEL[p["basis"]] if p["price"] else "Quoted after model check"}</span><span class="sp-src">Source: {esc(srcs)}</span>'
             imgcell = (f'<td class="sp-img sp-photo"><img src="{esc(D.photo_url(p))}" width="120" height="120" loading="lazy" decoding="async" referrerpolicy="no-referrer" alt="{esc(p["name"])} – representative product photo" onerror="this.onerror=null;this.src=\'/assets/img/parts/{p["img"]}.webp\';this.parentNode.classList.remove(\'sp-photo\')"></td>' if D.photo_url(p) else
                        f'<td class="sp-img"><img src="/assets/img/parts/{p["img"]}.webp" width="120" height="120" loading="lazy" decoding="async" alt="Illustration of {esc(p["name"])}"></td>')
-            search = esc((p['name'] + ' ' + p['desc'] + ' ' + p['cat']).lower())
+            vs = p.get('variants') or []
+            var = ''
+            if vs:
+                lab = ('model' if len(vs) == 1 else f'{len(vs)} models') if p['cat'] == 'remote' or len(vs) == 1 else f'{len(vs)} sizes / ratings'
+                var = (f'<details class="sp-var"><summary>View {lab} &amp; price{"s" if len(vs) > 1 else ""}</summary><ul>' +
+                       ''.join(f'<li><span>{esc(n)}</span><b>{D.inr(pr) if isinstance(pr, int) else D.inr(pr[0]) + '–' + D.inr(pr[1])}</b></li>' for n, pr in vs) + '</ul></details>')
+            search = esc((p['name'] + ' ' + p['desc'] + ' ' + p['cat'] + ' ' + ' '.join(n for n, _ in vs)).lower())
             rows += (f'<tr class="sp-row" id="{p["id"]}" data-cat="{c}" data-q="{search}">' + imgcell +
                      f'<th scope="row" class="sp-name">{esc(p["name"])}{badge}</th>'
-                     f'<td class="sp-desc">{esc(p["desc"])}</td>'
+                     f'<td class="sp-desc">{esc(p["desc"])}{var}</td>'
                      f'<td class="sp-price">{price}</td>'
                      f'<td class="sp-act"><a class="btn btn-wa btn-sm" href="{wa_part(p["name"])}" target="_blank" rel="noopener" aria-label="{esc(plain("sp.enq"))}: {esc(p["name"])}">{wa_ic()}<span data-i18n="sp.enq">{en("sp.enq")}</span></a></td></tr>')
 
@@ -105,7 +111,7 @@ def build(B):
 <div class="cta-box reveal" id="spare-cta"><div><h2 style="color:#fff;font-size:clamp(22px,2.6vw,28px);margin-bottom:6px">{tx("sp.cta.h")}</h2><p>{tx("sp.cta.p")}</p></div>
 <div class="btn-row"><a class="btn btn-orange btn-sm" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.callnum")}</a><a class="btn btn-wa btn-sm" href="{wa_gen}" target="_blank" rel="noopener">{wa_ic()}{tx("sp.cta.wa")}</a>{book_a("ac_repair", "btn-ghost btn-sm", "sp.cta.book")}</div></div>
 </div></section>
-<script src="/assets/js/spare-parts.js?v=1" defer></script>''' + B.footer())
+<script src="/assets/js/spare-parts.js?v=3" defer></script>''' + B.footer())
     B.page(PATH, html_)
 
 
