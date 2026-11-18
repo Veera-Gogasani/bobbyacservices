@@ -853,23 +853,28 @@ a.ccard:hover{transform:translateY(-3px)}
 .sp-var li b{white-space:nowrap;color:var(--navy)}
 .sp-var li.hit{background:#FFF5DA}
 
-/* ---------- footer AC electricity cost calculator ---------- */
-.acc{margin-top:18px;max-width:360px;padding:14px;border-radius:16px;background:linear-gradient(160deg,rgba(227,238,247,.09),rgba(227,238,247,.03));border:1px solid rgba(227,238,247,.14)}
-.acc-h{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
-.acc-h svg{width:16px;height:16px}
-.acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
-.acc label{display:grid;gap:4px;font-size:12px;color:#C9D7E6}
+/* ---------- AC electricity cost calculator (FAQ page) ---------- */
+.acc-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
+.acc-intro .eyebrow{display:inline-flex;align-items:center;gap:6px}
+.acc-intro .eyebrow svg{width:16px;height:16px}
+.acc-intro h2{margin:6px 0 12px}
+.acc-intro .acc-note{margin-top:14px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.acc-tip{display:flex;gap:8px;color:#146C3A!important}
+.acc-tip svg{width:18px;height:18px;flex:none;color:var(--green);margin-top:2px}
+.acc{padding:24px;border-radius:var(--r);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.acc label{display:grid;gap:6px;font-size:13.5px;font-weight:600;color:var(--navy)}
 .acc label:nth-child(n+5){grid-column:1/-1}
-.acc select,.acc input{width:100%;min-height:44px;font:inherit;font-size:14px;color:#fff;background:rgba(11,31,58,.65);border:1px solid rgba(227,238,247,.22);border-radius:10px;padding:8px 10px}
-.acc select option{color:#172B3A;background:#fff}
-.acc select:focus,.acc input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(86,200,255,.2)}
-.acc input[aria-invalid=true]{border-color:#FF9F43}
-.acc input::placeholder{color:#8EA6BF}
-.acc-out{display:grid;gap:4px;margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(11,31,58,.55)}
-.acc-row{display:flex;align-items:baseline;gap:6px;font-size:13px;color:#C9D7E6}
+.acc select,.acc input{width:100%;min-height:48px;font:inherit;font-size:15px;font-weight:500;color:var(--text);background:#F7FAFD;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.acc select:focus,.acc input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(22,136,212,.15);background:#fff}
+.acc input[aria-invalid=true]{border-color:var(--orange-d)}
+.acc input::placeholder{color:#7D8FA1}
+.acc-out{display:grid;gap:6px;margin-top:18px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,var(--navy),#1B4B85);color:#fff}
+.acc-row{display:flex;align-items:baseline;gap:6px;font-size:14px;color:#C9D7E6}
 .acc-row>span:first-child{flex:1}
-.acc-row b{color:#fff;font-size:15px}
-.acc-row small{font-size:12px;color:#A9BED6}
-.acc-big{margin-top:4px;padding-top:6px;border-top:1px dashed rgba(227,238,247,.2)}
-.acc-big b{font-size:20px;color:var(--orange)}
-.acc-note{margin-top:10px;font-size:11.5px;line-height:1.5;color:#A9BED6}
+.acc-row b{color:#fff;font-size:17px}
+.acc-row small{font-size:12.5px;color:#BFD1E5}
+.acc-big{margin-top:6px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.25)}
+.acc-big b{font-size:28px;color:var(--orange)}
+@media(max-width:900px){.acc-wrap{grid-template-columns:1fr;gap:24px}}
+@media(max-width:420px){.acc{padding:18px}.acc-grid{grid-template-columns:1fr}.acc label:nth-child(n+5){grid-column:auto}}

@@ -4,6 +4,11 @@
 SP = {
     # footer AC electricity cost calculator
     'acc.h': ("AC electricity cost calculator", "ఏసీ కరెంట్ ఖర్చు లెక్కింపు", "एसी बिजली खर्च कैलकुलेटर"),
+    'acc.eb': ("Free tool", "ఉచిత టూల్", "मुफ़्त टूल"),
+    'acc.h2': ("AC Electricity Cost Calculator", "ఏసీ కరెంట్ ఖర్చు కాలిక్యులేటర్", "एसी बिजली खर्च कैलकुलेटर"),
+    'acc.sub': ("Estimate how many units your AC uses and what it adds to your monthly electricity bill, based on its capacity, hours of use and your tariff.",
+                "మీ ఏసీ కెపాసిటీ, వాడే గంటలు, మీ టారిఫ్ ఆధారంగా ఏసీ ఎన్ని యూనిట్లు వాడుతుందో, నెలవారీ కరెంట్ బిల్లుకు ఎంత కలుపుతుందో అంచనా వేయండి.",
+                "क्षमता, चलने के घंटों और आपके टैरिफ़ के आधार पर अंदाज़ा लगाएँ कि आपका एसी कितनी यूनिट खर्च करता है और मासिक बिजली बिल में कितना जोड़ता है।"),
     'acc.cap': ("AC capacity", "ఏసీ కెపాసిటీ", "एसी क्षमता"),
     'acc.type': ("AC type", "ఏసీ రకం", "एसी प्रकार"),
     'acc.inv': ("Inverter", "ఇన్వర్టర్", "इन्वर्टर"),
