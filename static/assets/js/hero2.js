@@ -111,7 +111,7 @@
   var duo = document.getElementById('hero-duo');
   if (!duo) return;
   var panels = [].slice.call(duo.querySelectorAll('.hero-duo-panel'));
-  var dots = [].slice.call(duo.querySelectorAll('.hero-duo-pager button'));
+  var dots = [].slice.call(document.querySelectorAll('.hero-duo-pager button'));
   var cur2 = 0, duoTimer = null, duoHold = false, HOLD2 = 9000, duoHover = false;
   function show(n) {
     if (n === cur2) return;
@@ -136,7 +136,7 @@
     }
   }
   window.bobbyDuo = { next: function () { if (duoHold || reduce) return false; show(1); return true; } };
-  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; show(+d.dataset.duo); }); });
+  dots.forEach(function (d) { d.addEventListener('click', function () { duoHold = true; show(+d.dataset.duo); if (d.closest('.hero-switch')) { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); } }); });
   panels[1].addEventListener('pointerenter', function () { duoHover = true; });
   panels[1].addEventListener('pointerleave', function () { duoHover = false; });
   panels[1].inert = true;

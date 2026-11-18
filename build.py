@@ -537,7 +537,7 @@ def home_slider():
 <div class="bobby-hero-bottom">
 <div class="bobby-hero-copy"><p class="bobby-hero-trust">{ic('shield')}{tx('bh2.trust')}</p><h2 id="bh2-h2" class="bobby-hero-h1" data-i18n="bh2.h2">{en('bh2.h2')}</h2><div class="bobby-hero-caps" aria-live="polite">{caps}</div></div>
 <div class="bobby-hero-mid"><div class="bobby-hero-tabs" role="tablist">{tabs}</div>
-<div class="bobby-hero-ctas"><a class="bobby-hero-btn bobby-hero-btn-orange bh2-magnet" href="/contact/#book" data-book="">{tx('btn.bookservice')}{ic('arrow')}</a><a class="bobby-hero-btn bobby-hero-btn-glass bh2-magnet" href="tel:{PHONE_TEL}">{ic('phone')}{PHONE_TXT}</a><a class="bobby-hero-btn bobby-hero-btn-wa bh2-magnet" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wa')}</a></div></div>
+<div class="bobby-hero-ctas"><a class="bobby-hero-btn bobby-hero-btn-orange bh2-magnet" href="/contact/#book" data-book="">{tx('btn.bookservice')}{ic('arrow')}</a><a class="bobby-hero-btn bobby-hero-btn-glass bh2-magnet" href="tel:{PHONE_TEL}">{ic('phone')}<span class="bh2-call-lg">{PHONE_TXT}</span><span class="bh2-call-sm" aria-hidden="true" data-i18n="btn.call">{en('btn.call')}</span></a><a class="bobby-hero-btn bobby-hero-btn-wa bh2-magnet" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wa')}</a></div></div>
 <div class="bobby-hero-ctrl"><p class="bobby-hero-count"><b class="bobby-hero-cur">01</b> / 0{len(H2_SLIDES)}</p><div class="bobby-hero-progress"><span></span></div>
 <div class="bobby-hero-arrows"><button type="button" class="bobby-hero-arrow bobby-hero-prev" aria-label="{esc(plain('bh2.prev'))}" data-i18n-aria="bh2.prev">{ic('arrow')}</button><button type="button" class="bobby-hero-arrow bobby-hero-next" aria-label="{esc(plain('bh2.next'))}" data-i18n-aria="bh2.next">{ic('arrow')}</button></div></div>
 </div>
@@ -578,9 +578,17 @@ def build_home():
     duo = ('<div class="hero-duo" id="hero-duo" aria-roledescription="carousel" aria-label="Featured">'
            + home_slider().replace('<section class="bh2s bobby-hero"', '<section class="bh2s bobby-hero hero-duo-panel is-on"', 1)
            + hero.replace('<section class="hero"', '<section class="hero hero-duo-panel" aria-hidden="true" inert', 1)
+           + '</div>'
+           + '<script>(function(){var d=document.getElementById("hero-duo"),r=document.documentElement;'
+           + 'function s(k,v){var c=parseFloat(getComputedStyle(r).getPropertyValue(k));if(isNaN(c)||Math.abs(c-v)>1)r.style.setProperty(k,v+"px")}'
+           + 'function f(){var m=document.querySelector(".mbar");s("--hero-top",Math.round(d.getBoundingClientRect().top+scrollY));'
+           + 'if(m)s("--hero-bar",getComputedStyle(m).display!=="none"?m.offsetHeight:0)}'
+           + 'f();addEventListener("DOMContentLoaded",f);addEventListener("load",f);addEventListener("resize",f);'
+           + 'if(document.fonts)document.fonts.ready.then(f)})();</script>')
+    hero_switch = (f'<section class="hero-switch" aria-label="{esc(plain("duo.label"))}"><div class="wrap"><span class="hero-switch-lab" data-i18n="duo.label">{en("duo.label")}</span>'
            + '<div class="hero-duo-pager" role="tablist" aria-label="Choose hero">'
            + '<button type="button" role="tab" class="is-on" aria-selected="true" data-duo="0" aria-label="Services showcase"></button>'
-           + '<button type="button" role="tab" aria-selected="false" data-duo="1" aria-label="AC repair at your doorstep"></button></div></div>')
+           + '<button type="button" role="tab" aria-selected="false" data-duo="1" aria-label="AC repair at your doorstep"></button></div></div></section>')
     body = (duo + stats_block() + reviews_block() +
         f'<section class="sec sec-alt" id="ac-services"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards()}<p class="center reveal" style="text-align:center;margin-top:28px"><a class="btn btn-line" href="/ac-services/">{tx("btn.allac")}{ic("arrow")}</a></p></div></section>' +
         f'<section class="sec app-sec" id="appliances"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards()}</div></section>' +
@@ -593,7 +601,7 @@ def build_home():
         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band())
     page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
                    'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=4">\n</head>') + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=2" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=5">\n</head>') + header('home') + body + hero_switch + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=3" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,

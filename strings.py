@@ -586,3 +586,5 @@ S['f.thanks.tip'] = ("Didn't see WhatsApp open? Use the button below.", "WhatsAp
 
 # ---- Slider hero: distinct heading (no duplicate of the main H1) ----
 S['bh2.h2'] = ("One Call for AC, Fridge, Washing Machine, Cooler &amp; Fan Repair", "AC, ఫ్రిజ్, వాషింగ్ మెషిన్, కూలర్ &amp; ఫ్యాన్ రిపేర్ — ఒక్క కాల్ చాలు", "AC, फ्रिज, वॉशिंग मशीन, कूलर और पंखा रिपेयर — बस एक कॉल")
+
+S['duo.label'] = ("Home banner", "హోమ్ బ్యానర్", "होम बैनर")
