@@ -298,16 +298,7 @@ def footer():
 <footer class="ftr">
 <div class="wrap grid">
 <div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
-<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p>
-<section class="fw" aria-labelledby="fwH"><p class="fw-h" id="fwH"><span class="fw-live" aria-hidden="true"></span>{tx('fw.h')}</p>
-<ul class="fw-list">
-<li class="fw-row is-loading" data-fw="you"><span class="fw-ic" aria-hidden="true"></span><span class="fw-place"><b data-i18n="fw.you">{en('fw.you')}</b><small class="fw-sub" data-i18n="fw.detect">{en('fw.detect')}</small></span><span class="fw-temp">--</span></li>
-<li class="fw-row is-loading" data-fw="narasaraopet"><span class="fw-ic" aria-hidden="true"></span><span class="fw-place"><b>Narasaraopet</b><small class="fw-sub">…</small></span><span class="fw-temp">--</span></li>
-<li class="fw-row is-loading" data-fw="amaravati"><span class="fw-ic" aria-hidden="true"></span><span class="fw-place"><b>Amaravati</b><small class="fw-sub">…</small></span><span class="fw-temp">--</span></li>
-</ul>
-<form class="fw-form" hidden><input type="search" name="city" maxlength="60" autocomplete="address-level2" placeholder="{esc(plain('fw.ph'))}" data-i18n-ph="fw.ph" aria-label="{esc(plain('fw.ph'))}" data-i18n-aria="fw.ph"><button type="submit">{tx('fw.go')}</button></form>
-<p class="fw-foot"><button type="button" class="fw-change">{tx('fw.change')}</button><button type="button" class="fw-auto" hidden>{tx('fw.auto')}</button><span class="fw-time"></span></p>
-<p class="fw-note">{tx('fw.note')}</p></section></div>
+<p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
 <div><h3>{tx('ft.contact')}</h3><ul>
@@ -323,7 +314,6 @@ def footer():
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
 <script src="/assets/js/main.js?v=13" defer></script>
-<script src="/assets/js/weather.js?v=1" defer></script>
 </body></html>
 '''
 
