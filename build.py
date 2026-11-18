@@ -15,7 +15,7 @@ WA_NUM    = '918374889163'
 CITY      = 'Narasaraopet'
 REGION    = 'Andhra Pradesh'
 UPDATED   = '2026-11-18'
-ADDRESS   = {'street': 'Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
+ADDRESS   = {'street': 'Door 28-32/5, Employees Colony, Isha Zen Enclave, Palapadu Road, Arundelpet', 'locality': 'Narasaraopeta', 'postal': '522601'}
 GMAPS_CID = int('6713e7c4650facdb', 16)            # Google Business Profile listing
 GMAPS_URL = 'https://maps.google.com/?cid=%d' % GMAPS_CID
 DIR_URL   = 'https://www.google.com/maps/dir/?api=1&destination=16.2371462,80.0339778'
@@ -711,7 +711,7 @@ def build_inner():
     cards = f'''<div class="ccards reveal">
 <a class="ccard" href="tel:{PHONE_TEL}"><span class="ic" style="background:linear-gradient(135deg,var(--blue),#0E6FB3)">{ic('phone')}</span><span><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b></span></a>
 <a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:#fff;border:1px solid var(--line)">{wa_ic()}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
-<a class="ccard" href="{DIR_URL}" target="_blank" rel="noopener"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')} · {tx('btn.dir')}</small><b style="font-size:14.5px;font-weight:600">{tx('addr.full')}</b></span></a>
+<a class="ccard" href="{GMAPS_URL}" target="_blank" rel="noopener"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')} · {tx('btn.dir')}</small><b style="font-size:14.5px;font-weight:600">{tx('addr.full')}</b></span></a>
 <div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
 <div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''

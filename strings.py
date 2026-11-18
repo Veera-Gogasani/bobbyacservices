@@ -427,7 +427,7 @@ add({
 })
 
 add({
- 'addr.full': ("Door 11, Employees Colony, Isha Zen Enclave, 28-32/5, Palapadu Road, Arundelpet, Narasaraopeta, Andhra Pradesh 522601",)*3,
+ 'addr.full': ("Door 28-32/5, Employees Colony, Isha Zen Enclave, Palapadu Road, Arundelpet, Narasaraopeta, Andhra Pradesh 522601",)*3,
  'hours.open': ("Open 24 hours", "24 గంటలూ అందుబాటులో", "24 घंटे खुला"),
  'c.hours.h': ("Working hours", "పని వేళలు", "काम के घंटे"),
  'btn.dir': ("Get Directions", "దారి చూపించు", "रास्ता देखें"),
