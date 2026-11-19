@@ -174,24 +174,35 @@ NAV = [('/', 'nav.home', 'home'), ('/about/', 'nav.about', 'about'), ('/ac-servi
 # ---------------- booking form (used on Contact page and in the pop-up opened by every Book button) ----------------
 def booking_form(p, inline=False):
     def opt(v, k): return f'<option value="{v}" data-i18n="{k}">{en(k)}</option>'
+    def legend(n, k): return f'<legend><span class="fnum">{n}</span><span data-i18n="{k}">{en(k)}</span></legend>'
     cls = 'form bookform reveal d2' if inline else 'form bookform'
     hid = ' id="book"' if inline else ''
+    clock = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+    lock = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>'
     return f'''<form class="{cls}"{hid} novalidate data-prefix="{p}">
-<h2 id="{p}Title">{tx('f.h')}</h2><p class="fnote">{ic('info')}{tx('f.note')}</p>
+<div class="fhead"><div class="fhead-top"><h2 id="{p}Title">{tx('f.h')}</h2><span class="ftime">{clock}<span data-i18n="f.time">{en('f.time')}</span></span></div><p class="fnote">{ic('info')}{tx('f.note')}</p></div>
 <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+<fieldset class="fgrp">{legend(1, 'f.g1')}
 <div class="frow"><div class="field"><label for="{p}Name">{tx('f.name')} <span class="req">*</span></label><input id="{p}Name" name="name" autocomplete="name" maxlength="60" required placeholder="{esc(plain('f.ph.name'))}" data-i18n-ph="f.ph.name"><p class="emsg"></p></div>
 <div class="field"><label for="{p}Phone">{tx('f.phone')} <span class="req">*</span></label><div class="phone-wrap"><span class="cc" aria-hidden="true">+91</span><input id="{p}Phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" pattern="[6-9][0-9]{{9}}" required placeholder="98765 43210"><span class="pcount" aria-hidden="true"></span></div><p class="emsg"></p></div></div>
+</fieldset>
+<fieldset class="fgrp">{legend(2, 'f.g2')}
 <div class="frow"><div class="field"><label for="{p}Appliance">{tx('f.appliance')} <span class="req">*</span></label><select id="{p}Appliance" name="appliance" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('split','f.opt.splitac')}{opt('window','f.opt.windowac')}{opt('fridge','f.opt.fridge')}{opt('washer','f.opt.washer')}{opt('cooler','f.opt.cooler')}{opt('fan','f.opt.fan')}</select><p class="emsg"></p></div>
 <div class="field"><label for="{p}Service">{tx('f.service')} <span class="req">*</span></label><select id="{p}Service" name="service" required><option value="" data-i18n="f.select">{en('f.select')}</option>{opt('repair','f.opt.repair')}{opt('service','f.opt.service')}{opt('install','f.opt.install')}{opt('uninstall','f.opt.uninstall')}{opt('gas','f.opt.gas')}{opt('notsure','f.opt.notsure')}</select><p class="emsg"></p></div></div>
+<div class="field"><label for="{p}Brand">{tx('f.brand')}</label><input id="{p}Brand" name="brand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
+</fieldset>
+<fieldset class="fgrp">{legend(3, 'f.g3')}
 <div class="field loc-field"><span class="flabel">{tx('f.loc')}</span>
 <div class="loc-btns"><button type="button" class="btn btn-line btn-sm loc-cur">{ic('target')}{tx('f.loc.cur')}</button><button type="button" class="btn btn-line btn-sm loc-map">{ic('pin')}{tx('f.loc.map')}</button></div>
 <div class="loc-status" role="status" aria-live="polite"></div>
 <input type="hidden" name="lat"><input type="hidden" name="lng"><input type="hidden" name="addr"><p class="hint">{tx('f.loc.note')}</p></div>
-<div class="field"><label for="{p}Area">{tx('f.area')} <span class="req">*</span></label><input id="{p}Area" name="area" maxlength="120" required placeholder="{esc(plain('f.ph.area'))}" data-i18n-ph="f.ph.area"><p class="emsg"></p></div>
-<div class="frow"><div class="field"><label for="{p}Brand">{tx('f.brand')}</label><input id="{p}Brand" name="brand" maxlength="40" placeholder="{esc(plain('f.ph.brand'))}" data-i18n-ph="f.ph.brand"><p class="emsg"></p></div>
+<div class="frow"><div class="field"><label for="{p}Area">{tx('f.area')} <span class="req">*</span></label><input id="{p}Area" name="area" maxlength="120" required placeholder="{esc(plain('f.ph.area'))}" data-i18n-ph="f.ph.area"><p class="emsg"></p></div>
 <div class="field"><label for="{p}Date">{tx('f.date')}</label><input id="{p}Date" name="date" type="date"><p class="emsg"></p></div></div>
+</fieldset>
+<fieldset class="fgrp">{legend(4, 'f.g4')}
 <div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
-<button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="form-msg" role="status" aria-live="polite"></p>
+</fieldset>
+<div class="fsubmit"><button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="fsecure">{lock}<span data-i18n="f.secure">{en('f.secure')}</span></p></div><p class="form-msg" role="status" aria-live="polite"></p>
 <div class="book-done" hidden tabindex="-1"><span class="bd-ic">{ic('check')}</span>{tx('f.thanks.h', 'h3')}{tx('f.thanks.p', 'p')}<p class="bd-sign" data-i18n="f.thanks.sign">{en('f.thanks.sign')}</p><p class="bd-tip">{tx('f.thanks.tip')}</p>
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div></div></form>'''
 
@@ -267,7 +278,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=40">
+<link rel="stylesheet" href="/assets/css/style.css?v=41">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -789,18 +800,27 @@ def build_inner():
     # Contact
     p = '/contact/'
     form = booking_form('c', inline=True)
-    cards = f'''<div class="ccards reveal">
-<a class="ccard" href="tel:{PHONE_TEL}"><span class="ic" style="background:linear-gradient(135deg,var(--blue),#0E6FB3)">{ic('phone')}</span><span><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b></span></a>
-<a class="ccard" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ic" style="background:#fff;border:1px solid var(--line)">{wa_ic()}</span><span><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b></span></a>
-<a class="ccard" href="{GMAPS_URL}" target="_blank" rel="noopener"><span class="ic" style="background:var(--navy)">{ic('pin')}</span><span><small>{tx('c.loc.h')} · {tx('btn.dir')}</small><b style="font-size:14.5px;font-weight:600">{tx('addr.full')}</b></span></a>
-<div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
-<div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
-<div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''
+    arrow = ic('arrow')
+    quick = f'''<div class="ct-quick">
+<a class="ctq ctq-call reveal" href="tel:{PHONE_TEL}"><span class="ctq-ic">{ic('phone')}</span><span class="ctq-tx"><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b><em>{tx('c.quick.call.p')}</em></span><span class="ctq-go">{arrow}</span></a>
+<a class="ctq ctq-wa reveal d1" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ctq-ic">{wa_ic()}</span><span class="ctq-tx"><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b><em>{tx('c.quick.wa.p')}</em></span><span class="ctq-go">{arrow}</span></a>
+<a class="ctq ctq-dir reveal d2" href="{GMAPS_URL}" target="_blank" rel="noopener"><span class="ctq-ic">{ic('pin')}</span><span class="ctq-tx"><small>{tx('c.loc.h')}</small><b>{tx('c.quick.dir.h')}</b><em>{tx('c.quick.dir.p')}</em></span><span class="ctq-go">{arrow}</span></a>
+</div>'''
+    steps = ''.join(f'<li><span class="n">{i}</span><span>{tx("c.how.%d" % i)}</span></li>' for i in (1, 2, 3))
+    chips = ''.join(f'<li>{ic("check")}{tx(k)}</li>' for k in ('tr.3.t', 'tr.4.t', 'tr.1.t'))
+    cards = f'''<aside class="ct-side">
+<div class="ct-card ct-info reveal"><h2 class="ct-h">{tx('c.info.h')}</h2>
+<ul class="ct-list"><li><span class="ct-li-ic">{ic('pin')}</span><a href="{GMAPS_URL}" target="_blank" rel="noopener">{tx('addr.full')}</a></li>
+<li><span class="ct-li-ic">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></li>
+<li><span class="ct-li-ic">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></li></ul>
+<div class="map ct-map"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>
+<div class="ct-card ct-how reveal d1"><h2 class="ct-h">{tx('c.how.h')}</h2><ol class="ct-steps">{steps}</ol><ul class="ct-chips">{chips}</ul></div>
+</aside>'''
     page(p, head('Contact BOBBY | Book AC Repair in Narasaraopet',
                  'Contact BOBBY in Narasaraopet for AC repair and home appliance service. Call, WhatsApp or request a technician visit using our booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
-         f'<section class="sec"><div class="wrap contact-grid">{cards}{form}</div></section>' + footer())
+         f'<section class="sec ct-sec"><div class="wrap">{quick}<div class="ct-grid">{form}{cards}</div></div></section>' + footer())
 
     # Blog index + posts
     p = '/blog/'
