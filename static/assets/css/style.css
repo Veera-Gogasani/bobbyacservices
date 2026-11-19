@@ -915,3 +915,4 @@ a.ccard:hover{transform:translateY(-3px)}
 .post-meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-size:14px;color:#BFD1E5}
 .post-meta b{color:#fff;font-weight:600}
 .post-meta span+span::before{content:"·";margin-right:18px;margin-left:-10px;color:var(--orange)}
+.ftr .bottom{margin-top:-14px;padding:16px 0 20px}
