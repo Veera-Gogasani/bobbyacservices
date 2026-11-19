@@ -278,7 +278,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=44">
+<link rel="stylesheet" href="/assets/css/style.css?v=45">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -748,7 +748,7 @@ def build_inner():
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
          f'''<section class="sec"><div class="wrap about-grid"><div class="reveal"><h2>{tx('about.who.h')}</h2><p class="lead" style="margin-top:12px">{tx('about.who.p1')}</p><p class="lead" style="margin-top:12px">{tx('about.who.p2')}</p>
 <h2 style="margin-top:34px">{tx('about.how.h')}</h2><ul class="points">{''.join(f'<li>{tx("about.how.%d" % i)}</li>' for i in range(1,5))}</ul></div>
-<div class="ph ph-full reveal d2">{img('about-photo', 1536, 1024, 'about.photo.alt')}</div></div></section>
+<div class="ph-frame reveal d2"><div class="ph ph-full">{img('about-photo', 1536, 1024, 'about.photo.alt')}</div><div class="ph-badge"><img src="/assets/img/bobby-logo-640.webp" width="44" height="44" alt="" loading="lazy"><span><b data-i18n="about.badge.h">{en('about.badge.h')}</b><small data-i18n="about.badge.p">{en('about.badge.p')}</small></span></div></div></div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("why.eyebrow", "why.h2")}{why_cards()}</div></section>
 <section class="sec"><div class="wrap" style="max-width:860px;text-align:center"><div class="reveal"><h2>{tx('about.area.h')}</h2><p class="lead" style="margin:12px auto 22px">{tx('about.area.p')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>''' +

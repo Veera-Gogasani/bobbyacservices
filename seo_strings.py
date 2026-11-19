@@ -48,6 +48,8 @@ SEO = {
     'wa.desk': ("No WhatsApp on this computer? Call us on", "ఈ కంప్యూటర్‌లో వాట్సాప్ లేదా? మాకు కాల్ చేయండి:", "इस कंप्यूटर पर व्हाट्सऐप नहीं है? हमें कॉल करें:"),
     'wa.alt.h': ("No WhatsApp?", "వాట్సాప్ లేదా?", "व्हाट्सऐप नहीं है?"),
     'about.photo.alt': ("BOBBY technician in uniform with tool bag beside a split AC", "స్ప్లిట్ AC దగ్గర టూల్ బ్యాగ్‌తో యూనిఫాంలో BOBBY టెక్నీషియన్", "स्प्लिट AC के पास टूल बैग के साथ यूनिफ़ॉर्म में BOBBY टेक्नीशियन"),
+    'about.badge.h': ("Doorstep AC experts", "ఇంటి వద్దకే AC నిపుణులు", "घर पर AC विशेषज्ञ"),
+    'about.badge.p': ("Narasaraopet + 20 km", "నరసరావుపేట + 20 కి.మీ.", "नरसरावपेट + 20 किमी"),
     'blog.by': ("Written by", "రచన", "लेखक"),
     'blog.pub': ("Published", "ప్రచురణ", "प्रकाशित"),
     'blog.upd': ("Updated", "నవీకరణ", "अपडेट"),
