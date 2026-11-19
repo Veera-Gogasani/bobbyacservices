@@ -7,9 +7,14 @@ from strings import S, SERVICES, FAQ_N
 from blog import POSTS, add_strings
 
 # ======================= CONFIG =======================
-SITE      = 'https://bobbyacservices.pages.dev'      # primary address used in canonical/sitemap/schema.
-# When www.bobbyacservices.com is connected and working, change this to 'https://www.bobbyacservices.com'
-# and set REDIRECT_PAGES_DEV = true in functions/_middleware.js.
+# ---- Going live on the real domain: the ONLY switch ----
+# 1) Buy bobbyacservices.com and add both www.bobbyacservices.com and bobbyacservices.com as Custom Domains
+#    in Cloudflare Pages (project "bobbyacservices"). 2) When https://www.bobbyacservices.com opens the site,
+#    set DOMAIN_CONNECTED = True, run `python3 build.py`, commit and push. Canonical links, sitemap, robots,
+#    schema, llms.txt and the pages.dev -> www redirect (functions/_middleware.js) all follow this one flag.
+DOMAIN_CONNECTED = False
+DOMAIN    = 'www.bobbyacservices.com'
+SITE      = ('https://' + DOMAIN) if DOMAIN_CONNECTED else 'https://bobbyacservices.pages.dev'
 BRAND     = 'BOBBY AC Repair & Home Appliance Services'
 PHONE_TXT = '+91 83748 89163'
 PHONE_TEL = '+918374889163'
@@ -100,7 +105,7 @@ def wa_service(svc):
     msg = html.unescape(en('wa.service')).replace('{service}', html.unescape(strip_tags(en('svc.%s.name' % svc))))
     return 'https://wa.me/%s?text=%s' % (WA_NUM, quote(msg))
 
-ART_W = {'hero': 1200, 'about': 1600, 'about-photo': 1536, 'technician': 1536, 'why': 1200}
+ART_W = {'about-photo': 1536, 'why': 1200}
 def art_url(key, size='lg'): return f'/assets/img/art/{key}-{size}.webp'
 def img(key, w, h, alt_key, eager=False, cls='', sizes='(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 600px'):
     """Original BOBBY artwork (WebP, 2 sizes)."""
@@ -302,7 +307,7 @@ def header(active):
 </div></div>
 <header class="hdr">
 <div class="wrap">
-<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
+<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" fetchpriority="high" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
@@ -865,7 +870,7 @@ def build_inner():
                            [crumbs_ld([('Home', '/'), ('Sitemap', '/sitemap/')])]) + header('sitemap') +
          phero('p.sitemap.h1', None, [('crumb.home', '/'), ('p.sitemap.h1', '/sitemap/')]) +
          f'<section class="sec"><div class="wrap smap">{sm}</div></section>' + footer())
-    page('/404.html', head('Page not found | BOBBY AC Repair', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex') + header('') +
+    page('/404.html', head('Page not found | BOBBY AC Repair', 'Page not found.', '/404.html', 'p.404.h1').replace('index, follow', 'noindex').replace('<link rel="canonical" href="%s/404.html">\n' % SITE, '') + header('') +
          f'''<section class="phero" style="text-align:center"><div class="wrap"><h1>{tx('p.404.h1')}</h1><p style="margin:0 auto 24px">{tx('p.404.sub')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())
@@ -873,6 +878,54 @@ def build_inner():
     sp_page.build(sys.modules[__name__])
 
 # ---------------- write ----------------
+def fingerprint(out):
+    """Give every /assets/... reference a ?v=<content hash>, so browsers always get the newest file
+    (no manual version bumps) while assets can be cached for a year."""
+    import hashlib, re
+    def h(fp): return hashlib.md5(open(fp, 'rb').read()).hexdigest()[:8]
+    ref = re.compile(r'/assets/([A-Za-z0-9_./-]+\.(?:webp|png|jpg|jpeg|svg|ico|css|js|woff2?))(?:\?v=[A-Za-z0-9.]*)?')
+    def rewrite(fp):
+        s = open(fp, encoding='utf-8').read()
+        def sub(m):
+            p = os.path.join(out, 'assets', m.group(1))
+            return m.group(0) if not os.path.isfile(p) else '/assets/%s?v=%s' % (m.group(1), h(p))
+        n = ref.sub(sub, s)
+        if n != s: open(fp, 'w', encoding='utf-8').write(n)
+    # images first (css/js point at them), then css/js (html points at them), then pages
+    for sub_ in ('assets/css', 'assets/js'):
+        for f in os.listdir(os.path.join(out, sub_)):
+            if f.endswith(('.css', '.js')) and f != 'ac-assembly.js': rewrite(os.path.join(out, sub_, f))
+    for root, _, files in os.walk(out):
+        for f in files:
+            if f.endswith(('.html', '.xml', '.webmanifest')): rewrite(os.path.join(root, f))
+
+def write_middleware():
+    """functions/_middleware.js: apex -> www always; the production pages.dev address -> www only once
+    DOMAIN_CONNECTED is True. Branch previews (<branch>.bobbyacservices.pages.dev) are never redirected."""
+    js = f"""/**
+ * GENERATED by build.py - edit DOMAIN_CONNECTED in build.py, not this file.
+ * - bobbyacservices.com (no www)  -> 301 to https://{DOMAIN} (same path)
+ * - bobbyacservices.pages.dev     -> 301 to https://{DOMAIN} only when the domain is connected
+ * - branch previews (*.bobbyacservices.pages.dev) are left alone.
+ */
+const CANONICAL_HOST = '{DOMAIN}';
+const REDIRECT_PAGES_DEV = {'true' if DOMAIN_CONNECTED else 'false'};
+
+export async function onRequest(context) {{
+  const url = new URL(context.request.url);
+  const host = url.hostname;
+  if (host === 'bobbyacservices.com' || (REDIRECT_PAGES_DEV && host === 'bobbyacservices.pages.dev')) {{
+    url.hostname = CANONICAL_HOST;
+    url.protocol = 'https:';
+    url.port = '';
+    return Response.redirect(url.toString(), 301);
+  }}
+  return context.next();
+}}
+"""
+    open(os.path.join(os.path.dirname(__file__), 'functions', '_middleware.js'), 'w').write(js)
+
+
 def write():
     out = os.path.join(os.path.dirname(__file__), 'dist')
     if os.path.exists(out): shutil.rmtree(out)
@@ -932,7 +985,9 @@ def write():
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
-    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/img/*\n  Cache-Control: public, max-age=2592000\n/assets/vendor/*\n  Cache-Control: public, max-age=2592000\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/i18n/*\n  Cache-Control: public, max-age=31536000, immutable\n')
+    fingerprint(out)
+    write_middleware()
+    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/img/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/vendor/*\n  Cache-Control: public, max-age=2592000\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/i18n/*\n  Cache-Control: public, max-age=31536000, immutable\n')
     print('Built %d pages -> %s' % (len(PAGES), out))
 
 if __name__ == '__main__':

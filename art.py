@@ -164,10 +164,6 @@ def glow(x, y, r, g='cglow'):
 
 # ---------- scenes ----------
 SC = {}
-SC['hero'] = (1200, 1290, room(1200, 1290, 1010) + window(70, 300, 330, 380) +
-    glow(820, 330, 380) + split_ac(560, 230, 1.05) + airflow(600, 440, 520, 5, 40, 30) +
-    ladder(560, 560, 450, 1.3) + technician(500, 420, 1.42, 'up') + plant(1080, 1060, 1.3) + toolbox(150, 990, 1.15) +
-    sparkle(470, 240, 22, CYAN) + sparkle(1140, 470, 16, CYAN))
 SC['ac_repair'] = (1600, 1000, f'<rect width="1600" height="1000" fill="url(#brick)"/><rect width="1600" height="1000" fill="#FFF6EC" opacity=".25"/>' +
     f'<rect y="800" width="1600" height="200" fill="#C7CFD8"/><rect y="800" width="1600" height="12" fill="#AAB5C1"/>' +
     glow(560, 520, 420, 'oglow') + f'<path d="M290 470 h560 M300 470 v350 M840 470 v350" stroke="#7B8794" stroke-width="12"/>' +
@@ -237,14 +233,6 @@ SC['fan'] = (1600, 1200, f'<rect width="1600" height="1200" fill="url(#wallw)"/>
     f'<path d="M0 0 C-40 30 -70 120 -60 160 C-20 130 10 40 0 0z" fill="{NAVY}" opacity=".8"/><ellipse rx="70" ry="44" fill="url(#steel)"/><ellipse cy="26" rx="54" ry="24" fill="#FFF3D6"/><circle r="14" fill="{ORANGE}"/></g></g>' +
     window(1140, 420, 300, 380) + f'<rect x="120" y="760" width="460" height="250" rx="30" fill="{BLUE}" opacity=".85" filter="url(#sh)"/><rect x="140" y="700" width="420" height="110" rx="26" fill="#2E7FC0"/>' +
     badge(1300, 270, 50, 'check') + ''.join(sparkle(a, b, r, CYAN) for a, b, r in [(320, 330, 20), (1250, 620, 14)]))
-SC['about'] = (1600, 1280, f'<rect width="1600" height="1280" fill="url(#dusk)"/>' + glow(1180, 300, 300) +
-    f'<circle cx="1180" cy="300" r="90" fill="#FFE29A"/>' +
-    ''.join(f'<g filter="url(#sh2)"><rect x="{x}" y="{y}" width="{w}" height="{1000-y}" fill="{c}"/>' + ''.join(f'<rect x="{x+24+j*((w-48)//2)}" y="{y+40+k*120}" width="{(w-72)//2}" height="70" rx="6" fill="#FFFFFF" opacity=".75"/>' for j in range(2) for k in range(max(1, (1000-y-80)//120))) + '</g>'
-            for x, y, w, c in [(40, 520, 300, '#F4D9B5'), (340, 440, 280, '#CFE3F2'), (1000, 480, 300, '#F6C9A0'), (1300, 560, 280, '#D9EBDD')]) +
-    f'<g><rect x="1290" y="430" width="20" height="560" fill="#7A5A3A"/>' + ''.join(f'<ellipse cx="1300" cy="430" rx="130" ry="26" fill="#2E9E6A" transform="rotate({r} 1300 430)"/>' for r in (0, 35, 70, 110, 145, 180, -35)) + '</g>' +
-    f'<rect y="1000" width="1600" height="280" fill="#C7CFD8"/><rect y="1000" width="1600" height="14" fill="#AAB5C1"/>' +
-    technician(560, 340, 1.6, 'hold') +
-    outdoor(170, 720, 0.6, pipes=False) + split_ac(380, 300, 0.45) + badge(900, 380, 54, 'check'))
 
 
 def embed(path, x, y, w=None, h=None):

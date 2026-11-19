@@ -1,27 +1,6 @@
 # Strings for the home-page 3D split-AC assembly section: (English, Telugu, Hindi)
 ASM = {
-    'asm.aria': ("How a split AC is assembled and installed", "స్ప్లిట్ AC ఎలా అసెంబుల్ చేసి ఇన్‌స్టాల్ చేస్తారు", "स्प्लिट AC कैसे असेंबल और इंस्टॉल होता है"),
-    'asm.kicker': ("Inside your split AC", "మీ స్ప్లిట్ AC లోపల", "आपके स्प्लिट AC के अंदर"),
-    'asm.intro.h': ("Every part, in its place", "ప్రతి భాగం, దాని స్థానంలో", "हर पुर्ज़ा, अपनी जगह पर"),
-    'asm.intro.p': ("Scroll to see how the indoor and outdoor units are built and installed. Scroll up to take it apart again.",
-                    "ఇండోర్, అవుట్‌డోర్ యూనిట్లు ఎలా తయారై, ఇన్‌స్టాల్ అవుతాయో చూడటానికి స్క్రోల్ చేయండి. మళ్లీ విడదీయడానికి పైకి స్క్రోల్ చేయండి.",
-                    "इंडोर और आउटडोर यूनिट कैसे बनती और इंस्टॉल होती हैं, देखने के लिए स्क्रॉल करें। फिर से अलग करने के लिए ऊपर स्क्रॉल करें।"),
-    'asm.hint': ("Drag the model to turn it", "మోడల్‌ను తిప్పడానికి డ్రాగ్ చేయండి", "मॉडल घुमाने के लिए ड्रैग करें"),
-    'asm.st1': ("Components", "భాగాలు", "पुर्ज़े"),
-    'asm.st2': ("Indoor Unit", "ఇండోర్ యూనిట్", "इंडोर यूनिट"),
-    'asm.st3': ("Outdoor Unit", "అవుట్‌డోర్ యూనిట్", "आउटडोर यूनिट"),
-    'asm.st4': ("Installation", "ఇన్‌స్టాలేషన్", "इंस्टॉलेशन"),
-    'asm.st5': ("Cooling", "కూలింగ్", "कूलिंग"),
-    'asm.skip': ("Skip animation", "యానిమేషన్ దాటవేయండి", "एनिमेशन छोड़ें"),
-    'asm.indoor.done': ("Indoor unit complete", "ఇండోర్ యూనిట్ పూర్తయింది", "इंडोर यूनिट तैयार"),
-    'asm.indoor.done.p': ("The front panel closes over the filters and lifts open for cleaning.", "ఫ్రంట్ ప్యానెల్ ఫిల్టర్లను కప్పుతుంది, శుభ్రం చేయడానికి పైకి తెరుచుకుంటుంది.", "फ्रंट पैनल फ़िल्टर को ढकता है और सफ़ाई के लिए ऊपर खुलता है।"),
     'asm.out.note': ("Layouts differ between brands and models; this is a typical split-AC outdoor unit.", "బ్రాండ్, మోడల్ బట్టి అమరిక మారుతుంది; ఇది సాధారణ స్ప్లిట్ AC అవుట్‌డోర్ యూనిట్.", "ब्रांड और मॉडल के अनुसार बनावट बदलती है; यह एक सामान्य स्प्लिट AC आउटडोर यूनिट है।"),
-    'asm.list.in': ("Indoor unit parts", "ఇండోర్ యూనిట్ భాగాలు", "इंडोर यूनिट के पुर्ज़े"),
-    'asm.list.out': ("Outdoor unit parts", "అవుట్‌డోర్ యూనిట్ భాగాలు", "आउटडोर यूनिट के पुर्ज़े"),
-    'asm.list.inst': ("Installation steps", "ఇన్‌స్టాలేషన్ దశలు", "इंस्टॉलेशन के चरण"),
-    'asm.final.h': ("Every Component. One Perfect Cooling Experience.", "ప్రతి భాగం. ఒకే పరిపూర్ణ కూలింగ్ అనుభవం.", "हर पुर्ज़ा। एक परफ़ेक्ट कूलिंग अनुभव।"),
-    'asm.final.p': ("Professional AC Installation, Repair &amp; Service by BOBBY.", "BOBBY ద్వారా ప్రొఫెషనల్ AC ఇన్‌స్టాలేషన్, రిపేర్ &amp; సర్వీస్.", "BOBBY द्वारा प्रोफ़ेशनल AC इंस्टॉलेशन, रिपेयर और सर्विस।"),
-    'asm.poster.alt': ("3D illustration of an assembled split AC indoor unit and outdoor unit installed on a wall, with cool airflow", "గోడపై ఇన్‌స్టాల్ చేసిన స్ప్లిట్ AC ఇండోర్, అవుట్‌డోర్ యూనిట్ల 3D చిత్రం", "दीवार पर इंस्टॉल स्प्लिट AC इंडोर और आउटडोर यूनिट का 3D चित्र"),
 
     # ---- indoor parts ----
     'asm.in1': ("Indoor Unit Casing", "ఇండోర్ యూనిట్ కేసింగ్", "इंडोर यूनिट केसिंग"),
@@ -86,6 +65,4 @@ ASM = {
     'asm.ins6.d': ("Routed with a continuous downward slope to a safe drain point, never upward.", "నిరంతర దిగువ వాలుతో సురక్షిత డ్రెయిన్ పాయింట్‌కు; ఎప్పుడూ పైకి కాదు.", "लगातार नीचे की ढलान से सुरक्षित ड्रेन पॉइंट तक, कभी ऊपर की ओर नहीं।"),
     'asm.ins7': ("Vacuum, Leak Test &amp; Finishing", "వాక్యూమ్, లీక్ టెస్ట్ &amp; ఫినిషింగ్", "वैक्यूम, लीक टेस्ट और फ़िनिशिंग"),
     'asm.ins7.d': ("Lines are vacuumed and leak-tested before the valves open; the wall hole is sealed and pipes taped neatly.", "వాల్వ్‌లు తెరిచే ముందు లైన్లను వాక్యూమ్, లీక్ టెస్ట్ చేస్తారు; గోడ రంధ్రాన్ని సీల్ చేసి పైపులను చక్కగా టేప్ చేస్తారు.", "वाल्व खोलने से पहले लाइनों का वैक्यूम और लीक टेस्ट होता है; दीवार का छेद सील कर पाइप पर सलीके से टेप लगाया जाता है।"),
-    'asm.cool': ("Cool air, evenly spread", "చల్లని గాలి, సమానంగా", "ठंडी हवा, समान रूप से"),
-    'asm.cool.d': ("The display lights up, the louver opens and the room cools down.", "డిస్‌ప్లే వెలుగుతుంది, లూవర్ తెరుచుకుంటుంది, గది చల్లబడుతుంది.", "डिस्प्ले जलता है, लूवर खुलता है और कमरा ठंडा होता है।"),
 }
