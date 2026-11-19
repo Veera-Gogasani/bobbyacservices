@@ -267,7 +267,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=37">
+<link rel="stylesheet" href="/assets/css/style.css?v=38">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -503,10 +503,22 @@ def blog_cards(posts, hq='h3', eager_first=False):
     return '<div class="blog-grid">' + ''.join(f'''<article class="bcard reveal d{i % 3}"><a class="media" href="/blog/{p['slug']}/" tabindex="-1" aria-hidden="true">{img(p['img'], 640, 360, 'post.%s.title' % p['slug'], eager=eager_first and i == 0)}</a>
 <div class="body"><{hq}><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></{hq}><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}<span class="sr-only">: {esc(plain('post.%s.title' % p['slug']))}</span>{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
 
+CAL_SVG = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 def cta_band():
-    return f'''<section class="cta-band"><div class="wrap"><div class="cta-inner reveal">
-<div><h2>{tx("cta.h2")}</h2><p>{tx("cta.sub")}</p></div>
-<div class="btn-row"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.callnum")}</a>{book_a('', 'btn-ghost', 'btn.bookservice')}</div>
+    """Shared call-to-action banner: rendered AC artwork with cool airflow, service thumbnails, trust chips, rich buttons."""
+    thumbs = ''.join(f'<img src="/assets/img/art/{k}-sm.webp" width="44" height="44" alt="" loading="lazy" decoding="async">' for k in ('ac_repair', 'ac_gas', 'ac_servicing', 'ac_install'))
+    svcs = ' · '.join(tx('svc.%s.name' % k) for k in ('ac_repair', 'ac_gas', 'ac_servicing', 'ac_install'))
+    chips = ''.join(f'<li>{ic("check")}{tx(k)}</li>' for k in ('tr.3.t', 'tr.4.t', 'tr.1.t'))
+    return f'''<section class="cta-band"><div class="wrap"><div class="cta2 reveal">
+<div class="cta2-art" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="/assets/img/cta-ac-sm.webp"><img src="/assets/img/cta-ac.webp" width="960" height="820" alt="" loading="lazy" decoding="async"></picture></div>
+<div class="cta2-body"><p class="cta2-eb">{ic('pin')}{tx("hero.eyebrow")}</p><h2>{tx("cta.h2")}</h2><p class="cta2-sub">{tx("cta.sub")}</p>
+<ul class="cta2-chips">{chips}</ul>
+<div class="cta2-svc"><span class="cta2-th">{thumbs}</span><span>{svcs}</span></div></div>
+<div class="cta2-act">
+<a class="cta2-btn cta2-call" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))} {PHONE_TXT}"><span class="cta2-ic">{ic('phone')}</span><span class="cta2-tx"><small data-i18n="btn.call">{en('btn.call')}</small><b>{PHONE_TXT}</b></span></a>
+<a class="cta2-btn cta2-book" href="/contact/#book" data-book=""><span class="cta2-ic">{CAL_SVG}</span><span class="cta2-tx"><small data-i18n="cta.online">{en('cta.online')}</small><b data-i18n="btn.bookservice">{en('btn.bookservice')}</b></span></a>
+<a class="cta2-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx("btn.wachat")}</a>
+</div>
 </div></div></section>'''
 
 

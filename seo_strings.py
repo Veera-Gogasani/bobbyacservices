@@ -9,6 +9,7 @@ SEO = {
     'qa.ap.a': ("Yes. BOBBY repairs refrigerators, washing machines, air coolers and ceiling fans at your doorstep in Narasaraopet and nearby areas. The technician inspects the appliance first and gives a clear estimate before starting any repair.",
                 "అవును. BOBBY నరసరావుపేట మరియు సమీప ప్రాంతాల్లో ఫ్రిజ్, వాషింగ్ మెషీన్, ఎయిర్ కూలర్, సీలింగ్ ఫ్యాన్‌లను మీ ఇంటి వద్దే రిపేర్ చేస్తుంది. టెక్నీషియన్ ముందుగా పరికరాన్ని తనిఖీ చేసి, రిపేర్ ప్రారంభించే ముందు స్పష్టమైన అంచనా ఇస్తారు.",
                 "हाँ। BOBBY नरसरावपेट और आसपास के इलाकों में फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फ़ैन आपके घर पर रिपेयर करता है। तकनीशियन पहले उपकरण की जाँच करता है और रिपेयर शुरू करने से पहले साफ़ अनुमान देता है।"),
+    'cta.online': ("Book online", "ఆన్‌లైన్ బుకింగ్", "ऑनलाइन बुक करें"),
     'blog.by': ("Written by", "రచన", "लेखक"),
     'blog.pub': ("Published", "ప్రచురణ", "प्रकाशित"),
     'blog.upd': ("Updated", "నవీకరణ", "अपडेट"),
