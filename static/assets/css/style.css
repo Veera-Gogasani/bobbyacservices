@@ -1003,14 +1003,8 @@ html.is-desk .bd-sms{display:none}
 .ab-checks li{display:flex;gap:12px;align-items:flex-start;padding:15px 16px;background:#fff;border:1px solid var(--line);border-radius:16px;color:var(--navy);font-weight:600;line-height:1.5}
 .ab-checks svg{flex:none;width:24px;height:24px;padding:5px;border-radius:50%;background:linear-gradient(135deg,#1FA855,#159A4E);color:#fff}
 .ab-checks li:last-child:nth-child(odd){grid-column:1/-1}
-/* commitment */
-.ab-com{display:grid;grid-template-columns:1.4fr .6fr;gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(28px,4vw,48px);border-radius:28px;background:linear-gradient(135deg,#FFF6EC 0%,#EEF7FF 100%);border:1px solid #F1DEC6}
-.ab-com h2{margin:6px 0 14px}
-.ab-com p{color:var(--muted);line-height:1.75;margin:0 0 10px}
-.ab-com-btns{display:grid;gap:12px}
-.ab-com-btns .btn{justify-content:center}
 @media(max-width:1000px){.ab-tp{grid-template-columns:repeat(2,1fr)}.ab-svc{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:860px){.ab-why,.ab-com{grid-template-columns:1fr}.ab-why .sec-head{text-align:left}}
+@media(max-width:860px){.ab-why{grid-template-columns:1fr}.ab-why .sec-head{text-align:left}}
 @media(max-width:600px){.ab-svc,.ab-tp,.ab-checks{grid-template-columns:1fr}.ab-svc-c{padding:18px}.ab-tp li{padding:20px 18px}}
 .ab-tp{display:flex;flex-wrap:wrap;justify-content:center}
 .ab-tp li{flex:0 1 calc(25% - 14px)}

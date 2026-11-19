@@ -92,13 +92,4 @@ AB = {
     'ab.why.5': ("Inspection-based repair recommendations.", "తనిఖీ ఆధారిత రిపేర్ సూచనలు.", "जाँच पर आधारित रिपेयर सुझाव।"),
     'ab.why.6': ("Customer approval before additional work.", "అదనపు పనికి ముందు కస్టమర్ ఆమోదం.", "अतिरिक्त काम से पहले ग्राहक की मंज़ूरी।"),
     'ab.why.7': ("Careful handling and responsible service practices.", "జాగ్రత్తైన నిర్వహణ మరియు బాధ్యతాయుతమైన సర్వీస్ పద్ధతులు.", "सावधानीपूर्ण हैंडलिंग और ज़िम्मेदार सर्विस तरीके।"),
-    # Commitment
-    'ab.com.eb': ("Our Commitment to You", "మీకు మా నిబద్ధత", "आपके प्रति हमारी प्रतिबद्धता"),
-    'ab.com.h': ("Trust is earned, one honest visit at a time.", "నమ్మకం ప్రతి నిజాయితీ గల సేవతోనే వస్తుంది.", "भरोसा हर ईमानदार सेवा से कमाया जाता है।"),
-    'ab.com.p1': ("At BOBBY, we believe trust is earned through honest recommendations, transparent communication and dependable workmanship.",
-                  "నిజాయితీ గల సూచనలు, పారదర్శక సమాచారం మరియు నమ్మకమైన పనితనం ద్వారానే నమ్మకం సంపాదించబడుతుందని BOBBY నమ్ముతుంది.",
-                  "BOBBY में हमारा मानना है कि भरोसा ईमानदार सलाह, पारदर्शी बातचीत और भरोसेमंद कारीगरी से कमाया जाता है।"),
-    'ab.com.p2': ("Whether your AC needs servicing, your refrigerator is not cooling, your washing machine has stopped working or you need minor household electrical assistance, we aim to provide a convenient and responsible service experience.",
-                  "మీ ఏసీకి సర్వీసింగ్ కావాలన్నా, ఫ్రిజ్ చల్లబడకపోయినా, వాషింగ్ మెషీన్ పనిచేయడం ఆగిపోయినా లేదా చిన్న ఇంటి ఎలక్ట్రికల్ సహాయం కావాలన్నా, సౌకర్యవంతమైన మరియు బాధ్యతాయుతమైన సర్వీస్ అనుభవాన్ని అందించడమే మా లక్ష్యం.",
-                  "चाहे आपके एसी को सर्विसिंग चाहिए, फ्रिज ठंडा नहीं कर रहा, वॉशिंग मशीन बंद हो गई है या आपको छोटे घरेलू इलेक्ट्रिकल काम में मदद चाहिए, हमारा लक्ष्य सुविधाजनक और ज़िम्मेदार सर्विस अनुभव देना है।"),
 }

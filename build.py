@@ -772,10 +772,7 @@ def about_body():
         for i in range(7)) + '</ol></div></section>'
     why = f"""<section class="sec sec-alt"><div class="wrap ab-why"><div class="reveal">{sec_head('ab.why.eb', 'ab.why.h', center=False)}</div>
 <ul class="ab-checks reveal d1">{''.join(f'<li>{ic("check")}{tx("ab.why.%d" % i)}</li>' for i in range(1, 8))}</ul></div></section>"""
-    com = f"""<section class="sec"><div class="wrap"><div class="ab-com reveal">
-<div><p class="eyebrow">{tx('ab.com.eb', 'span')}</p><h2>{tx('ab.com.h')}</h2><p>{tx('ab.com.p1')}</p><p>{tx('ab.com.p2')}</p></div>
-<div class="ab-com-btns"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>"""
-    return who + phil + svc + tp + why + com
+    return who + phil + svc + tp + why
 
 def build_inner():
     # about
