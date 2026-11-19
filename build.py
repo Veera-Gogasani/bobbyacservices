@@ -230,7 +230,7 @@ def business_ld():
         'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
         'hasMap': GMAPS_URL, 'geo': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'sameAs': [GMAPS_URL],
-        'areaServed': [{'@type': 'City', 'name': CITY}, {'@type': 'GeoCircle', 'geoMidpoint': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'geoRadius': '10000'}],
+        'areaServed': [{'@type': 'City', 'name': CITY}, {'@type': 'GeoCircle', 'geoMidpoint': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'geoRadius': '20000'}],
         'email': OWNER_EMAIL,
         'founder': {'@type': 'Person', 'name': OWNER_NAME, 'alternateName': 'Bobby'},
         'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'AC & Home Appliance Services', 'itemListElement': [
