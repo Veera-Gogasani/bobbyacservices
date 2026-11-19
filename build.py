@@ -267,7 +267,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=38">
+<link rel="stylesheet" href="/assets/css/style.css?v=39">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -505,19 +505,28 @@ def blog_cards(posts, hq='h3', eager_first=False):
 
 CAL_SVG = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 def cta_band():
-    """Shared call-to-action banner: rendered AC artwork with cool airflow, service thumbnails, trust chips, rich buttons."""
-    thumbs = ''.join(f'<img src="/assets/img/art/{k}-sm.webp" width="44" height="44" alt="" loading="lazy" decoding="async">' for k in ('ac_repair', 'ac_gas', 'ac_servicing', 'ac_install'))
-    svcs = ' · '.join(tx('svc.%s.name' % k) for k in ('ac_repair', 'ac_gas', 'ac_servicing', 'ac_install'))
-    chips = ''.join(f'<li>{ic("check")}{tx(k)}</li>' for k in ('tr.3.t', 'tr.4.t', 'tr.1.t'))
-    return f'''<section class="cta-band"><div class="wrap"><div class="cta2 reveal">
-<div class="cta2-art" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="/assets/img/cta-ac-sm.webp"><img src="/assets/img/cta-ac.webp" width="960" height="820" alt="" loading="lazy" decoding="async"></picture></div>
-<div class="cta2-body"><p class="cta2-eb">{ic('pin')}{tx("hero.eyebrow")}</p><h2>{tx("cta.h2")}</h2><p class="cta2-sub">{tx("cta.sub")}</p>
-<ul class="cta2-chips">{chips}</ul>
-<div class="cta2-svc"><span class="cta2-th">{thumbs}</span><span>{svcs}</span></div></div>
-<div class="cta2-act">
-<a class="cta2-btn cta2-call" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))} {PHONE_TXT}"><span class="cta2-ic">{ic('phone')}</span><span class="cta2-tx"><small data-i18n="btn.call">{en('btn.call')}</small><b>{PHONE_TXT}</b></span></a>
-<a class="cta2-btn cta2-book" href="/contact/#book" data-book=""><span class="cta2-ic">{CAL_SVG}</span><span class="cta2-tx"><small data-i18n="cta.online">{en('cta.online')}</small><b data-i18n="btn.bookservice">{en('btn.bookservice')}</b></span></a>
-<a class="cta2-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx("btn.wachat")}</a>
+    """Shared call-to-action banner (artwork from BOBBY's own banner design; text and buttons are real HTML)."""
+    svg = lambda d: f'<svg viewBox="0 0 24 24" aria-hidden="true">{d}</svg>'
+    S_ = 'fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"'
+    icons = [svg(f'<path {S_} d="M14.7 6.3a4 4 0 0 0-5.3 5.3L3.5 17.5a1.8 1.8 0 0 0 2.5 2.5l5.9-5.9a4 4 0 0 0 5.3-5.3l-2.4 2.4-2.1-.4-.4-2.1z"/><path {S_} d="M4 4l5 5M3.5 6l2.5-2.5"/>'),
+             svg(f'<circle {S_} cx="12" cy="12" r="3"/><path {S_} d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>'),
+             svg(f'<rect {S_} x="6.5" y="6.5" width="11" height="15" rx="3"/><path {S_} d="M9.5 6.5V4h5v2.5M12 10.5v7M9 12.3l6 3.4M15 12.3l-6 3.4"/>'),
+             svg(f'<path {S_} d="M12 2.8l7.5 3v5.6c0 4.7-3.2 8.3-7.5 9.8-4.3-1.5-7.5-5.1-7.5-9.8V5.8z"/><path {S_} d="M8.6 12.2l2.4 2.4 4.6-4.8"/>')]
+    feats = ''.join(f'<li><span class="cta3-fi">{icons[i]}</span><span>{tx("cta3.f%d" % (i + 1))}</span></li>' for i in range(4))
+    cal = svg(f'<rect {S_} x="3.5" y="5" width="17" height="15.5" rx="3"/><path {S_} d="M8 3v4M16 3v4M3.5 10h17"/><path fill="currentColor" d="M7 13h2.4v2.2H7zM10.8 13h2.4v2.2h-2.4zM14.6 13H17v2.2h-2.4zM7 16.6h2.4v2.2H7zM10.8 16.6h2.4v2.2h-2.4z"/>')
+    return f'''<section class="cta-band"><div class="wrap"><div class="cta3 reveal">
+<div class="cta3-art cta3-l" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="/assets/img/cta-ac-left-sm.webp"><img src="/assets/img/cta-ac-left.webp" width="605" height="724" alt="" loading="lazy" decoding="async"></picture></div>
+<div class="cta3-art cta3-r" aria-hidden="true"><img src="/assets/img/cta-relax.webp" width="627" height="724" alt="" loading="lazy" decoding="async"></div>
+<div class="cta3-c">
+<p class="cta3-pill"><span>{tx("cta3.pill")}</span></p>
+<h2>{tx("cta3.h")}</h2>
+<p class="cta3-sub">{tx("cta3.sub")}</p>
+<ul class="cta3-feat">{feats}</ul>
+<div class="cta3-bar">
+<a class="cta3-book" href="/contact/#book" data-book="">{cal}<span data-i18n="cta3.book">{en("cta3.book")}</span></a>
+<div class="cta3-callwa"><a class="cta3-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="WhatsApp {PHONE_TXT}">{wa_ic()}</a>
+<a class="cta3-tel" href="tel:{PHONE_TEL}"><small data-i18n="cta3.callwa">{en("cta3.callwa")}</small><b>{PHONE_TXT}</b></a></div>
+</div>
 </div>
 </div></div></section>'''
 
