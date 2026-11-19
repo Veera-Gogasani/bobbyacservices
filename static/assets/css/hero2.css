@@ -367,4 +367,4 @@
   .hero-duo .hero .hero-photo.hero-photo-real{aspect-ratio:3/2;max-width:100%}
   .hero-duo .hero .hero-photo.hero-photo-real img{width:100%;height:100%;object-fit:cover;object-position:62% 40%}
 }
-@media (max-width:960px){.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float{display:none}}
+@media (max-width:960px){.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float{font-size:12px;padding:6px 10px;gap:6px}.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float i{width:22px;height:22px;border-radius:7px}.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float i svg{width:13px;height:13px}}
