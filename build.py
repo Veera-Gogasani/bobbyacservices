@@ -708,8 +708,8 @@ def build_home():
 <p class="sub anim d2">{tx('hero.sub')}</p>
 <div class="ctas anim d3">
 {book_a('ac_servicing', 'btn-orange', 'btn.bookac', 'snow')}
-<a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>
-<a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wachat')}</a>
+<a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}<span class="cta-short" data-i18n="btn.call">{en('btn.call')}</span></a>
+<a class="btn btn-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}<span class="cta-long">{tx('btn.wachat')}</span><span class="cta-short" data-i18n="btn.wa">{en('btn.wa')}</span></a>
 </div>
 <p class="trust anim d4">{ic('check')}{tx('hero.trust')}</p>
 </div>

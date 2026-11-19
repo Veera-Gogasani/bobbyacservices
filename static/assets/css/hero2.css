@@ -282,4 +282,21 @@
   .hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float.c3,
   .hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float.c4{right:1.5%}.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float.c1{left:1.5%}}
 .hero-visual.is-tight .chip-float{display:none!important}
-.hero-visual.is-tight .hero-card{display:none!important}
+.hero-visual.is-tight .hero-card{display:none!important}/* ===== phones: both hero slides fit cleanly ===== */
+@media (max-width:760px){
+  /* slide 1: Book full width, Call + WhatsApp side by side -> more room for the photo */
+  .hero-duo .hero .ctas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hero-duo .hero .ctas .btn{flex:none;min-height:44px;padding:10px 10px;font-size:14px;white-space:nowrap}
+  .hero-duo .hero .ctas .btn-orange{grid-column:1/-1}
+  .hero-duo .hero .ctas .btn-ghost [data-i18n="btn.callnum"]{display:none}
+  .hero-duo .hero .ctas .btn-ghost::after{content:attr(data-short)}
+  /* slide 2: three buttons share the row evenly, nothing touches the edge */
+  .hero-duo .bh2s .bobby-hero-ctas{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px;width:100%}
+  .hero-duo .bh2s .bobby-hero-btn{min-width:0;padding:11px 8px;font-size:13.5px;gap:6px}
+  .hero-duo .bh2s .bobby-hero-btn svg,.hero-duo .bh2s .bobby-hero-btn img{width:16px;height:16px}
+}
+@media (max-width:370px){.hero-duo .bh2s .bobby-hero-btn{font-size:12.5px;padding:10px 6px}.hero-duo .hero .eyebrow{font-size:10.5px;letter-spacing:.12em}}
+.hero .ctas .cta-short{display:none}
+@media (max-width:760px){.hero-duo .hero .ctas .btn-ghost::after{content:none}.hero-duo .hero .ctas .cta-short{display:inline}.hero-duo .hero .ctas .cta-long{display:none}}
+@media (max-width:420px){.hero-duo .bh2s .bobby-hero-btn-glass svg,.hero-duo .bh2s .bobby-hero-btn-orange svg{display:none}.hero-duo .bh2s .bobby-hero-ctas{grid-template-columns:1.15fr .95fr 1.1fr}}
+@media (max-width:760px){.hero-duo .bh2s .bobby-hero-btn{white-space:normal;line-height:1.2;text-align:center;min-height:44px}}
