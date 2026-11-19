@@ -18,52 +18,85 @@
   function t(key) { var d = dict[lang] || dict.en; return (d && d[key]) || (dict.en && dict.en[key]) || ''; }
   function strip(html) { var d = document.createElement('div'); d.innerHTML = html; return d.textContent; }
   function waUrl(msg) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg); }
-  /* ---------- WhatsApp vs WhatsApp Business (Android) ----------
-     wa.me only opens the phone's default WhatsApp app, so on Android we let the visitor pick the app and
-     open it with an intent aimed at that app's package (falls back to wa.me if it is not installed). */
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  function waIntent(url, pkg) {
-    var m = url.match(/wa\.me\/(\d+)(?:\?text=(.*))?$/); if (!m) return url;
-    return 'intent://send?phone=' + m[1] + (m[2] ? '&text=' + m[2] : '') + '#Intent;scheme=whatsapp;package=' + pkg +
-      ';S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+  /* ---------- Opening WhatsApp the right way on every device ----------
+     Android : fire a WhatsApp intent with no fixed app, so Android itself decides —
+               both WhatsApp + WhatsApp Business installed -> the phone shows its "Open with" list,
+               only one installed -> it opens straight away,
+               none installed -> the page stays put, and after ~2s we offer SMS / Call instead.
+     iPhone  : normal wa.me link (iOS opens whichever WhatsApp app is installed); SMS / Call shown as backup.
+     Desktop : wa.me (WhatsApp Web / desktop app) plus a note to call us if there is no WhatsApp. */
+  var UA = navigator.userAgent;
+  var isAndroid = /Android/i.test(UA);
+  var isIOS = /iPhone|iPad|iPod/i.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isMobile = isAndroid || isIOS;
+  var TEL = '+918374889163', TEL_SHOW = '+91 83748 89163';
+  root.classList.add(isMobile ? 'is-mob' : 'is-desk');
+  function waParts(url) {
+    var m = url.match(/wa\.me\/(\d+)(?:\?text=(.*))?$/);
+    return m ? { phone: m[1], text: m[2] ? decodeURIComponent(m[2]) : '' } : { phone: WA, text: '' };
   }
-  var waPick = null, waPickReturn = null;
-  function closeWaPick() { if (!waPick) return; waPick.hidden = true; document.documentElement.classList.remove('wa-pick-open'); if (waPickReturn && waPickReturn.focus) waPickReturn.focus({ preventScroll: true }); }
-  function openWA(url, from) {
-    if (!isAndroid) { window.open(url, '_blank', 'noopener'); return; }
-    if (!waPick) {
-      waPick = document.createElement('div'); waPick.className = 'wa-pick'; waPick.hidden = true;
-      waPick.innerHTML = '<div class="wa-pick-bg" data-wa-close></div><div class="wa-pick-panel" role="dialog" aria-modal="true" aria-labelledby="waPickH">' +
-        '<h3 id="waPickH"></h3><p class="wa-pick-p"></p>' +
-        '<a class="wa-opt" data-app="wa"><span class="wa-logo"><img src="/assets/img/whatsapp.png" width="34" height="34" alt=""></span><span class="wa-name"></span><small class="wa-last"></small></a>' +
-        '<a class="wa-opt" data-app="wb"><span class="wa-logo wb"><img src="/assets/img/whatsapp.png" width="34" height="34" alt=""><b>B</b></span><span class="wa-name"></span><small class="wa-last"></small></a>' +
+  function smsHref(text) { return 'sms:' + TEL + '?&body=' + encodeURIComponent(text || ''); }
+  var sheet = null, sheetReturn = null;
+  function closeSheet() { if (!sheet || sheet.hidden) return; sheet.hidden = true; root.classList.remove('wa-pick-open'); if (sheetReturn && sheetReturn.focus) sheetReturn.focus({ preventScroll: true }); }
+  function noWhatsApp(url, from) {   /* "WhatsApp isn't installed" -> SMS or call */
+    if (!sheet) {
+      sheet = document.createElement('div'); sheet.className = 'wa-pick'; sheet.hidden = true;
+      sheet.innerHTML = '<div class="wa-pick-bg" data-wa-close></div><div class="wa-pick-panel" role="dialog" aria-modal="true" aria-labelledby="waNoH">' +
+        '<h3 id="waNoH"></h3><p class="wa-pick-p"></p>' +
+        '<a class="wa-opt wa-sms"><span class="wa-logo sms"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2zm3 6v2h2V9H7zm4 0v2h2V9h-2zm4 0v2h2V9h-2z"/></svg></span><span class="wa-name"></span></a>' +
+        '<a class="wa-opt wa-call" href="tel:' + TEL + '"><span class="wa-logo call"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></span><span class="wa-name"></span><small class="wa-last">' + TEL_SHOW + '</small></a>' +
+        '<a class="wa-retry" target="_blank" rel="noopener"></a>' +
         '<button type="button" class="wa-pick-x" data-wa-close></button></div>';
-      document.body.appendChild(waPick);
-      waPick.addEventListener('click', function (e) {
-        if (e.target.closest('[data-wa-close]')) { closeWaPick(); return; }
-        var o = e.target.closest('.wa-opt'); if (o) { store('waApp', o.getAttribute('data-app')); setTimeout(closeWaPick, 300); }
-      });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && waPick && !waPick.hidden) closeWaPick(); });
+      document.body.appendChild(sheet);
+      sheet.addEventListener('click', function (e) { if (e.target.closest('[data-wa-close]')) closeSheet(); else if (e.target.closest('.wa-opt')) setTimeout(closeSheet, 400); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
     }
-    waPick.querySelector('#waPickH').textContent = strip(t('wa.pick.h'));
-    waPick.querySelector('.wa-pick-p').textContent = strip(t('wa.pick.p'));
-    waPick.querySelector('.wa-pick-x').textContent = strip(t('wa.pick.cancel'));
-    var last = store('waApp');
-    [['wa', 'com.whatsapp', 'wa.pick.wa'], ['wb', 'com.whatsapp.w4b', 'wa.pick.wb']].forEach(function (x) {
-      var a = waPick.querySelector('[data-app="' + x[0] + '"]'); a.href = waIntent(url, x[1]);
-      a.querySelector('.wa-name').textContent = strip(t(x[2]));
-      a.querySelector('.wa-last').textContent = last === x[0] ? strip(t('wa.pick.last')) : '';
-      a.classList.toggle('is-last', last === x[0]);
-    });
-    waPickReturn = from || document.activeElement;
-    waPick.hidden = false; document.documentElement.classList.add('wa-pick-open');
-    setTimeout(function () { var f = waPick.querySelector(last === 'wb' ? '[data-app="wb"]' : '[data-app="wa"]'); f && f.focus({ preventScroll: true }); }, 30);
+    sheet.querySelector('#waNoH').textContent = strip(t('wa.no.h'));
+    sheet.querySelector('.wa-pick-p').textContent = strip(t('wa.no.p'));
+    sheet.querySelector('.wa-sms').href = smsHref(waParts(url).text);
+    sheet.querySelector('.wa-sms .wa-name').textContent = strip(t('wa.sms'));
+    sheet.querySelector('.wa-call .wa-name').textContent = strip(t('wa.call'));
+    var r = sheet.querySelector('.wa-retry'); r.href = url; r.textContent = strip(t('wa.retry'));
+    sheet.querySelector('.wa-pick-x').textContent = strip(t('wa.pick.cancel'));
+    sheetReturn = from || document.activeElement;
+    sheet.hidden = false; root.classList.add('wa-pick-open');
+    setTimeout(function () { var f = sheet.querySelector('.wa-sms'); f && f.focus({ preventScroll: true }); }, 30);
+  }
+  var toastEl = null, toastT = 0;
+  function deskNote() {   /* desktop: small note with our number, in case there is no WhatsApp on this computer */
+    if (!toastEl) {
+      toastEl = document.createElement('div'); toastEl.className = 'wa-toast'; toastEl.setAttribute('role', 'status');
+      toastEl.innerHTML = '<span class="wa-toast-t"></span> <a href="tel:' + TEL + '">' + TEL_SHOW + '</a><button type="button" aria-label="Close">×</button>';
+      toastEl.querySelector('button').addEventListener('click', function () { toastEl.classList.remove('show'); });
+      document.body.appendChild(toastEl);
+    }
+    toastEl.querySelector('.wa-toast-t').textContent = strip(t('wa.desk'));
+    toastEl.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 12000);
+  }
+  function openWA(url, from) {
+    if (isAndroid) {
+      var p = waParts(url), left = false;
+      var mark = function () { left = true; };
+      window.addEventListener('blur', mark); window.addEventListener('pagehide', mark);
+      document.addEventListener('visibilitychange', mark);
+      location.href = 'intent://send?phone=' + p.phone + (p.text ? '&text=' + encodeURIComponent(p.text) : '') +
+        '#Intent;scheme=whatsapp;action=android.intent.action.VIEW;end';
+      setTimeout(function () {
+        window.removeEventListener('blur', mark); window.removeEventListener('pagehide', mark);
+        document.removeEventListener('visibilitychange', mark);
+        if (!left && !document.hidden) noWhatsApp(url, from);
+      }, 2200);
+      return;
+    }
+    window.open(url, '_blank', 'noopener');
+    if (!isMobile) deskNote();
   }
   /* every wa.me link on the page (chat buttons, floating button, CTA, "Open WhatsApp again") */
   document.addEventListener('click', function (e) {
-    if (!isAndroid || e.defaultPrevented || e.button > 0 || e.ctrlKey || e.metaKey) return;
-    var a = e.target.closest('a[href^="https://wa.me/"]'); if (!a) return;
-    e.preventDefault(); openWA(a.href, a);
+    if (e.defaultPrevented || e.button > 0 || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var a = e.target.closest('a[href^="https://wa.me/"]'); if (!a || a.closest('.wa-pick')) return;
+    if (isAndroid) { e.preventDefault(); openWA(a.href, a); }
+    else if (!isMobile) deskNote();
   });
   function gmap(lat, lng) { return 'https://maps.google.com/?q=' + lat + ',' + lng; }
 
@@ -495,8 +528,9 @@
       /* thank-you screen */
       msgEl.textContent = '';
       done.querySelector('.bd-again').href = url;
+      var sm = done.querySelector('.bd-sms'); if (sm) sm.href = smsHref(lines.join('\n'));
       form.classList.add('is-done'); done.hidden = false;
-      setTimeout(function () { if (!(waPick && !waPick.hidden)) done.focus({ preventScroll: true }); done.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }, 30);
+      setTimeout(function () { if (!(sheet && !sheet.hidden)) done.focus({ preventScroll: true }); done.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }, 30);
     });
     done.querySelector('.bd-new').addEventListener('click', function () {
       form.reset(); form.elements.lat.value = ''; form.elements.lng.value = ''; form.elements.addr.value = ''; form._acc = null; form._locErr = null;
