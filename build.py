@@ -899,6 +899,36 @@ def write():
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
         f'<url><loc>{SITE}{u}</loc><lastmod>{lastmod(u)}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
     open(os.path.join(out, 'sitemap.xml'), 'w').write(sm); save_lastmod()
+    llms = f"""# BOBBY AC Repair & Home Appliance Services
+
+> Doorstep AC repair, servicing, installation and home appliance repair in {CITY} (Palnadu district, Andhra Pradesh, India) and nearby areas within about 20 km. Run by Yalamanda Gogasani ("Bobby").
+
+- Phone / WhatsApp: {PHONE_TXT}
+- Address: {ADDRESS['street']}, {ADDRESS['locality']}, Andhra Pradesh {ADDRESS['postal']}, India
+- Google Maps: https://maps.google.com/?cid=7427535041159212251
+- Languages: English, Telugu, Hindi
+- Booking: call, WhatsApp, or the booking form at {SITE}/contact/
+
+## Services
+- Split AC and window AC repair: not cooling, water leakage, noise, electrical faults, PCB issues
+- AC servicing (wet/foam service), installation, uninstallation and relocation
+- Refrigerant leak check and gas filling
+- Home appliance repair: washing machines, refrigerators and other household appliances
+- Genuine AC spare parts sourcing
+- The technician inspects first and gives a clear estimate before starting work
+
+## Pages
+- [Home]({SITE}/): overview, how a split AC works, booking
+- [AC services]({SITE}/ac-services/): AC repair, servicing, installation and gas filling
+- [Appliance services]({SITE}/appliance-services/): home appliance repair
+- [AC spare parts]({SITE}/ac-spare-parts/): spare parts
+- [Brands]({SITE}/brands/): AC and appliance brands serviced
+- [FAQs]({SITE}/faqs/): common questions on repair, servicing, area and booking
+- [Blog]({SITE}/blog/): AC care guides (not cooling, water leakage, service frequency, split vs window)
+- [About]({SITE}/about/): about BOBBY and the service area
+- [Contact]({SITE}/contact/): phone, WhatsApp, map and booking form
+"""
+    open(os.path.join(out, 'llms.txt'), 'w').write(llms)
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))

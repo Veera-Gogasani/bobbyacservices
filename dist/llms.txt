@@ -1,0 +1,28 @@
+# BOBBY AC Repair & Home Appliance Services
+
+> Doorstep AC repair, servicing, installation and home appliance repair in Narasaraopet (Palnadu district, Andhra Pradesh, India) and nearby areas within about 20 km. Run by Yalamanda Gogasani ("Bobby").
+
+- Phone / WhatsApp: +91 83748 89163
+- Address: Door 11-28-32/5, Employees Colony, Isha Zen Enclave, Palapadu Road, Arundelpet, Narasaraopeta, Andhra Pradesh 522601, India
+- Google Maps: https://maps.google.com/?cid=7427535041159212251
+- Languages: English, Telugu, Hindi
+- Booking: call, WhatsApp, or the booking form at https://bobbyacservices.pages.dev/contact/
+
+## Services
+- Split AC and window AC repair: not cooling, water leakage, noise, electrical faults, PCB issues
+- AC servicing (wet/foam service), installation, uninstallation and relocation
+- Refrigerant leak check and gas filling
+- Home appliance repair: washing machines, refrigerators and other household appliances
+- Genuine AC spare parts sourcing
+- The technician inspects first and gives a clear estimate before starting work
+
+## Pages
+- [Home](https://bobbyacservices.pages.dev/): overview, how a split AC works, booking
+- [AC services](https://bobbyacservices.pages.dev/ac-services/): AC repair, servicing, installation and gas filling
+- [Appliance services](https://bobbyacservices.pages.dev/appliance-services/): home appliance repair
+- [AC spare parts](https://bobbyacservices.pages.dev/ac-spare-parts/): spare parts
+- [Brands](https://bobbyacservices.pages.dev/brands/): AC and appliance brands serviced
+- [FAQs](https://bobbyacservices.pages.dev/faqs/): common questions on repair, servicing, area and booking
+- [Blog](https://bobbyacservices.pages.dev/blog/): AC care guides (not cooling, water leakage, service frequency, split vs window)
+- [About](https://bobbyacservices.pages.dev/about/): about BOBBY and the service area
+- [Contact](https://bobbyacservices.pages.dev/contact/): phone, WhatsApp, map and booking form
