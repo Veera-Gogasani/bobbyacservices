@@ -251,9 +251,9 @@
 @media (max-width:760px){.hero-duo-pager{padding:3px 6px}.hero-duo-pager button.is-on{height:24px;width:34px}.hero-duo-pager button.is-on::before{height:10px;width:28px}}
 
 /* ================= Hero fits the first screen (viewport minus top bar, header and phone action bar) ================= */
-:root{--hero-top:113px;--hero-bar:0px}
-@media (min-width:961px) and (max-width:1180px){:root{--hero-top:148px}}
-@media (max-width:760px){:root{--hero-top:137px;--hero-bar:calc(69px + env(safe-area-inset-bottom))}}
+:root{--hero-top:115px;--hero-bar:0px}
+@media (min-width:961px) and (max-width:1180px){:root{--hero-top:150px}}
+@media (max-width:760px){:root{--hero-top:139px;--hero-bar:calc(69px + env(safe-area-inset-bottom))}}
 .hero-duo{--hero-h:max(calc(100svh - var(--hero-top) - var(--hero-bar)),440px);height:var(--hero-h)}
 .hero-duo-panel{height:100%;min-height:0}
 .hero-duo .bh2s{height:100%;min-height:0;container:bh / size}

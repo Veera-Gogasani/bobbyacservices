@@ -252,7 +252,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=31">
+<link rel="stylesheet" href="/assets/css/style.css?v=32">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -280,8 +280,8 @@ def header(active):
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
-<a class="btn btn-primary btn-sm btn-call" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))} {PHONE_TXT}">{ic('phone')}<span class="lbl" data-i18n="btn.call">{en('btn.call')}</span></a>
-<a class="btn btn-wa btn-sm" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice">{wa_ic()}<span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
+<a class="hbtn hbtn-call" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))} {PHONE_TXT}"><span class="hb-ic">{ic('phone')}</span><span class="lbl"><small data-i18n="btn.call">{en('btn.call')}</small><b>{PHONE_TXT}</b></span></a>
+<a class="hbtn hbtn-book" href="/contact/#book" data-book="" aria-label="{esc(plain('btn.bookservice'))}" data-i18n-aria="btn.bookservice"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="lbl" data-i18n="btn.bookservice">{en('btn.bookservice')}</span></a>
 <button class="burger" type="button" aria-controls="drawer" aria-expanded="false" aria-label="{esc(plain('nav.menu'))}" data-i18n-aria="nav.menu"><span></span></button>
 </div></div></header>
 <div class="drawer" id="drawer" aria-hidden="true">
@@ -641,7 +641,7 @@ def build_home():
         asm_section(trust_strip()))
     page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
                    'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=6">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=6" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=7">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=6" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
