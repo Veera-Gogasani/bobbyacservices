@@ -12,8 +12,8 @@
 - Split AC and window AC repair: not cooling, water leakage, noise, electrical faults, PCB issues
 - AC servicing (wet/foam service), installation, uninstallation and relocation
 - Refrigerant leak check and gas filling
-- Home appliance repair: washing machines, refrigerators and other household appliances
-- Genuine AC spare parts sourcing
+- Home appliance repair: refrigerators, washing machines, air coolers and ceiling fans
+- AC spare parts (genuine or compatible, depending on model and stock)
 - The technician inspects first and gives a clear estimate before starting work
 
 ## Pages
