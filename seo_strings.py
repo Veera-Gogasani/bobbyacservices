@@ -11,7 +11,7 @@ SEO = {
                 "हाँ। BOBBY नरसरावपेट और आसपास के इलाकों में फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फ़ैन आपके घर पर रिपेयर करता है। तकनीशियन पहले उपकरण की जाँच करता है और रिपेयर शुरू करने से पहले साफ़ अनुमान देता है।"),
     'cta.online': ("Book online", "ఆన్‌లైన్ బుకింగ్", "ऑनलाइन बुक करें"),
     'cta3.pill': ("Professional", "ప్రొఫెషనల్", "प्रोफ़ेशनल"),
-    'cta3.h': ("AC Service &amp; <em>Repair</em><br>in Narasaraopet", "నరసరావుపేటలో<br>AC సర్వీస్ &amp; <em>రిపేర్</em>", "नरसरावपेट में<br>AC सर्विस और <em>रिपेयर</em>"),
+    'cta3.h': ("AC Service &amp; <em>Repair</em> <br>in Narasaraopet", "నరసరావుపేటలో <br>AC సర్వీస్ &amp; <em>రిపేర్</em>", "नरसरावपेट में <br>AC सर्विस और <em>रिपेयर</em>"),
     'cta3.sub': ("Keep your home cool and comfortable with BOBBY", "BOBBY తో మీ ఇంటిని చల్లగా, సౌకర్యంగా ఉంచుకోండి", "BOBBY के साथ अपना घर ठंडा और आरामदायक रखें"),
     'cta3.f1': ("Repair &amp; Servicing", "రిపేర్ &amp; సర్వీసింగ్", "रिपेयर और सर्विसिंग"),
     'cta3.f2': ("Installation &amp; Uninstallation", "ఇన్‌స్టాలేషన్ &amp; అన్‌ఇన్‌స్టాలేషన్", "इंस्टॉलेशन और अनइंस्टॉलेशन"),

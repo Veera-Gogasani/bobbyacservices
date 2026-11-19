@@ -267,7 +267,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=39">
+<link rel="stylesheet" href="/assets/css/style.css?v=40">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -504,8 +504,13 @@ def blog_cards(posts, hq='h3', eager_first=False):
 <div class="body"><{hq}><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></{hq}><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}<span class="sr-only">: {esc(plain('post.%s.title' % p['slug']))}</span>{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
 
 CAL_SVG = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-def cta_band():
+CTA_ART = {   # page -> (image, side, object-position): every page gets its own picture in the same style
+    'about': ('cta-ac-bobby', 'l', '35% 18%'), 'ac': ('cta-ac-glow', 'l', '10% 22%'), 'app': ('cta-relax-mug', 'r', '62% 55%'),
+    'brands': ('cta-3d-a', 'l', '50% 25%'), 'faqs': ('cta-relax', 'r', '55% 40%'), 'blog': ('cta-3d-b', 'r', '50% 25%'),
+}
+def cta_band(page='ac'):
     """Shared call-to-action banner (artwork from BOBBY's own banner design; text and buttons are real HTML)."""
+    art, side, pos = CTA_ART.get(page, CTA_ART['ac'])
     svg = lambda d: f'<svg viewBox="0 0 24 24" aria-hidden="true">{d}</svg>'
     S_ = 'fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"'
     icons = [svg(f'<path {S_} d="M14.7 6.3a4 4 0 0 0-5.3 5.3L3.5 17.5a1.8 1.8 0 0 0 2.5 2.5l5.9-5.9a4 4 0 0 0 5.3-5.3l-2.4 2.4-2.1-.4-.4-2.1z"/><path {S_} d="M4 4l5 5M3.5 6l2.5-2.5"/>'),
@@ -514,19 +519,18 @@ def cta_band():
              svg(f'<path {S_} d="M12 2.8l7.5 3v5.6c0 4.7-3.2 8.3-7.5 9.8-4.3-1.5-7.5-5.1-7.5-9.8V5.8z"/><path {S_} d="M8.6 12.2l2.4 2.4 4.6-4.8"/>')]
     feats = ''.join(f'<li><span class="cta3-fi">{icons[i]}</span><span>{tx("cta3.f%d" % (i + 1))}</span></li>' for i in range(4))
     cal = svg(f'<rect {S_} x="3.5" y="5" width="17" height="15.5" rx="3"/><path {S_} d="M8 3v4M16 3v4M3.5 10h17"/><path fill="currentColor" d="M7 13h2.4v2.2H7zM10.8 13h2.4v2.2h-2.4zM14.6 13H17v2.2h-2.4zM7 16.6h2.4v2.2H7zM10.8 16.6h2.4v2.2h-2.4z"/>')
-    return f'''<section class="cta-band"><div class="wrap"><div class="cta3 reveal">
-<div class="cta3-art cta3-l" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="/assets/img/cta-ac-left-sm.webp"><img src="/assets/img/cta-ac-left.webp" width="605" height="724" alt="" loading="lazy" decoding="async"></picture></div>
-<div class="cta3-art cta3-r" aria-hidden="true"><img src="/assets/img/cta-relax.webp" width="627" height="724" alt="" loading="lazy" decoding="async"></div>
+    return f'''<section class="cta-band"><div class="wrap"><div class="cta3 cta3-{side} reveal">
+<div class="cta3-art" aria-hidden="true"><img src="/assets/img/{art}.webp" alt="" loading="lazy" decoding="async" style="object-position:{pos}"></div>
 <div class="cta3-c">
 <p class="cta3-pill"><span>{tx("cta3.pill")}</span></p>
 <h2>{tx("cta3.h")}</h2>
 <p class="cta3-sub">{tx("cta3.sub")}</p>
 <ul class="cta3-feat">{feats}</ul>
+</div>
 <div class="cta3-bar">
 <a class="cta3-book" href="/contact/#book" data-book="">{cal}<span data-i18n="cta3.book">{en("cta3.book")}</span></a>
 <div class="cta3-callwa"><a class="cta3-wa" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="WhatsApp {PHONE_TXT}">{wa_ic()}</a>
 <a class="cta3-tel" href="tel:{PHONE_TEL}"><small data-i18n="cta3.callwa">{en("cta3.callwa")}</small><b>{PHONE_TXT}</b></a></div>
-</div>
 </div>
 </div></div></section>'''
 
@@ -737,7 +741,7 @@ def build_inner():
 <section class="sec sec-alt"><div class="wrap">{sec_head("why.eyebrow", "why.h2")}{why_cards()}</div></section>
 <section class="sec"><div class="wrap" style="max-width:860px;text-align:center"><div class="reveal"><h2>{tx('about.area.h')}</h2><p class="lead" style="margin:12px auto 22px">{tx('about.area.p')}</p>
 <div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>''' +
-         steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
+         steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('about') + footer())
 
     # AC services
     p = '/ac-services/'
@@ -749,7 +753,7 @@ def build_inner():
          f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
 <div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
-         steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
+         steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('ac') + footer())
 
     # Appliance
     p = '/appliance-services/'
@@ -760,7 +764,7 @@ def build_inner():
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) + quick_answer('ap') +
          f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([7, 8, 9, 13])}</div></section>''' +
-         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
+         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('app') + footer())
 
     # Brands
     p = '/brands/'
@@ -770,7 +774,7 @@ def build_inner():
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block(True)}</div></section>
 <section class="sec sec-alt"><div class="wrap">{faq_list([10], hq='h2')}</div></section>''' +
-         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
+         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('brands') + footer())
 
     # FAQs (FAQPage schema: every Q&A here is visible on this page)
     p = '/faqs/'
@@ -780,7 +784,7 @@ def build_inner():
                  'Answers about AC repair, servicing, installation, gas filling, spare parts, appliance repairs and service areas in Narasaraopet, plus an AC electricity cost calculator.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
-         f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1), hq='h2')}</div></section>' + acc_widget() + cta_band() + footer())
+         f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1), hq='h2')}</div></section>' + acc_widget() + cta_band('faqs') + footer())
 
     # Contact
     p = '/contact/'
@@ -804,7 +808,7 @@ def build_inner():
                  'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and fridge care from BOBBY, Narasaraopet.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
-         f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2', eager_first=True)}</div></section>' + cta_band() + footer())
+         f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2', eager_first=True)}</div></section>' + cta_band('blog') + footer())
     for post in POSTS:
         s = post['slug']; pp = '/blog/%s/' % s
         title_en = plain('post.%s.title' % s)

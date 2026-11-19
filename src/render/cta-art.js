@@ -14,9 +14,10 @@ const fill = new THREE.PointLight(0x6EC1FF, 3.0, 4, 1.5); fill.position.set(0.2,
 /* faint wall plane behind the unit */
 const wall = new THREE.Mesh(new THREE.PlaneGeometry(8, 6), new THREE.MeshStandardMaterial({ color: 0x0E2443, roughness: 0.95 })); wall.position.set(0, -1.2, -0.12); s.add(wall);
 const ind = buildIndoor(false); s.add(ind.unit);
-ind.P.louverPivot.rotation.x = 0.55; ind.P.setDisplay('22°', 1.6);
+ind.P.louverPivot.rotation.x = 0.55; ind.P.setDisplay(new URLSearchParams(location.search).get('v') === 'b' ? '20°' : '22°', 1.6);
 const air = buildAirflow(false); air.group.position.set(0, -0.14, 0.13); s.add(air.group); air.update(3.2, 1.0);
 const cam = new THREE.PerspectiveCamera(30, W / H, 0.05, 30);
-cam.position.set(-0.72, -0.7, 2.8); cam.lookAt(0.02, -0.46, 0); cam.updateProjectionMatrix();
+const v = new URLSearchParams(location.search).get('v') || 'a';
+if (v === 'b') { cam.position.set(1.3, -0.5, 2.8); cam.lookAt(-0.05, -0.42, 0); } else { cam.position.set(-0.72, -0.7, 2.8); cam.lookAt(0.02, -0.46, 0); } cam.updateProjectionMatrix();
 r.render(s, cam);
 window.__done = true;
