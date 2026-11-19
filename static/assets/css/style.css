@@ -1018,3 +1018,36 @@ html.is-desk .bd-sms{display:none}
 @media(max-width:600px){.ab-tags{gap:8px}.ab-tags li,.ab-tags li:nth-child(2),.ab-tags li:nth-child(3){flex-direction:column;gap:6px;padding:12px 6px;font-size:12.5px}}
 .ab-tags li,.ab-tags li:nth-child(2),.ab-tags li:nth-child(3){flex-direction:column;justify-content:flex-start;gap:7px;padding:14px 10px}
 .ab-tags li svg,.ab-tags li:nth-child(2) svg,.ab-tags li:nth-child(3) svg{width:20px;height:20px}
+/* ================= Mobile polish (phones first) ================= */
+/* Home "Why Choose BOBBY?": was squeezed into two columns on phones */
+@media(max-width:960px){.why-split{grid-template-columns:1fr}.why-split .why-photo{max-width:520px;margin:0 auto;width:100%}}
+@media(max-width:560px){.why-split .why-photo{aspect-ratio:16/11}.why-split .why-grid{gap:12px}.why-split .wcard{padding:18px}}
+/* review carousel: arrows were squashed to slivers */
+.rc-btn{flex:none;min-width:44px;min-height:44px}
+@media(max-width:560px){.rc-nav{gap:8px}.rc-btn{width:44px;height:44px}.rc-dots{flex-wrap:wrap;justify-content:center;max-width:calc(100% - 110px)}}
+/* footer: no white strip under it on phones; tidy columns and icons */
+@media(max-width:760px){
+  body{padding-bottom:0}
+  .ftr{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+  .ftr .grid{grid-template-columns:1fr 1fr;gap:26px 18px}
+  .ftr .grid>div:first-child,.ftr .grid>div:last-child{grid-column:1/-1}
+  .ftr ul a{min-height:40px}
+  .ftr .ci{align-items:center;min-height:40px}
+  .ftr .ci svg,.ftr .ci .wa-ic{margin-top:0}
+  .ftr .bottom{flex-direction:column;gap:6px}
+}
+/* contact quick cards: label text was 11px */
+@media(max-width:760px){.ctq-tx small{font-size:12px;letter-spacing:.04em}}
+/* bigger tap targets */
+.link-arrow{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:760px){.cta3-tel{min-height:44px}}
+/* hero subtitle: show it in full on normal-height phones */
+@media(max-width:760px) and (min-height:760px){.hero-duo .hero .sub{-webkit-line-clamp:4}}
+@media(max-width:760px){
+  .ftr .grid>div:nth-child(4){grid-column:1/-1}
+  .ftr .ci{align-items:flex-start}
+  .ftr .ci svg,.ftr .ci .wa-ic{margin-top:11px}
+  .ftr .ci a,.ftr .ci span{padding:8px 0}
+}
+@media(max-width:560px){.rc-dots{flex-wrap:nowrap;max-width:none}.rc-dot{width:18px}.rc-dot[aria-current="true"]{width:36px}.rc-dot[aria-current="true"]::before{width:30px}}
+@media(max-width:760px){.ftr .ci:has(a){align-items:center}.ftr .ci:has(a) svg,.ftr .ci:has(a) .wa-ic{margin-top:0}.ftr .ci a{padding:0}.ftr .ci span{padding:6px 0}.ftr .ci:not(:has(a)) svg{margin-top:9px}}
