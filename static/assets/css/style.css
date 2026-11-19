@@ -889,3 +889,12 @@ a.ccard:hover{transform:translateY(-3px)}
 @media(max-width:1300px){.nav{display:none}}
 @media(max-width:760px){:root{--hdr:68px}.hdr .logo img.wm{height:44px}.hbtn-call .lbl,.hbtn-book .lbl{display:none}.hbtn-call{padding:0;border:0;background:none}.hbtn-call .hb-ic{width:42px;height:42px;background:#56C8FF;color:#0B1F3A}.hbtn-book{width:42px;height:42px;padding:0;justify-content:center}.hdr-actions{gap:7px}}
 @media(max-width:380px){.hbtn-book{display:none}}
+/* tighter top area: pre-header + main menu */
+.topbar .wrap{padding:4px 0}
+:root{--hdr:66px}
+.hdr .logo img.wm{height:48px}
+.nav{padding:4px}
+.nav a,.nav a[aria-current="page"]{padding:8px 15px}
+.hbtn{height:44px}
+.hbtn-call .hb-ic{width:34px;height:34px}
+@media(max-width:760px){:root{--hdr:60px}.hdr .logo img.wm{height:42px}.hbtn-call .hb-ic,.hbtn-book{width:40px;height:40px}.hbtn{height:40px}.hdr .burger{width:42px;height:42px}}
