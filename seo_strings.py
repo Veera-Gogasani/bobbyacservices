@@ -20,7 +20,7 @@ SEO = {
     'cta3.book': ("Book Service Today", "ఈరోజే సర్వీస్ బుక్ చేయండి", "आज ही सर्विस बुक करें"),
     'cta3.callwa': ("Call / WhatsApp", "కాల్ / వాట్సాప్", "कॉल / व्हाट्सऐप"),
     'c.quick.call.p': ("Talk to Bobby directly", "బాబీతో నేరుగా మాట్లాడండి", "बॉबी से सीधे बात करें"),
-    'c.quick.wa.p': ("Chat, send photos or your location", "చాట్ చేయండి, ఫోటోలు లేదా లొకేషన్ పంపండి", "चैट करें, फ़ोटो या लोकेशन भेजें"),
+    'c.quick.wa.p': ("Fill the booking form below, then send it on WhatsApp", "కింద ఉన్న బుకింగ్ ఫారం నింపి, వాట్సాప్‌లో పంపండి", "नीचे बुकिंग फ़ॉर्म भरें, फिर व्हाट्सऐप पर भेजें"),
     'c.quick.dir.h': ("Get Directions", "దారి చూడండి", "रास्ता देखें"),
     'c.quick.dir.p': ("Open our location in Google Maps", "మా లొకేషన్‌ను Google Maps లో తెరవండి", "हमारी लोकेशन Google Maps में खोलें"),
     'c.info.h': ("Find Us", "మమ్మల్ని కనుగొనండి", "हमें खोजें"),

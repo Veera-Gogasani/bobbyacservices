@@ -345,7 +345,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=16" defer></script>
+<script src="/assets/js/main.js?v=17" defer></script>
 </body></html>
 '''
 
@@ -803,7 +803,7 @@ def build_inner():
     arrow = ic('arrow')
     quick = f'''<div class="ct-quick">
 <a class="ctq ctq-call reveal" href="tel:{PHONE_TEL}"><span class="ctq-ic">{ic('phone')}</span><span class="ctq-tx"><small>{tx('c.call.h')}</small><b>{PHONE_TXT}</b><em>{tx('c.quick.call.p')}</em></span><span class="ctq-go">{arrow}</span></a>
-<a class="ctq ctq-wa reveal d1" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener"><span class="ctq-ic">{wa_ic()}</span><span class="ctq-tx"><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b><em>{tx('c.quick.wa.p')}</em></span><span class="ctq-go">{arrow}</span></a>
+<a class="ctq ctq-wa reveal d1" href="#book" data-goto-form><span class="ctq-ic">{wa_ic()}</span><span class="ctq-tx"><small>{tx('c.wa.h')}</small><b>{PHONE_TXT}</b><em>{tx('c.quick.wa.p')}</em></span><span class="ctq-go">{arrow}</span></a>
 <a class="ctq ctq-dir reveal d2" href="{GMAPS_URL}" target="_blank" rel="noopener"><span class="ctq-ic">{ic('pin')}</span><span class="ctq-tx"><small>{tx('c.loc.h')}</small><b>{tx('c.quick.dir.h')}</b><em>{tx('c.quick.dir.p')}</em></span><span class="ctq-go">{arrow}</span></a>
 </div>'''
     steps = ''.join(f'<li><span class="n">{i}</span><span>{tx("c.how.%d" % i)}</span></li>' for i in (1, 2, 3))

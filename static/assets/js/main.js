@@ -625,3 +625,12 @@
     buildDots(); go(0); play();
   });
 })();
+
+/* Contact page: "WhatsApp Booking" card takes the visitor to the Service Booking Form */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('[data-goto-form]'); if (!a) return;
+  var f = document.getElementById('book'); if (!f) return;
+  e.preventDefault();
+  f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function () { var i = f.querySelector('input[name=name]'); if (i) i.focus({ preventScroll: true }); }, 600);
+});
