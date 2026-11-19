@@ -75,6 +75,8 @@ for k, v in ASM.items(): S[k] = v
 from asm2_strings import A2
 for k, v in A2.items(): S[k] = v
 from seo_strings import SEO, PRIV_EXTRA
+from about_strings import AB
+for k, v in AB.items(): S[k] = v
 for k, v in SEO.items(): S[k] = v
 def _priv_add(body, extra):              # add hosting / image-source disclosure after the third-party paragraph
     i = body.find('Google Fonts'); j = body.find('</p>', i) if i >= 0 else -1
@@ -148,6 +150,8 @@ ICONS = {
  'fridge': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M8.5 5.5v2M8.5 12.5v4"/></g>',
  'washer': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="2.5" width="17" height="19" rx="2.5"/><path d="M3.5 7h17"/><circle cx="12" cy="14" r="4.5"/><circle cx="16.8" cy="4.8" r=".6" fill="currentColor"/></g>',
  'cooler': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5.5" y="2.5" width="13" height="19" rx="3"/><path d="M8.5 6h7M8.5 9h7M8.5 12h7"/><circle cx="12" cy="17.5" r="1.4"/></g>',
+ 'bolt': '<path d="M13 2.5L4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+ 'eye': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g>',
  'fan': '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v5"/><circle cx="12" cy="10" r="2.2"/><path d="M10 10C6 9 3 10 2 11.5c3 1 6 .5 8 0M14 10c4-1 7 0 8 1.5-3 1-6 .5-8 0M12 12.2c-.5 3.5.5 7 1.8 8.3 1-2.6.4-5.8-.3-8.3"/></g>',
  'home': '<path d="M3 11l9-7 9 7v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
  'user': '<circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
@@ -744,6 +748,35 @@ def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
             'provider': {'@id': SITE + '/#business'}, 'areaServed': {'@type': 'City', 'name': CITY}, 'url': SITE + path}
 
+def about_body():
+    tags = ''.join(f'<li>{ic(i)}{tx(k)}</li>' for i, k in (('home', 'ab.tag1'), ('layers', 'ab.tag2'), ('heart', 'ab.tag3')))
+    who = f"""<section class="sec ab-who"><div class="wrap about-grid"><div class="reveal">
+<p class="eyebrow">{tx('ab.who.eb', 'span')}</p><h2>{tx('ab.who.h')}</h2>
+<p class="lead ab-lead">{tx('ab.who.p1')}</p>
+<ul class="ab-bul">{''.join(f'<li>{ic("check")}{tx(k)}</li>' for k in ('ab.who.p2', 'ab.who.p3'))}</ul>
+<p class="ab-p">{tx('ab.who.p4')}</p>
+<ul class="ab-tags">{tags}</ul></div>
+<div class="ph-frame reveal d2"><div class="ph ph-full">{img('about-photo', 1536, 1024, 'about.photo.alt')}</div></div></div></section>"""
+    phil = f"""<section class="sec ab-phil"><div class="wrap"><div class="ab-phil-card reveal">
+<span class="ab-q" aria-hidden="true">“</span>
+<p class="eyebrow">{tx('ab.phil.eb', 'span')}</p><h2>{tx('ab.phil.h')}</h2>
+<div class="ab-phil-steps">{''.join(f'<span>{ic(i)}{tx(k)}</span>' for i, k in (('search', 'ab.phil.s1'), ('wrench', 'ab.phil.s2'), ('shield', 'ab.phil.s3')))}</div>
+<p>{tx('ab.phil.p')}</p></div></div></section>"""
+    svc_ic = ['ac', 'fridge', 'washer', 'cooler', 'fan', 'bolt']
+    svc = f"""<section class="sec sec-alt"><div class="wrap">{sec_head('ab.svc.eb', 'ab.svc.h')}<div class="ab-svc">""" + ''.join(
+        f'<article class="ab-svc-c reveal d{i % 3}"><span class="ab-ic">{ic(svc_ic[i])}</span><div><h3>{tx("ab.svc.%d.t" % (i + 1))}</h3><p>{tx("ab.svc.%d.d" % (i + 1))}</p></div></article>'
+        for i in range(6)) + '</div></div></section>'
+    tp_ic = ['search', 'talk', 'rupee', 'target', 'wrench', 'gauge', 'home']
+    tp = f"""<section class="sec"><div class="wrap">{sec_head('ab.tp.eb', 'ab.tp.h')}<ol class="ab-tp">""" + ''.join(
+        f'<li class="reveal d{i % 4}"><span class="ab-n">{i + 1:02d}</span><span class="ab-tp-ic">{ic(tp_ic[i])}</span><h3>{tx("ab.tp.%d.t" % (i + 1))}</h3><p>{tx("ab.tp.%d.d" % (i + 1))}</p></li>'
+        for i in range(7)) + '</ol></div></section>'
+    why = f"""<section class="sec sec-alt"><div class="wrap ab-why"><div class="reveal">{sec_head('ab.why.eb', 'ab.why.h', center=False)}</div>
+<ul class="ab-checks reveal d1">{''.join(f'<li>{ic("check")}{tx("ab.why.%d" % i)}</li>' for i in range(1, 8))}</ul></div></section>"""
+    com = f"""<section class="sec"><div class="wrap"><div class="ab-com reveal">
+<div><p class="eyebrow">{tx('ab.com.eb', 'span')}</p><h2>{tx('ab.com.h')}</h2><p>{tx('ab.com.p1')}</p><p>{tx('ab.com.p2')}</p></div>
+<div class="ab-com-btns"><a class="btn btn-orange" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>"""
+    return who + phil + svc + tp + why + com
+
 def build_inner():
     # about
     p = '/about/'
@@ -751,13 +784,8 @@ def build_inner():
                  'Learn about BOBBY AC Repair & Home Appliance Services in Narasaraopet: our services, inspection-first process and doorstep service coverage.', p, 'nav.about',
                  [business_ld(), crumbs_ld([('Home', '/'), ('About Us', p)])]) + header('about') +
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
-         f'''<section class="sec"><div class="wrap about-grid"><div class="reveal"><h2>{tx('about.who.h')}</h2><p class="lead" style="margin-top:12px">{tx('about.who.p1')}</p><p class="lead" style="margin-top:12px">{tx('about.who.p2')}</p>
-<h2 style="margin-top:34px">{tx('about.how.h')}</h2><ul class="points">{''.join(f'<li>{tx("about.how.%d" % i)}</li>' for i in range(1,5))}</ul></div>
-<div class="ph-frame reveal d2"><div class="ph ph-full">{img('about-photo', 1536, 1024, 'about.photo.alt')}</div></div></div></section>
-<section class="sec sec-alt"><div class="wrap">{sec_head("why.eyebrow", "why.h2")}{why_cards()}</div></section>
-<section class="sec"><div class="wrap" style="max-width:860px;text-align:center"><div class="reveal"><h2>{tx('about.area.h')}</h2><p class="lead" style="margin:12px auto 22px">{tx('about.area.p')}</p>
-<div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div></div></div></section>''' +
-         steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('about') + footer())
+         about_body() +
+         '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('about') + footer())
 
     # AC services
     p = '/ac-services/'
