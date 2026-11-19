@@ -400,3 +400,35 @@
 }
 @media (max-width:380px){.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float{display:none}}
 @media (max-width:380px){.hero-duo .hero .hero-visual:has(.hero-photo-real) .hero-card{display:none}}
+/* web: show the full photo like mobile */
+@media (min-width:961px){
+  .hero-photo.hero-photo-real{aspect-ratio:3/2}
+  .hero-photo.hero-photo-real img{object-position:50% 50%}
+  .hero-duo .hero .hero-visual:has(.hero-photo-real){width:min(640px,100%,calc((var(--hero-h) - 150px) * 1.5))}
+  .hero-visual:has(.hero-photo-real) .chip-float.c1{left:-5%;top:45%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c2{right:-6%;top:3%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c3{right:-8%;top:22%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c4{right:-6%;top:41%}
+  .hero-visual:has(.hero-photo-real) .hero-card{left:auto;right:-4%;transform:none;bottom:-26px}
+}
+@media (min-width:961px) and (max-width:1199px){
+  .hero-visual:has(.hero-photo-real) .chip-float.c2,.hero-visual:has(.hero-photo-real) .chip-float.c4{right:1%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c3{right:0}
+  .hero-visual:has(.hero-photo-real) .chip-float{font-size:12.5px;padding:7px 11px}
+  .hero-visual:has(.hero-photo-real) .hero-card{right:0}
+}
+@media (min-width:961px) and (max-width:1199px){.hero-duo .hero .hero-visual:has(.hero-photo-real){width:min(440px,calc(100% - 56px));margin-right:56px}}
+@media (min-width:961px) and (max-width:1199px){
+  .hero-visual:has(.hero-photo-real) .chip-float{font-size:11px;padding:5px 9px 5px 5px;gap:5px;border-radius:10px}
+  .hero-visual:has(.hero-photo-real) .chip-float i{width:18px;height:18px;border-radius:6px}
+  .hero-visual:has(.hero-photo-real) .chip-float i svg{width:11px;height:11px}
+  .hero-visual:has(.hero-photo-real) .chip-float.c2,.hero-visual:has(.hero-photo-real) .chip-float.c3,.hero-visual:has(.hero-photo-real) .chip-float.c4{right:-7%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c2{top:4%}.hero-visual:has(.hero-photo-real) .chip-float.c3{top:21%}.hero-visual:has(.hero-photo-real) .chip-float.c4{top:38%}
+  .hero-visual:has(.hero-photo-real) .chip-float.c1{left:-4%}
+}
+@media (min-width:961px) and (max-width:1199px){
+  .hero-visual:has(.hero-photo-real) .hero-card{padding:7px 12px;gap:9px}
+  .hero-visual:has(.hero-photo-real) .hero-card .temp{font-size:19px}
+  .hero-visual:has(.hero-photo-real) .hero-card b{font-size:12.5px}
+  .hero-visual:has(.hero-photo-real) .hero-card small{font-size:10.5px}
+}
