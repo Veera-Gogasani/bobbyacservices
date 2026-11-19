@@ -278,7 +278,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=41">
+<link rel="stylesheet" href="/assets/css/style.css?v=42">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -345,7 +345,7 @@ def footer():
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
-<script src="/assets/js/main.js?v=14" defer></script>
+<script src="/assets/js/main.js?v=15" defer></script>
 </body></html>
 '''
 

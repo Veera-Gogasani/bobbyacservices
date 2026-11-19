@@ -18,6 +18,53 @@
   function t(key) { var d = dict[lang] || dict.en; return (d && d[key]) || (dict.en && dict.en[key]) || ''; }
   function strip(html) { var d = document.createElement('div'); d.innerHTML = html; return d.textContent; }
   function waUrl(msg) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg); }
+  /* ---------- WhatsApp vs WhatsApp Business (Android) ----------
+     wa.me only opens the phone's default WhatsApp app, so on Android we let the visitor pick the app and
+     open it with an intent aimed at that app's package (falls back to wa.me if it is not installed). */
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  function waIntent(url, pkg) {
+    var m = url.match(/wa\.me\/(\d+)(?:\?text=(.*))?$/); if (!m) return url;
+    return 'intent://send?phone=' + m[1] + (m[2] ? '&text=' + m[2] : '') + '#Intent;scheme=whatsapp;package=' + pkg +
+      ';S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+  }
+  var waPick = null, waPickReturn = null;
+  function closeWaPick() { if (!waPick) return; waPick.hidden = true; document.documentElement.classList.remove('wa-pick-open'); if (waPickReturn && waPickReturn.focus) waPickReturn.focus({ preventScroll: true }); }
+  function openWA(url, from) {
+    if (!isAndroid) { window.open(url, '_blank', 'noopener'); return; }
+    if (!waPick) {
+      waPick = document.createElement('div'); waPick.className = 'wa-pick'; waPick.hidden = true;
+      waPick.innerHTML = '<div class="wa-pick-bg" data-wa-close></div><div class="wa-pick-panel" role="dialog" aria-modal="true" aria-labelledby="waPickH">' +
+        '<h3 id="waPickH"></h3><p class="wa-pick-p"></p>' +
+        '<a class="wa-opt" data-app="wa"><span class="wa-logo"><img src="/assets/img/whatsapp.png" width="34" height="34" alt=""></span><span class="wa-name"></span><small class="wa-last"></small></a>' +
+        '<a class="wa-opt" data-app="wb"><span class="wa-logo wb"><img src="/assets/img/whatsapp.png" width="34" height="34" alt=""><b>B</b></span><span class="wa-name"></span><small class="wa-last"></small></a>' +
+        '<button type="button" class="wa-pick-x" data-wa-close></button></div>';
+      document.body.appendChild(waPick);
+      waPick.addEventListener('click', function (e) {
+        if (e.target.closest('[data-wa-close]')) { closeWaPick(); return; }
+        var o = e.target.closest('.wa-opt'); if (o) { store('waApp', o.getAttribute('data-app')); setTimeout(closeWaPick, 300); }
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && waPick && !waPick.hidden) closeWaPick(); });
+    }
+    waPick.querySelector('#waPickH').textContent = strip(t('wa.pick.h'));
+    waPick.querySelector('.wa-pick-p').textContent = strip(t('wa.pick.p'));
+    waPick.querySelector('.wa-pick-x').textContent = strip(t('wa.pick.cancel'));
+    var last = store('waApp');
+    [['wa', 'com.whatsapp', 'wa.pick.wa'], ['wb', 'com.whatsapp.w4b', 'wa.pick.wb']].forEach(function (x) {
+      var a = waPick.querySelector('[data-app="' + x[0] + '"]'); a.href = waIntent(url, x[1]);
+      a.querySelector('.wa-name').textContent = strip(t(x[2]));
+      a.querySelector('.wa-last').textContent = last === x[0] ? strip(t('wa.pick.last')) : '';
+      a.classList.toggle('is-last', last === x[0]);
+    });
+    waPickReturn = from || document.activeElement;
+    waPick.hidden = false; document.documentElement.classList.add('wa-pick-open');
+    setTimeout(function () { var f = waPick.querySelector(last === 'wb' ? '[data-app="wb"]' : '[data-app="wa"]'); f && f.focus({ preventScroll: true }); }, 30);
+  }
+  /* every wa.me link on the page (chat buttons, floating button, CTA, "Open WhatsApp again") */
+  document.addEventListener('click', function (e) {
+    if (!isAndroid || e.defaultPrevented || e.button > 0 || e.ctrlKey || e.metaKey) return;
+    var a = e.target.closest('a[href^="https://wa.me/"]'); if (!a) return;
+    e.preventDefault(); openWA(a.href, a);
+  });
   function gmap(lat, lng) { return 'https://maps.google.com/?q=' + lat + ',' + lng; }
 
   /* ---------- WhatsApp chat links ---------- */
@@ -444,12 +491,12 @@
       if (val('date')) lines.push(strip(t('f.date')) + ': ' + val('date'));
       if (val('msg')) lines.push(strip(t('f.msg')) + ': ' + val('msg').slice(0, 500));
       var url = waUrl(lines.join('\n'));
-      window.open(url, '_blank', 'noopener');
+      openWA(url, form.querySelector('button[type=submit]'));
       /* thank-you screen */
       msgEl.textContent = '';
       done.querySelector('.bd-again').href = url;
       form.classList.add('is-done'); done.hidden = false;
-      setTimeout(function () { done.focus({ preventScroll: true }); done.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }, 30);
+      setTimeout(function () { if (!(waPick && !waPick.hidden)) done.focus({ preventScroll: true }); done.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }, 30);
     });
     done.querySelector('.bd-new').addEventListener('click', function () {
       form.reset(); form.elements.lat.value = ''; form.elements.lng.value = ''; form.elements.addr.value = ''; form._acc = null; form._locErr = null;
