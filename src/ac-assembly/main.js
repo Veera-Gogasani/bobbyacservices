@@ -110,7 +110,7 @@ function init(sec) {
   const exS = new THREE.Vector3(1, 1, 1);   /* portrait screens stack parts more vertically */
   const PRESET = [
     () => ({ t: new THREE.Vector3(1.13, 1.4, 0.2), az: -0.08, el: 0.12, d: fitDist(1.05, 0.98) + 0.7 }),
-    () => ({ t: A.clone().add(new THREE.Vector3(-0.2, -0.08, 0.26)), az: 0.55, el: 0.22, d: (fitDist(exIn[0], exIn[1]) + exIn[2]) * 0.9 }),
+    () => ({ t: A.clone().add(new THREE.Vector3(-0.2, -0.08, 0.26)), az: 0.55, el: 0.22, d: fitDist(exIn[0], exIn[1]) + exIn[2] * 0.85 }),
     () => ({ t: B.clone().add(new THREE.Vector3(0.04, 0.06, 0.2)), az: 0.5, el: 0.24, d: fitDist(exOut[0] * 1.02, exOut[1] * 1.05) + exOut[2] }),
     () => ({ t: new THREE.Vector3(1.12, 1.32, 0.35), az: 0.12, el: 0.16, d: fitDist(1.55, 1.25) + 0.5 }),
     () => ({ t: new THREE.Vector3(0.95, 1.42, 0.5), az: -0.2, el: 0.07, d: fitDist(1.3, 0.98) + 0.4 }),
@@ -152,7 +152,7 @@ function init(sec) {
   function buildSpots() {
     hot.innerHTML = ''; spots = (HOT[stage] || []).map(([part, obj, an], i) => {
       const b = document.createElement('button'); b.type = 'button'; b.tabIndex = -1; b.className = 'a2-spot'; b.dataset.part = part;
-      b.innerHTML = '<span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="lab"></span>';
+      b.innerHTML = '<i class="dot"></i><i class="ln"></i><span class="tag"><span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="lab"></span></span>';
       b.addEventListener('click', (e) => { e.stopPropagation(); if (window.A2UI) window.A2UI.select(part); });
       hot.appendChild(b); return { b, part, obj, an };
     });
@@ -174,6 +174,13 @@ function init(sec) {
       const x = (v3.x * 0.5 + 0.5) * w, y = (-v3.y * 0.5 + 0.5) * h;
       const vis = facing && x > 8 && x < w - 8 && y > 8 && y < h - 8 && spotOp > 0.05;
       s.b.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+      /* marker sits a little away from the part, joined by a fine connector line */
+      let dx = x - w / 2, dy = y - h * 0.46; const L = Math.hypot(dx, dy) || 1; const off = w < 560 ? 30 : 40;
+      dx = (dx / L) * off; dy = (dy / L) * off - 6;
+      if (s.dx !== dx.toFixed(0) || s.dy !== dy.toFixed(0)) { s.dx = dx.toFixed(0); s.dy = dy.toFixed(0);
+        s.b.style.setProperty('--dx', s.dx + 'px'); s.b.style.setProperty('--dy', s.dy + 'px');
+        s.b.style.setProperty('--len', Math.hypot(dx, dy).toFixed(0) + 'px'); s.b.style.setProperty('--ang', Math.atan2(dy, dx).toFixed(3) + 'rad');
+        s.b.classList.toggle('left', dx < 0); }
       s.b.style.opacity = vis ? ((selPart && selPart !== s.part ? 0.5 : 1) * spotOp).toFixed(3) : '0'; s.b.style.pointerEvents = vis ? 'auto' : 'none';
       s.b.classList.toggle('on', selPart === s.part); s.b.classList.toggle('cyc', stage === 4 && !selPart && cycleIdx === i);
     });

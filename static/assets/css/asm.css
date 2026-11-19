@@ -29,10 +29,16 @@
 .a2-canvas canvas{display:block;cursor:grab}
 .a2-canvas canvas:active{cursor:grabbing}
 .a2-hot{pointer-events:none}
-.a2-spot{position:absolute;left:0;top:0;margin:-15px 0 0 -15px;display:flex;align-items:center;gap:7px;padding:0;border:0;background:none;cursor:pointer;opacity:0;transition:opacity .25s;will-change:transform}
-.a2-spot .num{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-size:11.5px;font-weight:700;color:#fff;background:rgba(11,31,58,.88);border:1.5px solid rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,0,0,.35);transition:background .2s,border-color .2s,transform .2s}
+.a2-spot{position:absolute;left:0;top:0;width:0;height:0;padding:0;border:0;background:none;cursor:pointer;opacity:0;transition:opacity .25s;will-change:transform}
+.a2-spot .dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(11,31,58,.55)}
+.a2-spot .ln{position:absolute;left:0;top:0;width:var(--len,40px);height:1.5px;background:rgba(255,255,255,.8);transform-origin:0 50%;transform:rotate(var(--ang,0rad))}
+.a2-spot .tag{position:absolute;left:var(--dx,0);top:var(--dy,-40px);transform:translate(-15px,-15px);display:flex;align-items:center;gap:7px}
+.a2-spot.left .tag{flex-direction:row-reverse;transform:translate(calc(-100% + 15px),-15px)}
+.a2-spot .num{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-size:11.5px;font-weight:700;color:#fff;background:rgba(11,31,58,.9);border:1.5px solid rgba(255,255,255,.8);box-shadow:0 4px 12px rgba(0,0,0,.35);transition:background .2s,border-color .2s,transform .2s}
 .a2-spot .lab{max-width:0;overflow:hidden;white-space:nowrap;font-size:12.5px;font-weight:600;color:#0B1F3A;background:#fff;border-radius:999px;padding:5px 0;opacity:0;transition:max-width .3s,padding .3s,opacity .2s;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .a2-spot:hover .num,.a2-spot.on .num,.a2-spot.cyc .num{background:#FF9F43;border-color:#fff;color:#0B1F3A;transform:scale(1.08)}
+.a2-spot.on .dot,.a2-spot.cyc .dot{background:#FF9F43}
+.a2-spot.on .ln,.a2-spot.cyc .ln{background:#FF9F43}
 .a2-spot:hover .lab,.a2-spot.on .lab{max-width:240px;padding:5px 11px;opacity:1}
 .a2-spot.on .num{box-shadow:0 0 0 6px rgba(255,159,67,.25),0 4px 12px rgba(0,0,0,.35)}
 .a2-tools{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px;z-index:3}
@@ -95,7 +101,7 @@
  .a2-drag{display:none}
  .a2-side{padding:18px 14px 14px;border-radius:18px}
  .a2-dsc{padding:0 12px 14px 12px}
- .a2-spot .num{width:32px;height:32px}
+ .a2-spot .num{width:30px;height:30px}
  .a2-prev span,.a2-next span{display:none}
  .a2-prev,.a2-next{width:44px;height:44px;padding:0;justify-content:center}
 }
