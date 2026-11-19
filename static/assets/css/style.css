@@ -1070,3 +1070,4 @@ html.wa-pick-open{overflow:hidden}
 .bd-alt b{color:var(--navy)}
 .bd-alt a{font-weight:700;color:#159A4E;text-decoration:underline;text-underline-offset:3px}
 html.is-desk .bd-sms{display:none}
+.about-grid .ph.ph-full{aspect-ratio:3/2;align-self:center}
