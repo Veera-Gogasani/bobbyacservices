@@ -79,8 +79,8 @@ def build(B):
                     'image': D.photo_url(p) or SITE + '/assets/img/parts/%s.webp' % p['img']} for i, p in enumerate(D.PARTS)]}
     crumbs = B.crumbs_ld([('Home', '/'), ('AC Services', '/ac-services/'), ('AC Spare Parts', PATH)])
 
-    html_ = (B.head('AC Spare Parts Price List in India | BOBBY Narasaraopet',
-                    'Approximate prices for residential AC spare parts in India: capacitors, PCBs, fan motors, compressors, sensors, valves, remotes and installation accessories.',
+    html_ = (B.head('AC Spare Parts Price List in India | BOBBY',
+                    'Explore indicative residential AC spare parts prices in India, including capacitors, PCBs, motors, compressors, sensors and installation accessories.',
                     PATH, 'sp.crumb', [crumbs, item_ld]) +
              B.header('ac') +
              B.phero('sp.h1', 'sp.sub', [('crumb.home', '/'), ('nav.ac', '/ac-services/'), ('sp.crumb', PATH)]) +

@@ -904,3 +904,14 @@ a.ccard:hover{transform:translateY(-3px)}
 .nav a[aria-current="page"]{background:rgba(255,159,67,.16);box-shadow:inset 0 0 0 1px rgba(255,159,67,.55);font-weight:600}
 .nav a[aria-current="page"]::after{display:block;content:"";position:absolute;left:50%;bottom:3px;width:16px;height:2px;margin-left:-8px;border-radius:2px;background:#FF9F43;transform:none}
 .nav a,.nav a[aria-current="page"]{font-weight:700}
+/* quick-answer (AEO) box on service pages */
+.qa-sec{padding:clamp(28px,4vw,44px) 0 0}
+.qa-box{position:relative;max-width:980px;margin:0 auto;padding:22px 26px 22px 30px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(16,44,80,.07)}
+.qa-box::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:0 4px 4px 0;background:var(--orange)}
+.qa-label{margin:0 0 6px;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.qa-q{margin:0 0 8px;font-size:clamp(18px,1.6vw,22px);line-height:1.3;color:var(--navy)}
+.qa-a{margin:0;font-size:16px;line-height:1.65;color:var(--text)}
+/* article byline */
+.post-meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-size:14px;color:#BFD1E5}
+.post-meta b{color:#fff;font-weight:600}
+.post-meta span+span::before{content:"·";margin-right:18px;margin-left:-10px;color:var(--orange)}

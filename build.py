@@ -7,7 +7,9 @@ from strings import S, SERVICES, FAQ_N
 from blog import POSTS, add_strings
 
 # ======================= CONFIG =======================
-SITE      = 'https://www.bobbyacservices.com'      # change here if the domain changes
+SITE      = 'https://bobbyacservices.pages.dev'      # primary address used in canonical/sitemap/schema.
+# When www.bobbyacservices.com is connected and working, change this to 'https://www.bobbyacservices.com'
+# and set REDIRECT_PAGES_DEV = true in functions/_middleware.js.
 BRAND     = 'BOBBY AC Repair & Home Appliance Services'
 PHONE_TXT = '+91 83748 89163'
 PHONE_TEL = '+918374889163'
@@ -65,6 +67,17 @@ from sp_strings import SP
 for k, v in SP.items(): S[k] = v
 from asm_strings import ASM
 for k, v in ASM.items(): S[k] = v
+from seo_strings import SEO, PRIV_EXTRA
+for k, v in SEO.items(): S[k] = v
+def _priv_add(body, extra):              # add hosting / image-source disclosure after the third-party paragraph
+    i = body.find('Google Fonts'); j = body.find('</p>', i) if i >= 0 else -1
+    return body[:j + 4] + extra + body[j + 4:] if j >= 0 else body + extra
+S['priv.body'] = tuple(_priv_add(b_, e_) for b_, e_ in zip(S['priv.body'], PRIV_EXTRA))
+def fmt_date(d):
+    import datetime as _d; return _d.date.fromisoformat(d).strftime('%d %b %Y').lstrip('0')
+def quick_answer(k):
+    return (f'<section class="sec qa-sec"><div class="wrap"><div class="qa-box reveal"><p class="qa-label">{tx("qa.label")}</p>'
+            f'<h2 class="qa-q">{tx("qa.%s.q" % k)}</h2><p class="qa-a">{tx("qa.%s.a" % k)}</p></div></div></section>')
 import sp_page
 for p in POSTS:
     for f in ('title', 'excerpt', 'body'):
@@ -204,7 +217,7 @@ def business_ld():
         'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
         'hasMap': GMAPS_URL, 'geo': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'sameAs': [GMAPS_URL],
-        'areaServed': {'@type': 'City', 'name': CITY},
+        'areaServed': [{'@type': 'City', 'name': CITY}, {'@type': 'GeoCircle', 'geoMidpoint': {'@type': 'GeoCoordinates', 'latitude': GEO[0], 'longitude': GEO[1]}, 'geoRadius': '10000'}],
         'email': OWNER_EMAIL,
         'founder': {'@type': 'Person', 'name': OWNER_NAME, 'alternateName': 'Bobby'},
         'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'AC & Home Appliance Services', 'itemListElement': [
@@ -252,7 +265,7 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/style.css?v=35">
+<link rel="stylesheet" href="/assets/css/style.css?v=36">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
 <body>
@@ -589,7 +602,23 @@ def home_slider():
 
 # ---------------- pages ----------------
 PAGES = {}
+_LM_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'lastmod.json')
+try: _LM = json.load(open(_LM_FILE))
+except Exception: _LM = {}
+_LM_SEEN = {}
+def _lm_record(path, html_):
+    import hashlib, datetime, re as _re
+    body = _re.sub(r'\?v=[0-9a-f]+|data-iv="[^"]*"', '', html_)       # ignore asset version bumps
+    h = hashlib.md5(body.encode('utf-8')).hexdigest()
+    old = _LM.get(path)
+    _LM_SEEN[path] = old if (old and old['h'] == h) else {'h': h, 'd': datetime.date.today().isoformat()}
+def lastmod(u):
+    return (_LM_SEEN.get(u) or _LM_SEEN.get(u + 'index.html') or {'d': UPDATED})['d']
+def save_lastmod():
+    json.dump(_LM_SEEN, open(_LM_FILE, 'w'), indent=0, sort_keys=True)
+
 def page(path, html_):
+    _lm_record(path, html_)
     PAGES[path] = html_
 
 def build_home():
@@ -639,8 +668,8 @@ def build_home():
         steps_block() +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         asm_section(trust_strip()))
-    page('/', head('AC Repair in Narasaraopet | BOBBY AC & Appliance Services',
-                   'AC repair in Narasaraopet: servicing, installation, gas filling and home appliance repair at your doorstep. Call or WhatsApp BOBBY on +91 83748 89163.',
+    page('/', head('AC Repair in Narasaraopet | BOBBY AC Services',
+                 'Need AC repair in Narasaraopet? BOBBY provides AC installation, servicing, gas leak inspection and appliance repair. Call or WhatsApp +91 83748 89163.',
                    '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=8">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=6" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
@@ -650,7 +679,8 @@ def service_ld(name, desc, path):
 def build_inner():
     # about
     p = '/about/'
-    page(p, head('About BOBBY – AC & Appliance Repair, Narasaraopet', 'BOBBY AC Repair & Home Appliance Services is a local AC and home appliance service provider in Narasaraopet, Andhra Pradesh. Learn how we work.', p, 'nav.about',
+    page(p, head('About BOBBY | AC Repair & Appliance Services',
+                 'Learn about BOBBY AC Repair & Home Appliance Services in Narasaraopet: our services, inspection-first process and doorstep service coverage.', p, 'nav.about',
                  [business_ld(), crumbs_ld([('Home', '/'), ('About Us', p)])]) + header('about') +
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
          f'''<section class="sec"><div class="wrap about-grid"><div class="reveal"><h2>{tx('about.who.h')}</h2><p class="lead" style="margin-top:12px">{tx('about.who.p1')}</p><p class="lead" style="margin-top:12px">{tx('about.who.p2')}</p>
@@ -664,10 +694,10 @@ def build_inner():
     # AC services
     p = '/ac-services/'
     sl = [service_ld(plain('ac.%s.t' % L), plain('ac.%s.d' % L), p + '#' + a) for L, a, *_ in AC_BLOCKS]
-    page(p, head('AC Repair, Servicing & Gas Filling in Narasaraopet | BOBBY',
-                 'AC repair, servicing, installation, gas filling and deep cleaning for split and window ACs in Narasaraopet. Call or WhatsApp BOBBY: +91 83748 89163.',
+    page(p, head('AC Repair, Servicing & Installation in Narasaraopet',
+                 'Book AC repair, installation, uninstallation, servicing and gas filling checks in Narasaraopet. Split and window AC service. Call BOBBY today.',
                  p, 'nav.ac', [business_ld(), crumbs_ld([('Home', '/'), ('AC Services', p)])] + sl) + header('ac') +
-         phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) +
+         phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) + quick_answer('ac') +
          f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
 <div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
@@ -676,18 +706,18 @@ def build_inner():
     # Appliance
     p = '/appliance-services/'
     sl = [service_ld(plain('ap.%s.t' % k), plain('svc.%s.desc' % k), p + '#' + a) for k, a in AP_BLOCKS]
-    page(p, head('Fridge, Washer, Cooler & Fan Repair Narasaraopet | BOBBY',
-                 'Doorstep refrigerator, washing machine, air cooler and ceiling fan repair in Narasaraopet. Call or WhatsApp BOBBY on +91 83748 89163.',
+    page(p, head('Refrigerator & Washing Machine Repair Narasaraopet',
+                 'Need refrigerator, washing machine, air cooler or ceiling fan repair in Narasaraopet? Contact BOBBY for doorstep appliance service.',
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
-         phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) +
+         phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) + quick_answer('ap') +
          f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards(eager_first=True)}</div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([7, 8, 9, 13])}</div></section>''' +
          '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band() + footer())
 
     # Brands
     p = '/brands/'
-    page(p, head('Multi-Brand AC & Appliance Repair Narasaraopet | BOBBY',
-                 'Independent multi-brand AC and appliance service in Narasaraopet for LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas.',
+    page(p, head('AC & Appliance Brands Serviced in Narasaraopet',
+                 'BOBBY provides independent multi-brand AC and appliance repair for LG, Daikin, Samsung, Voltas, Blue Star, Panasonic and other brands.',
                  p, 'nav.brands', [business_ld(), crumbs_ld([('Home', '/'), ('Brands We Service', p)])]) + header('brands') +
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
          f'''<section class="sec"><div class="wrap">{sec_head("brands.eyebrow", "brands.h2", "brands.sub")}{brands_block(True)}</div></section>
@@ -698,8 +728,8 @@ def build_inner():
     p = '/faqs/'
     fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in range(1, FAQ_N + 1)]}
-    page(p, head('AC Repair & Service FAQs – Narasaraopet | BOBBY',
-                 'Answers about AC repair, gas filling, servicing, installation and appliance repair in Narasaraopet, plus a free AC electricity cost calculator.',
+    page(p, head('AC Repair FAQs in Narasaraopet | BOBBY',
+                 'Answers about AC repair, servicing, installation, gas filling, spare parts, appliance repairs and service areas in Narasaraopet, plus an AC electricity cost calculator.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
          f'<section class="sec"><div class="wrap">{faq_list(range(1, FAQ_N + 1), hq='h2')}</div></section>' + acc_widget() + cta_band() + footer())
@@ -714,8 +744,8 @@ def build_inner():
 <div class="ccard"><span class="ic" style="background:#1FA855">{ic('star')}</span><span><small>{tx('c.hours.h')}</small><b>{tx('hours.open')}</b></span></div>
 <div class="ccard"><span class="ic" style="background:linear-gradient(135deg,#FFB061,var(--orange-d))">{ic('radius')}</span><span><small>{tx('c.area.h')}</small><b>{tx('c.area.v')}</b></span></div>
 <div class="map" style="margin-top:6px"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>'''
-    page(p, head('Book AC Service in Narasaraopet | Contact BOBBY',
-                 'Book AC repair or appliance service in Narasaraopet. Call or WhatsApp BOBBY on +91 83748 89163, or use the online booking form.',
+    page(p, head('Contact BOBBY | Book AC Repair in Narasaraopet',
+                 'Contact BOBBY in Narasaraopet for AC repair and home appliance service. Call, WhatsApp or request a technician visit using our booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
          f'<section class="sec"><div class="wrap contact-grid">{cards}{form}</div></section>' + footer())
@@ -731,14 +761,15 @@ def build_inner():
         s = post['slug']; pp = '/blog/%s/' % s
         title_en = plain('post.%s.title' % s)
         art = {'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': title_en, 'description': plain('post.%s.excerpt' % s),
-               'datePublished': post['date'], 'dateModified': post['date'], 'inLanguage': 'en', 'mainEntityOfPage': SITE + pp,
+               'datePublished': post['date'], 'dateModified': post.get('updated', post['date']), 'inLanguage': 'en', 'mainEntityOfPage': SITE + pp,
                'image': SITE + art_url(post['img']), 'author': {'@id': SITE + '/#business'}, 'publisher': {'@id': SITE + '/#business'}}
         others = [x for x in POSTS if x['slug'] != s][:3]
         page(pp, head(title_en + ' | BOBBY', plain('post.%s.excerpt' % s), pp, 'post.%s.title' % s,
                       [business_ld(), crumbs_ld([('Home', '/'), ('Blog', '/blog/'), (title_en, pp)]), art],
                       og_img=SITE + art_url(post['img'])) + header('blog') +
              f'''<section class="phero"><div class="wrap"><nav class="crumbs anim" aria-label="Breadcrumb"><ol><li><a href="/">{tx('crumb.home')}</a></li><li><a href="/blog/">{tx('nav.blog')}</a></li><li aria-current="page">{tx('post.%s.title' % s)}</li></ol></nav>
-<h1 class="anim d1">{tx('post.%s.title' % s)}</h1><p class="anim d2">{tx('post.%s.excerpt' % s)}</p></div></section>
+<h1 class="anim d1">{tx('post.%s.title' % s)}</h1><p class="anim d2">{tx('post.%s.excerpt' % s)}</p>
+<p class="post-meta anim d2"><span>{tx('blog.by')} <b>{esc(BRAND)}</b></span><span>{tx('blog.pub')} <time datetime="{post['date']}">{fmt_date(post['date'])}</time></span><span>{tx('blog.upd')} <time datetime="{post.get('updated', post['date'])}">{fmt_date(post.get('updated', post['date']))}</time></span></p></div></section>
 <section class="sec"><article class="wrap article"><div class="cover-img reveal">{img(post['img'], 1200, 600, 'post.%s.title' % s, eager=True)}</div>
 <div class="prose" data-i18n="post.{s}.body">{en('post.%s.body' % s)}</div>
 <p class="disc">{tx('blog.disclaimer')}</p>
@@ -794,8 +825,8 @@ def write():
     urls = [p for p in PAGES if p.endswith('/')]
     pri = lambda p: '1.0' if p == '/' else ('0.9' if p in ('/ac-services/', '/contact/') else ('0.6' if p.startswith('/blog/') or p in ('/privacy-policy/', '/terms/', '/sitemap/') else '0.8'))
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
-        f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
-    open(os.path.join(out, 'sitemap.xml'), 'w').write(sm)
+        f'<url><loc>{SITE}{u}</loc><lastmod>{lastmod(u)}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
+    open(os.path.join(out, 'sitemap.xml'), 'w').write(sm); save_lastmod()
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
