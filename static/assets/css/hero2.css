@@ -439,3 +439,5 @@
   .hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float.c4{right:1.5%}
   .hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float.c1{left:1.5%}
 }
+.hero-visual.is-tight .chip-float{display:none!important}
+.hero-visual.is-tight .hero-card{display:none!important}

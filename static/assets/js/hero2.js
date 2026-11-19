@@ -151,3 +151,9 @@
   panels.forEach(function (p, i) { p.inert = i !== cur2; });
   scheduleBack();
 })();
+/* real hero photo: when the photo ends up small (short screens), hide the floating chips so they don't cover it */
+(function () {
+  var ph = document.querySelector('.hero-photo-real'); if (!ph || !window.ResizeObserver) return;
+  var vis = ph.closest('.hero-visual');
+  new ResizeObserver(function () { vis.classList.toggle('is-tight', ph.getBoundingClientRect().width < 260); }).observe(ph);
+})();
