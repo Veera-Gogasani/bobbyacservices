@@ -7,11 +7,12 @@ const M = {};
 export function materials(low) {
   if (M.ready) return M;
   const std = (o) => new THREE.MeshStandardMaterial(o);
-  M.white = std({ color: 0xF3F6F9, roughness: 0.32, metalness: 0.0 });
+  const phys = (o) => (low ? new THREE.MeshStandardMaterial(o) : new THREE.MeshPhysicalMaterial(Object.assign({ clearcoat: 0.55, clearcoatRoughness: 0.35 }, o)));
+  M.white = phys({ color: 0xF4F6F8, roughness: 0.38, metalness: 0.0 });
   M.whiteMatte = std({ color: 0xE8EDF2, roughness: 0.55 });
   M.grey = std({ color: 0xC3CCD5, roughness: 0.45 });
-  M.cabinet = std({ color: 0xE9ECEF, roughness: 0.42, metalness: 0.15 });
-  M.dark = std({ color: 0x1D2733, roughness: 0.5, metalness: 0.2 });
+  M.cabinet = phys({ color: 0xE8EAEC, roughness: 0.45, metalness: 0.05 });
+  M.dark = std({ color: 0x3A4656, roughness: 0.48, metalness: 0.25 });
   M.black = std({ color: 0x14181E, roughness: 0.38, metalness: 0.45 });
   M.alu = std({ color: 0xC7D0D9, roughness: 0.3, metalness: 0.85 });
   M.copper = std({ color: 0xC9784A, roughness: 0.28, metalness: 1.0 });
@@ -19,13 +20,14 @@ export function materials(low) {
   M.steel = std({ color: 0x9AA6B2, roughness: 0.35, metalness: 0.9 });
   M.pcb = std({ color: 0x1F7A4C, roughness: 0.6, metalness: 0.1 });
   M.chip = std({ color: 0x15191F, roughness: 0.4 });
-  M.blowerMat = std({ color: 0xD9E3EC, roughness: 0.45 });
-  M.foam = std({ color: 0x23282F, roughness: 0.92 });
+  M.blowerMat = std({ color: 0x23272D, roughness: 0.55, metalness: 0.05 });
+  M.foam = std({ color: 0xD5DADF, roughness: 0.85 });
+  M.finBlue = std({ color: 0x6FA3C7, roughness: 0.32, metalness: 0.75 });
   M.hose = std({ color: 0xB8C2CC, roughness: 0.6 });
   M.cable = std({ color: 0xE6E9EC, roughness: 0.5 });
   M.filter = std({ color: 0x8FC6EE, roughness: 0.8, transparent: true, opacity: 0.75, side: THREE.DoubleSide });
   M.glass = std({ color: 0x0B141E, roughness: 0.12, metalness: 0.3 });
-  M.fanBlade = std({ color: 0x2B3440, roughness: 0.5, side: THREE.DoubleSide });
+  M.fanBlade = std({ color: 0x1E2329, roughness: 0.45, side: THREE.DoubleSide });
   M.ready = true;
   return M;
 }
@@ -172,8 +174,8 @@ export function buildIndoor(low) {
   const anchors = { casing: [-0.3, 0.12, -0.1], coil: [0.15, 0.07, 0.05], blower: [-0.15, -0.055, -0.02], motor: [0.405, -0.055, 0.0], filter: [-0.2, 0.05, 0.08],
     pan: [0.2, -0.09, 0.09], hose: [-0.44, -0.15, -0.1], sensor: [0.33, 0.07, 0.07], pcb: [0.405, 0.045, 0.06], display: [0.31, -0.035, 0.12], louver: [0, -0.125, 0.11], front: [-0.1, 0.05, 0.12] };
   /* exploded offsets (landscape); portrait layouts compress X */
-  const explode = { casing: [0, 0.02, -0.28], coil: [0.0, 0.34, 0.06], blower: [-0.05, -0.36, -0.05], motor: [0.48, -0.22, 0], filter: [-0.42, 0.3, 0.22],
-    pan: [0.15, -0.3, 0.28], hose: [-0.55, -0.2, 0.1], sensor: [0.56, 0.24, 0.12], pcb: [0.6, 0.02, 0.2], display: [0.62, -0.36, 0.3], louver: [-0.3, -0.5, 0.25], front: [0, 0.58, 0.12] };
+  const explode = { front: [-0.78, 0.02, 0.72], filter: [-0.52, 0.2, 0.5], coil: [-0.3, 0.02, 0.32], blower: [-0.12, -0.24, 0.2], motor: [0.36, -0.24, 0.22],
+    pan: [-0.22, -0.4, 0.28], hose: [-0.48, -0.52, 0.1], sensor: [-0.08, 0.34, 0.36], pcb: [0.52, 0.16, 0.12], display: [-0.62, -0.3, 0.72], louver: [-0.46, -0.42, 0.48], casing: [0.24, 0.04, -0.2] };
   return { unit, P, order, anchors, explode };
 }
 
@@ -195,6 +197,8 @@ export function buildOutdoor(low) {
   P.compressor = part('compressor');
   const cp = new THREE.Group(); cp.position.set(0.26, -0.12, 0.02);
   cp.add(cylY(0.075, 0.2, m.black, 0, 0, 0, 32));
+  { const lt = canvasTex(256, 128, (c, w, h) => { c.fillStyle = '#F4F4F2'; c.fillRect(0, 0, w, h); c.fillStyle = '#1B1B1B'; c.font = 'bold 26px Arial'; c.fillText('ROTARY', 16, 40); c.font = '17px Arial'; c.fillText('COMPRESSOR', 16, 66); c.fillStyle = '#9A9A9A'; for (let i = 0; i < 4; i++) c.fillRect(16, 82 + i * 9, 150 - i * 25, 4); });
+    const lg = new THREE.CylinderGeometry(0.0755, 0.0755, 0.07, 32, 1, true, -0.55, 1.1); const lab = new THREE.Mesh(lg, new THREE.MeshStandardMaterial({ map: lt, roughness: 0.6 })); lab.position.set(0, 0.02, 0); lab.rotation.y = 0; cp.add(lab); }
   const dome = mesh(new THREE.SphereGeometry(0.075, 32, 12, 0, Math.PI * 2, 0, Math.PI / 2), m.black, 0, 0.1, 0); dome.scale.y = 0.55; cp.add(dome);
   const domeB = mesh(new THREE.SphereGeometry(0.075, 32, 12, 0, Math.PI * 2, 0, Math.PI / 2), m.black, 0, -0.1, 0); domeB.scale.y = -0.4; cp.add(domeB);
   cp.add(cylY(0.09, 0.012, m.steel, 0, -0.13, 0, 32));
@@ -208,9 +212,9 @@ export function buildOutdoor(low) {
 
   /* 3 condenser coil (L-shaped, back + left side) */
   P.condenser = part('condenser');
-  const back = new THREE.Group(); back.position.set(-0.11, 0.0, -0.125); back.add(fins(low ? 90 : 150, 0.52, 0.48, 0.03, m.alu));
+  const back = new THREE.Group(); back.position.set(-0.11, 0.0, -0.125); back.add(fins(low ? 90 : 150, 0.52, 0.48, 0.03, m.finBlue));
   for (let i = 0; i < 8; i++) back.add(cylX(0.0045, 0.53, m.copper, 0, -0.21 + i * 0.06, i % 2 ? 0.007 : -0.007, 10));
-  const side = new THREE.Group(); side.position.set(-0.385, 0.0, 0.0); side.rotation.y = Math.PI / 2; side.add(fins(low ? 40 : 70, 0.22, 0.48, 0.03, m.alu));
+  const side = new THREE.Group(); side.position.set(-0.385, 0.0, 0.0); side.rotation.y = Math.PI / 2; side.add(fins(low ? 40 : 70, 0.22, 0.48, 0.03, m.finBlue));
   P.condenser.add(back, side);
   for (let i = 0; i < 4; i++) { const t = mesh(new THREE.TorusGeometry(0.03, 0.0045, 8, 16, Math.PI), m.copper, 0.15, -0.18 + i * 0.12, -0.125); t.rotation.y = -Math.PI / 2; P.condenser.add(t); }
   P.condenser.add(box(0.01, 0.48, 0.03, m.steel, 0.155, 0, -0.125));
@@ -285,8 +289,8 @@ export function buildOutdoor(low) {
   for (const k of order) unit.add(P[k]);
   const anchors = { cabinet: [0.32, -0.27, 0.1], compressor: [0.26, -0.08, 0.09], condenser: [-0.3, 0.15, -0.12], fan: [-0.03, 0.12, 0.09], fmotor: [-0.115, 0, 0.06],
     mpcb: [0.26, 0.18, 0.04], capacitor: [0.33, 0.1, 0.11], valves: [0.43, -0.17, 0.06], terminal: [0.41, 0.07, 0.02], close: [0, 0.27, 0.1], grille: [-0.2, 0.15, 0.16] };
-  const explode = { cabinet: [0, -0.25, 0], compressor: [0.5, 0.05, 0.25], condenser: [-0.5, 0.15, -0.3], fan: [-0.35, 0.05, 0.55], fmotor: [-0.55, -0.2, 0.35],
-    mpcb: [0.4, 0.45, 0.2], capacitor: [0.62, 0.3, 0.3], valves: [0.58, -0.25, 0.25], terminal: [0.6, 0.12, 0.12], close: [0, 0.55, 0.5], grille: [-0.1, 0.0, 0.8] };
+  const explode = { cabinet: [0, 0, 0], compressor: [0.36, -0.02, 0.36], condenser: [0.06, 0, -0.36], fan: [-0.3, 0, 0.5], fmotor: [-0.16, 0, 0.3],
+    mpcb: [0.3, 0.44, 0.2], capacitor: [0.52, 0.32, 0.3], valves: [0.56, -0.12, 0.22], terminal: [0.56, 0.16, 0.06], close: [0, 0.5, 0.9], grille: [-0.46, 0, 0.76] };
   return { unit, P, order, anchors, explode };
 }
 
@@ -298,8 +302,15 @@ export function buildRoom(low) {
   const std = (o) => { const mm = new THREE.MeshStandardMaterial(Object.assign({ transparent: true, opacity: 0 }, o)); fade.push(mm); return mm; };
   const wallIn = std({ color: 0xEDE6DA, roughness: 0.9 });
   const wallOut = std({ color: 0xD9D4CC, roughness: 0.95 });
-  const wallCut = std({ color: 0xA9A196, roughness: 0.95 });
-  const floor = std({ color: 0xB98C62, roughness: 0.7 });
+  const brick = canvasTex(256, 256, (c, w, h) => { c.fillStyle = '#B9B2A8'; c.fillRect(0, 0, w, h);
+    for (let r = 0; r < 16; r++) for (let k = -1; k < 5; k++) { const x = k * 64 + (r % 2 ? 32 : 0), y = r * 16; const t = 150 + ((r * 7 + k * 13) % 5) * 9;
+      c.fillStyle = `rgb(${t + 40},${t - 25},${t - 45})`; c.fillRect(x + 2, y + 2, 60, 12); } });
+  brick.wrapS = brick.wrapT = THREE.RepeatWrapping; brick.repeat.set(2, 6);
+  const wallCut = std({ color: 0xFFFFFF, map: brick, roughness: 0.95 });
+  const wood = canvasTex(256, 256, (c, w, h) => { for (let i = 0; i < 8; i++) { const t = 120 + (i * 37 % 5) * 8; c.fillStyle = `rgb(${t + 50},${t + 18},${t - 20})`; c.fillRect(0, i * 32, w, 31);
+    c.fillStyle = 'rgba(0,0,0,.06)'; for (let j = 0; j < 6; j++) c.fillRect((i * 53 + j * 47) % w, i * 32 + 4 + j * 4, 60, 1); } });
+  wood.wrapS = wood.wrapT = THREE.RepeatWrapping; wood.repeat.set(4, 3);
+  const floor = std({ color: 0xFFFFFF, map: wood, roughness: 0.6 });
   const ground = std({ color: 0x8E9A86, roughness: 1 });
   const skirt = std({ color: 0xFFFFFF, roughness: 0.6 });
   const trim = std({ color: 0x9AA6B2, roughness: 0.4, metalness: 0.7 });
@@ -322,7 +333,14 @@ export function buildRoom(low) {
   for (const x of [1.55, 2.05]) { g.add(box(0.04, 0.5, 0.04, trim, x, 0.62, 0.02)); g.add(box(0.04, 0.04, 0.42, trim, x, 0.43, 0.21)); const d = box(0.03, 0.03, 0.5, trim, x, 0.6, 0.12); d.rotation.x = 0.75; g.add(d); }
   /* indoor wall-mounting plate */
   g.add(box(0.7, 0.18, 0.006, trim, 0.45, 2.05, 0.004));
-  return { group: g, fade };
+  return { group: g, fade, mats: { wallIn, wallOut, wallCut, floor } };
+}
+
+/* airflow clearance in front of the outdoor unit (dashed box) */
+export function buildClearance() {
+  const geo = new THREE.EdgesGeometry(new THREE.BoxGeometry(0.86, 0.62, 0.5));
+  const mat = new THREE.LineDashedMaterial({ color: 0x8FD3FF, dashSize: 0.03, gapSize: 0.02, transparent: true, opacity: 0 });
+  const l = new THREE.LineSegments(geo, mat); l.computeLineDistances(); return l;
 }
 
 /* pipe bundle + cable + drain from indoor unit (mounted) through the sleeve to the outdoor valves */
@@ -340,35 +358,46 @@ export function buildPiping(low) {
 
 /* translucent cool-air ribbons + particles */
 export function buildAirflow(low) {
-  const ribbons = new THREE.Group();
-  const mats = [];
+  const group = new THREE.Group();
   const uni = { uTime: { value: 0 }, uAmt: { value: 0 } };
-  for (let i = 0; i < (low ? 4 : 6); i++) {
-    const spread = (i - 2.5) * 0.11;
-    const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(spread * 0.6, 0, 0), new THREE.Vector3(spread * 0.9, -0.25, 0.45), new THREE.Vector3(spread * 1.3, -0.75, 1.0), new THREE.Vector3(spread * 1.7, -1.3, 1.6)]);
-    const seg = 60, w = 0.09 + (i % 3) * 0.025; const pos = []; const uv = []; const idx = [];
-    for (let s = 0; s <= seg; s++) { const t = s / seg; const p = curve.getPoint(t); const tan = curve.getTangent(t); const side = new THREE.Vector3(1, 0, 0); const n = new THREE.Vector3().crossVectors(tan, side).normalize();
-      const ww = w * (0.6 + t * 1.6); pos.push(p.x - ww, p.y + n.y * 0.0, p.z, p.x + ww, p.y, p.z); uv.push(t, 0, t, 1); if (s < seg) { const a = s * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); } }
-    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); geo.setIndex(idx);
+  const mats = [];
+  const beams = low ? 7 : 11;
+  for (let i = 0; i < beams; i++) {
+    const f = beams === 1 ? 0 : i / (beams - 1) - 0.5;            /* -0.5 .. 0.5 across the outlet */
+    const len = 1.5 + Math.random() * 0.35, w0 = 0.06, w1 = 0.34;
+    const geo = new THREE.PlaneGeometry(1, 1, 1, 24);
+    const pos = geo.attributes.position;
+    for (let k = 0; k < pos.count; k++) { const y = pos.getY(k) + 0.5; const x = pos.getX(k); pos.setXYZ(k, x * lerp(w0, w1, y), 0, y); }
+    geo.computeVertexNormals();
     const mat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
-      uniforms: { uTime: uni.uTime, uAmt: uni.uAmt, uOff: { value: i * 0.37 } },
+      uniforms: { uTime: uni.uTime, uAmt: uni.uAmt, uSeed: { value: Math.random() * 10 } },
       vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} ',
-      fragmentShader: 'uniform float uTime; uniform float uAmt; uniform float uOff; varying vec2 vUv; void main(){ float head=uAmt*1.15; if(vUv.x>head) discard; float edge=smoothstep(0.0,0.35,vUv.y)*smoothstep(1.0,0.65,vUv.y); float stripes=0.55+0.45*sin((vUv.x*9.0-uTime*1.4+uOff)*6.2831); float fade=(1.0-vUv.x)*smoothstep(0.0,0.06,vUv.x)*smoothstep(head,head-0.15,vUv.x); float a=edge*fade*stripes*0.17; gl_FragColor=vec4(vec3(0.55,0.85,1.0),a);} ' });
-    mats.push(mat); const r = new THREE.Mesh(geo, mat); r.userData.curve = curve; ribbons.add(r);
+      fragmentShader: 'uniform float uTime; uniform float uAmt; uniform float uSeed; varying vec2 vUv;' +
+        'void main(){ float d=vUv.y; float head=uAmt*1.1; if(d>head) discard;' +
+        ' float edge=smoothstep(0.0,0.5,vUv.x)*smoothstep(1.0,0.5,vUv.x);' +
+        ' float streak=0.75+0.25*sin(d*18.0-uTime*2.2+uSeed);' +
+        ' float a=pow(edge,1.6)*(1.0-d)*(1.0-d)*streak*smoothstep(head,head-0.2,d)*0.24;' +
+        ' gl_FragColor=vec4(mix(vec3(0.75,0.92,1.0),vec3(0.35,0.7,1.0),d),a);} ' });
+    mats.push(mat);
+    const m = new THREE.Mesh(geo, mat);
+    /* fan the beams across the outlet and downward into the room */
+    const holder = new THREE.Group(); holder.position.set(f * 0.72, 0, 0);
+    holder.rotation.set(0.95 + Math.random() * 0.12, f * 0.55, 0); m.scale.set(1, 1, len);
+    holder.add(m); group.add(holder);
   }
-  /* particles following the ribbon curves */
-  const N = low ? 140 : 320; const pg = new THREE.BufferGeometry(); const pp = new Float32Array(N * 3); const seed = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { seed[i * 3] = Math.random(); seed[i * 3 + 1] = Math.floor(Math.random() * ribbons.children.length); seed[i * 3 + 2] = (Math.random() - 0.5); }
+  const N = low ? 120 : 260; const pg = new THREE.BufferGeometry(); const pp = new Float32Array(N * 3); const seed = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { seed[i * 3] = Math.random(); seed[i * 3 + 1] = Math.random() - 0.5; seed[i * 3 + 2] = Math.random(); }
   pg.setAttribute('position', new THREE.BufferAttribute(pp, 3));
-  const dot = canvasTex(64, 64, (c) => { const gr = c.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(220,245,255,1)'); gr.addColorStop(1, 'rgba(120,200,255,0)'); c.fillStyle = gr; c.fillRect(0, 0, 64, 64); });
-  const pm = new THREE.PointsMaterial({ size: 0.028, map: dot, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0 });
-  const points = new THREE.Points(pg, pm);
+  const dot = canvasTex(64, 64, (c) => { const gr = c.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(230,248,255,1)'); gr.addColorStop(1, 'rgba(140,210,255,0)'); c.fillStyle = gr; c.fillRect(0, 0, 64, 64); });
+  const pm = new THREE.PointsMaterial({ size: 0.022, map: dot, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0 });
+  const points = new THREE.Points(pg, pm); group.add(points);
   const update = (time, amt) => {
-    uni.uTime.value = time; uni.uAmt.value = amt; pm.opacity = Math.min(1, amt * 1.4) * 0.6;
-    for (let i = 0; i < N; i++) { const r = ribbons.children[seed[i * 3 + 1]]; let t = (seed[i * 3] + time * 0.08) % 1; if (t > amt * 1.1) t = t * amt; const p = r.userData.curve.getPoint(t);
-      pp[i * 3] = p.x + seed[i * 3 + 2] * 0.2 * (0.3 + t); pp[i * 3 + 1] = p.y + Math.sin(time * 2 + i) * 0.02; pp[i * 3 + 2] = p.z + seed[i * 3 + 2] * 0.1; }
+    uni.uTime.value = time; uni.uAmt.value = amt; pm.opacity = Math.min(1, amt * 1.3) * 0.5;
+    for (let i = 0; i < N; i++) { const t = (seed[i * 3] + time * 0.12) % 1; const tt = Math.min(t, amt);
+      const x = seed[i * 3 + 1] * (0.7 + tt * 1.1), y = -tt * 1.2 - Math.sin(time + i) * 0.01, z = tt * 0.75 + seed[i * 3 + 2] * 0.06;
+      pp[i * 3] = x; pp[i * 3 + 1] = y; pp[i * 3 + 2] = z; }
     pg.attributes.position.needsUpdate = true;
   };
-  const group = new THREE.Group(); group.add(ribbons, points);
   return { group, update };
 }
+const lerp = (a, b, t) => a + (b - a) * t;

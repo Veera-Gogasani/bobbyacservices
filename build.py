@@ -67,6 +67,8 @@ from sp_strings import SP
 for k, v in SP.items(): S[k] = v
 from asm_strings import ASM
 for k, v in ASM.items(): S[k] = v
+from asm2_strings import A2
+for k, v in A2.items(): S[k] = v
 from seo_strings import SEO, PRIV_EXTRA
 for k, v in SEO.items(): S[k] = v
 def _priv_add(body, extra):              # add hosting / image-source disclosure after the third-party paragraph
@@ -533,39 +535,65 @@ H2_SYMBOLS = '''<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="bh-swirl" viewBox="0 0 100 100"><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M8 40 H62 A14 14 0 1 0 48 26"/><path d="M8 60 H74 A14 14 0 1 1 60 74"/><path d="M18 50 H44"/></g></symbol>
 </defs></svg>'''
 
-ASM_V = 2
+ASM_V = 3
+A2_STAGES = [
+    ('sys', 'a2.t1', 'a2.h3.sys', 'a2.i.sys', [('sys%d' % i, 'sys%d' % i) for i in range(1, 6)]),
+    ('in', 'a2.t2', 'a2.h3.in', 'a2.i.in', [('asm.in12', 'front'), ('asm.in5', 'filter'), ('asm.in2', 'coil'), ('asm.in3', 'blower'), ('asm.in4', 'motor'), ('asm.in6', 'pan'),
+                                            ('asm.in7', 'hose'), ('asm.in8', 'sensor'), ('asm.in9', 'pcb'), ('asm.in10', 'display'), ('asm.in11', 'louver'), ('asm.in1', 'casing')]),
+    ('out', 'a2.t3', 'a2.h3.out', 'a2.i.out', [('asm.out%d' % i, p) for i, p in enumerate(['cabinet', 'compressor', 'condenser', 'fan', 'fmotor', 'mpcb', 'capacitor', 'valves', 'terminal', 'grille'], 1)]),
+    ('ins', 'a2.t4', 'a2.h3.ins', 'a2.i.ins', [('asm.ins%d' % i, 'ins%d' % i) for i in range(1, 8)]),
+    ('cool', 'a2.t5', 'a2.h3.cool', 'a2.i.cool', [('cool%d' % i, 'cool%d' % i) for i in range(1, 7)]),
+]
 def asm_section(ticker=''):
-    """Home: scroll-pinned 3D split-AC assembly & installation story (replaces the old bottom CTA)."""
-    lis = lambda pre, n: ''.join(f'<li data-k="{pre}{i}"><b data-i18n="asm.{pre}{i}">{en("asm.%s%d" % (pre, i))}</b><span data-i18n="asm.{pre}{i}.d">{en("asm.%s%d.d" % (pre, i))}</span></li>' for i in range(1, n + 1))
-    steps = ''.join(f'<li><button type="button"><small>0{i}</small>{tx("asm.st%d" % i)}</button></li>' for i in range(1, 6))
-    return f'''<section id="ac-assembly" class="asm" aria-label="{esc(plain("asm.aria"))}">
-<div class="asm-track"><div class="asm-stage">
-<picture class="asm-poster"><img src="/assets/img/ac-assembly-poster.webp?v={ASM_V}" width="1600" height="900" loading="lazy" decoding="async" alt="{esc(plain("asm.poster.alt"))}" data-i18n-alt="asm.poster.alt"></picture>
-<div class="asm-canvas" aria-hidden="true"></div>
-<div class="asm-tags" aria-hidden="true"></div>
-<svg class="asm-lines" aria-hidden="true"><path d=""/><circle r="4.5" cx="-9" cy="-9"/></svg>
-<div class="asm-hud">
- <div class="asm-intro"><p class="asm-kicker">{tx("asm.kicker")}</p><h2>{tx("asm.intro.h")}</h2><p>{tx("asm.intro.p")}</p><p class="asm-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{tx("asm.hint")}</p></div>
- <p class="asm-note">{tx("asm.out.note")}</p>
- <div class="asm-nav"><p class="asm-cur" aria-hidden="true"></p><ol class="asm-steps">{steps}</ol><div class="asm-bar" aria-hidden="true"><i></i></div></div>
- <a class="asm-skip" href="#asm-end">{tx("asm.skip")}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    """Home: interactive split-AC explorer (5 stages, component list, 3D viewer with hotspots)."""
+    chev = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    svg = lambda d: f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    tabs, panels = '', ''
+    for si, (sid, tk, hk, ik, items) in enumerate(A2_STAGES, 1):
+        on = si == 1
+        tabs += (f'<button type="button" role="tab" id="a2-tab-{si}" aria-controls="a2-p-{si}" aria-selected="{"true" if on else "false"}"'
+                 f'{"" if on else " tabindex=\"-1\""} data-stage="{si - 1}"><small>0{si}</small>{tx(tk)}</button>')
+        lis = ''
+        for n, (k, part) in enumerate(items, 1):
+            did = f'a2-d-{sid}-{n}'
+            lis += (f'<li class="a2-item" data-part="{part}"><button type="button" class="a2-pick" aria-expanded="false" aria-controls="{did}">'
+                    f'<span class="n">{n:02d}</span><span class="nm">{tx(k)}</span>{chev}</button>'
+                    f'<div class="a2-dsc" id="{did}" hidden><p>{tx(k + ".d")}</p>' +
+                    (f'<p class="why"><b>{tx("a2.why")}</b> {tx(k + ".u")}</p>' if (k + '.u') in S else '') + '</div></li>')
+        panels += (f'<div class="a2-panel" role="tabpanel" id="a2-p-{si}" aria-labelledby="a2-tab-{si}" data-stage="{si - 1}" data-sid="{sid}"{"" if on else " hidden"}>'
+                   f'<h3>{tx(hk)}</h3><p class="a2-intro">{tx(ik)}</p><ol class="a2-list">{lis}</ol>' +
+                   (f'<p class="a2-note">{tx("asm.out.note")}</p>' if sid == 'out' else '') + '</div>')
+    tools = (f'<button type="button" class="a2-tool" data-act="rotate" aria-pressed="false" aria-label="{esc(plain("a2.rotate"))}" data-i18n-aria="a2.rotate">{svg("M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5")}</button>'
+             f'<button type="button" class="a2-tool" data-act="zin" aria-label="{esc(plain("a2.zin"))}" data-i18n-aria="a2.zin">{svg("M12 5v14M5 12h14")}</button>'
+             f'<button type="button" class="a2-tool" data-act="zout" aria-label="{esc(plain("a2.zout"))}" data-i18n-aria="a2.zout">{svg("M5 12h14")}</button>'
+             f'<button type="button" class="a2-tool" data-act="reset" aria-label="{esc(plain("a2.reset"))}" data-i18n-aria="a2.reset">{svg("M3 12a9 9 0 1 0 3-6.7M3 4v5h5")}</button>')
+    return f'''<section id="ac-assembly" class="a2" aria-labelledby="a2-h">
+<div class="wrap">
+<div class="a2-head"><h2 id="a2-h"><span class="a2-eb">{tx("a2.eb")}</span><span class="a2-hh">{tx("a2.h")}</span></h2>
+<p class="a2-lead">{tx("a2.p")}</p><p class="a2-hint">{svg("M9 11V6a3 3 0 0 1 6 0v5M5 13l7 7 7-7")}{tx("a2.hint")}</p></div>
+<div class="a2-tabs" role="tablist" aria-label="{esc(plain("a2.eb"))}">{tabs}</div>
+<div class="a2-grid">
+<div class="a2-view">
+<img class="a2-poster" src="/assets/img/ac-assembly-poster.webp?v={ASM_V}" width="1508" height="1268" loading="lazy" decoding="async" alt="{esc(plain("a2.poster"))}" data-i18n-alt="a2.poster">
+<div class="a2-canvas"></div><div class="a2-hot" aria-hidden="true"></div>
+<div class="a2-tools" hidden>{tools}</div>
+<p class="a2-drag" hidden>{tx("a2.drag")}</p>
 </div>
-<div class="asm-card" aria-live="polite" aria-hidden="true"><small class="n"></small><b class="t"></b><p class="d"></p></div>
-<div class="asm-final"><h2>{tx("asm.final.h")}</h2><p class="sub">{tx("asm.final.p")}</p><p class="sig">BOBBY <span>AC Repair &amp; Home Appliance Services</span></p><p class="tg">{tx("brand.tagline")}</p></div>
-</div></div>
-<div class="asm-data" hidden>
- <div><h3>{tx("asm.list.in")}</h3><ol>{lis("in", 12)}</ol></div>
- <div><h3>{tx("asm.list.out")}</h3><ol>{lis("out", 10)}</ol><p class="asm-fn">{tx("asm.out.note")}</p></div>
- <div><h3>{tx("asm.list.inst")}</h3><ol>{lis("ins", 7)}</ol></div>
-<p hidden>{tx("asm.indoor.done")}{tx("asm.indoor.done.p")}{tx("asm.cool")}{tx("asm.cool.d")}</p>
+<div class="a2-side">{panels}
+<div class="a2-nav"><button type="button" class="a2-prev" aria-label="{esc(plain("a2.prev"))}" data-i18n-aria="a2.prev">{svg("M15 18l-6-6 6-6")}<span>{tx("a2.prev")}</span></button>
+<div class="a2-prog"><span class="a2-count">01 / 05</span><div class="a2-bar" aria-hidden="true"><i></i></div></div>
+<button type="button" class="a2-next" aria-label="{esc(plain("a2.next"))}" data-i18n-aria="a2.next"><span>{tx("a2.next")}</span>{svg("M9 18l6-6-6-6")}</button></div>
 </div>
-<div id="asm-end" tabindex="-1">{ticker}</div>
+</div>
+</div>
+<div id="asm-end">{ticker}</div>
 <script>(function(){{var s=document.getElementById('ac-assembly'),ok=false;try{{var c=document.createElement('canvas');ok=!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}}catch(e){{}}
-var st=function(){{s.classList.add('asm-static');s.querySelector('.asm-data').hidden=false;}};
-if(!ok||matchMedia('(prefers-reduced-motion: reduce)').matches){{st();return;}}
-var go=function(){{var j=document.createElement('script');j.src='/assets/js/ac-assembly.js?v={ASM_V}';j.async=true;j.onerror=st;document.body.appendChild(j);}};
-if('IntersectionObserver'in window){{var io=new IntersectionObserver(function(e){{if(e[0].isIntersecting){{io.disconnect();go();}}}},{{rootMargin:'150% 0px'}});io.observe(s);}}else go();}})();</script>
+if(!ok){{s.classList.add('a2-static');return;}}
+var go=function(){{var j=document.createElement('script');j.src='/assets/js/ac-assembly.js?v={ASM_V}';j.async=true;j.onerror=function(){{s.classList.add('a2-static');}};document.body.appendChild(j);}};
+if('IntersectionObserver'in window){{var io=new IntersectionObserver(function(e){{if(e[0].isIntersecting){{io.disconnect();go();}}}},{{rootMargin:'120% 0px'}});io.observe(s);}}else go();}})();</script>
+<script src="/assets/js/a2-ui.js?v={ASM_V}" defer></script>
 </section>'''
+
 
 def trust_strip():
     """Moving trust ticker (moved from the hero to just above the footer)."""
