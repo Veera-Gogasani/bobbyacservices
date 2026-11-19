@@ -363,3 +363,8 @@
 .trust-strip .bh2-mq>span{font-size:14px;font-weight:500;letter-spacing:.04em;padding:0 22px}
 .trust-strip .bh2-mq>span:first-child{font-weight:700;color:#FFD08A}
 .trust-strip .bh2-mq>i{font-style:normal;opacity:.6;font-size:12px}
+@media (max-width:960px){
+  .hero-duo .hero .hero-photo.hero-photo-real{aspect-ratio:3/2;max-width:100%}
+  .hero-duo .hero .hero-photo.hero-photo-real img{width:100%;height:100%;object-fit:cover;object-position:62% 40%}
+}
+@media (max-width:960px){.hero-duo .hero .hero-visual:has(.hero-photo-real) .chip-float{display:none}}
