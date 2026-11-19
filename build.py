@@ -517,7 +517,7 @@ def blog_cards(posts, hq='h3', eager_first=False):
 CAL_SVG = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 CTA_ART = {   # page -> (image, side, object-position): every page gets its own picture in the same style
     'about': ('cta-ac-bobby', 'l', '35% 18%'), 'ac': ('cta-relax', 'r', '55% 40%'), 'app': ('cta-relax-mug', 'r', '62% 55%'),
-    'brands': ('cta-3d-a', 'l', '50% 25%'), 'faqs': ('cta-relax', 'r', '55% 40%'), 'blog': ('cta-3d-b', 'r', '50% 25%'),
+    'brands': ('cta-3d-a', 'l', '50% 25%'), 'faqs': ('cta-ac-glow', 'l', '10% 22%'), 'blog': ('cta-3d-b', 'r', '50% 25%'),
 }
 def cta_band(page='ac'):
     """Shared call-to-action banner (artwork from BOBBY's own banner design; text and buttons are real HTML)."""
