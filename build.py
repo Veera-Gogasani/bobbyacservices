@@ -247,7 +247,7 @@ def business_ld():
     return {
         '@context': 'https://schema.org', '@type': 'HVACBusiness', '@id': SITE + '/#business',
         'name': BRAND, 'alternateName': 'Bobby AC Repair', 'url': SITE + '/',
-        'telephone': PHONE_TEL, 'image': SITE + '/assets/img/og-bobby.jpg', 'logo': SITE + '/assets/img/bobby-logo-640.webp',
+        'telephone': PHONE_TEL, 'image': SITE + '/assets/img/og-share.jpg', 'logo': SITE + '/assets/img/bobby-logo-640.webp',
         'slogan': en('brand.tagline'),
         'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
@@ -272,8 +272,8 @@ I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hex
 
 def head(title, desc, path, title_key=None, ld=(), og_img=None):
     url = SITE + path
-    og = og_img or SITE + '/assets/img/og-bobby.jpg'
-    og_alt = title if og_img else 'Bobby, AC and home appliance technician in Narasaraopet'
+    og = og_img or SITE + '/assets/img/og-share.jpg'
+    og_alt = title if og_img else 'BOBBY AC Repair & Home Appliance Services, Narasaraopet: AC, refrigerator, washing machine and ceiling fan repair. Call +91 83748 89163'
     tk = f' data-title-key="{title_key}"' if title_key else ''
     lds = ''.join('<script type="application/ld+json">%s</script>\n' % json.dumps(x, ensure_ascii=False) for x in ld)
     return f'''<!DOCTYPE html>
