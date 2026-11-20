@@ -1086,3 +1086,5 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 @media(max-width:600px){.post-toc ul{columns:1}.prose table{min-width:0;font-size:14px}.prose th,.prose td{padding:9px 10px}}
 /* Mobile: hide the pre-header (owner name / email) completely so the hero starts right under the main nav */
 @media (max-width:767px){.topbar{display:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}}
+
+.fprivacy{margin:6px auto 0;max-width:460px;text-align:center;font-size:12.5px;line-height:1.5;color:var(--muted)}

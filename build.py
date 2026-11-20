@@ -212,7 +212,7 @@ def booking_form(p, inline=False):
 <fieldset class="fgrp">{legend(4, 'f.g4')}
 <div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
 </fieldset>
-<div class="fsubmit"><button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="fsecure">{lock}<span data-i18n="f.secure">{en('f.secure')}</span></p></div><p class="form-msg" role="status" aria-live="polite"></p>
+<div class="fsubmit"><button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="fsecure">{lock}<span data-i18n="f.secure">{en('f.secure')}</span></p><p class="fprivacy" data-i18n="f.privacy">{en('f.privacy')}</p></div><p class="form-msg" role="status" aria-live="polite"></p>
 <div class="book-done" hidden tabindex="-1"><span class="bd-ic">{ic('check')}</span>{tx('f.thanks.h', 'h3')}{tx('f.thanks.p', 'p')}<p class="bd-sign" data-i18n="f.thanks.sign">{en('f.thanks.sign')}</p><p class="bd-tip">{tx('f.thanks.tip')}</p>
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div><p class="bd-alt">{tx('wa.alt.h', 'b')} <a class="bd-sms" href="sms:+918374889163">{tx('wa.sms')}</a><a class="bd-tel" href="tel:+918374889163">{tx('wa.call')}: +91 83748 89163</a></p></div></form>'''
 

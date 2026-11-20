@@ -31,6 +31,7 @@ SEO = {
     'f.g2': ("Appliance &amp; service", "పరికరం &amp; సర్వీస్", "उपकरण और सर्विस"),
     'f.g3': ("Location &amp; preferred date", "లొకేషన్ &amp; కోరుకున్న తేదీ", "लोकेशन और पसंदीदा तारीख"),
     'f.g4': ("Problem details", "సమస్య వివరాలు", "समस्या का विवरण"),
+    'f.privacy': ("This form does not store your details. It opens WhatsApp with your booking message ready, so you can review and send it to us.", "ఈ ఫారం మీ వివరాలను నిల్వ చేయదు. ఇది మీ బుకింగ్ సందేశం సిద్ధంగా ఉన్న వాట్సాప్‌ను తెరుస్తుంది, మీరు దాన్ని చూసి మాకు పంపవచ్చు.", "यह फ़ॉर्म आपकी जानकारी सेव नहीं करता। यह आपका बुकिंग संदेश तैयार करके व्हाट्सऐप खोलता है, ताकि आप उसे देखकर हमें भेज सकें।"),
     'f.secure': ("Nothing is sent until you tap Send in WhatsApp.", "వాట్సాప్‌లో Send నొక్కే వరకు ఏదీ పంపబడదు.", "व्हाट्सऐप में Send दबाने तक कुछ नहीं भेजा जाता।"),
     'f.time': ("Takes about 1 minute", "సుమారు 1 నిమిషం పడుతుంది", "लगभग 1 मिनट लगता है"),
     'wa.pick.cancel': ("Cancel", "రద్దు", "रद्द करें"),
