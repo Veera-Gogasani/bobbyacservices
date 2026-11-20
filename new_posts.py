@@ -147,6 +147,7 @@ NEW_POSTS = [
 <ul><li><b>Voltas</b>: easiest to find at every price point; good value in the 3-star inverter segment.</li><li><b>LG</b>: feature-rich (dual inverter, Wi-Fi models) with a large service footprint.</li><li><b>Daikin</b>: often chosen for efficiency and quiet operation in long-hours use.</li></ul>
 <h2>What matters more than the brand</h2>
 <ol><li><b>ISEER and star rating</b> under the 2026 BEE table: a higher ISEER means lower running cost. Our <a href="/blog/how-to-reduce-ac-electricity-bill/">AC electricity saving guide</a> explains why.</li><li><b>Inverter compressor</b> if you run the AC more than a few hours a day.</li><li><b>Correct tonnage</b> for your room size, floor and sun exposure.</li><li><b>Copper condenser coil</b> or good anti-corrosion coating if you live in a dusty or coastal area.</li><li><b>Compressor warranty</b>: check the years and what it covers.</li><li><b>Local service and spare parts</b>: ask your dealer who services the brand in your town.</li><li><b>Installation quality</b>: a poor installation (bad flaring, no vacuum, wrong pipe length) hurts any brand. See our <a href="/ac-services/#ac-installation">AC installation service</a>.</li></ol>
+<p>Want the full list? See our <a href="/blog/top-10-ac-brands-in-india/">Top 10 AC brands in India for 2026</a>, with the ranking method explained.</p>
 <h2>Split or window?</h2>
 <p>If you are also deciding between the two types, read <a href="/blog/split-ac-vs-window-ac/">Split AC vs window AC: which is right for your home?</a></p>
 <h2>Our honest recommendation</h2>
@@ -241,6 +242,72 @@ NEW_POSTS = [
  'sources': [("BOBBY: Our trust principles", "/about/"), ("BOBBY: Contact & booking", "/contact/")],
 },
 ]
+
+# ------------------------------------------------------------------ 6. Top 10 AC brands in India
+NEW_POSTS.append({
+ 'slug': 'top-10-ac-brands-in-india', 'img': 'blog_top10', 'svc': 'ac_install', 'link': '/brands/',
+ 'date': '2026-11-20',
+ 'seo': 'Top 10 AC Brands in India 2026: Ranking & Guide | BOBBY',
+ 'desc': "Top 10 AC brands in India for 2026, ranked by BOBBY's technicians on efficiency, reliability, service network, spare parts and warranty.",
+ 'title': ("Top 10 AC Brands in India – 2026 Rankings, Features, Reliability and After-Sales Service",
+           "భారతదేశంలో టాప్ 10 ఏసీ బ్రాండ్లు – 2026 ర్యాంకింగ్స్, ఫీచర్లు, విశ్వసనీయత, ఆఫ్టర్-సేల్స్ సర్వీస్",
+           "भारत के टॉप 10 एसी ब्रांड – 2026 रैंकिंग, फ़ीचर्स, भरोसेमंदी और आफ़्टर-सेल्स सर्विस"),
+ 'excerpt': ("Our technicians' 2026 ranking of the ten AC brands most worth shortlisting in India, with the criteria we used and what each brand does best.",
+             "భారతదేశంలో షార్ట్‌లిస్ట్ చేయదగిన పది ఏసీ బ్రాండ్లపై మా టెక్నీషియన్ల 2026 ర్యాంకింగ్, మేము వాడిన ప్రమాణాలు, ఒక్కో బ్రాండ్ ప్రత్యేకత.",
+             "भारत में शॉर्टलिस्ट करने लायक़ दस एसी ब्रांडों की हमारे टेक्नीशियनों की 2026 रैंकिंग, इस्तेमाल किए गए मापदंड और हर ब्रांड की ख़ासियत।"),
+ 'body': """<p class="lead-q"><b>Quick answer:</b> our 2026 top 10 AC brands in India are <b>Voltas, LG, Daikin, Blue Star, Samsung, Panasonic, Lloyd, Hitachi, Carrier and Godrej</b>. All ten make reliable inverter ACs; the ranking reflects how easy each brand is to own over many years in a town like Narasaraopet: service reach, spare parts, efficiency choices and value.</p>
+<p><b>Important:</b> this is BOBBY's editorial ranking, based on our experience installing, servicing and repairing these brands. It is not an official industry ranking, no brand has paid for a position, and we review it every year. For a head-to-head look at the leading names, read <a href="/blog/best-ac-brand-in-india/">Which AC brand is best in India in 2026?</a></p>
+<h2>How we ranked the brands</h2>
+<div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Weight</th><th>What we look at</th></tr></thead><tbody>
+<tr><td>After-sales service reach</td><td>25%</td><td>Authorised service in smaller towns, response time</td></tr>
+<tr><td>Spare-parts availability</td><td>20%</td><td>How fast PCBs, motors, sensors and coils can be sourced</td></tr>
+<tr><td>Energy efficiency range</td><td>20%</td><td>Choice of high-ISEER inverter models under the 2026 BEE table</td></tr>
+<tr><td>Reliability in Indian heat</td><td>20%</td><td>Repeat faults we see in 40°C+ summers</td></tr>
+<tr><td>Value and warranty</td><td>15%</td><td>Price for features, compressor warranty terms</td></tr>
+</tbody></table></div>
+<h2>1. Voltas</h2>
+<p>A Tata group company and widely reported as India's room-AC market leader. Its biggest strength is reach: models at every price point and dealers almost everywhere, which also means parts and technicians are easy to find. Strong value in the 1.5 ton 3-star inverter segment that most families buy.</p>
+<h2>2. LG</h2>
+<p>One of the most widely owned AC brands in Indian homes. Known for dual-inverter compressors, convertible cooling modes and Wi-Fi models, backed by a large service network. A good all-rounder if you want features without hunting for service.</p>
+<h2>3. Daikin</h2>
+<p>A Japanese air-conditioning specialist with manufacturing in India. Often chosen for efficient, quiet inverter models and dependable cooling in long daily use. Typically priced a little higher; strong choice for heavy users.</p>
+<h2>4. Blue Star</h2>
+<p>An Indian cooling specialist since 1943, active in both home and commercial air-conditioning. Solid inverter range, good cooling performance in high ambient temperatures and a growing residential service footprint.</p>
+<h2>5. Samsung</h2>
+<p>Fast-growing in room ACs, with design-led models and features such as WindFree cooling and smart-home control. Service coverage is good in cities and improving in smaller towns.</p>
+<h2>6. Panasonic</h2>
+<p>An established Japanese brand with efficient inverter models and air-purification features on some ranges. A dependable mid-to-premium option.</p>
+<h2>7. Lloyd</h2>
+<p>Owned by Havells. Competitively priced with a wide range, making it popular with first-time buyers. Check local service availability before buying.</p>
+<h2>8. Hitachi</h2>
+<p>Known for robust cooling and premium build on its higher-end models. Service is good in larger cities; parts can take longer in small towns.</p>
+<h2>9. Carrier</h2>
+<p>A historic name in air-conditioning with a broad residential range. Reliable products; as with Hitachi, confirm local service support.</p>
+<h2>10. Godrej</h2>
+<p>A long-trusted Indian appliance brand offering value-focused ACs, including models using eco-friendly refrigerants. Good for budget buyers who value a familiar brand.</p>
+""" + fig('/assets/img/art/blog_brands-sm.webp', 'AC and appliance brands serviced by BOBBY in Narasaraopet', 'BOBBY services all of these brands, whichever one you choose.', 800, 500) + """
+<h2>Ranking summary</h2>
+<div class="table-wrap"><table><thead><tr><th>Rank</th><th>Brand</th><th>Best for</th></tr></thead><tbody>
+<tr><td>1</td><td>Voltas</td><td>Value and availability everywhere</td></tr><tr><td>2</td><td>LG</td><td>Features with a big service network</td></tr>
+<tr><td>3</td><td>Daikin</td><td>Efficiency for heavy daily use</td></tr><tr><td>4</td><td>Blue Star</td><td>Cooling specialist, hot climates</td></tr>
+<tr><td>5</td><td>Samsung</td><td>Smart features and design</td></tr><tr><td>6</td><td>Panasonic</td><td>Dependable mid-to-premium</td></tr>
+<tr><td>7</td><td>Lloyd</td><td>Budget-friendly range</td></tr><tr><td>8</td><td>Hitachi</td><td>Premium build</td></tr>
+<tr><td>9</td><td>Carrier</td><td>Established cooling name</td></tr><tr><td>10</td><td>Godrej</td><td>Value from a familiar brand</td></tr>
+</tbody></table></div>
+<h2>Before you buy: a 5-point checklist</h2>
+<ol><li>Compare the <b>ISEER value</b> on the BEE label (the 2026 table is stricter, so check the label year). Our <a href="/blog/how-to-reduce-ac-electricity-bill/">electricity-saving guide</a> explains why it matters.</li><li>Pick the <b>right tonnage</b> for the room size, floor and sun exposure.</li><li>Prefer an <b>inverter</b> model if the AC runs more than a few hours a day.</li><li>Check the <b>compressor warranty</b> years and conditions.</li><li>Ask who provides <b>service and parts in your town</b>, and book a proper <a href="/ac-services/#ac-installation">AC installation</a>.</li></ol>
+<p>Whichever brand you choose, BOBBY installs, services and repairs it in Narasaraopet. See the <a href="/brands/">brands we service</a> and our <a href="/ac-spare-parts/">AC spare parts price guide</a>.</p>""",
+ 'faq': [
+  ("Which is the No. 1 AC brand in India?", "Voltas is widely reported as India's room-AC market leader by share. In our editorial ranking it is No. 1 mainly for availability, value and easy service, not because other brands are worse."),
+  ("Is this ranking sponsored?", "No. It is BOBBY's editorial ranking based on our service experience and the criteria listed in the article. No brand pays for a position."),
+  ("Which AC brand needs the fewest repairs?", "Reliability depends more on correct installation, sizing and regular servicing than on the logo. All ten brands here make reliable inverter ACs when installed and maintained properly."),
+  ("Which brand is best for a small town like Narasaraopet?", "Choose a brand with an authorised service centre or reliable multi-brand technicians nearby and easy parts availability. Voltas, LG, Daikin, Blue Star and Samsung are the easiest to support locally."),
+  ("How often do you update this list?", "We review the ranking every year as models, efficiency standards and service networks change."),
+ ],
+ 'sources': [("Reuters via MarketScreener: Voltas, India's AC market leader", "https://www.marketscreener.com/news/india-s-top-ac-maker-bets-on-first-time-buyers-to-drive-summer-demand-rebound-ce7e5adbdc89ff24"),
+             ("Business Today: revised BEE star ratings from 1 January 2026", "https://www.businesstoday.in/india/story/5-star-acs-refrigerators-to-get-costlier-from-january-2026-heres-why-508978-2025-12-31"),
+             ("BOBBY guide: Which AC brand is best in India in 2026?", "/blog/best-ac-brand-in-india/")],
+})
 
 NEW_STRINGS = {
  'blog.toc': ("In this article", "ఈ ఆర్టికల్‌లో", "इस लेख में"),

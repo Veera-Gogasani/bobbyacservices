@@ -1038,7 +1038,7 @@ def write():
 - [AC spare parts]({SITE}/ac-spare-parts/): spare parts
 - [Brands]({SITE}/brands/): AC and appliance brands serviced
 - [FAQs]({SITE}/faqs/): common questions on repair, servicing, area and booking
-- [Blog]({SITE}/blog/): AC guides: AC repair in Narasaraopet, AC servicing in Narasaraopet, reducing AC electricity bills, best AC brands in India, finding an AC technician, AC not cooling, water leakage, gas filling
+- [Blog]({SITE}/blog/): AC guides: AC repair in Narasaraopet, AC servicing in Narasaraopet, reducing AC electricity bills, best AC brands in India, top 10 AC brands in India, finding an AC technician, AC not cooling, water leakage, gas filling
 - [About]({SITE}/about/): about BOBBY and the service area
 - [Contact]({SITE}/contact/): phone, WhatsApp, map and booking form
 """
