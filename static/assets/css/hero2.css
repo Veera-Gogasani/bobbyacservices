@@ -302,3 +302,27 @@
 @media (max-width:760px){.hero-duo .bh2s .bobby-hero-btn{white-space:normal;line-height:1.2;text-align:center;min-height:44px}}
 @media (max-width:760px){.hero-duo{--hero-h:max(calc(100svh - var(--hero-top) - var(--hero-bar)),min(660px,calc(56vw + 450px)))}}
 @media (max-width:767px){:root{--hero-top:62px}}
+/* ===== slide 1: three CTAs on one row, compact (all screens) ===== */
+.hero-duo .hero .ctas{display:flex;flex-wrap:nowrap;gap:10px}
+.hero-duo .hero .ctas .btn{flex:0 1 auto;min-width:0;min-height:44px;padding:11px 18px;font-size:14.5px;gap:8px;white-space:nowrap}
+.hero-duo .hero .ctas .btn svg{width:18px;height:18px;flex:none}
+@media (max-width:1180px) and (min-width:761px){.hero-duo .hero .ctas .btn{padding:10px 13px;font-size:13.5px}}
+@media (max-width:760px){
+  .hero-duo .hero .ctas{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:7px}
+  .hero-duo .hero .ctas .btn,.hero-duo .hero .ctas .btn-orange{grid-column:auto;flex:none;min-height:42px;padding:9px 6px;font-size:13px;gap:5px;justify-content:center}
+  .hero-duo .hero .ctas .btn svg{width:15px;height:15px}
+}
+@media (max-width:380px){.hero-duo .hero .ctas .btn{font-size:12px;padding:9px 4px}.hero-duo .hero .ctas .btn-orange svg{display:none}}
+@media (max-width:760px){
+  .hero-duo .hero .ctas{display:flex;gap:6px}
+  .hero-duo .hero .ctas .btn,.hero-duo .hero .ctas .btn-orange{flex:1 1 auto;padding:9px 8px;font-size:12.5px;letter-spacing:0}
+  .hero-duo .hero .ctas .btn-orange svg,.hero-duo .hero .ctas .btn-wa svg{display:none}
+  .hero-duo .hero .ctas .btn-ghost svg{width:14px;height:14px}
+}
+@media (max-width:380px){.hero-duo .hero .ctas .btn{font-size:11.5px;padding:9px 5px}.hero-duo .hero .ctas .btn-ghost svg{display:none}}
+@media (max-width:760px){
+  .hero-duo .hero>.wrap>div:first-child{min-width:0;max-width:100%}
+  .hero-duo .hero .ctas{gap:5px;max-width:100%}
+  .hero-duo .hero .ctas .btn,.hero-duo .hero .ctas .btn-orange{padding:9px 6px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+}
+@media (max-width:400px){.hero-duo .hero .ctas .btn{font-size:12px}.hero-duo .hero .ctas .btn-wa .wa-ic,.hero-duo .hero .ctas .btn-orange .wa-ic{display:none}}
