@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bobbyacservices.pages.dev/sitemap.xml
+Sitemap: https://www.bobbyacservices.com/sitemap.xml

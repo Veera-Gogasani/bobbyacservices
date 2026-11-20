@@ -12,7 +12,7 @@ from blog import POSTS, add_strings
 #    in Cloudflare Pages (project "bobbyacservices"). 2) When https://www.bobbyacservices.com opens the site,
 #    set DOMAIN_CONNECTED = True, run `python3 build.py`, commit and push. Canonical links, sitemap, robots,
 #    schema, llms.txt and the pages.dev -> www redirect (functions/_middleware.js) all follow this one flag.
-DOMAIN_CONNECTED = False
+DOMAIN_CONNECTED = True
 DOMAIN    = 'www.bobbyacservices.com'
 SITE      = ('https://' + DOMAIN) if DOMAIN_CONNECTED else 'https://bobbyacservices.pages.dev'
 BRAND     = 'BOBBY AC Repair & Home Appliance Services'

@@ -5,7 +5,7 @@
  * - branch previews (*.bobbyacservices.pages.dev) are left alone.
  */
 const CANONICAL_HOST = 'www.bobbyacservices.com';
-const REDIRECT_PAGES_DEV = false;
+const REDIRECT_PAGES_DEV = true;
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
