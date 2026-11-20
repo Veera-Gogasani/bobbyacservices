@@ -90,7 +90,8 @@ def quick_answer(k):
 import sp_page
 for p in POSTS:
     for f in ('title', 'excerpt', 'body'):
-        S['post.%s.%s' % (p['slug'], f)] = p[f]
+        v = p[f]
+        S['post.%s.%s' % (p['slug'], f)] = v if isinstance(v, tuple) else (v, v, v)
 
 def en(key): return S[key][0]
 def plain(key): return html.unescape(strip_tags(S[key][0]))
@@ -519,6 +520,37 @@ def faq_list(nums, first_open=True, hq='h3'):
         f'<details class="reveal"{" open" if (first_open and i == 0) else ""}><summary>{tx("faq.%d.q" % n, hq, attrs="style=\"font-size:inherit;color:inherit;font-weight:inherit\"")}<span class="pm">{ic("plus")}</span></summary><div class="ans">{tx("faq.%d.a" % n, "p")}</div></details>'
         for i, n in enumerate(nums)) + '</div>'
 
+def post_body(post):
+    """Article body. New long-form posts (English body) get a table of contents, FAQ, sources and a local contact box."""
+    import re as _re
+    s = post['slug']
+    if isinstance(post['body'], tuple):
+        return f'<div class="prose" data-i18n="post.{s}.body">{en("post.%s.body" % s)}</div>'
+    body = post['body']; toc = []
+    def _id(m):
+        t = _re.sub(r'<[^>]+>', '', m.group(1)); i = _re.sub(r'[^a-z0-9]+', '-', t.lower()).strip('-')[:60]
+        toc.append((i, t)); return f'<h2 id="{i}">{m.group(1)}</h2>'
+    body = _re.sub(r'<h2>(.*?)</h2>', _id, body)
+    out = f'<p class="lang-note">{tx("blog.lang")}</p>'
+    out += ('<nav class="post-toc" aria-label="Table of contents"><p class="post-toc-h">' + tx('blog.toc') + '</p><ul>' +
+            ''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i, t in toc) + '</ul></nav>')
+    out += f'<div class="prose" lang="en">{body}</div>'
+    if post.get('local'):
+        out += (f'<div class="post-local reveal"><h2>{tx("blog.local.h")}</h2><p>{tx("blog.local.p")}</p>'
+                f'<p class="post-local-nap"><b>{esc(BRAND)}</b><br><a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · Door 11-28-32/5, Employees Colony, Arundelpet, Narasaraopet, Palnadu District, Andhra Pradesh – 522601</p>'
+                f'<div class="btn-row"><a class="btn btn-orange btn-sm" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.callnum")}</a>'
+                f'<a class="btn btn-wa btn-sm" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{wa_ic()}{tx("btn.wachat")}</a></div></div>')
+    if post.get('faq'):
+        out += ('<section class="post-faq" lang="en"><h2 id="faq">' + tx('blog.faqh') + '</h2><div class="faq">' +
+                ''.join(f'<details><summary><h3 style="font-size:inherit;color:inherit;font-weight:inherit;margin:0">{esc(q)}</h3><span class="pm">{ic("plus")}</span></summary><div class="ans"><p>{esc(a)}</p></div></details>' for q, a in post['faq']) +
+                '</div></section>')
+    if post.get('sources'):
+        def _a(label, url):
+            ext = url.startswith('http')
+            return f'<li><a href="{url}"' + (' target="_blank" rel="noopener"' if ext else '') + f'>{esc(label)}</a></li>'
+        out += '<aside class="post-src" lang="en"><h2>' + tx('blog.src') + '</h2><ul>' + ''.join(_a(l, u) for l, u in post['sources']) + '</ul></aside>'
+    return out
+
 def blog_cards(posts, hq='h3', eager_first=False):
     return '<div class="blog-grid">' + ''.join(f'''<article class="bcard reveal d{i % 3}"><a class="media" href="/blog/{p['slug']}/" tabindex="-1" aria-hidden="true">{img(p['img'], 640, 360, 'post.%s.title' % p['slug'], eager=eager_first and i == 0)}</a>
 <div class="body"><{hq}><a href="/blog/{p['slug']}/">{tx('post.%s.title' % p['slug'])}</a></{hq}><p>{tx('post.%s.excerpt' % p['slug'])}</p><a class="link-arrow" href="/blog/{p['slug']}/">{tx('btn.more')}<span class="sr-only">: {esc(plain('post.%s.title' % p['slug']))}</span>{ic('arrow')}</a></div></article>''' for i, p in enumerate(posts)) + '</div>'
@@ -855,7 +887,7 @@ def build_inner():
     # Blog index + posts
     p = '/blog/'
     page(p, head('AC & Appliance Care Tips | BOBBY Narasaraopet',
-                 'Simple guides on AC cooling problems, servicing, gas filling, water leakage, split vs window AC and fridge care from BOBBY, Narasaraopet.',
+                 'AC repair and servicing guides from BOBBY, Narasaraopet: AC not cooling, electricity saving, best AC brands, gas filling, water leakage and more.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
          f'<section class="sec"><div class="wrap">{blog_cards(POSTS, hq='h2', eager_first=True)}</div></section>' + cta_band('blog') + footer())
@@ -866,14 +898,18 @@ def build_inner():
                'datePublished': post['date'], 'dateModified': post.get('updated', post['date']), 'inLanguage': 'en', 'mainEntityOfPage': SITE + pp,
                'image': SITE + art_url(post['img']), 'author': {'@id': SITE + '/#business'}, 'publisher': {'@id': SITE + '/#business'}}
         others = [x for x in POSTS if x['slug'] != s][:3]
-        page(pp, head(title_en + ' | BOBBY', plain('post.%s.excerpt' % s), pp, 'post.%s.title' % s,
-                      [business_ld(), crumbs_ld([('Home', '/'), ('Blog', '/blog/'), (title_en, pp)]), art],
+        lds = [business_ld(), crumbs_ld([('Home', '/'), ('Blog', '/blog/'), (title_en, pp)]), art]
+        if post.get('faq'):
+            lds.append({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+                {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in post['faq']]})
+        page(pp, head(post.get('seo', title_en + ' | BOBBY'), post.get('desc', plain('post.%s.excerpt' % s)), pp, 'post.%s.title' % s,
+                      lds,
                       og_img=SITE + art_url(post['img'])) + header('blog') +
              f'''<section class="phero"><div class="wrap"><nav class="crumbs anim" aria-label="Breadcrumb"><ol><li><a href="/">{tx('crumb.home')}</a></li><li><a href="/blog/">{tx('nav.blog')}</a></li><li aria-current="page">{tx('post.%s.title' % s)}</li></ol></nav>
 <h1 class="anim d1">{tx('post.%s.title' % s)}</h1><p class="anim d2">{tx('post.%s.excerpt' % s)}</p>
 <p class="post-meta anim d2"><span>{tx('blog.by')} <b>{esc(BRAND)}</b></span><span>{tx('blog.pub')} <time datetime="{post['date']}">{fmt_date(post['date'])}</time></span><span>{tx('blog.upd')} <time datetime="{post.get('updated', post['date'])}">{fmt_date(post.get('updated', post['date']))}</time></span></p></div></section>
 <section class="sec"><article class="wrap article"><div class="cover-img reveal">{img(post['img'], 1200, 600, 'post.%s.title' % s, eager=True)}</div>
-<div class="prose" data-i18n="post.{s}.body">{en('post.%s.body' % s)}</div>
+{post_body(post)}
 <p class="disc">{tx('blog.disclaimer')}</p>
 <div class="cta-box reveal"><div><h3>{tx('blog.related')}</h3><p>{tx('blog.relatedp')}</p></div><div class="btn-row">{book_a(post['svc'], 'btn-orange btn-sm')}<a class="btn btn-ghost btn-sm" href="{post['link']}">{tx('blog.viewsvc')}</a></div></div>
 </article></section>
@@ -1002,7 +1038,7 @@ def write():
 - [AC spare parts]({SITE}/ac-spare-parts/): spare parts
 - [Brands]({SITE}/brands/): AC and appliance brands serviced
 - [FAQs]({SITE}/faqs/): common questions on repair, servicing, area and booking
-- [Blog]({SITE}/blog/): AC care guides (not cooling, water leakage, service frequency, split vs window)
+- [Blog]({SITE}/blog/): AC guides: AC repair in Narasaraopet, AC servicing in Narasaraopet, reducing AC electricity bills, best AC brands in India, finding an AC technician, AC not cooling, water leakage, gas filling
 - [About]({SITE}/about/): about BOBBY and the service area
 - [Contact]({SITE}/contact/): phone, WhatsApp, map and booking form
 """

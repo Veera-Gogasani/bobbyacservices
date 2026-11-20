@@ -150,6 +150,9 @@ POSTS = [
 },
 ]
 
+from new_posts import NEW_POSTS, NEW_STRINGS
+POSTS[:0] = NEW_POSTS
+
 add_strings = {
  'blog.related': ("Need help with this?", "దీనికి సహాయం కావాలా?", "इसमें मदद चाहिए?"),
  'blog.relatedp': ("Book a doorstep visit from BOBBY in Narasaraopet.", "నరసరావుపేటలో BOBBY ఇంటి వద్ద విజిట్ బుక్ చేయండి.", "नरसरावपेट में BOBBY की घर पर विज़िट बुक करें।"),
@@ -157,3 +160,4 @@ add_strings = {
  'blog.more': ("More guides", "మరిన్ని గైడ్‌లు", "और गाइड"),
  'blog.disclaimer': ("General guidance only. For electrical faults, always call a trained technician.", "ఇది సాధారణ మార్గదర్శకం మాత్రమే. ఎలక్ట్రికల్ లోపాల కోసం ఎల్లప్పుడూ శిక్షణ పొందిన టెక్నీషియన్‌ను పిలవండి.", "यह सिर्फ़ सामान्य जानकारी है। इलेक्ट्रिकल खराबी के लिए हमेशा प्रशिक्षित टेक्नीशियन को बुलाएँ।"),
 }
+add_strings.update(NEW_STRINGS)
