@@ -727,7 +727,7 @@ def page(path, html_):
 
 def build_home():
     ld = [business_ld(),
-          {'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': BRAND, 'inLanguage': ['en', 'te', 'hi'], 'publisher': {'@id': SITE + '/#business'}},
+          {'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'BOBBY AC Services', 'alternateName': ['BOBBY AC Repair & Home Appliance Services', 'bobbyacservices.com', 'BOBBY AC Narasaraopet'], 'inLanguage': ['en', 'te', 'hi'], 'publisher': {'@id': SITE + '/#business'}},
           {'@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', 'name': BRAND, 'url': SITE + '/', 'logo': SITE + '/assets/img/bobby-logo-640.webp', 'telephone': PHONE_TEL}]
     chips = [('c1', 'install', 'svc.ac_install.name'), ('c2', 'wrench', 'svc.ac_repair.name'), ('c3', 'ac', 'svc.ac_servicing.name'), ('c4', 'gauge', 'chip.gas')]
     S['chip.gas'] = ("Gas Filling", "గ్యాస్ ఫిల్లింగ్", "गैस फिलिंग")
@@ -772,8 +772,8 @@ def build_home():
         steps_block() +
         f'<section class="sec sec-alt" id="blog"><div class="wrap">{sec_head("blogh.eyebrow", "blogh.h2", "blogh.sub")}{blog_cards(POSTS[:3])}<p style="text-align:center;margin-top:28px" class="reveal"><a class="btn btn-line" href="/blog/">{tx("btn.allblog")}{ic("arrow")}</a></p></div></section>' +
         asm_section(trust_strip()))
-    page('/', head('AC Repair in Narasaraopet | BOBBY AC Services',
-                 'Need AC repair in Narasaraopet? BOBBY provides AC installation, servicing, gas leak inspection and appliance repair. Call or WhatsApp +91 83748 89163.',
+    page('/', head('BOBBY AC, Washing Machine Repair & Home Appliance Services - Narasaraopet',
+                 'Doorstep AC repair, AC servicing & installation, washing machine, refrigerator, air cooler and fan repair in Narasaraopet + 20 km. Call or WhatsApp +91 83748 89163.',
                    '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=19">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=7" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
@@ -809,7 +809,7 @@ def about_body():
 def build_inner():
     # about
     p = '/about/'
-    page(p, head('About BOBBY | AC Repair & Appliance Services',
+    page(p, head('About Us | BOBBY AC & Home Appliance Services Narasaraopet',
                  'Learn about BOBBY AC Repair & Home Appliance Services in Narasaraopet: our services, inspection-first process and doorstep service coverage.', p, 'nav.about',
                  [business_ld(), crumbs_ld([('Home', '/'), ('About Us', p)])]) + header('about') +
          phero('p.about.h1', 'p.about.sub', [('crumb.home', '/'), ('nav.about', p)]) +
@@ -819,7 +819,7 @@ def build_inner():
     # AC services
     p = '/ac-services/'
     sl = [service_ld(plain('ac.%s.t' % L), plain('ac.%s.d' % L), p + '#' + a) for L, a, *_ in AC_BLOCKS]
-    page(p, head('AC Repair, Servicing & Installation in Narasaraopet',
+    page(p, head('AC Services - Repair, Servicing & Installation | BOBBY Narasaraopet',
                  'Book AC repair, installation, uninstallation, servicing and gas filling checks in Narasaraopet. Split and window AC service. Call BOBBY today.',
                  p, 'nav.ac', [business_ld(), crumbs_ld([('Home', '/'), ('AC Services', p)])] + sl) + header('ac') +
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) + quick_answer('ac') +
@@ -831,7 +831,7 @@ def build_inner():
     # Appliance
     p = '/appliance-services/'
     sl = [service_ld(plain('ap.%s.t' % k), plain('svc.%s.desc' % k), p + '#' + a) for k, a in AP_BLOCKS]
-    page(p, head('Refrigerator & Washing Machine Repair Narasaraopet',
+    page(p, head('Washing Machine & Refrigerator Repair | BOBBY Narasaraopet',
                  'Need refrigerator, washing machine, air cooler or ceiling fan repair in Narasaraopet? Contact BOBBY for doorstep appliance service.',
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) + quick_answer('ap') +
@@ -841,7 +841,7 @@ def build_inner():
 
     # Brands
     p = '/brands/'
-    page(p, head('AC & Appliance Brands Serviced in Narasaraopet',
+    page(p, head('Brands We Service - LG, Samsung, Daikin, Voltas | BOBBY Narasaraopet',
                  'BOBBY provides independent multi-brand AC and appliance repair for LG, Daikin, Samsung, Voltas, Blue Star, Panasonic and other brands.',
                  p, 'nav.brands', [business_ld(), crumbs_ld([('Home', '/'), ('Brands We Service', p)])]) + header('brands') +
          phero('p.brands.h1', 'p.brands.sub', [('crumb.home', '/'), ('nav.brands', p)]) +
@@ -853,7 +853,7 @@ def build_inner():
     p = '/faqs/'
     fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in range(1, FAQ_N + 1)]}
-    page(p, head('AC Repair FAQs in Narasaraopet | BOBBY',
+    page(p, head('FAQs - AC & Appliance Repair Questions | BOBBY Narasaraopet',
                  'Answers about AC repair, servicing, installation, gas filling, spare parts, appliance repairs and service areas in Narasaraopet, plus an AC electricity cost calculator.',
                  p, 'nav.faqs', [business_ld(), crumbs_ld([('Home', '/'), ('FAQs', p)]), fld]) + header('faqs') +
          phero('p.faqs.h1', 'p.faqs.sub', [('crumb.home', '/'), ('nav.faqs', p)]) +
@@ -878,7 +878,7 @@ def build_inner():
 <div class="map ct-map"><iframe title="{esc(plain('loc.map'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe></div></div>
 <div class="ct-card ct-how reveal d1"><h2 class="ct-h">{tx('c.how.h')}</h2><ol class="ct-steps">{steps}</ol><ul class="ct-chips">{chips}</ul></div>
 </aside>'''
-    page(p, head('Contact BOBBY | Book AC Repair in Narasaraopet',
+    page(p, head('Contact & Book Service | BOBBY AC Services Narasaraopet',
                  'Contact BOBBY in Narasaraopet for AC repair and home appliance service. Call, WhatsApp or request a technician visit using our booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
@@ -886,7 +886,7 @@ def build_inner():
 
     # Blog index + posts
     p = '/blog/'
-    page(p, head('AC & Appliance Care Tips | BOBBY Narasaraopet',
+    page(p, head('Blog - AC & Appliance Care Tips | BOBBY Narasaraopet',
                  'AC repair and servicing guides from BOBBY, Narasaraopet: AC not cooling, electricity saving, best AC brands, gas filling, water leakage and more.',
                  p, 'nav.blog', [business_ld(), crumbs_ld([('Home', '/'), ('Blog', p)])]) + header('blog') +
          phero('p.blog.h1', 'p.blog.sub', [('crumb.home', '/'), ('nav.blog', p)]) +
