@@ -110,6 +110,18 @@ def wa_service(svc):
 
 ART_W = {'about-photo': 1536, 'why': 1200}
 def art_url(key, size='lg'): return f'/assets/img/art/{key}-{size}.webp'
+def og_url(key):
+    """1200x630 JPEG share image (WhatsApp/Facebook) made from an artwork, created once."""
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/assets/img/og', key + '.jpg')
+    if not os.path.exists(out):
+        from PIL import Image
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        im = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/assets/img/art', key + '-lg.webp')).convert('RGB')
+        W, H = im.size; r = 1200 / 630
+        if W / H > r: w = round(H * r); im = im.crop(((W - w) // 2, 0, (W - w) // 2 + w, H))
+        else: h = round(W / r); im = im.crop((0, (H - h) // 2, W, (H - h) // 2 + h))
+        im.resize((1200, 630), Image.LANCZOS).save(out, quality=84, optimize=True, progressive=True)
+    return f'/assets/img/og/{key}.jpg'
 def img(key, w, h, alt_key, eager=False, cls='', sizes='(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 600px'):
     """Original BOBBY artwork (WebP, 2 sizes)."""
     load = 'fetchpriority="high"' if eager else 'loading="lazy"'
@@ -235,7 +247,7 @@ def business_ld():
     return {
         '@context': 'https://schema.org', '@type': 'HVACBusiness', '@id': SITE + '/#business',
         'name': BRAND, 'alternateName': 'Bobby AC Repair', 'url': SITE + '/',
-        'telephone': PHONE_TEL, 'image': SITE + '/assets/img/og-image.jpg', 'logo': SITE + '/assets/img/bobby-logo-640.webp',
+        'telephone': PHONE_TEL, 'image': SITE + '/assets/img/og-bobby.jpg', 'logo': SITE + '/assets/img/bobby-logo-640.webp',
         'slogan': en('brand.tagline'),
         'address': {'@type': 'PostalAddress', 'streetAddress': ADDRESS['street'], 'addressLocality': ADDRESS['locality'], 'postalCode': ADDRESS['postal'], 'addressRegion': REGION, 'addressCountry': 'IN'},
         'openingHoursSpecification': {'@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens': '00:00', 'closes': '23:59'},
@@ -260,7 +272,8 @@ I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hex
 
 def head(title, desc, path, title_key=None, ld=(), og_img=None):
     url = SITE + path
-    og = og_img or SITE + '/assets/img/og-image.jpg'
+    og = og_img or SITE + '/assets/img/og-bobby.jpg'
+    og_alt = title if og_img else 'Bobby, AC and home appliance technician in Narasaraopet'
     tk = f' data-title-key="{title_key}"' if title_key else ''
     lds = ''.join('<script type="application/ld+json">%s</script>\n' % json.dumps(x, ensure_ascii=False) for x in ld)
     return f'''<!DOCTYPE html>
@@ -279,8 +292,16 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{og}">
+<meta property="og:image:secure_url" content="{og}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{esc(og_alt)}">
 <meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(desc)}">
+<meta name="twitter:image" content="{og}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -904,7 +925,7 @@ def build_inner():
                 {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in post['faq']]})
         page(pp, head(post.get('seo', title_en + ' | BOBBY'), post.get('desc', plain('post.%s.excerpt' % s)), pp, 'post.%s.title' % s,
                       lds,
-                      og_img=SITE + art_url(post['img'])) + header('blog') +
+                      og_img=SITE + og_url(post['img'])) + header('blog') +
              f'''<section class="phero"><div class="wrap"><nav class="crumbs anim" aria-label="Breadcrumb"><ol><li><a href="/">{tx('crumb.home')}</a></li><li><a href="/blog/">{tx('nav.blog')}</a></li><li aria-current="page">{tx('post.%s.title' % s)}</li></ol></nav>
 <h1 class="anim d1">{tx('post.%s.title' % s)}</h1><p class="anim d2">{tx('post.%s.excerpt' % s)}</p>
 <p class="post-meta anim d2"><span>{tx('blog.by')} <b>{esc(BRAND)}</b></span><span>{tx('blog.pub')} <time datetime="{post['date']}">{fmt_date(post['date'])}</time></span><span>{tx('blog.upd')} <time datetime="{post.get('updated', post['date'])}">{fmt_date(post.get('updated', post['date']))}</time></span></p></div></section>
