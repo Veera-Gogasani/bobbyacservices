@@ -301,3 +301,4 @@
 @media (max-width:420px){.hero-duo .bh2s .bobby-hero-btn-glass svg,.hero-duo .bh2s .bobby-hero-btn-orange svg{display:none}.hero-duo .bh2s .bobby-hero-ctas{grid-template-columns:1.15fr .95fr 1.1fr}}
 @media (max-width:760px){.hero-duo .bh2s .bobby-hero-btn{white-space:normal;line-height:1.2;text-align:center;min-height:44px}}
 @media (max-width:760px){.hero-duo{--hero-h:max(calc(100svh - var(--hero-top) - var(--hero-bar)),min(660px,calc(56vw + 450px)))}}
+@media (max-width:767px){:root{--hero-top:62px}}
