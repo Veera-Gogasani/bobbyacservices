@@ -70,9 +70,9 @@ add({
 # ---------- home ----------
 add({
  'hero.eyebrow': ("Doorstep AC service in Narasaraopet", "నరసరావుపేటలో ఇంటి వద్దకే ఏసీ సర్వీస్", "नरसरावपेट में घर पर एसी सर्विस"),
- 'hero.h1': ("Reliable <span class=\"hl\">AC Repair &amp; Services</span> at Your Doorstep",
-             "మీ ఇంటి వద్దకే నమ్మకమైన <span class=\"hl\">ఏసీ రిపేర్ &amp; సర్వీసులు</span>",
-             "आपके घर पर भरोसेमंद <span class=\"hl\">एसी रिपेयर और सर्विस</span>"),
+ 'hero.h1': ("Reliable <span class=\"hl-ac\">AC</span> &amp; <span class=\"hl-wm\">Washing Machine</span> Repair Services at Your Doorstep",
+             "మీ ఇంటి వద్దకే నమ్మకమైన <span class=\"hl-ac\">ఏసీ</span> &amp; <span class=\"hl-wm\">వాషింగ్ మెషిన్</span> రిపేర్ సర్వీసులు",
+             "आपके घर पर भरोसेमंद <span class=\"hl-ac\">एसी</span> और <span class=\"hl-wm\">वॉशिंग मशीन</span> रिपेयर सर्विस"),
  'hero.sub': ("Looking for dependable AC repair and servicing in Narasaraopet? BOBBY provides AC installation, uninstallation, servicing, gas filling and repair, along with home appliance repair services.",
               "నరసరావుపేటలో నమ్మకమైన ఏసీ రిపేర్ మరియు సర్వీసింగ్ కోసం చూస్తున్నారా? BOBBY ఏసీ ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్, సర్వీసింగ్, గ్యాస్ ఫిల్లింగ్, రిపేర్‌తో పాటు గృహోపకరణాల రిపేర్ సేవలను అందిస్తుంది.",
               "नरसरावपेट में भरोसेमंद एसी रिपेयर और सर्विसिंग चाहिए? BOBBY एसी इंस्टॉलेशन, अनइंस्टॉलेशन, सर्विसिंग, गैस फिलिंग और रिपेयर के साथ घरेलू उपकरणों की रिपेयर सेवाएँ भी देता है।"),
