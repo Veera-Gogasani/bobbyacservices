@@ -1088,3 +1088,4 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 @media (max-width:767px){.topbar{display:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}}
 
 .fprivacy{margin:6px auto 0;max-width:460px;text-align:center;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.fprivacy{display:flex;gap:7px;align-items:flex-start;justify-content:center;text-align:left}.fprivacy svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--muted)}

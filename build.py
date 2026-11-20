@@ -190,7 +190,7 @@ def booking_form(p, inline=False):
     clock = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
     lock = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>'
     return f'''<form class="{cls}"{hid} novalidate data-prefix="{p}">
-<div class="fhead"><div class="fhead-top"><h2 id="{p}Title">{tx('f.h')}</h2><span class="ftime">{clock}<span data-i18n="f.time">{en('f.time')}</span></span></div><p class="fnote">{ic('info')}{tx('f.note')}</p></div>
+<div class="fhead"><div class="fhead-top"><h2 id="{p}Title">{tx('f.h')}</h2><span class="ftime">{clock}<span data-i18n="f.time">{en('f.time')}</span></span></div></div>
 <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
 <fieldset class="fgrp">{legend(1, 'f.g1')}
 <div class="frow"><div class="field"><label for="{p}Name">{tx('f.name')} <span class="req">*</span></label><input id="{p}Name" name="name" autocomplete="name" maxlength="60" required placeholder="{esc(plain('f.ph.name'))}" data-i18n-ph="f.ph.name"><p class="emsg"></p></div>
@@ -212,7 +212,7 @@ def booking_form(p, inline=False):
 <fieldset class="fgrp">{legend(4, 'f.g4')}
 <div class="field"><label for="{p}Msg">{tx('f.msg')}</label><textarea id="{p}Msg" name="msg" rows="3" maxlength="500" placeholder="{esc(plain('f.ph.msg'))}" data-i18n-ph="f.ph.msg"></textarea></div>
 </fieldset>
-<div class="fsubmit"><button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="fsecure">{lock}<span data-i18n="f.secure">{en('f.secure')}</span></p><p class="fprivacy" data-i18n="f.privacy">{en('f.privacy')}</p></div><p class="form-msg" role="status" aria-live="polite"></p>
+<div class="fsubmit"><button class="btn btn-wa" type="submit">{wa_ic()}{tx('f.submit')}</button><p class="fsecure">{lock}<span data-i18n="f.secure">{en('f.secure')}</span></p><p class="fprivacy">{ic('info')}{tx('f.note')}</p></div><p class="form-msg" role="status" aria-live="polite"></p>
 <div class="book-done" hidden tabindex="-1"><span class="bd-ic">{ic('check')}</span>{tx('f.thanks.h', 'h3')}{tx('f.thanks.p', 'p')}<p class="bd-sign" data-i18n="f.thanks.sign">{en('f.thanks.sign')}</p><p class="bd-tip">{tx('f.thanks.tip')}</p>
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div><p class="bd-alt">{tx('wa.alt.h', 'b')} <a class="bd-sms" href="sms:+918374889163">{tx('wa.sms')}</a><a class="bd-tel" href="tel:+918374889163">{tx('wa.call')}: +91 83748 89163</a></p></div></form>'''
 
