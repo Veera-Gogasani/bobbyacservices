@@ -352,7 +352,9 @@ def build_service_pages():
 import hashlib as _hl
 EST_JSON = EST.estimate_json()
 EST_JSON['biz'] = {'phone': PHONE_TXT, 'wa': WA_NUM, 'web': DOMAIN if DOMAIN_CONNECTED else SITE.replace('https://', ''),
-                   'address': '%s, %s, Andhra Pradesh %s' % (ADDRESS['street'], ADDRESS['locality'], ADDRESS['postal'])}
+                   'address': '%s, %s, Andhra Pradesh %s' % (ADDRESS['street'], ADDRESS['locality'], ADDRESS['postal']),
+                   'book': SITE + '/contact/#book'}
+for _c in EST_JSON['cats']: _c['svg'] = '<svg viewBox="0 0 24 24" aria-hidden="true">%s</svg>' % ICONS[_c['icon']]
 EST_V = _hl.md5(json.dumps(EST_JSON, sort_keys=True).encode()).hexdigest()[:8]
 I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
 

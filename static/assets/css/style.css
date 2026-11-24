@@ -1163,3 +1163,22 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 @media(max-width:600px){.est-panel{padding:18px 14px 14px;width:calc(100% - 12px);max-height:calc(100dvh - 12px)}.est-panel>h2{font-size:19px}.est-list li{padding:9px 10px}.est-n{font-size:13.8px}}
 .est-panel{background:#fff;box-shadow:var(--shadow-lg)}
 @media(max-width:600px){.est-actions{gap:8px;bottom:-14px}.est-actions .btn{font-size:14px;padding:12px 6px;min-width:0;white-space:nowrap}}
+.est-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.est-cat{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px 10px;border:1.5px solid var(--line);border-radius:14px;background:#fff;font:inherit;font-size:13.5px;font-weight:700;color:var(--navy);cursor:pointer;text-align:center;line-height:1.25;transition:border-color .15s,background .15s,box-shadow .15s}
+.est-cat:hover{border-color:#B7D3EA}
+.est-cat .est-cat-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--bg);color:var(--blue)}
+.est-cat .est-cat-ic svg{width:24px;height:24px}
+.est-cat.on{border-color:var(--blue);background:#F2F9FF;box-shadow:0 0 0 3px rgba(22,136,212,.12)}
+.est-cat.on .est-cat-ic{background:var(--blue);color:#fff}
+.est-tick{position:absolute;top:6px;right:7px;width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-style:normal;display:none;place-items:center;line-height:18px}
+.est-cat.on .est-tick{display:grid}
+.est-grp{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.est-grp+.est-grp{margin-top:10px}
+.est-grp-h{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);margin-bottom:8px;font-size:15px}
+.est-grp-h .est-cat-ic{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--blue);color:#fff}
+.est-grp-h .est-cat-ic svg{width:17px;height:17px}
+.est-parts{margin-top:10px;border:1px dashed #C9D9E8;border-radius:12px;padding:10px 12px;background:#fff}
+.est-parts-h{font-weight:700;color:var(--navy);font-size:14px}
+.est-sub{margin-bottom:6px}
+.est-h3+.est-mini{margin-top:-4px}
+@media(max-width:380px){.est-cat{font-size:12.5px;padding:10px 4px 8px}}

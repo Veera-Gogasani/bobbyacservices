@@ -3,7 +3,7 @@
   var modal = document.getElementById('estModal');
   if (!modal) return;
   var body = modal.querySelector('.est-body');
-  var DATA = null, loading = null, sel = {}, parts = [], lastFocus = null;
+  var DATA = null, loading = null, sel = {}, parts = [], cats = {}, lastFocus = null;
   var JSPDF_SRC = '/assets/js/vendor/jspdf.umd.min.js';
 
   function lang() { var l = (document.documentElement.lang || 'en').slice(0, 2); return (l === 'te' || l === 'hi') ? l : 'en'; }
@@ -24,9 +24,10 @@
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     body.innerHTML = '<p class="est-load">…</p>';
     load().then(function () {
-      if (preset && DATA.services.some(function (s) { return s.id === preset; }) && !sel[preset]) sel[preset] = 1;
+      var ps = preset && DATA.services.filter(function (s) { return s.id === preset; })[0];
+      if (ps) { cats[ps.cat] = true; if (!sel[preset]) sel[preset] = 1; }
       render();
-      var f = modal.querySelector('.est-svc input'); if (f) f.focus({ preventScroll: true });
+      var f = modal.querySelector('.est-cat'); if (f) f.focus({ preventScroll: true });
     }).catch(function () { body.innerHTML = '<p class="est-load">Could not load prices. Please call +91 83748 89163.</p>'; });
   }
   function close() {
@@ -53,14 +54,13 @@
     return '<span class="est-qty" data-kind="' + kind + '" data-id="' + esc(id) + '"><button type="button" data-d="-1" aria-label="−">−</button><b>' + q + '</b><button type="button" data-d="1" aria-label="+">+</button></span>';
   }
 
-  function render() {
-    var lg = lang();
-    var svc = DATA.services.map(function (s) {
-      var q = sel[s.id] || 0;
-      return '<li class="est-svc' + (q ? ' on' : '') + '"><label><input type="checkbox" data-svc="' + s.id + '"' + (q ? ' checked' : '') + '>' +
-        '<span class="est-n">' + esc(s.name[lg] || s.name.en) + '<small>' + rng(s.min, s.max) + ' ' + esc(L('est.u.' + s.unit)) + (s.plus ? ' · ' + esc(L('est.plusparts')) : '') + '</small></span></label>' +
-        (q ? stepper(s.id, q, 'svc') : '') + '</li>';
-    }).join('');
+  function svcRow(s, lg) {
+    var q = sel[s.id] || 0;
+    return '<li class="est-svc' + (q ? ' on' : '') + '"><label><input type="checkbox" data-svc="' + s.id + '"' + (q ? ' checked' : '') + '>' +
+      '<span class="est-n">' + esc(s.name[lg] || s.name.en) + '<small>' + rng(s.min, s.max) + ' ' + esc(L('est.u.' + s.unit)) + (s.plus ? ' · ' + esc(L('est.plusparts')) : '') + '</small></span></label>' +
+      (q ? stepper(s.id, q, 'svc') : '') + '</li>';
+  }
+  function partsBlock() {
     var groups = {}, order = [];
     DATA.parts.forEach(function (p, i) { if (!groups[p.cat]) { groups[p.cat] = []; order.push(p.cat); } groups[p.cat].push('<option value="' + i + '">' + esc(p.name) + ' (' + rng(p.min, p.max) + ')</option>'); });
     var opts = order.map(function (c) { return '<optgroup label="' + esc(c) + '">' + groups[c].join('') + '</optgroup>'; }).join('');
@@ -68,22 +68,35 @@
       return '<li><span class="est-n">' + esc(p.name) + '<small>' + rng(p.min, p.max) + ' ' + esc(p.unit) + '</small></span>' + stepper(i, p.q, 'part') +
         '<button type="button" class="est-rm" data-rm="' + i + '" aria-label="' + esc(L('est.remove')) + '">×</button></li>';
     }).join('');
+    return '<div class="est-parts"><p class="est-parts-h">' + esc(L('est.parts')) + '</p><p class="est-mini">' + esc(L('est.parts.p')) + '</p>' +
+      '<div class="est-pick"><select aria-label="' + esc(L('est.pick')) + '"><option value="">' + esc(L('est.pick')) + '</option>' + opts + '</select>' +
+      '<button type="button" class="btn btn-line btn-sm est-add">' + esc(L('est.add')) + '</button></div>' +
+      (plist ? '<ul class="est-list est-plist">' + plist + '</ul>' : '') + '</div>';
+  }
+
+  function render() {
+    var lg = lang();
+    var chips = DATA.cats.map(function (c) {
+      var on = !!cats[c.id];
+      return '<button type="button" class="est-cat' + (on ? ' on' : '') + '" data-cat="' + c.id + '" aria-pressed="' + on + '"><span class="est-cat-ic">' + c.svg + '</span><span>' + esc(c.name[lg] || c.name.en) + '</span><i class="est-tick" aria-hidden="true">✓</i></button>';
+    }).join('');
+    var groups = DATA.cats.filter(function (c) { return cats[c.id]; }).map(function (c) {
+      var rows = DATA.services.filter(function (s) { return s.cat === c.id; }).map(function (s) { return svcRow(s, lg); }).join('');
+      return '<div class="est-grp"><p class="est-grp-h"><span class="est-cat-ic">' + c.svg + '</span>' + esc(c.name[lg] || c.name.en) + '</p><ul class="est-list">' + rows + '</ul>' + (c.id === 'ac' ? partsBlock() : '') + '</div>';
+    }).join('');
     var t = totals();
     var sum = t.lines.length ? (
       '<ul class="est-lines">' + t.lines.map(function (l) {
         return '<li><span>' + esc(l.name[lg] || l.en) + (l.q > 1 ? ' × ' + l.q : '') + '</span><b>' + rng(l.min * l.q, l.max * l.q) + '</b></li>';
       }).join('') + '</ul>' +
       '<div class="est-total"><span>' + esc(L('est.total')) + '</span><b>' + rng(t.lo, t.hi) + (t.plus ? '<small>' + esc(L('est.plusparts')) + '</small>' : '') + '</b></div>'
-    ) : '<p class="est-empty">' + esc(L('est.empty')) + '</p>';
+    ) : '<p class="est-empty">' + esc(L(groups ? 'est.empty' : 'est.pickcat')) + '</p>';
     body.innerHTML =
       '<p class="est-sub">' + esc(L('est.sub')) + '</p>' +
-      '<h3 class="est-h3">' + esc(L('est.svc')) + '</h3><ul class="est-list">' + svc + '</ul>' +
-      '<details class="est-parts"' + (parts.length ? ' open' : '') + '><summary>' + esc(L('est.parts')) + '</summary><p class="est-mini">' + esc(L('est.parts.p')) + '</p>' +
-      '<div class="est-pick"><select aria-label="' + esc(L('est.pick')) + '"><option value="">' + esc(L('est.pick')) + '</option>' + opts + '</select>' +
-      '<button type="button" class="btn btn-line btn-sm est-add">' + esc(L('est.add')) + '</button></div>' +
-      (plist ? '<ul class="est-list est-plist">' + plist + '</ul>' : '') + '</details>' +
+      '<h3 class="est-h3">' + esc(L('est.step1')) + '</h3><p class="est-mini">' + esc(L('est.step1.p')) + '</p><div class="est-cats">' + chips + '</div>' +
+      (groups ? '<h3 class="est-h3">' + esc(L('est.step2')) + '</h3>' + groups : '') +
       '<div class="est-sum" aria-live="polite"><h3 class="est-h3">' + esc(L('est.sum')) + '</h3>' + sum + '</div>' +
-      '<p class="est-note">' + esc(L('est.note')) + '</p>' +
+      (t.lines.length ? '<p class="est-note">' + esc(L('est.note')) + '</p>' : '') +
       '<div class="est-actions"><button type="button" class="btn btn-orange est-pdf"' + (t.lines.length ? '' : ' disabled') + '>' + esc(L('est.pdf')) + '</button>' +
       '<button type="button" class="btn btn-wa est-wa"' + (t.lines.length ? '' : ' disabled') + '>' + esc(L('est.wa')) + '</button></div>';
   }
@@ -95,6 +108,13 @@
     render(); var el = body.querySelector('[data-svc="' + id + '"]'); if (el) el.focus({ preventScroll: true });
   });
   body.addEventListener('click', function (e) {
+    var cb = e.target.closest('.est-cat');
+    if (cb) {
+      var cid = cb.getAttribute('data-cat');
+      if (cats[cid]) { delete cats[cid]; DATA.services.forEach(function (s) { if (s.cat === cid) delete sel[s.id]; }); if (cid === 'ac') parts = []; }
+      else cats[cid] = true;
+      render(); var nb = body.querySelector('.est-cat[data-cat="' + cid + '"]'); if (nb) nb.focus({ preventScroll: true }); return;
+    }
     var b = e.target.closest('.est-qty button');
     if (b) {
       var w = b.parentNode, id = w.getAttribute('data-id'), d = +b.getAttribute('data-d');
@@ -191,8 +211,11 @@
       y += nl.length * 4.8 + 17;
       doc.setFontSize(10); doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold');
       doc.text('Book your visit: call or WhatsApp ' + b.phone, M, y);
-      doc.setFont('helvetica', 'normal'); doc.setTextColor.apply(doc, grey); doc.setFontSize(8.5);
-      doc.text('Independent multi-brand service provider. Not an authorised service centre of any brand.  |  ' + b.web, W / 2, 287, { align: 'center' });
+      y += 6.5; doc.setFont('helvetica', 'normal'); doc.setTextColor.apply(doc, navy); doc.text('Or book online: ', M, y);
+      var bx = M + doc.getTextWidth('Or book online: '); doc.setTextColor(22, 136, 212);
+      doc.textWithLink(b.book, bx, y, { url: b.book }); doc.setDrawColor(22, 136, 212); doc.line(bx, y + 0.8, bx + doc.getTextWidth(b.book), y + 0.8);
+      doc.setTextColor.apply(doc, grey); doc.setFontSize(8.5);
+      doc.text(b.web, W / 2, 287, { align: 'center' });
       doc.save('BOBBY-Estimate-' + st.file + '.pdf');
     }).catch(function () { alertMsg(); }).then(function () { btn.disabled = false; btn.textContent = label; });
   }
