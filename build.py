@@ -351,6 +351,25 @@ def build_service_pages():
              body + cta_band(parent[3]) + footer())
 
 
+
+AC_LINK_BRANDS = ['Blue Star', 'Carrier', 'Daikin', 'Godrej', 'Haier', 'Hitachi', 'LG', 'Lloyd', 'Mitsubishi', 'O General', 'Onida', 'Panasonic', 'Samsung', 'Voltas', 'Whirlpool']
+S.update({
+ 'acl.h': ("All AC Related Services in Narasaraopet", "నరసరావుపేటలో అన్ని ఏసీ సంబంధిత సేవలు", "नरसरावपेट में सभी एसी सेवाएं"),
+ 'acl.svc': ("Our AC services", "మా ఏసీ సేవలు", "हमारी एसी सेवाएं"),
+ 'acl.brands': ("AC brands we service", "మేము సర్వీస్ చేసే ఏసీ బ్రాండ్లు", "जिन एसी ब्रांड्स की हम सर्विस करते हैं"),
+ 'acl.note': ("BOBBY is an independent multi-brand AC service provider, not an authorised service centre of these brands.",
+              "బాబీ స్వతంత్ర మల్టీ-బ్రాండ్ ఏసీ సర్వీస్ ప్రొవైడర్; ఈ బ్రాండ్ల అధీకృత సర్వీస్ సెంటర్ కాదు.",
+              "BOBBY एक स्वतंत्र मल्टी-ब्रांड एसी सर्विस प्रोवाइडर है, इन ब्रांड्स का अधिकृत सर्विस सेंटर नहीं।"),
+})
+def ac_links_block():
+    svc = [('AC Service Centre Narasaraopet', '/ac-services/')] + [(x['name'] + ' in Narasaraopet', svc_link(x['slug'])) for x in SVP.SERVICES if x['group'] == 'ac']
+    br = [(b + ' AC Service in Narasaraopet', '/ac-services/') for b in AC_LINK_BRANDS]
+    chips = lambda items: ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for t, u in items)
+    return (f'<section class="sec acl-sec"><div class="wrap"><h2 class="acl-h">{tx("acl.h")}</h2><div class="acl-box">'
+            f'<p class="acl-sub">{tx("acl.svc")}</p><ul class="acl-chips">{chips(svc)}</ul>'
+            f'<p class="acl-sub">{tx("acl.brands")}</p><ul class="acl-chips">{chips(br)}</ul>'
+            f'<p class="acl-note">{tx("acl.note")}</p></div></div></section>')
+
 import hashlib as _hl
 EST_JSON = EST.estimate_json()
 EST_JSON['biz'] = {'phone': PHONE_TXT, 'wa': WA_NUM, 'web': DOMAIN if DOMAIN_CONNECTED else SITE.replace('https://', ''),
@@ -999,7 +1018,7 @@ def build_inner():
                  'Contact BOBBY in Narasaraopet for AC repair and home appliance service. Call, WhatsApp or request a technician visit using our booking form.',
                  p, 'nav.contact', [business_ld(), crumbs_ld([('Home', '/'), ('Contact Us', p)])]) + header('contact') +
          phero('p.contact.h1', 'p.contact.sub', [('crumb.home', '/'), ('nav.contact', p)]) +
-         f'<section class="sec ct-sec"><div class="wrap">{quick}<div class="ct-grid">{form}{cards}</div></div></section>' + footer())
+         f'<section class="sec ct-sec"><div class="wrap">{quick}<div class="ct-grid">{form}{cards}</div></div></section>' + ac_links_block() + footer())
 
     # Blog index + posts
     p = '/blog/'
