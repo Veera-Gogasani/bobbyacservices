@@ -256,7 +256,7 @@ def business_ld():
         'email': OWNER_EMAIL,
         'founder': {'@type': 'Person', 'name': OWNER_NAME, 'alternateName': 'Bobby'},
         'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'AC & Home Appliance Services', 'itemListElement': [
-            {'@type': 'Offer', 'itemOffered': {'@type': 'Service', 'name': n, 'url': SITE + u}} for n, u in [
+            {'@type': 'Offer', 'itemOffered': {'@type': 'Service', 'name': n, 'url': SITE + SVP.ANCHOR_TO_PAGE.get(u, u)}} for n, u in [
                 ('AC Installation', '/ac-services/#ac-installation'), ('AC Uninstallation', '/ac-services/#ac-uninstallation'), ('AC Repair', '/ac-services/#ac-repair'),
                 ('AC Servicing', '/ac-services/#ac-servicing'), ('AC Gas Filling', '/ac-services/#ac-gas-filling'), ('AC Deep Cleaning', '/ac-services/#ac-deep-cleaning'),
                 ('Refrigerator Repair', '/appliance-services/#refrigerator'), ('Washing Machine Repair', '/appliance-services/#washing-machine'),
@@ -266,6 +266,83 @@ def business_ld():
 def crumbs_ld(items):
     return {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': SITE + u} for i, (n, u) in enumerate(items)]}
+
+
+# ---------------- dedicated service landing pages ----------------
+import svc_pages as SVP
+S.update({
+ 'svp.lang': ("Detailed service information on this page is in English. You can call or WhatsApp us in Telugu, Hindi or English.",
+              "ఈ పేజీలోని వివరమైన సమాచారం ఆంగ్లంలో ఉంది. తెలుగు, హిందీ లేదా ఆంగ్లంలో మాకు కాల్ లేదా వాట్సాప్ చేయవచ్చు.",
+              "इस पेज की विस्तृत जानकारी अंग्रेज़ी में है। आप हमें तेलुगु, हिंदी या अंग्रेज़ी में कॉल या व्हाट्सऐप कर सकते हैं।"),
+ 'svp.inc.h': ("What's included", "ఇందులో ఉన్నవి", "इसमें क्या शामिल है"),
+ 'svp.prob.eb': ("Common problems", "సాధారణ సమస్యలు", "आम समस्याएं"),
+ 'svp.prob.h': ("Problems we check and fix", "మేము తనిఖీ చేసి సరిచేసే సమస్యలు", "समस्याएं जिन्हें हम जांचते और ठीक करते हैं"),
+ 'svp.est.h': ("How estimates work", "అంచనా ఎలా ఇస్తాం", "अनुमान कैसे दिया जाता है"),
+ 'svp.est.p': ("Every appliance and fault is different, so we do not quote a fixed price over the phone. The technician inspects at your home, explains the problem and gives you an estimate, including any parts. Work starts only after you approve it.",
+               "ప్రతి ఉపకరణం, సమస్య వేరు కాబట్టి ఫోన్‌లో స్థిర ధర చెప్పము. టెక్నీషియన్ ఇంటి వద్ద తనిఖీ చేసి, సమస్య వివరించి, విడిభాగాలతో సహా అంచనా ఇస్తారు. మీరు ఒప్పుకున్న తర్వాతే పని మొదలవుతుంది.",
+               "हर उपकरण और खराबी अलग होती है, इसलिए हम फ़ोन पर तय कीमत नहीं बताते। टेक्नीशियन घर पर जांच करके समस्या समझाते हैं और पार्ट्स सहित अनुमान देते हैं। आपकी मंज़ूरी के बाद ही काम शुरू होता है।"),
+ 'svp.area.h': ("Areas we serve", "మేము సేవలందించే ప్రాంతాలు", "हमारे सेवा क्षेत्र"),
+ 'svp.area.p': ("Narasaraopet town and nearby villages within about 20 km. Not sure if we cover your location? Call or WhatsApp to confirm.",
+                "నరసరావుపేట పట్టణం మరియు సుమారు 20 కి.మీ. లోపు గ్రామాలు. మీ ప్రాంతానికి వస్తామో లేదో కాల్ లేదా వాట్సాప్ చేసి తెలుసుకోండి.",
+                "नरसरावपेट शहर और लगभग 20 किमी के आसपास के गांव। आपके इलाके के बारे में पक्का नहीं? कॉल या व्हाट्सऐप करके पूछें।"),
+ 'svp.area.more': ("+ nearby villages within about 20 km", "+ సుమారు 20 కి.మీ. లోపు గ్రామాలు", "+ लगभग 20 किमी के गांव"),
+ 'svp.faq.eb': ("Questions", "ప్రశ్నలు", "सवाल"),
+ 'svp.rel.h': ("Related services", "సంబంధిత సేవలు", "संबंधित सेवाएं"),
+ 'svp.view': ("View service", "సేవ చూడండి", "सेवा देखें"),
+ 'svp.all.h': ("Explore each service", "ప్రతి సేవను చూడండి", "हर सेवा देखें"),
+})
+for _s in SVP.SERVICES:
+    S['svp.%s.h1' % _s['slug']] = _s['h1']; S['svp.%s.sub' % _s['slug']] = _s['sub']
+
+def svc_link(slug): return '/%s/' % slug
+SVC_PAGE = {sv['price']: svc_link(sv['slug']) for sv in SVP.SERVICES}
+def svc_more(key):
+    u = SVC_PAGE.get(key)
+    return f'<a class="svc-more" href="{u}">{tx("svp.view")} {ic("arrow")}</a>' if u else ''
+
+def svc_related(slugs, title_key='svp.rel.h'):
+    cards = ''
+    for i, x in enumerate(slugs):
+        sv = SVP.BY_SLUG[x]
+        cards += (f'<a class="svp-rel-card reveal d{i % 3}" href="{svc_link(x)}"><span class="svp-rel-ic">{ic(sv["icon"])}</span>'
+                  f'<span><b>{tx("svc.%s.name" % sv["price"])}</b><small>{tx("svp.view")} {ic("arrow")}</small></span></a>')
+    return f'<div class="svp-rel"><h2 class="svp-h">{tx(title_key)}</h2><div class="svp-rel-grid">{cards}</div></div>'
+
+def build_service_pages():
+    for s in SVP.SERVICES:
+        p = svc_link(s['slug'])
+        parent = ('/ac-services/', 'nav.ac', 'AC Services', 'ac') if s['group'] == 'ac' else ('/appliance-services/', 'nav.appliance', 'Appliance Services', 'app')
+        name_key = 'svc.%s.name' % s['price']
+        fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+            {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in [(s['q'], s['a'])] + s['faqs']]}
+        sld = service_ld(s['name'], s['a'], p)
+        sld['areaServed'] = [{'@type': 'City', 'name': CITY}] + [{'@type': 'Place', 'name': a + ', ' + CITY} for a in SVP.AREAS]
+        inc = ''.join(f'<li>{esc(x)}</li>' for x in s['includes'])
+        probs = ''.join(f'<div class="svp-pcard reveal d{i % 3}"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(s['problems']))
+        hs = 'style="font-size:inherit;color:inherit;font-weight:inherit"'
+        faqs = '<div class="faq">' + ''.join(
+            f'<details class="reveal"{" open" if i == 0 else ""}><summary><h3 {hs}>{esc(q)}</h3><span class="pm">{ic("plus")}</span></summary><div class="ans"><p>{esc(a)}</p></div></details>'
+            for i, (q, a) in enumerate(s['faqs'])) + '</div>'
+        areas = ''.join(f'<li>{ic("pin")}{esc(a)}</li>' for a in SVP.AREAS) + f'<li class="more">{ic("radius")}{tx("svp.area.more")}</li>'
+        body = (f'<section class="sec qa-sec"><div class="wrap"><p class="lang-note">{tx("svp.lang")}</p><div class="qa-box reveal"><p class="qa-label">{tx("qa.label")}</p>'
+                f'<h2 class="qa-q">{esc(s["q"])}</h2><p class="qa-a">{esc(s["a"])}</p></div></div></section>'
+                f'<section class="sec svp-main"><div class="wrap loc-grid">'
+                f'<div class="reveal svp-media">{img(s["img"], 640, 400, name_key, eager=True)}</div>'
+                f'<div class="reveal d1"><p class="lead">{esc(s["intro"])}</p><h2 class="svp-h">{tx("svp.inc.h")}</h2><ul class="ticks">{inc}</ul>'
+                f'<div class="svp-actions">{book_a(s["svc"], "btn-orange")}<a class="btn btn-line" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.call")}</a></div></div>'
+                f'</div></section>'
+                f'<section class="sec sec-alt"><div class="wrap">{sec_head("svp.prob.eb", "svp.prob.h")}<div class="svp-pgrid">{probs}</div></div></section>'
+                f'<section class="sec"><div class="wrap loc-grid">'
+                f'<div class="svp-box reveal"><h2 class="svp-h">{ic("rupee")}{tx("svp.est.h")}</h2><p>{tx("svp.est.p")}</p></div>'
+                f'<div class="svp-box reveal d1"><h2 class="svp-h">{ic("radius")}{tx("svp.area.h")}</h2><p>{tx("svp.area.p")}</p><ul class="svp-areas">{areas}</ul></div>'
+                f'</div></section>' + steps_block() +
+                f'<section class="sec sec-alt"><div class="wrap">{sec_head("svp.faq.eb", "faqh.h2")}{faqs}</div></section>'
+                f'<section class="sec"><div class="wrap">{svc_related(s["related"])}</div></section>')
+        page(p, head(s['title'], s['desc'], p, None,
+                     [business_ld(), crumbs_ld([('Home', '/'), (parent[2], parent[0]), (s['name'], p)]), sld, fld]) + header(parent[3]) +
+             phero('svp.%s.h1' % s['slug'], 'svp.%s.sub' % s['slug'], [('crumb.home', '/'), (parent[1], parent[0]), (name_key, p)]) +
+             body + cta_band(parent[3]) + footer())
+
 
 import hashlib as _hl
 I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
@@ -356,7 +433,7 @@ def footer():
     acl = [('/ac-services/#ac-repair','svc.ac_repair.name'),('/ac-services/#ac-servicing','svc.ac_servicing.name'),
            ('/ac-services/#ac-installation','svc.ac_install.name'),('/ac-services/#ac-uninstallation','svc.ac_uninstall.name'),
            ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
-    a = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k in acl)
+    a = ''.join(f'<li><a href="{SVP.ANCHOR_TO_PAGE.get(u, u)}">{tx(k)}</a></li>' for u, k in acl)
     return f'''</main>
 <footer class="ftr">
 <div class="wrap grid">
@@ -399,7 +476,7 @@ def quick_cards():
     for i, s in enumerate(SERVICES):
         appc = ' app' if s in ('fridge', 'washer', 'cooler', 'fan') else ''
         out.append(f'''<article class="qcard reveal d{i % 4}{appc}">
-<div class="ic">{ic(SVC_ICON[s])}</div><h3>{tx("svc.%s.name" % s)}</h3><p>{tx("svc.%s.desc" % s)}</p>{price(s)}
+<div class="ic">{ic(SVC_ICON[s])}</div><h3>{f'<a href="{SVC_PAGE[s]}">' + tx("svc.%s.name" % s) + '</a>' if s in SVC_PAGE else tx("svc.%s.name" % s)}</h3><p>{tx("svc.%s.desc" % s)}</p>{price(s)}
 {book_a(s, 'btn-wa btn-sm')}</article>''')
     return '<div class="quick-grid">' + ''.join(out) + '</div>'
 
@@ -419,7 +496,7 @@ def ac_cards(featured_first=False, eager_first=False):
         feat = ' ac-featured' if (featured_first and i == 0) else ''
         out.append(f'''<article class="scard reveal d{i % 3}{feat}" id="{anchor}">
 <div class="media">{img(pk, 960 if feat else 640, 600 if feat else 400, "ac.%s.t" % L, eager=bool(feat) or (eager_first and i == 0))}<span class="tag">{tx("ac.%s.t" % L)}</span>{price(prk, "tag")}</div>
-<div class="body"><h3>{tx("ac.%s.t" % L)}</h3><p>{tx("ac.%s.d" % L)}</p><ul class="ticks">{lis}</ul>{note}
+<div class="body"><h3>{tx("ac.%s.t" % L)}</h3><p>{tx("ac.%s.d" % L)}</p><ul class="ticks">{lis}</ul>{note}{svc_more(prk)}
 <div class="actions">{book_a(sk, 'btn-primary btn-sm')}<a class="btn btn-line btn-sm" href="tel:{PHONE_TEL}">{ic('phone')}{tx("btn.call")}</a></div></div></article>''')
     pf = f'<p class="price-foot">{tx("price.note")}</p>' if any_price() else ''
     return '<div class="ac-grid">' + ''.join(out) + '</div>' + pf
@@ -431,7 +508,7 @@ def app_cards(eager_first=False):
         lis = ''.join(f'<li>{tx("ap.%s.%d" % (k, j))}</li>' for j in range(1, 4))
         out.append(f'''<article class="scard reveal d{i}" id="{anchor}">
 <div class="media">{img(k, 600, 450, "ap.%s.t" % k, eager=eager_first and i == 0)}<span class="tag">{tx("svc.%s.name" % k)}</span>{price(k, "tag")}</div>
-<div class="body"><h3>{tx("ap.%s.t" % k)}</h3><ul class="ticks">{lis}</ul>
+<div class="body"><h3>{tx("ap.%s.t" % k)}</h3><ul class="ticks">{lis}</ul>{svc_more(k)}
 <div class="actions">{book_a(k, 'btn-orange btn-sm')}</div></div></article>''')
     return '<div class="app-grid app">' + ''.join(out) + '</div>'
 
@@ -685,6 +762,7 @@ def asm_section(ticker=''):
 </div>
 <div id="asm-end">{ticker}</div>
 <script>(function(){{var s=document.getElementById('ac-assembly'),ok=false;try{{var c=document.createElement('canvas');ok=!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}}catch(e){{}}
+var cn=navigator.connection;if(cn&&(cn.saveData||/(^|-)2g$/.test(cn.effectiveType||'')))ok=false;
 if(!ok){{s.classList.add('a2-static');return;}}
 var go=function(){{var j=document.createElement('script');j.src='/assets/js/ac-assembly.js?v={ASM_V}';j.async=true;j.onerror=function(){{s.classList.add('a2-static');}};document.body.appendChild(j);}};
 if('IntersectionObserver'in window){{var io=new IntersectionObserver(function(e){{if(e[0].isIntersecting){{io.disconnect();go();}}}},{{rootMargin:'120% 0px'}});io.observe(s);}}else go();}})();</script>
@@ -845,6 +923,7 @@ def build_inner():
                  p, 'nav.ac', [business_ld(), crumbs_ld([('Home', '/'), ('AC Services', p)])] + sl) + header('ac') +
          phero('p.ac.h1', 'p.ac.sub', [('crumb.home', '/'), ('nav.ac', p)]) + quick_answer('ac') +
          f'''<section class="sec"><div class="wrap">{sec_head("acsec.eyebrow", "acsec.h2", "acsec.sub")}{ac_cards(eager_first=True)}</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">{svc_related([x['slug'] for x in SVP.SERVICES if x['group']=='ac'], 'svp.all.h')}</div></section>
 <section class="sec sec-alt"><div class="wrap loc-grid"><div class="reveal"><h2>{tx('ac.types.h')}</h2><p class="lead" style="margin-top:12px">{tx('ac.types.p')}</p><p class="note" style="margin-top:18px">{ic('info')}{tx('ac.E.note')}</p></div>
 <div class="reveal d2">{faq_list([2, 4, 5, 6], first_open=False)}</div></div></section>''' +
          steps_block() + '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('ac') + footer())
@@ -857,6 +936,7 @@ def build_inner():
                  p, 'nav.appliance', [business_ld(), crumbs_ld([('Home', '/'), ('Appliance Services', p)])] + sl) + header('app') +
          phero('p.app.h1', 'p.app.sub', [('crumb.home', '/'), ('nav.appliance', p)]) + quick_answer('ap') +
          f'''<section class="sec app-sec"><div class="wrap">{sec_head("appsec.eyebrow", "appsec.h2", "appsec.sub")}{app_cards(eager_first=True)}</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">{svc_related([x['slug'] for x in SVP.SERVICES if x['group']=='ap'], 'svp.all.h')}</div></section>
 <section class="sec sec-alt"><div class="wrap">{sec_head("faqh.eyebrow", "faqh.h2")}{faq_list([7, 8, 9, 13])}</div></section>''' +
          '<div style="height:clamp(64px,8vw,100px)"></div>' + cta_band('app') + footer())
 
@@ -943,8 +1023,8 @@ def build_inner():
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
     groups = [('nav.home', [('/', 'nav.home'), ('/about/', 'nav.about'), ('/contact/', 'nav.contact'), ('/faqs/', 'nav.faqs')]),
-              ('nav.ac', [('/ac-services/', 'nav.ac')] + [('/ac-services/#' + a, 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS]),
-              ('nav.appliance', [('/appliance-services/', 'nav.appliance')] + [('/appliance-services/#' + a, 'ap.%s.t' % k) for k, a in AP_BLOCKS] + [('/brands/', 'nav.brands')]),
+              ('nav.ac', [('/ac-services/', 'nav.ac')] + [(SVP.ANCHOR_TO_PAGE.get('/ac-services/#' + a, '/ac-services/#' + a), 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS]),
+              ('nav.appliance', [('/appliance-services/', 'nav.appliance')] + [(SVP.ANCHOR_TO_PAGE['/appliance-services/#' + a], 'ap.%s.t' % k) for k, a in AP_BLOCKS] + [('/brands/', 'nav.brands')]),
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
     sm = ''.join(f'<div><h2>{tx(g)}</h2><ul>' + ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k in items) + '</ul></div>' for g, items in groups)
@@ -1043,6 +1123,7 @@ def write():
 - Google Maps: https://maps.google.com/?cid=7427535041159212251
 - Languages: English, Telugu, Hindi
 - Booking: call, WhatsApp, or the booking form at {SITE}/contact/
+- Service area: Narasaraopet town ({', '.join(SVP.AREAS)}) and nearby villages within about 20 km
 
 ## Services
 - Split AC and window AC repair: not cooling, water leakage, noise, electrical faults, PCB issues
@@ -1056,7 +1137,7 @@ def write():
 - [Home]({SITE}/): overview, how a split AC works, booking
 - [AC services]({SITE}/ac-services/): AC repair, servicing, installation and gas filling
 - [Appliance services]({SITE}/appliance-services/): home appliance repair
-- [AC spare parts]({SITE}/ac-spare-parts/): spare parts
+{''.join(f"- [{x['name']} in Narasaraopet]({SITE}/{x['slug']}/): {x['desc']}\n" for x in SVP.SERVICES)}- [AC spare parts]({SITE}/ac-spare-parts/): spare parts
 - [Brands]({SITE}/brands/): AC and appliance brands serviced
 - [FAQs]({SITE}/faqs/): common questions on repair, servicing, area and booking
 - [Blog]({SITE}/blog/): AC guides: AC repair in Narasaraopet, AC servicing in Narasaraopet, reducing AC electricity bills, best AC brands in India, top 10 AC brands in India, finding an AC technician, AC not cooling, water leakage, gas filling
@@ -1073,4 +1154,4 @@ def write():
     print('Built %d pages -> %s' % (len(PAGES), out))
 
 if __name__ == '__main__':
-    build_home(); build_inner(); write()
+    build_home(); build_inner(); build_service_pages(); write()
