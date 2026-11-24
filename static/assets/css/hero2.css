@@ -368,3 +368,7 @@
 @media (max-width:960px){.hero svg.flag-wm{width:86px;top:44px;right:58px;opacity:.5}}
 @media (max-width:380px){.hero svg.flag-wm{width:74px;right:52px;top:42px}}
 @media (max-width:960px){.hero svg.flag-wm{width:80px;top:26px;right:60px}}@media (max-width:380px){.hero svg.flag-wm{width:70px;top:26px;right:54px}}
+/* restore ribbon tricolour wave (now SMIL-driven so the Ashoka Chakra stays on the white band) */
+.hero .tri-wave{display:block}
+.hero .tri-wave .tw-move{animation:none}
+.hero .tri-wave{height:auto;aspect-ratio:600/260}@media (max-width:960px){.hero .tri-wave{height:auto;top:2%}}
