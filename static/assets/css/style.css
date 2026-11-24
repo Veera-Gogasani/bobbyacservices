@@ -1101,7 +1101,7 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .post-src li{margin:5px 0;font-size:15px}
 @media(max-width:600px){.post-toc ol{columns:1}.post-local{padding:20px}.post-fig{max-width:300px}}
 .post-toc ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
-@media(max-width:600px){.post-toc ul{columns:1}.prose table{min-width:0;font-size:14px}.prose th,.prose td{padding:9px 10px}}
+@media(max-width:600px){.post-toc ul{columns:1}.prose table{min-width:0;font-size:13.5px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}.prose th,.prose td{padding:9px 10px}}
 /* Mobile: hide the pre-header (owner name / email) completely so the hero starts right under the main nav */
 @media (max-width:767px){.topbar{display:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important}}
 

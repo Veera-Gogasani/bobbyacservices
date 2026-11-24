@@ -152,6 +152,8 @@ POSTS = [
 
 from new_posts import NEW_POSTS, NEW_STRINGS
 POSTS[:0] = NEW_POSTS
+from new_posts2 import NEW_POSTS2
+POSTS[:0] = NEW_POSTS2
 
 add_strings = {
  'blog.related': ("Need help with this?", "దీనికి సహాయం కావాలా?", "इसमें मदद चाहिए?"),
