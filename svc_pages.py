@@ -2,7 +2,8 @@
 # Content rules: describe only what BOBBY actually offers; no prices, warranties or
 # response-time promises unless the owner confirms them (estimates are given after inspection).
 
-AREAS = ['Arundelpet', 'Prakash Nagar', 'Ramireddipet', 'Barampet', 'Islampet', 'Sattenapalli Road', 'Palnadu Road']
+AREAS = ['Arundelpet', 'Prakash Nagar', 'Ramireddipet', 'Navodaya Nagar', 'Barampet', 'Guntur Road', 'Islampet', 'Sattenapalli Road', 'Vinukonda Road', 'Palnadu Road', 'Rompicherla']
+VILLAGES = {'Rompicherla'}   # outside Narasaraopet town
 
 SERVICES = [
  dict(slug='ac-repair-narasaraopet', name='AC Repair', group='ac', svc='ac_repair', img='ac_repair', price='ac_repair', icon='wrench',

@@ -316,7 +316,7 @@ def build_service_pages():
         fld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
             {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in [(s['q'], s['a'])] + s['faqs']]}
         sld = service_ld(s['name'], s['a'], p)
-        sld['areaServed'] = [{'@type': 'City', 'name': CITY}] + [{'@type': 'Place', 'name': a + ', ' + CITY} for a in SVP.AREAS]
+        sld['areaServed'] = [{'@type': 'City', 'name': CITY}] + [{'@type': 'Place', 'name': a + ('' if a in SVP.VILLAGES else ', ' + CITY)} for a in SVP.AREAS]
         inc = ''.join(f'<li>{esc(x)}</li>' for x in s['includes'])
         probs = ''.join(f'<div class="svp-pcard reveal d{i % 3}"><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(s['problems']))
         hs = 'style="font-size:inherit;color:inherit;font-weight:inherit"'
@@ -1125,7 +1125,7 @@ def write():
 - Google Maps: https://maps.google.com/?cid=7427535041159212251
 - Languages: English, Telugu, Hindi
 - Booking: call, WhatsApp, or the booking form at {SITE}/contact/
-- Service area: Narasaraopet town ({', '.join(SVP.AREAS)}) and nearby villages within about 20 km
+- Service area: Narasaraopet and nearby areas ({', '.join(SVP.AREAS)}) and villages within about 20 km
 
 ## Services
 - Split AC and window AC repair: not cooling, water leakage, noise, electrical faults, PCB issues
