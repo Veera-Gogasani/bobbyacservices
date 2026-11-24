@@ -1121,3 +1121,45 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .svc-more:hover{color:var(--orange-d)}
 @media(max-width:900px){.svp-pgrid,.svp-rel-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.svp-pgrid,.svp-rel-grid{grid-template-columns:1fr}.svp-actions .btn{flex:1 1 100%;justify-content:center}.svp-pcard{padding:15px 16px}}
+/* ===== Quick Estimate popup ===== */
+.ftr a.ft-est{display:inline-flex;align-items:center;gap:7px;margin-top:4px;padding:8px 14px;border-radius:999px;background:var(--orange);color:#1b2433!important;font-weight:700}
+.ftr a.ft-est svg{width:16px;height:16px}
+.ftr a.ft-est:hover{background:var(--orange-d)}
+.est-panel{max-width:640px;width:calc(100% - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:24px 24px 20px}
+.est-panel>h2{display:flex;align-items:center;gap:10px;font-size:22px;color:var(--navy);margin:0 32px 4px 0}
+.est-panel>h2 svg{width:26px;height:26px;color:var(--orange-d)}
+.est-sub{color:var(--muted);font-size:14px;margin-bottom:12px}
+.est-load{padding:30px 0;text-align:center;color:var(--muted)}
+.est-h3{font-size:15px;color:var(--navy);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.est-list{list-style:none;display:grid;gap:8px}
+.est-list li{display:flex;align-items:center;gap:10px;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;transition:border-color .15s,background .15s}
+.est-svc.on{border-color:var(--blue);background:#F2F9FF}
+.est-list label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;flex:1;min-width:0}
+.est-list input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--blue)}
+.est-n{display:flex;flex-direction:column;font-weight:600;color:var(--text);font-size:14.5px;line-height:1.35;min-width:0}
+.est-n small{font-weight:500;color:var(--muted);font-size:12.5px;margin-top:2px}
+.est-qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.est-qty button{width:34px;height:34px;border:0;background:var(--bg);font-size:18px;font-weight:700;color:var(--navy);cursor:pointer}
+.est-qty b{min-width:26px;text-align:center;font-size:14px}
+.est-rm{width:32px;height:32px;border:0;border-radius:50%;background:#FDECEC;color:#C0392B;font-size:18px;cursor:pointer;flex:none}
+.est-parts{margin-top:14px;border:1px dashed #C9D9E8;border-radius:12px;padding:10px 12px;background:var(--bg)}
+.est-parts summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:14.5px}
+.est-mini{font-size:12.5px;color:var(--muted);margin:6px 0 8px}
+.est-pick{display:flex;gap:8px}
+.est-pick select{flex:1;min-width:0;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font:inherit;font-size:14px;background:#fff}
+.est-plist{margin-top:10px}
+.est-sum{margin-top:12px}
+.est-lines{list-style:none;border-top:1px solid var(--line)}
+.est-lines li{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:14px}
+.est-lines b{white-space:nowrap;color:var(--navy)}
+.est-total{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--navy);color:#fff;font-weight:700}
+.est-total b{font-size:18px;text-align:right;display:flex;flex-direction:column}
+.est-total small{font-size:11.5px;font-weight:500;color:#B9D6F2}
+.est-empty{padding:12px;border-radius:12px;background:var(--bg);color:var(--muted);font-size:14px;text-align:center}
+.est-note{margin-top:12px;padding:10px 12px;border-radius:12px;background:#FFF6EC;border:1px solid #F6D9B8;font-size:13px;color:#5A3B12;line-height:1.5}
+.est-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;position:sticky;bottom:-20px;background:#fff;padding:10px 0 4px}
+.est-actions .btn{justify-content:center}
+.est-actions .btn[disabled]{opacity:.5;pointer-events:none}
+@media(max-width:600px){.est-panel{padding:18px 14px 14px;width:calc(100% - 12px);max-height:calc(100dvh - 12px)}.est-panel>h2{font-size:19px}.est-list li{padding:9px 10px}.est-n{font-size:13.8px}}
+.est-panel{background:#fff;box-shadow:var(--shadow-lg)}
+@media(max-width:600px){.est-actions{gap:8px;bottom:-14px}.est-actions .btn{font-size:14px;padding:12px 6px;min-width:0;white-space:nowrap}}

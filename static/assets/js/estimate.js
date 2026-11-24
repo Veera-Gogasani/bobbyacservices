@@ -1,0 +1,208 @@
+/* BOBBY – Quick Estimate popup: indicative service + spare-part ranges, PDF download, WhatsApp share. */
+(function () {
+  var modal = document.getElementById('estModal');
+  if (!modal) return;
+  var body = modal.querySelector('.est-body');
+  var DATA = null, loading = null, sel = {}, parts = [], lastFocus = null;
+  var JSPDF_SRC = '/assets/js/vendor/jspdf.umd.min.js';
+
+  function lang() { var l = (document.documentElement.lang || 'en').slice(0, 2); return (l === 'te' || l === 'hi') ? l : 'en'; }
+  function L(k) { var d = DATA.labels[lang()] || DATA.labels.en; return d[k] || DATA.labels.en[k] || k; }
+  function inr(n) { return Number(n).toLocaleString('en-IN'); }
+  function rng(a, b) { return a === b ? '₹' + inr(a) : '₹' + inr(a) + ' – ₹' + inr(b); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function load() {
+    if (DATA) return Promise.resolve(DATA);
+    if (loading) return loading;
+    loading = fetch(modal.getAttribute('data-src')).then(function (r) { return r.json(); }).then(function (d) { DATA = d; return d; });
+    return loading;
+  }
+
+  function open(preset) {
+    lastFocus = document.activeElement;
+    modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    body.innerHTML = '<p class="est-load">…</p>';
+    load().then(function () {
+      if (preset && DATA.services.some(function (s) { return s.id === preset; }) && !sel[preset]) sel[preset] = 1;
+      render();
+      var f = modal.querySelector('.est-svc input'); if (f) f.focus({ preventScroll: true });
+    }).catch(function () { body.innerHTML = '<p class="est-load">Could not load prices. Please call +91 83748 89163.</p>'; });
+  }
+  function close() {
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
+    if (!document.querySelector('.modal.open')) document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function totals() {
+    var lo = 0, hi = 0, plus = false, lines = [];
+    DATA.services.forEach(function (s) {
+      var q = sel[s.id]; if (!q) return;
+      lo += s.min * q; hi += s.max * q; if (s.plus) plus = true;
+      lines.push({ name: s.name, en: s.name.en, q: q, min: s.min, max: s.max, plus: s.plus });
+    });
+    parts.forEach(function (p) {
+      lo += p.min * p.q; hi += p.max * p.q;
+      lines.push({ name: { en: p.name }, en: p.name, q: p.q, min: p.min, max: p.max, part: true });
+    });
+    return { lo: lo, hi: hi, plus: plus, lines: lines };
+  }
+
+  function stepper(id, q, kind) {
+    return '<span class="est-qty" data-kind="' + kind + '" data-id="' + esc(id) + '"><button type="button" data-d="-1" aria-label="−">−</button><b>' + q + '</b><button type="button" data-d="1" aria-label="+">+</button></span>';
+  }
+
+  function render() {
+    var lg = lang();
+    var svc = DATA.services.map(function (s) {
+      var q = sel[s.id] || 0;
+      return '<li class="est-svc' + (q ? ' on' : '') + '"><label><input type="checkbox" data-svc="' + s.id + '"' + (q ? ' checked' : '') + '>' +
+        '<span class="est-n">' + esc(s.name[lg] || s.name.en) + '<small>' + rng(s.min, s.max) + ' ' + esc(L('est.u.' + s.unit)) + (s.plus ? ' · ' + esc(L('est.plusparts')) : '') + '</small></span></label>' +
+        (q ? stepper(s.id, q, 'svc') : '') + '</li>';
+    }).join('');
+    var groups = {}, order = [];
+    DATA.parts.forEach(function (p, i) { if (!groups[p.cat]) { groups[p.cat] = []; order.push(p.cat); } groups[p.cat].push('<option value="' + i + '">' + esc(p.name) + ' (' + rng(p.min, p.max) + ')</option>'); });
+    var opts = order.map(function (c) { return '<optgroup label="' + esc(c) + '">' + groups[c].join('') + '</optgroup>'; }).join('');
+    var plist = parts.map(function (p, i) {
+      return '<li><span class="est-n">' + esc(p.name) + '<small>' + rng(p.min, p.max) + ' ' + esc(p.unit) + '</small></span>' + stepper(i, p.q, 'part') +
+        '<button type="button" class="est-rm" data-rm="' + i + '" aria-label="' + esc(L('est.remove')) + '">×</button></li>';
+    }).join('');
+    var t = totals();
+    var sum = t.lines.length ? (
+      '<ul class="est-lines">' + t.lines.map(function (l) {
+        return '<li><span>' + esc(l.name[lg] || l.en) + (l.q > 1 ? ' × ' + l.q : '') + '</span><b>' + rng(l.min * l.q, l.max * l.q) + '</b></li>';
+      }).join('') + '</ul>' +
+      '<div class="est-total"><span>' + esc(L('est.total')) + '</span><b>' + rng(t.lo, t.hi) + (t.plus ? '<small>' + esc(L('est.plusparts')) + '</small>' : '') + '</b></div>'
+    ) : '<p class="est-empty">' + esc(L('est.empty')) + '</p>';
+    body.innerHTML =
+      '<p class="est-sub">' + esc(L('est.sub')) + '</p>' +
+      '<h3 class="est-h3">' + esc(L('est.svc')) + '</h3><ul class="est-list">' + svc + '</ul>' +
+      '<details class="est-parts"' + (parts.length ? ' open' : '') + '><summary>' + esc(L('est.parts')) + '</summary><p class="est-mini">' + esc(L('est.parts.p')) + '</p>' +
+      '<div class="est-pick"><select aria-label="' + esc(L('est.pick')) + '"><option value="">' + esc(L('est.pick')) + '</option>' + opts + '</select>' +
+      '<button type="button" class="btn btn-line btn-sm est-add">' + esc(L('est.add')) + '</button></div>' +
+      (plist ? '<ul class="est-list est-plist">' + plist + '</ul>' : '') + '</details>' +
+      '<div class="est-sum" aria-live="polite"><h3 class="est-h3">' + esc(L('est.sum')) + '</h3>' + sum + '</div>' +
+      '<p class="est-note">' + esc(L('est.note')) + '</p>' +
+      '<div class="est-actions"><button type="button" class="btn btn-orange est-pdf"' + (t.lines.length ? '' : ' disabled') + '>' + esc(L('est.pdf')) + '</button>' +
+      '<button type="button" class="btn btn-wa est-wa"' + (t.lines.length ? '' : ' disabled') + '>' + esc(L('est.wa')) + '</button></div>';
+  }
+
+  body.addEventListener('change', function (e) {
+    var c = e.target.closest('[data-svc]'); if (!c) return;
+    var id = c.getAttribute('data-svc');
+    if (c.checked) sel[id] = sel[id] || 1; else delete sel[id];
+    render(); var el = body.querySelector('[data-svc="' + id + '"]'); if (el) el.focus({ preventScroll: true });
+  });
+  body.addEventListener('click', function (e) {
+    var b = e.target.closest('.est-qty button');
+    if (b) {
+      var w = b.parentNode, id = w.getAttribute('data-id'), d = +b.getAttribute('data-d');
+      if (w.getAttribute('data-kind') === 'svc') { sel[id] = Math.max(1, Math.min(20, (sel[id] || 1) + d)); }
+      else { var p = parts[+id]; p.q = Math.max(1, Math.min(20, p.q + d)); }
+      render(); return;
+    }
+    var rm = e.target.closest('[data-rm]'); if (rm) { parts.splice(+rm.getAttribute('data-rm'), 1); render(); return; }
+    if (e.target.closest('.est-add')) {
+      var s = body.querySelector('.est-pick select'), v = s && s.value; if (v === '' || v == null) { if (s) s.focus(); return; }
+      var src = DATA.parts[+v], ex = parts.filter(function (x) { return x.id === src.id; })[0];
+      if (ex) ex.q = Math.min(20, ex.q + 1); else parts.push({ id: src.id, name: src.name, min: src.min, max: src.max, unit: src.unit, q: 1 });
+      render(); return;
+    }
+    if (e.target.closest('.est-pdf')) { pdf(e.target.closest('.est-pdf')); return; }
+    if (e.target.closest('.est-wa')) { wa(); return; }
+  });
+
+  function stamp() {
+    var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return { date: p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear(), file: d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()),
+             no: 'EST-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) };
+  }
+
+  function wa() {
+    var t = totals(), b = DATA.biz;
+    var msg = 'Hello BOBBY, I would like a service visit. My online estimate (' + stamp().no + '):\n' +
+      t.lines.map(function (l) { return '• ' + l.en + (l.q > 1 ? ' x ' + l.q : '') + ': Rs. ' + inr(l.min * l.q) + (l.max !== l.min ? ' - ' + inr(l.max * l.q) : ''); }).join('\n') +
+      '\nEstimated total: Rs. ' + inr(t.lo) + ' - ' + inr(t.hi) + (t.plus ? ' (+ parts if needed)' : '') +
+      '\nI understand the final price is confirmed after inspection.\nMy area: ';
+    window.open('https://wa.me/' + b.wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  }
+
+  function loadJsPDF() {
+    if (window.jspdf) return Promise.resolve(window.jspdf);
+    return new Promise(function (ok, bad) {
+      var s = document.createElement('script'); s.src = JSPDF_SRC; s.async = true;
+      s.onload = function () { ok(window.jspdf); }; s.onerror = bad; document.head.appendChild(s);
+    });
+  }
+  function imgData(src) {
+    return new Promise(function (ok) {
+      var i = new Image(); i.crossOrigin = 'anonymous';
+      i.onload = function () { try { var c = document.createElement('canvas'); c.width = i.naturalWidth; c.height = i.naturalHeight; c.getContext('2d').drawImage(i, 0, 0); ok(c.toDataURL('image/png')); } catch (e) { ok(null); } };
+      i.onerror = function () { ok(null); }; i.src = src;
+    });
+  }
+
+  function pdf(btn) {
+    var label = btn.textContent; btn.disabled = true; btn.textContent = L('est.loading');
+    Promise.all([loadJsPDF(), imgData(modal.getAttribute('data-logo'))]).then(function (r) {
+      var J = r[0].jsPDF, logo = r[1], doc = new J({ unit: 'mm', format: 'a4' }), t = totals(), st = stamp(), b = DATA.biz;
+      var W = 210, M = 16, y = 16, navy = [16, 44, 80], orange = [242, 133, 31], grey = [85, 105, 124];
+      doc.setFillColor(16, 44, 80); doc.rect(0, 0, W, 40, 'F');
+      if (logo) doc.addImage(logo, 'PNG', M, 6, 28, 28);
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(15);
+      doc.text('BOBBY AC Repair & Home Appliance Services', logo ? M + 33 : M, 16);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
+      doc.text(b.address, logo ? M + 33 : M, 22.5, { maxWidth: W - M * 2 - 33 });
+      doc.text('Phone / WhatsApp: ' + b.phone + '   |   ' + b.web, logo ? M + 33 : M, 33);
+      y = 52;
+      doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.text('Service Estimate', M, y);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor.apply(doc, grey);
+      doc.text('Estimate no: ' + st.no, W - M, y - 5, { align: 'right' }); doc.text('Date: ' + st.date, W - M, y + 1, { align: 'right' });
+      y += 10;
+      // table header
+      var cx = [M, 118, 134, W - M];
+      doc.setFillColor(243, 248, 252); doc.rect(M, y, W - M * 2, 9, 'F');
+      doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
+      doc.text('Service / Part', cx[0] + 3, y + 6); doc.text('Qty', cx[1] + 4, y + 6, { align: 'center' });
+      doc.text('Rate (Rs.)', cx[2] + 2, y + 6); doc.text('Amount (Rs.)', cx[3] - 3, y + 6, { align: 'right' });
+      y += 9; doc.setFont('helvetica', 'normal'); doc.setFontSize(9.8);
+      function money(a, z) { return a === z ? inr(a) : inr(a) + ' - ' + inr(z); }
+      t.lines.forEach(function (l, i) {
+        var name = l.en + (l.plus ? ' (+ parts if needed)' : '') + (l.part ? ' [spare part]' : '');
+        var nl = doc.splitTextToSize(name, cx[1] - cx[0] - 6), h = Math.max(9, nl.length * 4.6 + 4);
+        if (y + h > 250) { doc.addPage(); y = 20; }
+        if (i % 2) { doc.setFillColor(250, 252, 254); doc.rect(M, y, W - M * 2, h, 'F'); }
+        doc.setTextColor(23, 43, 58);
+        doc.text(nl, cx[0] + 3, y + 6); doc.text(String(l.q), cx[1] + 4, y + 6, { align: 'center' });
+        doc.text(money(l.min, l.max), cx[2] + 2, y + 6); doc.text(money(l.min * l.q, l.max * l.q), cx[3] - 3, y + 6, { align: 'right' });
+        doc.setDrawColor(220, 231, 241); doc.line(M, y + h, W - M, y + h); y += h;
+      });
+      y += 4;
+      doc.setFillColor(16, 44, 80); doc.roundedRect(M, y, W - M * 2, 13, 2, 2, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(12);
+      doc.text('Estimated total', M + 4, y + 8.5); doc.text('Rs. ' + money(t.lo, t.hi) + (t.plus ? ' + parts' : ''), W - M - 4, y + 8.5, { align: 'right' });
+      y += 21;
+      var note = 'Please note: this is only an estimate, not the final price. The final price depends on the technician\'s inspection, the spare parts required and the service needed, and may vary. Spare-part prices are indicative market ranges (reviewed ' + DATA.partsReviewed + '). Work starts only after you approve the final quotation.';
+      var nl = doc.splitTextToSize(note, W - M * 2 - 10);
+      doc.setFillColor(255, 246, 236); doc.setDrawColor(246, 217, 184); doc.roundedRect(M, y, W - M * 2, nl.length * 4.8 + 9, 2, 2, 'FD');
+      doc.setTextColor.apply(doc, orange); doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.text('ESTIMATE ONLY', M + 5, y + 6);
+      doc.setTextColor(23, 43, 58); doc.setFont('helvetica', 'normal'); doc.setFontSize(9.3); doc.text(nl, M + 5, y + 11.5);
+      y += nl.length * 4.8 + 17;
+      doc.setFontSize(10); doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold');
+      doc.text('Book your visit: call or WhatsApp ' + b.phone, M, y);
+      doc.setFont('helvetica', 'normal'); doc.setTextColor.apply(doc, grey); doc.setFontSize(8.5);
+      doc.text('Independent multi-brand service provider. Not an authorised service centre of any brand.  |  ' + b.web, W / 2, 287, { align: 'center' });
+      doc.save('BOBBY-Estimate-' + st.file + '.pdf');
+    }).catch(function () { alertMsg(); }).then(function () { btn.disabled = false; btn.textContent = label; });
+  }
+  function alertMsg() { var n = modal.querySelector('.est-note'); if (n) n.insertAdjacentHTML('beforebegin', '<p class="est-empty">PDF could not be created. Please try again or use WhatsApp.</p>'); }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-estimate]');
+    if (a) { e.preventDefault(); var dm = document.querySelector('.drawer.open,.nav-drawer.open'); open(a.getAttribute('data-estimate')); return; }
+    if (e.target.closest && e.target.closest('#estModal [data-close-est]')) close();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { e.stopPropagation(); close(); } }, true);
+  if (location.hash === '#estimate') setTimeout(function () { open(); }, 300);
+})();

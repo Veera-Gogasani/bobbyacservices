@@ -229,7 +229,10 @@ def booking_form(p, inline=False):
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div><p class="bd-alt">{tx('wa.alt.h', 'b')} <a class="bd-sms" href="sms:+918374889163">{tx('wa.sms')}</a><a class="bd-tel" href="tel:+918374889163">{tx('wa.call')}: +91 83748 89163</a></p></div></form>'''
 
 def modals():
-    return f'''<div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
+    return f'''<div class="modal est-modal" id="estModal" aria-hidden="true" data-src="/assets/data/estimate.json?v={EST_V}" data-logo="/assets/img/logo-pdf.png"><div class="modal-bg" data-close-est></div>
+<div class="modal-panel est-panel" role="dialog" aria-modal="true" aria-labelledby="estTitle"><button type="button" class="modal-x" data-close-est aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
+<h2 id="estTitle">{ic('rupee')}{tx('est.h')}</h2><div class="est-body"></div></div></div>
+<div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
 <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="mTitle"><button type="button" class="modal-x" data-close-modal aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>{booking_form('m')}</div></div>
 <div class="modal" id="mapModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
 <div class="modal-panel map-panel" role="dialog" aria-modal="true" aria-labelledby="mapTitle"><button type="button" class="modal-x" data-close-modal aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
@@ -270,6 +273,8 @@ def crumbs_ld(items):
 
 # ---------------- dedicated service landing pages ----------------
 import svc_pages as SVP
+import estimate_data as EST
+S.update(EST.EST_STRINGS)
 S.update({
  'svp.lang': ("Detailed service information on this page is in English. You can call or WhatsApp us in Telugu, Hindi or English.",
               "ఈ పేజీలోని వివరమైన సమాచారం ఆంగ్లంలో ఉంది. తెలుగు, హిందీ లేదా ఆంగ్లంలో మాకు కాల్ లేదా వాట్సాప్ చేయవచ్చు.",
@@ -329,7 +334,7 @@ def build_service_pages():
                 f'<section class="sec svp-main"><div class="wrap loc-grid">'
                 f'<div class="reveal svp-media">{img(s["img"], 640, 400, name_key, eager=True)}</div>'
                 f'<div class="reveal d1"><p class="lead">{esc(s["intro"])}</p><h2 class="svp-h">{tx("svp.inc.h")}</h2><ul class="ticks">{inc}</ul>'
-                f'<div class="svp-actions">{book_a(s["svc"], "btn-orange")}<a class="btn btn-line" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.call")}</a></div></div>'
+                f'<div class="svp-actions">{book_a(s["svc"], "btn-orange")}<a class="btn btn-line" href="#estimate" data-estimate="{s['price']}">{ic("rupee")}{tx("est.btn")}</a><a class="btn btn-line" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.call")}</a></div></div>'
                 f'</div></section>'
                 f'<section class="sec sec-alt"><div class="wrap">{sec_head("svp.prob.eb", "svp.prob.h")}<div class="svp-pgrid">{probs}</div></div></section>'
                 f'<section class="sec"><div class="wrap loc-grid">'
@@ -345,6 +350,10 @@ def build_service_pages():
 
 
 import hashlib as _hl
+EST_JSON = EST.estimate_json()
+EST_JSON['biz'] = {'phone': PHONE_TXT, 'wa': WA_NUM, 'web': DOMAIN if DOMAIN_CONNECTED else SITE.replace('https://', ''),
+                   'address': '%s, %s, Andhra Pradesh %s' % (ADDRESS['street'], ADDRESS['locality'], ADDRESS['postal'])}
+EST_V = _hl.md5(json.dumps(EST_JSON, sort_keys=True).encode()).hexdigest()[:8]
 I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
 
 def head(title, desc, path, title_key=None, ld=(), og_img=None):
@@ -429,7 +438,7 @@ def header(active):
 '''
 
 def footer():
-    q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV if a != 'ac') + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>'  # AC Services has its own column
+    q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV if a != 'ac') + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>' + f'<li><a class="ft-est" href="#estimate" data-estimate="">{ic("rupee")}{tx("est.btn")}</a></li>'  # AC Services has its own column
     acl = [('/ac-services/#ac-repair','svc.ac_repair.name'),('/ac-services/#ac-servicing','svc.ac_servicing.name'),
            ('/ac-services/#ac-installation','svc.ac_install.name'),('/ac-services/#ac-uninstallation','svc.ac_uninstall.name'),
            ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
@@ -454,6 +463,7 @@ def footer():
 <div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
 {modals()}
 <script src="/assets/js/main.js?v=17" defer></script>
+<script src="/assets/js/estimate.js?v=1" defer></script>
 </body></html>
 '''
 
@@ -1147,6 +1157,8 @@ def write():
 - [Contact]({SITE}/contact/): phone, WhatsApp, map and booking form
 """
     open(os.path.join(out, 'llms.txt'), 'w').write(llms)
+    os.makedirs(os.path.join(out, 'assets', 'data'), exist_ok=True)
+    json.dump(EST_JSON, open(os.path.join(out, 'assets', 'data', 'estimate.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
