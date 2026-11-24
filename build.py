@@ -79,7 +79,7 @@ from about_strings import AB
 for k, v in AB.items(): S[k] = v
 for k, v in SEO.items(): S[k] = v
 def _priv_add(body, extra):              # add hosting / image-source disclosure after the third-party paragraph
-    i = body.find('Google Fonts'); j = body.find('</p>', i) if i >= 0 else -1
+    i = body.find('Google Maps'); j = body.find('</p>', i) if i >= 0 else -1
     return body[:j + 4] + extra + body[j + 4:] if j >= 0 else body + extra
 S['priv.body'] = tuple(_priv_add(b_, e_) for b_, e_ in zip(S['priv.body'], PRIV_EXTRA))
 def fmt_date(d):
@@ -128,7 +128,8 @@ def img(key, w, h, alt_key, eager=False, cls='', sizes='(max-width: 640px) 100vw
     c = f' class="{cls}"' if cls else ''
     full = ART_W.get(key, 1600)
     alt = esc(plain(alt_key))
-    return (f'<img{c} src="{art_url(key)}" srcset="{art_url(key, "sm")} {full//2}w, {art_url(key)} {full}w" sizes="{sizes}" '
+    xs = f'{art_url(key, "xs")} 560w, ' if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static' + art_url(key, 'xs'))) else ''
+    return (f'<img{c} src="{art_url(key)}" srcset="{xs}{art_url(key, "sm")} {full//2}w, {art_url(key)} {full}w" sizes="{sizes}" '
             f'width="{w}" height="{h}" alt="{alt}" data-i18n-alt="{alt_key}" {load} decoding="async">')
 
 def price(key, style='card'):
@@ -180,7 +181,7 @@ ICONS = {
  'radius': '<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></g>',
 }
 def wa_ic(cls='wa-ic'):
-    return f'<img class="{cls}" src="/assets/img/whatsapp.png" width="22" height="22" alt="" aria-hidden="true">'
+    return f'<img class="{cls}" src="/assets/img/whatsapp-44.webp" width="22" height="22" alt="" aria-hidden="true">'
 
 def ic(name, cls=''):
     c = f' class="{cls}"' if cls else ''
@@ -415,9 +416,8 @@ def head(title, desc, path, title_key=None, ld=(), og_img=None):
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap"></noscript>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/poppins-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/poppins-latin-800-normal.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=47">
 <script>try{{var l=localStorage.getItem('bobby-lang');if(l==='te'||l==='hi')document.documentElement.lang=l}}catch(e){{}}</script>
 {lds}</head>
@@ -442,7 +442,7 @@ def header(active):
 </div></div>
 <header class="hdr">
 <div class="wrap">
-<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" fetchpriority="high" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
+<a class="logo" href="/" aria-label="BOBBY AC Repair &amp; Home Appliance Services – Home"><img class="wm" src="/assets/img/bobby-wordmark-250.webp" srcset="/assets/img/bobby-wordmark-130.webp 130w, /assets/img/bobby-wordmark-250.webp 250w" sizes="(max-width: 560px) 108px, 122px" width="142" height="56" fetchpriority="high" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <div class="hdr-actions">
 {lang_switch()}
@@ -453,7 +453,7 @@ def header(active):
 <div class="drawer" id="drawer" aria-hidden="true">
 <div class="drawer-bg" data-close></div>
 <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="{esc(plain('nav.menu'))}">
-<div class="drawer-top"><a class="logo" href="/"><img class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
+<div class="drawer-top"><a class="logo" href="/"><img class="wm" src="/assets/img/bobby-wordmark-250.webp" srcset="/assets/img/bobby-wordmark-130.webp 130w, /assets/img/bobby-wordmark-250.webp 250w" sizes="(max-width: 560px) 108px, 122px" width="142" height="56" loading="lazy" alt="BOBBY AC Repair &amp; Home Appliance Services"></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
 <nav aria-label="Mobile">{links}<a href="/blog/"{" aria-current=\"page\"" if active == "blog" else ""}>{tx('nav.blog')}</a></nav>
 <div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div>
 </div></div>
@@ -469,7 +469,7 @@ def footer():
     return f'''</main>
 <footer class="ftr">
 <div class="wrap grid">
-<div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark.webp" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
+<div><a class="logo" href="/"><img loading="lazy" class="wm" src="/assets/img/bobby-wordmark-250.webp" srcset="/assets/img/bobby-wordmark-130.webp 130w, /assets/img/bobby-wordmark-250.webp 250w" sizes="(max-width: 560px) 108px, 122px" width="142" height="56" alt="BOBBY AC Repair &amp; Home Appliance Services"></a>
 <p class="desc">{tx('ft.about')}</p><p class="tag">{tx('brand.tagline')}</p></div>
 <div><h3>{tx('ft.quick')}</h3><ul>{q}</ul></div>
 <div><h3>{tx('ft.ac')}</h3><ul>{a}</ul></div>
@@ -552,7 +552,7 @@ def brand_logo(name):
             return f'<img src="/assets/img/brands/{slug}.{ext}" alt="{esc(name)}" loading="lazy" width="140" height="56">'
     return name
 def brands_block(tiles_too=False):
-    banner = f'''<figure class="brand-banner reveal"><img src="/assets/img/brands-banner-lg.webp" srcset="/assets/img/brands-banner-sm.webp 836w, /assets/img/brands-banner-lg.webp 1672w" sizes="(max-width: 1240px) 100vw, 1200px" width="1672" height="941" fetchpriority="high" decoding="async" alt="BOBBY AC Repair &amp; Home Appliance Services banner: we repair and service LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas" data-i18n-alt="brands.banner"></figure>'''
+    banner = f'''<figure class="brand-banner reveal"><img src="/assets/img/brands-banner-1080.webp" srcset="/assets/img/brands-banner-480.webp 480w, /assets/img/brands-banner-720.webp 720w, /assets/img/brands-banner-1080.webp 1080w, /assets/img/brands-banner-lg.webp 1672w" sizes="(max-width: 1240px) calc(100vw - 40px), 1200px" width="1672" height="941" loading="lazy" decoding="async" alt="BOBBY AC Repair &amp; Home Appliance Services banner: we repair and service LG, Daikin, Blue Star, Samsung, Panasonic, Hitachi, Carrier, Godrej, Haier and Voltas" data-i18n-alt="brands.banner"></figure>'''
     tiles = ''.join(f'<div class="brand reveal d{i % 4}">{brand_logo(b)}</div>' for i, b in enumerate(BRANDS))
     grid = f'<div class="brands" style="margin-top:22px">{tiles}</div>' if tiles_too else ''
     return f'''{banner}{grid}
@@ -879,7 +879,7 @@ def build_home():
 </div>
 <div class="hero-visual anim d2">
 <svg class="airflow" viewBox="0 0 300 200" fill="none" stroke="#9FE6FF" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M10 40 C80 10 140 70 220 40 S290 20 300 30"/><path d="M0 80 C70 50 150 110 230 80 S290 60 300 70"/><path d="M20 120 C90 90 160 150 240 120"/><path d="M10 160 C80 130 140 190 220 160"/></svg>
-<div class="hero-photo hero-photo-real">{img('about-photo', 640, 690, 'about.photo.alt', eager=True)}</div>
+<div class="hero-photo hero-photo-real">{img('about-photo', 640, 690, 'about.photo.alt', eager=True, sizes='(max-width: 760px) calc(100vw - 24px), (max-width: 960px) 100vw, 520px')}</div>
 {chips_html}
 <div class="hero-card"><span class="temp">24°C</span><span><b data-i18n="hero.card.title">{en('hero.card.title')}</b><small data-i18n="hero.card.sub">{en('hero.card.sub')}</small></span></div>
 </div></div></section>'''
@@ -908,7 +908,7 @@ def build_home():
     ld = list(ld) + [{'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': plain('faq.%d.q' % n), 'acceptedAnswer': {'@type': 'Answer', 'text': plain('faq.%d.a' % n)}} for n in [1, 19, 14, 16, 20, 12]]}]
     page('/', head('AC & Washing Machine Repair in Narasaraopet | BOBBY AC Services',
                  'Doorstep AC repair, servicing, installation and gas leak checks, plus refrigerator and washing machine repair in Narasaraopet, AP. Call or WhatsApp +91 83748 89163.',
-                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=20">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=7" defer></script>\n</body>'))
+                   '/', None, ld).replace('</head>', '<link rel="stylesheet" href="/assets/css/hero2.css?v=20">\n<link rel="stylesheet" href="/assets/css/asm.css?v=%d" media="print" onload="this.media=\'all\'">\n</head>' % ASM_V) + header('home') + body + footer().replace('</body>', '<script src="/assets/js/hero2.js?v=7" defer></script>\n</body>'))
 
 def service_ld(name, desc, path):
     return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': desc, 'serviceType': name,
@@ -1187,7 +1187,7 @@ def write():
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
     fingerprint(out)
     write_middleware()
-    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/img/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/vendor/*\n  Cache-Control: public, max-age=2592000\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/i18n/*\n  Cache-Control: public, max-age=31536000, immutable\n')
+    open(os.path.join(out, '_headers'), 'w').write('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n  Permissions-Policy: camera=(), microphone=(), geolocation=(self)\n/assets/img/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/vendor/*\n  Cache-Control: public, max-age=2592000\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/i18n/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n  Access-Control-Allow-Origin: *\n/assets/data/*\n  Cache-Control: public, max-age=31536000, immutable\n')
     print('Built %d pages -> %s' % (len(PAGES), out))
 
 if __name__ == '__main__':

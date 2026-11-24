@@ -13,3 +13,8 @@
   Cache-Control: public, max-age=31536000, immutable
 /assets/i18n/*
   Cache-Control: public, max-age=31536000, immutable
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+/assets/data/*
+  Cache-Control: public, max-age=31536000, immutable

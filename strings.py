@@ -367,19 +367,19 @@ add({
  'priv.body': ("""<p>This website is run by BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES, Narasaraopet, Andhra Pradesh. We respect your privacy and collect as little information as possible.</p>
 <h2>What we collect</h2><p>The website does not have user accounts and does not store your booking details on a server. When you use the booking form, your details are placed into a WhatsApp message on your own device. Nothing is sent until you choose to send it.</p>
 <h2>How we use your details</h2><p>Information you send by phone or WhatsApp (such as your name, number, area and appliance problem) is used only to arrange and carry out your service. We do not sell or share it for marketing.</p>
-<h2>Third-party services</h2><p>The site loads fonts from Google Fonts, and a map from Google Maps. These services may receive basic technical information such as your IP address. WhatsApp is governed by its own privacy policy.</p>
+<h2>Third-party services</h2><p>The site loads a map from Google Maps (fonts are served from this website itself). Google Maps may receive basic technical information such as your IP address. WhatsApp is governed by its own privacy policy.</p>
 <h2>Your language choice</h2><p>We save your chosen language in your browser so the site remembers it. You can clear it at any time from your browser settings.</p>
 <h2>Contact</h2><p>For any privacy question, call or WhatsApp +91 83748 89163.</p>""",
 """<p>ఈ వెబ్‌సైట్‌ను నరసరావుపేట, ఆంధ్రప్రదేశ్‌లోని BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES నిర్వహిస్తుంది. మేము మీ గోప్యతను గౌరవిస్తాము మరియు వీలైనంత తక్కువ సమాచారం మాత్రమే సేకరిస్తాము.</p>
 <h2>మేము ఏమి సేకరిస్తాము</h2><p>ఈ వెబ్‌సైట్‌లో యూజర్ అకౌంట్లు లేవు; మీ బుకింగ్ వివరాలను సర్వర్‌లో సేవ్ చేయదు. బుకింగ్ ఫారం ఉపయోగించినప్పుడు, మీ వివరాలు మీ ఫోన్‌లోనే వాట్సాప్ మెసేజ్‌గా సిద్ధమవుతాయి. మీరు పంపే వరకు ఏదీ పంపబడదు.</p>
 <h2>మీ వివరాలను ఎలా ఉపయోగిస్తాము</h2><p>ఫోన్ లేదా వాట్సాప్ ద్వారా మీరు ఇచ్చే సమాచారం (పేరు, నంబర్, ప్రాంతం, ఉపకరణ సమస్య) మీ సర్వీస్‌ను ఏర్పాటు చేసి పూర్తి చేయడానికి మాత్రమే ఉపయోగిస్తాము. మార్కెటింగ్ కోసం అమ్మము లేదా పంచుకోము.</p>
-<h2>ఇతర సేవలు</h2><p>ఈ సైట్ Google Fonts నుండి ఫాంట్లు, Google Maps నుండి మ్యాప్‌ను లోడ్ చేస్తుంది. ఈ సేవలకు మీ IP అడ్రస్ వంటి ప్రాథమిక సాంకేతిక సమాచారం చేరవచ్చు. వాట్సాప్‌కు దాని స్వంత గోప్యతా విధానం వర్తిస్తుంది.</p>
+<h2>ఇతర సేవలు</h2><p>ఈ సైట్ Google Maps నుండి మ్యాప్‌ను లోడ్ చేస్తుంది (ఫాంట్లు ఈ వెబ్‌సైట్ నుండే వస్తాయి). ఈ సేవలకు మీ IP అడ్రస్ వంటి ప్రాథమిక సాంకేతిక సమాచారం చేరవచ్చు. వాట్సాప్‌కు దాని స్వంత గోప్యతా విధానం వర్తిస్తుంది.</p>
 <h2>మీ భాష ఎంపిక</h2><p>మీరు ఎంచుకున్న భాషను సైట్ గుర్తుంచుకోవడానికి మీ బ్రౌజర్‌లో సేవ్ చేస్తాము. బ్రౌజర్ సెట్టింగ్స్ నుండి ఎప్పుడైనా తొలగించవచ్చు.</p>
 <h2>సంప్రదింపు</h2><p>గోప్యతకు సంబంధించిన ఏ ప్రశ్నకైనా +91 83748 89163 కి కాల్ లేదా వాట్సాప్ చేయండి.</p>""",
 """<p>यह वेबसाइट नरसरावपेट, आंध्र प्रदेश के BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES द्वारा चलाई जाती है। हम आपकी निजता का सम्मान करते हैं और जितनी कम हो सके उतनी जानकारी लेते हैं।</p>
 <h2>हम क्या लेते हैं</h2><p>इस वेबसाइट पर कोई यूज़र अकाउंट नहीं है और यह आपकी बुकिंग जानकारी सर्वर पर सेव नहीं करती। बुकिंग फ़ॉर्म इस्तेमाल करने पर आपकी जानकारी आपके ही फ़ोन पर व्हाट्सऐप मैसेज में भर जाती है। जब तक आप भेजें नहीं, कुछ नहीं जाता।</p>
 <h2>हम जानकारी का उपयोग कैसे करते हैं</h2><p>फ़ोन या व्हाट्सऐप पर दी गई जानकारी (नाम, नंबर, इलाका, उपकरण की समस्या) सिर्फ़ आपकी सर्विस तय करने और पूरी करने के लिए इस्तेमाल होती है। हम इसे मार्केटिंग के लिए न बेचते हैं न साझा करते हैं।</p>
-<h2>तीसरे पक्ष की सेवाएँ</h2><p>साइट Google Fonts से फ़ॉन्ट, Google Maps से नक्शा लोड करती है। इन सेवाओं को आपका IP पता जैसी बुनियादी तकनीकी जानकारी मिल सकती है। व्हाट्सऐप पर उसकी अपनी गोपनीयता नीति लागू होती है।</p>
+<h2>तीसरे पक्ष की सेवाएँ</h2><p>साइट Google Maps से नक्शा लोड करती है (फ़ॉन्ट इसी वेबसाइट से आते हैं)। इन सेवाओं को आपका IP पता जैसी बुनियादी तकनीकी जानकारी मिल सकती है। व्हाट्सऐप पर उसकी अपनी गोपनीयता नीति लागू होती है।</p>
 <h2>आपकी भाषा</h2><p>आपकी चुनी हुई भाषा आपके ब्राउज़र में सेव होती है ताकि साइट उसे याद रखे। आप इसे कभी भी ब्राउज़र सेटिंग्स से हटा सकते हैं।</p>
 <h2>संपर्क</h2><p>गोपनीयता से जुड़े किसी भी सवाल के लिए +91 83748 89163 पर कॉल या व्हाट्सऐप करें।</p>"""),
  'terms.body': ("""<p>By using this website or booking a service with BOBBY AC REPAIR &amp; HOME APPLIANCE SERVICES, you agree to these terms.</p>
