@@ -326,3 +326,11 @@
   .hero-duo .hero .ctas .btn,.hero-duo .hero .ctas .btn-orange{padding:9px 6px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 }
 @media (max-width:400px){.hero-duo .hero .ctas .btn{font-size:12px}.hero-duo .hero .ctas .btn-wa .wa-ic,.hero-duo .hero .ctas .btn-orange .wa-ic{display:none}}
+/* ===== hero heading: three lines in Indian flag colours ===== */
+.hero h1 .hl-ln{display:block;font-weight:800;letter-spacing:-.01em;line-height:1.12;white-space:nowrap}
+.hero h1 .hl-sf{color:#FF9933;text-shadow:0 2px 18px rgba(255,153,51,.28)}
+.hero h1 .hl-wh{color:#fff;font-size:.8em;margin:4px 0 2px;text-shadow:0 2px 14px rgba(255,255,255,.12)}
+.hero h1 .hl-gr{color:#3CCB5A;text-shadow:0 2px 18px rgba(60,203,90,.28)}
+.hero .eyebrow::before{width:30px;background:linear-gradient(90deg,#FF9933 0 33%,#fff 33% 66%,#3CCB5A 66% 100%)}
+@media (max-width:960px){.hero-duo .hero h1{font-size:clamp(25px,8.4vw,38px)}.hero h1 .hl-wh{font-size:.66em}}
+@media (max-width:360px){.hero-duo .hero h1{font-size:27px}}
