@@ -346,3 +346,25 @@
 @media (max-width:960px){.hero .tri-wave{opacity:.16}}
 .hero .tri-wave{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 62%,transparent 98%),linear-gradient(180deg,transparent 0,#000 16%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 62%,transparent 98%),linear-gradient(180deg,transparent 0,#000 16%,#000 78%,transparent 100%);mask-composite:intersect}
 @media (max-width:960px){.hero .tri-wave{opacity:.22}}
+/* ===== small waving Indian flag watermark (replaces ribbon wave) ===== */
+.hero .tri-wave{display:none}
+.hero .flag-wm{--fw:210px;position:absolute;z-index:-1;top:-6px;right:2%;width:var(--fw);height:calc(var(--fw)*2/3);display:flex;opacity:.24;pointer-events:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.hero .flag-wm i{flex:1 1 0;height:100%;background:url(/assets/img/flag-in.svg) no-repeat;background-size:var(--fw) 100%;background-position:calc(var(--i)*var(--fw)/-24) 0;
+  animation:flagWave 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*-0.11s)}
+.hero .flag-wm i:first-child{border-radius:2px 0 0 2px}
+@keyframes flagWave{0%,100%{transform:translateY(0) scaleY(1);filter:brightness(1)}50%{transform:translateY(5px) scaleY(.985);filter:brightness(.82)}}
+@media (max-width:960px){.hero .flag-wm{--fw:120px;top:-2px;right:0;opacity:.26}}
+@media (prefers-reduced-motion:reduce){.hero .flag-wm i{animation:none}}
+.hero .flag-wm{--fw:170px;top:4px;right:4%;opacity:.42;filter:none}
+.hero .flag-wm i{margin-right:-.6px;animation-name:flagWave2;backface-visibility:hidden}
+.hero .flag-wm::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.10) 18%,rgba(255,255,255,.08) 36%,rgba(0,0,0,0) 50%);background-size:200% 100%;animation:flagShade 2.6s linear infinite;mix-blend-mode:soft-light}
+@keyframes flagWave2{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes flagShade{from{background-position:0 0}to{background-position:-200% 0}}
+@media (max-width:960px){.hero .flag-wm{--fw:104px;top:58px;right:56px;opacity:.45}}
+@media (max-width:380px){.hero .flag-wm{--fw:88px;right:50px}}
+@media (prefers-reduced-motion:reduce){.hero .flag-wm::after{animation:none}}
+/* flag v3: single smooth SVG (SMIL wave), no slices */
+.hero svg.flag-wm{display:block;position:absolute;z-index:-1;top:2px;right:4%;width:168px;height:auto;opacity:.45;pointer-events:none;overflow:visible}
+@media (max-width:960px){.hero svg.flag-wm{width:86px;top:44px;right:58px;opacity:.5}}
+@media (max-width:380px){.hero svg.flag-wm{width:74px;right:52px;top:42px}}
+@media (max-width:960px){.hero svg.flag-wm{width:80px;top:26px;right:60px}}@media (max-width:380px){.hero svg.flag-wm{width:70px;top:26px;right:54px}}
