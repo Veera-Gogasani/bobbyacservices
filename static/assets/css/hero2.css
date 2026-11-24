@@ -334,3 +334,15 @@
 .hero .eyebrow::before{width:30px;background:linear-gradient(90deg,#FF9933 0 33%,#fff 33% 66%,#3CCB5A 66% 100%)}
 @media (max-width:960px){.hero-duo .hero h1{font-size:clamp(25px,8.4vw,38px)}.hero h1 .hl-wh{font-size:.66em}}
 @media (max-width:360px){.hero-duo .hero h1{font-size:27px}}
+/* ===== animated tricolour wave watermark behind slide-1 text (abstract ribbons, no national emblem) ===== */
+.hero .hero-txt{position:relative;isolation:isolate}
+.hero .tri-wave{position:absolute;z-index:-1;left:-4%;top:-2%;width:108%;height:88%;opacity:.13;pointer-events:none;filter:blur(1.5px);
+  -webkit-mask-image:radial-gradient(ellipse 72% 70% at 42% 48%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 72% 70% at 42% 48%,#000 55%,transparent 100%)}
+.hero .tri-wave .tw-move{animation:twFlow 9s linear infinite;will-change:transform}
+@keyframes twFlow{from{transform:translateX(0)}to{transform:translateX(-600px)}}
+@media (max-width:960px){.hero .tri-wave{opacity:.11;height:72%;top:-1%}}
+@media (prefers-reduced-motion:reduce){.hero .tri-wave .tw-move{animation:none}}
+.hero .tri-wave{opacity:.19;filter:blur(1px)}
+@media (max-width:960px){.hero .tri-wave{opacity:.16}}
+.hero .tri-wave{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 62%,transparent 98%),linear-gradient(180deg,transparent 0,#000 16%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 62%,transparent 98%),linear-gradient(180deg,transparent 0,#000 16%,#000 78%,transparent 100%);mask-composite:intersect}
+@media (max-width:960px){.hero .tri-wave{opacity:.22}}
