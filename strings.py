@@ -69,10 +69,8 @@ add({
 
 # ---------- home ----------
 add({
- 'hero.eyebrow': ("Doorstep AC service in Narasaraopet", "నరసరావుపేటలో ఇంటి వద్దకే ఏసీ సర్వీస్", "नरसरावपेट में घर पर एसी सर्विस"),
- 'hero.h1': ("Reliable <span class=\"hl-ac\">AC</span> &amp; <span class=\"hl-wm\">Washing Machine</span> Repair Services at Your Doorstep",
-             "మీ ఇంటి వద్దకే నమ్మకమైన <span class=\"hl-ac\">ఏసీ</span> &amp; <span class=\"hl-wm\">వాషింగ్ మెషిన్</span> రిపేర్ సర్వీసులు",
-             "आपके घर पर भरोसेमंद <span class=\"hl-ac\">एसी</span> और <span class=\"hl-wm\">वॉशिंग मशीन</span> रिपेयर सर्विस"),
+ 'hero.eyebrow': ('Doorstep AC &amp; appliance service', 'ఇంటి వద్దకే ఏసీ &amp; గృహోపకరణాల సర్వీస్', 'घर पर एसी और उपकरण सर्विस'),
+ 'hero.h1': ('Reliable <span class="hl-ac">AC</span> &amp; <span class="hl-wm">Washing Machine</span> Repair in Narasaraopet', 'నరసరావుపేటలో నమ్మకమైన <span class="hl-ac">ఏసీ</span> &amp; <span class="hl-wm">వాషింగ్ మెషిన్</span> రిపేర్', 'नरसरावपेट में भरोसेमंद <span class="hl-ac">एसी</span> और <span class="hl-wm">वॉशिंग मशीन</span> रिपेयर'),
  'hero.sub': ("Looking for dependable AC repair and servicing in Narasaraopet? BOBBY provides AC installation, uninstallation, servicing, gas filling and repair, along with home appliance repair services.",
               "నరసరావుపేటలో నమ్మకమైన ఏసీ రిపేర్ మరియు సర్వీసింగ్ కోసం చూస్తున్నారా? BOBBY ఏసీ ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్, సర్వీసింగ్, గ్యాస్ ఫిల్లింగ్, రిపేర్‌తో పాటు గృహోపకరణాల రిపేర్ సేవలను అందిస్తుంది.",
               "नरसरावपेट में भरोसेमंद एसी रिपेयर और सर्विसिंग चाहिए? BOBBY एसी इंस्टॉलेशन, अनइंस्टॉलेशन, सर्विसिंग, गैस फिलिंग और रिपेयर के साथ घरेलू उपकरणों की रिपेयर सेवाएँ भी देता है।"),
@@ -204,7 +202,7 @@ add({
 })
 
 # ---------- FAQ ----------
-FAQ_N = 13
+FAQ_N = 20
 add({
  'faq.1.q': ("Do you provide AC repair services in Narasaraopet?", "మీరు నరసరావుపేటలో ఏసీ రిపేర్ సేవలు అందిస్తారా?", "क्या आप नरसरावपेट में एसी रिपेयर सेवा देते हैं?"),
  'faq.1.a': ("Yes. We provide doorstep AC repair in Narasaraopet and nearby areas within about 20 km. Call or WhatsApp +91 83748 89163 to book.",
@@ -246,6 +244,20 @@ add({
  'faq.13.a': ("Share your appliance type, brand and problem by call or WhatsApp. The technician confirms the final estimate after inspecting the appliance and before starting any work.",
               "కాల్ లేదా వాట్సాప్ ద్వారా మీ ఉపకరణం రకం, బ్రాండ్ మరియు సమస్య తెలియజేయండి. ఉపకరణాన్ని తనిఖీ చేసిన తర్వాత, పని మొదలుపెట్టే ముందు టెక్నీషియన్ తుది అంచనాను నిర్ధారిస్తారు.",
               "कॉल या व्हाट्सऐप पर उपकरण का प्रकार, ब्रांड और समस्या बताएँ। टेक्नीशियन उपकरण की जाँच के बाद और काम शुरू करने से पहले अंतिम अनुमान बताते हैं।"),
+ 'faq.14.q': ('How often should an AC be serviced?', 'ఏసీని ఎంత తరచుగా సర్వీస్ చేయించాలి?', 'एसी की सर्विस कितनी बार करानी चाहिए?'),
+ 'faq.14.a': ('In a hot place like Narasaraopet, most homes service their AC before summer and once more during heavy use. ACs that run many hours a day or sit near dusty roads may need cleaning more often.', 'నరసరావుపేట లాంటి వేడి ప్రాంతంలో చాలా ఇళ్లలో వేసవికి ముందు ఒకసారి, ఎక్కువ వాడకం సమయంలో మరోసారి ఏసీ సర్వీస్ చేయిస్తారు. రోజూ ఎక్కువ గంటలు నడిచే లేదా దుమ్ము ఉండే రోడ్ల దగ్గర ఉన్న ఏసీలకు తరచుగా శుభ్రత అవసరం కావచ్చు.', 'नरसरावपेट जैसी गर्म जगह में ज़्यादातर घर गर्मी से पहले और ज़्यादा इस्तेमाल के दौरान एक बार और एसी सर्विस कराते हैं। रोज़ कई घंटे चलने वाले या धूल भरी सड़क के पास लगे एसी को ज़्यादा बार सफाई की ज़रूरत हो सकती है।'),
+ 'faq.15.q': ('Why is water leaking from my AC?', 'నా ఏసీ నుండి నీరు ఎందుకు కారుతోంది?', 'मेरे एसी से पानी क्यों टपक रहा है?'),
+ 'faq.15.a': ('Water leakage from the indoor unit is usually caused by a blocked drain pipe, an incorrect drain slope, or ice forming on the coil because of dirty filters or low refrigerant. A technician can find the exact cause and clear it.', 'ఇండోర్ యూనిట్ నుండి నీరు కారడానికి సాధారణంగా బ్లాక్ అయిన డ్రెయిన్ పైప్, సరైన వాలు లేకపోవడం, లేదా మురికి ఫిల్టర్లు/తక్కువ గ్యాస్ వల్ల కాయిల్\u200cపై ఐస్ ఏర్పడటం కారణం. టెక్నీషియన్ అసలు కారణం కనుగొని సరిచేస్తారు.', 'इनडोर यूनिट से पानी टपकना आमतौर पर बंद ड्रेन पाइप, गलत ढलान, या गंदे फ़िल्टर/कम गैस की वजह से कॉइल पर बर्फ जमने से होता है। टेक्नीशियन असली कारण ढूंढकर ठीक करते हैं।'),
+ 'faq.16.q': ('Is AC gas filling needed every year?', 'ప్రతి సంవత్సరం ఏసీ గ్యాస్ ఫిల్లింగ్ అవసరమా?', 'क्या हर साल एसी में गैस भरवानी पड़ती है?'),
+ 'faq.16.a': ('No. An AC works in a sealed circuit, so the gas is not used up in normal running. If your AC needs gas every year, there is a leak that should be found and repaired before refilling.', 'అవసరం లేదు. ఏసీ మూసి ఉన్న సర్క్యూట్\u200cలో పనిచేస్తుంది, సాధారణ వాడకంలో గ్యాస్ తగ్గదు. ప్రతి సంవత్సరం గ్యాస్ అవసరమైతే ఎక్కడో లీక్ ఉంది; రీఫిల్ చేసే ముందు దాన్ని కనుగొని సరిచేయాలి.', 'नहीं। एसी एक बंद सर्किट में चलता है, इसलिए सामान्य इस्तेमाल में गैस खत्म नहीं होती। अगर हर साल गैस चाहिए, तो कहीं लीक है जिसे दोबारा भरने से पहले ढूंढकर ठीक करना चाहिए।'),
+ 'faq.17.q': ('What should I check before calling an AC technician?', 'ఏసీ టెక్నీషియన్\u200cకు కాల్ చేసే ముందు ఏమి చూడాలి?', 'एसी टेक्नीशियन को बुलाने से पहले क्या जांचें?'),
+ 'faq.17.a': ('Check that the power supply and MCB are on, the remote has working batteries and is set to Cool mode, and the filters are not heavily clogged. If the AC still does not cool, switch it off and call a technician rather than running it for hours.', 'పవర్ సప్లై, ఎంసీబీ ఆన్\u200cలో ఉన్నాయా, రిమోట్ బ్యాటరీలు పనిచేస్తున్నాయా, కూల్ మోడ్\u200cలో ఉందా, ఫిల్టర్లు బాగా మూసుకుపోయాయా అని చూడండి. అయినా కూల్ కాకపోతే, గంటల తరబడి నడపకుండా ఏసీని ఆపి టెక్నీషియన్\u200cకు కాల్ చేయండి.', 'देखें कि बिजली और MCB चालू हैं, रिमोट की बैटरी ठीक है और वह कूल मोड पर है, और फ़िल्टर ज़्यादा गंदे नहीं हैं। फिर भी ठंडा न करे तो एसी को घंटों चलाने के बजाय बंद करके टेक्नीशियन को बुलाएं।'),
+ 'faq.18.q': ('What are common washing machine problems?', 'వాషింగ్ మెషిన్\u200cలో సాధారణ సమస్యలు ఏమిటి?', 'वॉशिंग मशीन की आम समस्याएं क्या हैं?'),
+ 'faq.18.a': ('The most common problems are the drum not spinning, water not draining or not filling, heavy vibration or noise, leaking water and error codes. BOBBY repairs top load, front load and semi-automatic machines at your home in Narasaraopet.', 'డ్రమ్ తిరగకపోవడం, నీరు బయటకు పోకపోవడం లేదా నిండకపోవడం, ఎక్కువ కంపనం లేదా శబ్దం, నీరు కారడం, ఎర్రర్ కోడ్\u200cలు సాధారణ సమస్యలు. బాబీ నరసరావుపేటలో టాప్ లోడ్, ఫ్రంట్ లోడ్, సెమీ-ఆటోమేటిక్ మెషిన్లను ఇంటి వద్దే రిపేర్ చేస్తుంది.', 'सबसे आम समस्याएं हैं ड्रम न घूमना, पानी न निकलना या न भरना, ज़्यादा हिलना या आवाज़, पानी टपकना और एरर कोड। BOBBY नरसरावपेट में टॉप लोड, फ्रंट लोड और सेमी-ऑटोमैटिक मशीन घर पर रिपेयर करता है।'),
+ 'faq.19.q': ('How much does AC servicing or repair cost in Narasaraopet?', 'నరసరావుపేటలో ఏసీ సర్వీసింగ్ లేదా రిపేర్\u200cకు ఎంత ఖర్చవుతుంది?', 'नरसरावपेट में एसी सर्विसिंग या रिपेयर का खर्च कितना है?'),
+ 'faq.19.a': ('The cost depends on the AC type, the work needed and any parts. BOBBY does not quote a fixed price over the phone: the technician inspects first, explains the problem and gives an estimate, and work starts only after you approve it.', 'ఖర్చు ఏసీ రకం, అవసరమైన పని మరియు విడిభాగాలపై ఆధారపడుతుంది. బాబీ ఫోన్\u200cలో స్థిర ధర చెప్పదు: టెక్నీషియన్ ముందు తనిఖీ చేసి, సమస్య వివరించి, అంచనా ఇస్తారు; మీరు ఒప్పుకున్న తర్వాతే పని మొదలవుతుంది.', 'कीमत एसी के प्रकार, ज़रूरी काम और पार्ट्स पर निर्भर करती है। BOBBY फ़ोन पर तय कीमत नहीं बताता: टेक्नीशियन पहले जांच करके समस्या समझाते हैं और अनुमान देते हैं; आपकी मंज़ूरी के बाद ही काम शुरू होता है।'),
+ 'faq.20.q': ('Do you repair appliances at home?', 'మీరు ఇంటి వద్దే ఉపకరణాలను రిపేర్ చేస్తారా?', 'क्या आप घर पर ही उपकरण रिपेयर करते हैं?'),
+ 'faq.20.a': ('Yes. BOBBY is a doorstep service: ACs, refrigerators, washing machines, air coolers and ceiling fans are inspected and, in most cases, repaired at your home. If a part needs workshop work or replacement, we explain this and the cost first.', 'అవును. బాబీ ఇంటి వద్దకే వచ్చే సర్వీస్: ఏసీలు, ఫ్రిజ్\u200cలు, వాషింగ్ మెషిన్లు, ఎయిర్ కూలర్లు, సీలింగ్ ఫ్యాన్లను మీ ఇంట్లోనే తనిఖీ చేసి, చాలా సందర్భాల్లో అక్కడే రిపేర్ చేస్తాం. వర్క్\u200cషాప్ పని లేదా విడిభాగం మార్చాల్సి వస్తే, ముందుగా దాని గురించి, ఖర్చు గురించి చెబుతాం.', 'हां। BOBBY घर पर आने वाली सर्विस है: एसी, फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फैन की जांच आपके घर पर होती है और ज़्यादातर रिपेयर भी वहीं होती है। अगर वर्कशॉप का काम या पार्ट बदलना हो, तो पहले उसकी और खर्च की जानकारी देते हैं।'),
 })
 
 # ---------- page heroes / meta ----------
@@ -256,13 +268,13 @@ add({
  'p.ac.sub': ("Repair, servicing, installation, uninstallation, gas filling and deep cleaning for split and window ACs.", "స్ప్లిట్ మరియు విండో ఏసీలకు రిపేర్, సర్వీసింగ్, ఇన్‌స్టాలేషన్, అన్‌ఇన్‌స్టాలేషన్, గ్యాస్ ఫిల్లింగ్ మరియు డీప్ క్లీనింగ్.", "स्प्लिट और विंडो एसी के लिए रिपेयर, सर्विसिंग, इंस्टॉलेशन, अनइंस्टॉलेशन, गैस फिलिंग और डीप क्लीनिंग।"),
  'p.app.h1': ("Home Appliance Repair in Narasaraopet", "నరసరావుపేటలో గృహోపకరణాల రిపేర్", "नरसरावपेट में घरेलू उपकरण रिपेयर"),
  'p.app.sub': ("Refrigerator, washing machine, air cooler and ceiling fan repair at your doorstep.", "ఇంటి వద్దకే ఫ్రిజ్, వాషింగ్ మెషిన్, ఎయిర్ కూలర్ మరియు సీలింగ్ ఫ్యాన్ రిపేర్.", "घर पर फ्रिज, वॉशिंग मशीन, एयर कूलर और सीलिंग फैन रिपेयर।"),
- 'p.brands.h1': ("Brands We Service", "మేము సర్వీస్ చేసే బ్రాండ్లు", "हम इन ब्रांड्स की सर्विस करते हैं"),
+ 'p.brands.h1': ('AC &amp; Appliance Brands We Service in Narasaraopet', 'నరసరావుపేటలో మేము సర్వీస్ చేసే ఏసీ &amp; ఉపకరణాల బ్రాండ్లు', 'नरसरावपेट में हम जिन एसी और उपकरण ब्रांड्स की सर्विस करते हैं'),
  'p.brands.sub': ("Independent multi-brand service for ACs and home appliances.", "ఏసీలు మరియు గృహోపకరణాలకు స్వతంత్ర మల్టీ-బ్రాండ్ సర్వీస్.", "एसी और घरेलू उपकरणों के लिए स्वतंत्र मल्टी-ब्रांड सर्विस।"),
- 'p.faqs.h1': ("Frequently Asked Questions", "తరచుగా అడిగే ప్రశ్నలు", "अक्सर पूछे जाने वाले सवाल"),
+ 'p.faqs.h1': ('AC &amp; Appliance Repair FAQs in Narasaraopet', 'నరసరావుపేటలో ఏసీ &amp; గృహోపకరణాల రిపేర్ ప్రశ్నలు', 'नरसरावपेट में एसी और उपकरण रिपेयर से जुड़े सवाल'),
  'p.faqs.sub': ("Straight answers about our AC and appliance services in Narasaraopet.", "నరసరావుపేటలో మా ఏసీ మరియు అప్లయెన్స్ సేవల గురించి సూటి సమాధానాలు.", "नरसरावपेट में हमारी एसी और अप्लायंस सेवाओं के बारे में सीधे जवाब।"),
- 'p.contact.h1': ("Contact &amp; Book a Service", "సంప్రదించండి &amp; సర్వీస్ బుక్ చేయండి", "संपर्क करें और सर्विस बुक करें"),
+ 'p.contact.h1': ('Contact &amp; Book AC Service in Narasaraopet', 'నరసరావుపేటలో ఏసీ సర్వీస్ బుక్ చేయండి – సంప్రదించండి', 'संपर्क करें और नरसरावपेट में एसी सर्विस बुक करें'),
  'p.contact.sub': ("Call, WhatsApp or send your details with the form below.", "కాల్, వాట్సాప్ చేయండి లేదా కింది ఫారం ద్వారా మీ వివరాలు పంపండి.", "कॉल, व्हाट्सऐप करें या नीचे दिए फ़ॉर्म से अपनी जानकारी भेजें।"),
- 'p.blog.h1': ("Knowledge Centre", "నాలెడ్జ్ సెంటర్", "नॉलेज सेंटर"),
+ 'p.blog.h1': ('AC &amp; Appliance Care Tips', 'ఏసీ &amp; గృహోపకరణాల సంరక్షణ చిట్కాలు', 'एसी और उपकरण देखभाल के टिप्स'),
  'p.blog.sub': ("Practical guides on AC and home appliance care.", "ఏసీ మరియు గృహోపకరణాల సంరక్షణపై ఉపయోగకరమైన గైడ్‌లు.", "एसी और घरेलू उपकरणों की देखभाल पर उपयोगी गाइड।"),
  'p.privacy.h1': ("Privacy Policy", "గోప్యతా విధానం", "गोपनीयता नीति"),
  'p.terms.h1': ("Terms &amp; Conditions", "నిబంధనలు &amp; షరతులు", "नियम और शर्तें"),
