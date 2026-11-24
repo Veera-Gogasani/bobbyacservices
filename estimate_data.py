@@ -22,6 +22,7 @@ EST_SERVICES = [
     ('ac_deepclean', 'ac', ("AC deep cleaning (jet wash)", "ఏసీ డీప్ క్లీనింగ్ (జెట్ వాష్)", "एसी डीप क्लीनिंग (जेट वॉश)"), 'ac', 900, 1500, False),
     ('ac_repair', 'ac', ("AC repair – inspection / visit charge", "ఏసీ రిపేర్ – తనిఖీ / విజిట్ చార్జ్", "एसी रिपेयर – जांच / विज़िट चार्ज"), 'ac', 300, 500, True),
     ('ac_gas', 'ac', ("AC gas filling (with leak check)", "ఏసీ గ్యాస్ ఫిల్లింగ్ (లీక్ చెక్‌తో)", "एसी गैस फिलिंग (लीक चेक के साथ)"), 'ac', 2000, 3500, False),
+    ('ac_outdoor', 'ac', ("AC outdoor unit cleaning", "ఏసీ అవుట్‌డోర్ యూనిట్ క్లీనింగ్", "एसी आउटडोर यूनिट सफाई"), 'ac', 400, 600, False),
     ('ac_install', 'ac', ("Split AC installation", "స్ప్లిట్ ఏసీ ఇన్‌స్టాలేషన్", "स्प्लिट एसी इंस्टॉलेशन"), 'ac', 1500, 2500, False),
     ('ac_uninstall', 'ac', ("AC uninstallation", "ఏసీ అన్‌ఇన్‌స్టాలేషన్", "एसी अनइंस्टॉलेशन"), 'ac', 700, 1000, False),
     ('washer', 'washer', ("Washing machine repair – visit charge", "వాషింగ్ మెషిన్ రిపేర్ – విజిట్ చార్జ్", "वॉशिंग मशीन रिपेयर – विज़िट चार्ज"), 'unit', 300, 500, True),

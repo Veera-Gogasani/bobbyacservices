@@ -261,7 +261,7 @@ def business_ld():
         'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'AC & Home Appliance Services', 'itemListElement': [
             {'@type': 'Offer', 'itemOffered': {'@type': 'Service', 'name': n, 'url': SITE + SVP.ANCHOR_TO_PAGE.get(u, u)}} for n, u in [
                 ('AC Installation', '/ac-services/#ac-installation'), ('AC Uninstallation', '/ac-services/#ac-uninstallation'), ('AC Repair', '/ac-services/#ac-repair'),
-                ('AC Servicing', '/ac-services/#ac-servicing'), ('AC Gas Filling', '/ac-services/#ac-gas-filling'), ('AC Deep Cleaning', '/ac-services/#ac-deep-cleaning'),
+                ('AC Servicing', '/ac-services/#ac-servicing'), ('AC Gas Filling', '/ac-services/#ac-gas-filling'), ('AC Deep Cleaning', '/ac-services/#ac-deep-cleaning'), ('AC PCB Repair', '/ac-pcb-repair-narasaraopet/'), ('AC Outdoor Unit Cleaning', '/ac-outdoor-unit-cleaning-narasaraopet/'),
                 ('Refrigerator Repair', '/appliance-services/#refrigerator'), ('Washing Machine Repair', '/appliance-services/#washing-machine'),
                 ('Air Cooler Repair', '/appliance-services/#air-cooler'), ('Ceiling Fan Repair', '/appliance-services/#ceiling-fan')]]},
         'knowsLanguage': ['en', 'te', 'hi'],
@@ -295,6 +295,8 @@ S.update({
  'svp.rel.h': ("Related services", "సంబంధిత సేవలు", "संबंधित सेवाएं"),
  'svp.view': ("View service", "సేవ చూడండి", "सेवा देखें"),
  'svp.all.h': ("Explore each service", "ప్రతి సేవను చూడండి", "हर सेवा देखें"),
+ 'svc.ac_pcb.name': ("AC PCB Repair", "ఏసీ పీసీబీ రిపేర్", "एसी PCB रिपेयर"),
+ 'svc.ac_outdoor.name': ("AC Outdoor Unit Cleaning", "ఏసీ అవుట్‌డోర్ యూనిట్ క్లీనింగ్", "एसी आउटडोर यूनिट सफाई"),
 })
 for _s in SVP.SERVICES:
     S['svp.%s.h1' % _s['slug']] = _s['h1']; S['svp.%s.sub' % _s['slug']] = _s['sub']
@@ -443,7 +445,7 @@ def footer():
     q = ''.join(f'<li><a href="{u}">{tx(k)}</a></li>' for u, k, a in NAV if a != 'ac') + f'<li><a href="/blog/">{tx("nav.blog")}</a></li>' + f'<li><a class="ft-est" href="#estimate" data-estimate="">{ic("rupee")}{tx("est.btn")}</a></li>'  # AC Services has its own column
     acl = [('/ac-services/#ac-repair','svc.ac_repair.name'),('/ac-services/#ac-servicing','svc.ac_servicing.name'),
            ('/ac-services/#ac-installation','svc.ac_install.name'),('/ac-services/#ac-uninstallation','svc.ac_uninstall.name'),
-           ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
+           ('/ac-services/#ac-gas-filling','svc.ac_gas.name'),('/ac-pcb-repair-narasaraopet/','svc.ac_pcb.name'),('/ac-outdoor-unit-cleaning-narasaraopet/','svc.ac_outdoor.name'),('/ac-services/#ac-deep-cleaning','ft.maint'),('/ac-spare-parts/','ft.parts')]
     a = ''.join(f'<li><a href="{SVP.ANCHOR_TO_PAGE.get(u, u)}">{tx(k)}</a></li>' for u, k in acl)
     return f'''</main>
 <footer class="ftr">
@@ -1037,7 +1039,7 @@ def build_inner():
              phero(hk, None, [('crumb.home', '/'), (hk, path)]) +
              f'<section class="sec"><div class="wrap legal prose" data-i18n="{bk}">{en(bk)}</div><p class="wrap legal disc">Last updated: {UPDATED}</p></section>' + footer())
     groups = [('nav.home', [('/', 'nav.home'), ('/about/', 'nav.about'), ('/contact/', 'nav.contact'), ('/faqs/', 'nav.faqs')]),
-              ('nav.ac', [('/ac-services/', 'nav.ac')] + [(SVP.ANCHOR_TO_PAGE.get('/ac-services/#' + a, '/ac-services/#' + a), 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS]),
+              ('nav.ac', [('/ac-services/', 'nav.ac')] + [(SVP.ANCHOR_TO_PAGE.get('/ac-services/#' + a, '/ac-services/#' + a), 'ac.%s.t' % L) for L, a, *_ in AC_BLOCKS] + [('/ac-pcb-repair-narasaraopet/', 'svc.ac_pcb.name'), ('/ac-outdoor-unit-cleaning-narasaraopet/', 'svc.ac_outdoor.name')]),
               ('nav.appliance', [('/appliance-services/', 'nav.appliance')] + [(SVP.ANCHOR_TO_PAGE['/appliance-services/#' + a], 'ap.%s.t' % k) for k, a in AP_BLOCKS] + [('/brands/', 'nav.brands')]),
               ('nav.blog', [('/blog/', 'nav.blog')] + [('/blog/%s/' % x['slug'], 'post.%s.title' % x['slug']) for x in POSTS]),
               ('ft.privacy', [('/privacy-policy/', 'ft.privacy'), ('/terms/', 'ft.terms')])]
