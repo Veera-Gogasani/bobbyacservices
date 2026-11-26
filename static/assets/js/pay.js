@@ -126,13 +126,11 @@
   // ---------- fallback (no PhonePe keys yet): copy UPI ID / QR ----------
   var VPA = modal.getAttribute('data-upi'), copied = modal.querySelector('.pay-copied');
   var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked', launched = 0, away = false;
-  // The button itself is a link to PhonePe's home screen (no payment pre-filled, so PhonePe never declines).
-  // Android only lets a website open an app at the moment of the tap, so the copy happens synchronously in the
-  // same tap and the browser then follows the link. Android: PhonePe's link, with its Play Store page (which has
-  // an "Open" button) as the fallback; iPhone: phonepe://
+  // The button is a link that leads into PhonePe (no payment pre-filled, so PhonePe never declines). The copy
+  // happens synchronously in the same tap, then the browser follows the link. iPhone: phonepe:// opens the app.
   var IOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  var PP_LINK = IOS ? 'phonepe://' : 'intent://#Intent;scheme=phonepe;package=com.phonepe.app;S.browser_fallback_url=' +
-    encodeURIComponent('https://play.google.com/store/apps/details?id=com.phonepe.app') + ';end';
+  // Android: PhonePe's Play Store page (works in every browser; shows "Open" because PhonePe is installed).
+  var PP_LINK = IOS ? 'phonepe://' : 'https://play.google.com/store/apps/details?id=com.phonepe.app&hl=en_IN';
   modal.querySelectorAll('[data-copy-upi]').forEach(function (a) { a.setAttribute('href', PP_LINK); });
   function copyUpi() {                                              // must stay synchronous (same tap as the app launch)
     var ta = document.createElement('textarea'); ta.value = VPA; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
