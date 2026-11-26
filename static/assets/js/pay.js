@@ -1,8 +1,8 @@
-/* BOBBY – UPI "Pay" popup (phones only) + Google review request after returning from the UPI app.
-   UPI apps decline payments to a personal account when a website pre-fills them (upi://pay links), so instead
-   a tap copies BOBBY's UPI ID to the clipboard and opens PhonePe / Google Pay; the customer pastes it inside
-   the app (which is allowed). The QR code is the other option. The website never sees the payment result;
-   the review popup appears when the customer comes back. */
+/* BOBBY – UPI "Pay" popup (phones only) + Google review request after the customer comes back.
+   UPI apps decline website-started payments to a personal account, and Android does not let a website open
+   another app's home screen, so the popup copies BOBBY's UPI ID in one tap and the customer pastes it inside
+   PhonePe / Google Pay (allowed). The QR code is the other option. The website never sees the payment result;
+   the review popup appears when the customer returns after leaving to pay. */
 (function () {
   var modal = document.getElementById('payModal');
   if (!modal) return;
@@ -13,11 +13,9 @@
 
   var VPA = modal.getAttribute('data-upi');
   var rev = document.getElementById('revModal');
-  var noapp = modal.querySelector('.pay-noapp'), copied = modal.querySelector('.pay-copied');
-  var PKG = { phonepe: 'com.phonepe.app', gpay: 'com.google.android.apps.nbu.paisa.user' };
-  var IOS = { phonepe: 'phonepe://', gpay: 'gpay://' };
+  var copied = modal.querySelector('.pay-copied');
   var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked';
-  var lastFocus = null, timer = null, launched = 0, away = false, blurred = false;
+  var lastFocus = null, timer = null, launched = 0, away = false;
 
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { return null; } }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -26,18 +24,8 @@
   document.querySelectorAll('[data-pay]').forEach(function (b) { b.hidden = false; });
   var bar = document.querySelector('.mbar'); if (bar) bar.classList.add('has-pay');
 
-  // opens the app's home screen (no payment pre-filled, so the app never declines it)
-  function appLink(app) {
-    if (ios) return IOS[app];
-    var back = location.href.split('#')[0] + '#pay-noapp';
-    return 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=' + PKG[app] +
-      ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
-  }
-
-  function open(showNoapp) {
+  function open() {
     if (!modal.classList.contains('open')) lastFocus = document.activeElement;
-    if (noapp) noapp.hidden = !showNoapp;
-    var qd = modal.querySelector('[data-qr]'); if (qd && showNoapp) qd.open = true;
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
   }
   function close(m) {
@@ -74,7 +62,6 @@
     if (document.hidden) { if (timer) { clearTimeout(timer); timer = null; } if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } }
     else returned();
   });
-  window.addEventListener('blur', function () { if (launched) { blurred = true; if (timer) { clearTimeout(timer); timer = null; } } });
   window.addEventListener('pageshow', function (e) { if (e.persisted) returned(); });
   window.addEventListener('pagehide', function () { if (timer) { clearTimeout(timer); timer = null; } });
 
@@ -84,21 +71,12 @@
     if (t.closest('[data-pay]')) {
       e.preventDefault();
       var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
-      open(false); return;
+      open(); return;
     }
-    var app = t.closest('#payModal [data-open]');
-    if (app) {
-      e.preventDefault();
-      var url = appLink(app.getAttribute('data-open'));
-      if (noapp) noapp.hidden = true;
+    if (t.closest('#payModal [data-copy-upi]')) {
       copy(VPA).then(function () {
         if (copied) copied.hidden = false;
-        launched = Date.now(); away = false; blurred = false; ss(AWAY, null); ss(KEY, String(launched));
-        if (timer) clearTimeout(timer);
-        if (ios) timer = setTimeout(function () {                    // iPhone: nothing opened -> app not installed
-          timer = null; if (!document.hidden && !away && !blurred && document.hasFocus()) { if (noapp) noapp.hidden = false; }
-        }, 3000);
-        setTimeout(function () { location.href = url; }, 350);        // let the customer see "UPI ID copied"
+        launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched));   // review asked when they come back
       });
       return;
     }
@@ -112,11 +90,8 @@
     else if (modal.classList.contains('open')) { e.stopPropagation(); close(modal); }
   }, true);
 
-  // #pay opens the popup; #pay-noapp = Android fallback when the chosen app is not installed
-  function hash() {
-    if (location.hash === '#pay') open(false);
-    else if (location.hash === '#pay-noapp') { launched = 0; away = false; ss(KEY, null); ss(AWAY, null); open(true); history.replaceState(null, '', location.pathname + location.search); }
-  }
+  // #pay opens the popup
+  function hash() { if (location.hash === '#pay') open(); }
   window.addEventListener('hashchange', hash); hash();
   returned();   // page was reloaded after returning from the UPI app
 })();

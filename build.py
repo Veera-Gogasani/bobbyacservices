@@ -240,11 +240,9 @@ def pay_modal():
 <div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
 <div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
-<p class="pay-h">{tx('pay.apps.h')}</p>
-<div class="pay-apps"><a class="pay-app pay-pp" data-open="phonepe" href="#">PhonePe</a><a class="pay-app pay-gp" data-open="gpay" href="#">Google Pay</a></div>
+<button type="button" class="btn btn-orange pay-copy" data-copy-upi>{ic('check')}<span class="pc-a">{tx('pay.copybtn')}</span></button>
 <p class="pay-copied" role="status" hidden>{ic('check')}{tx('pay.copied')}</p>
 <ol class="pay-steps"><li>{tx('pay.s1')}</li><li>{tx('pay.s2')}</li><li>{tx('pay.s3')}</li></ol>
-<p class="pay-noapp" role="alert" hidden>{ic('info')}{tx('pay.noapp')}</p>
 <p class="pay-check">{ic('shield')}{tx('pay.check')}</p>
 <details class="pay-qr" data-qr><summary>{ic('rupee')}{tx('pay.qr')}</summary><img src="/assets/img/pay/bobby-upi-qr.png" width="220" height="220" alt="UPI QR code for {esc(PAY.UPI_NAME)}" loading="lazy"><p class="pay-upi">{esc(PAY.UPI_ID)}</p><a class="btn btn-line btn-sm" href="/assets/img/pay/bobby-upi-qr.png" download="BOBBY-UPI-QR.png">{tx('pay.qr.save')}</a><p class="pay-mini">{tx('pay.qr.p')}</p></details>
 <p class="pay-safe">{tx('pay.safe')}</p></div></div>
