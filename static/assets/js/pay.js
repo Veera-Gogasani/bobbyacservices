@@ -11,9 +11,9 @@
   var ios = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (!android && !ios) return;                       // desktop / web: Pay stays hidden
 
-  var VPA = modal.getAttribute('data-upi'), PN = modal.getAttribute('data-pn');
+  var VPA = modal.getAttribute('data-upi'), QP = modal.getAttribute('data-qp');
   var rev = document.getElementById('revModal');
-  var amt = modal.querySelector('.pay-amt input'), noapp = modal.querySelector('.pay-noapp');
+  var noapp = modal.querySelector('.pay-noapp');
   var PKG = { gpay: 'com.google.android.apps.nbu.paisa.user', phonepe: 'com.phonepe.app' };
   var KEY = 'bobby-pay-launch', DONE = 'bobby-rev-asked';
   var lastFocus = null, timer = null, launched = 0, away = false, AWAY = 'bobby-pay-away';
@@ -25,15 +25,8 @@
   document.querySelectorAll('[data-pay]').forEach(function (b) { b.hidden = false; });
   var bar = document.querySelector('.mbar'); if (bar) bar.classList.add('has-pay');
 
-  function amount() {
-    var v = (amt && amt.value || '').replace(/[^0-9.]/g, ''), n = parseFloat(v);
-    return n > 0 && n < 1000000 ? n.toFixed(2) : '';
-  }
-  function query() {
-    var q = 'pa=' + encodeURIComponent(VPA) + '&pn=' + encodeURIComponent(PN) + '&cu=INR&tn=' + encodeURIComponent('BOBBY service payment');
-    var a = amount(); if (a) q += '&am=' + a;
-    return q;
-  }
+  // exactly the payee details from BOBBY's own QR code: no amount / note (apps decline those for personal accounts)
+  function query() { return 'pa=' + encodeURIComponent(VPA).replace('%40', '@') + '&' + QP; }
   function link(app) {
     var q = query();
     if (app === 'upi') return 'upi://pay?' + q;
@@ -82,7 +75,6 @@
     if (t.closest('[data-pay]')) { e.preventDefault(); var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click(); open(false); return; }
     var app = t.closest('#payModal [data-app]');
     if (app) {
-      app.setAttribute('href', link(app.getAttribute('data-app')));   // amount may have just changed
       launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched)); if (noapp) noapp.hidden = true;
       if (timer) clearTimeout(timer);
       timer = setTimeout(function () {                                 // still here after 2.5 s: app probably missing
@@ -93,10 +85,6 @@
     if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
     if (t.closest('#revModal [data-rev-go]')) { ls('bobby-reviewed', '1'); setTimeout(function () { close(rev); }, 300); return; }
     if (t.closest('#revModal [data-close-rev]')) { close(rev); return; }
-  });
-  if (amt) amt.addEventListener('input', function () {
-    var v = amt.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^(\d*\.\d{0,2}).*$/, '$1');
-    if (v !== amt.value) amt.value = v; refresh();
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;

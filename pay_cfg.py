@@ -3,7 +3,10 @@
 UPI_ID: Bobby's real UPI ID exactly as shown in Google Pay / PhonePe (profile -> UPI ID).
 Leave '' to keep the Pay button hidden everywhere (a phone number alone cannot be used in a UPI payment link)."""
 import os
-UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@ibl')   # PhonePe UPI ID (KVB account), from owner's QR screen 26 Nov 2026
+UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@axl')   # exactly as in the owner's PhonePe QR (KVB account); 8374889163@ibl is the same account
+# Exact parameters decoded from the owner's own QR code. App buttons send these unchanged (no amount/note),
+# because UPI apps decline website-started payments to personal accounts when extra fields are added.
+UPI_QR_PARAMS = 'pn=G%20YALLAMANDA&mc=0000&mode=02&purpose=00'
 UPI_NAME = 'G YALLAMANDA'                                # bank-registered name the customer's UPI app shows (from the QR)
 UPI_NUMBER = '8374889163'                                # Google Pay / PhonePe number (manual fallback)
 REVIEW_URL = ('https://www.google.com/maps/place//data=!4m3!3m2!1s0x3a4a8120cd16cd23:0x6713e7c4650facdb!12e1'
@@ -19,12 +22,12 @@ def strings(name):
              'సర్వీస్ పూర్తయి, టెక్నీషియన్‌తో తుది బిల్లు అంగీకరించిన తర్వాత మాత్రమే చెల్లించండి.',
              'सर्विस पूरी होने और टेक्नीशियन के साथ अंतिम बिल तय होने के बाद ही भुगतान करें।'),
  'pay.to': ('Paying to', 'చెల్లింపు అందుకునేవారు', 'भुगतान प्राप्तकर्ता'),
- 'pay.amt': ('Bill amount (₹)', 'బిల్లు మొత్తం (₹)', 'बिल राशि (₹)'),
- 'pay.amt.ph': ('Enter amount (optional)', 'మొత్తం నమోదు చేయండి (ఐచ్ఛికం)', 'राशि दर्ज करें (वैकल्पिक)'),
- 'pay.amt.p': ('You can also enter or change the amount inside your app.', 'మొత్తాన్ని మీ యాప్‌లో కూడా నమోదు చేయవచ్చు లేదా మార్చవచ్చు.', 'आप राशि अपने ऐप में भी दर्ज या बदल सकते हैं।'),
  'pay.choose': ('Choose your payment app', 'మీ పేమెంట్ యాప్‌ను ఎంచుకోండి', 'अपना पेमेंट ऐप चुनें'),
+ 'pay.choose.p': ('Your app opens with BOBBY already selected. Enter the bill amount there and tap Pay.',
+                  'మీ యాప్ BOBBY ఎంపిక చేసి తెరుచుకుంటుంది. అక్కడ బిల్లు మొత్తం నమోదు చేసి Pay నొక్కండి.',
+                  'आपका ऐप BOBBY चुना हुआ खुलेगा। वहां बिल राशि डालें और Pay दबाएं।'),
  'pay.other': ('Other UPI apps', 'ఇతర UPI యాప్‌లు', 'अन्य UPI ऐप'),
- 'pay.noapp': ("Didn't open? The app may not be installed on this phone. Try the other app, or pay with the QR code below.",
+ 'pay.noapp': ("Didn't open, or the app declined it? Try the other app, or pay with the QR code below. Scanning the QR always works.",
                'తెరుచుకోలేదా? ఆ యాప్ ఈ ఫోన్‌లో ఇన్‌స్టాల్ అయి ఉండకపోవచ్చు. మరో యాప్‌ను ప్రయత్నించండి, లేదా కింద ఉన్న QR కోడ్‌తో చెల్లించండి.',
                'नहीं खुला? हो सकता है यह ऐप इस फ़ोन में इंस्टॉल न हो। दूसरा ऐप आज़माएं, या नीचे दिए QR कोड से भुगतान करें।'),
  'pay.qr': ('Pay with QR code', 'QR కోడ్‌తో చెల్లించండి', 'QR कोड से भुगतान करें'),

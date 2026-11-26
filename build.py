@@ -236,12 +236,11 @@ def pay_btn(cls, key):
 def pay_modal():
     if not PAY_ON: return ''
     num = PAY.UPI_NUMBER
-    return f'''<div class="modal pay-modal" id="payModal" aria-hidden="true" data-upi="{esc(PAY.UPI_ID)}" data-pn="{esc(PAY.UPI_NAME)}"><div class="modal-bg" data-close-pay></div>
+    return f'''<div class="modal pay-modal" id="payModal" aria-hidden="true" data-upi="{esc(PAY.UPI_ID)}" data-qp="{esc(PAY.UPI_QR_PARAMS)}"><div class="modal-bg" data-close-pay></div>
 <div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
 <div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
-<label class="pay-amt"><span>{tx('pay.amt')}</span><span class="pay-amt-in"><i>₹</i><input type="text" inputmode="decimal" autocomplete="off" maxlength="9" placeholder="{esc(plain('pay.amt.ph'))}" data-i18n-ph="pay.amt.ph"></span><small>{tx('pay.amt.p')}</small></label>
-<p class="pay-h">{tx('pay.choose')}</p>
+<p class="pay-h">{tx('pay.choose')}</p><p class="pay-mini pay-cp">{tx('pay.choose.p')}</p>
 <div class="pay-apps"><a class="pay-app pay-gpay" data-app="gpay" href="#"><span class="pa-dot" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Google Pay</a><a class="pay-app pay-pp" data-app="phonepe" href="#"><span class="pa-pp" aria-hidden="true">{ic('rupee')}</span>PhonePe</a></div>
 <a class="pay-other" data-app="upi" href="#">{tx('pay.other')}{ic('arrow')}</a>
 <p class="pay-noapp" role="alert" hidden>{ic('info')}{tx('pay.noapp')}</p>
