@@ -112,6 +112,7 @@
   if (!duo) return;
   var panels = [].slice.call(duo.querySelectorAll('.hero-duo-panel'));   /* 0 = classic, 1 = showcase */
   var dots = [].slice.call(document.querySelectorAll('.hero-duo-pager button'));
+  panels.forEach(function (p, i) { if (i) p.classList.add('is-gone'); });   /* hidden hero: skip all its rendering work */
   var SHOW = panels.indexOf(hero), cur2 = 0, duoTimer = null, duoHold = false, HOLD_CLASSIC = 8000, duoHover = false, duoVisible = true;
   function scheduleBack() {                 /* while the classic hero is shown, switch to the showcase after a pause */
     clearTimeout(duoTimer);
@@ -123,11 +124,12 @@
   function show(n) {
     if (n === cur2) return;
     var old = panels[cur2], nxt = panels[n], fwd = n > cur2 || (cur2 === panels.length - 1 && n === 0);
+    nxt.classList.remove('is-gone');
     if (!fwd) { nxt.classList.add('is-back'); void nxt.offsetWidth; nxt.classList.remove('is-back'); }
     old.classList.remove('is-on'); old.classList.toggle('is-out', fwd);
     if (!fwd) old.style.transform = 'translate3d(100%,0,0)';
     nxt.classList.remove('is-out'); nxt.style.transform = ''; nxt.classList.add('is-on');
-    setTimeout(function () { old.classList.remove('is-out'); old.style.transform = ''; }, 1150);
+    setTimeout(function () { old.classList.remove('is-out'); old.style.transform = ''; if (!old.classList.contains('is-on')) old.classList.add('is-gone'); }, 1150);
     old.setAttribute('aria-hidden', 'true'); old.inert = true;
     nxt.removeAttribute('aria-hidden'); nxt.inert = false;
     dots[cur2].classList.remove('is-on'); dots[cur2].setAttribute('aria-selected', 'false');

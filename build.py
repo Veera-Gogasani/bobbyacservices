@@ -1237,7 +1237,7 @@ def write():
     os.makedirs(os.path.join(out, 'assets', 'data'), exist_ok=True)
     json.dump(EST_JSON, open(os.path.join(out, 'assets', 'data', 'estimate.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-    open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'standalone',
+    open(os.path.join(out, 'site.webmanifest'), 'w').write(json.dumps({'name': BRAND, 'short_name': 'BOBBY AC', 'start_url': '/', 'display': 'browser',
         'background_color': '#102C50', 'theme_color': '#102C50', 'icons': [{'src': '/assets/img/icon-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/assets/img/icon-512.png', 'sizes': '512x512', 'type': 'image/png'}]}))
     fingerprint(out)
     write_middleware()
