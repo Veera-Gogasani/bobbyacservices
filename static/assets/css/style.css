@@ -1275,5 +1275,13 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .pay-check b{white-space:nowrap}
 
 .pay-cp{margin:-4px 0 10px}
-.pay-open{display:flex;width:100%;justify-content:center;min-height:56px;font-size:16.5px;gap:8px;color:#fff!important}
-.pay-open svg{width:20px;height:20px}
+.pay-apps{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-app{display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:16px;font-weight:700;font-size:16.5px;text-decoration:none;box-shadow:0 6px 16px rgba(16,44,80,.1)}
+.pay-app:active{transform:scale(.97)}
+.pay-pp{background:#5F259F;color:#fff!important}
+.pay-gp{background:#fff;color:#202124!important;border:1.5px solid #DADCE0}
+.pay-copied{display:flex;align-items:center;gap:8px;margin:10px 0 0;padding:9px 12px;border-radius:12px;background:#EEF8F1;color:#13803F;font-weight:600;font-size:13.5px}
+.pay-copied[hidden]{display:none}
+.pay-copied svg{width:18px;height:18px;flex:none}
+.pay-steps{margin:12px 0 4px;padding-left:20px;font-size:13.5px;color:#334A5E;line-height:1.5}
+.pay-steps li{margin-bottom:4px}

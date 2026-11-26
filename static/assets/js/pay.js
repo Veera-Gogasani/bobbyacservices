@@ -1,7 +1,8 @@
-/* BOBBY – UPI "Pay" (phones only) + Google review request after returning from the UPI app.
-   Tapping Pay opens upi://pay with BOBBY's exact QR details: Android shows every installed UPI app
-   (Google Pay, PhonePe, …) to choose from, iPhone opens the UPI app. If nothing opens, a small popup offers
-   the QR code instead. The website never sees the payment result; the review popup appears on return. */
+/* BOBBY – UPI "Pay" popup (phones only) + Google review request after returning from the UPI app.
+   UPI apps decline payments to a personal account when a website pre-fills them (upi://pay links), so instead
+   a tap copies BOBBY's UPI ID to the clipboard and opens PhonePe / Google Pay; the customer pastes it inside
+   the app (which is allowed). The QR code is the other option. The website never sees the payment result;
+   the review popup appears when the customer comes back. */
 (function () {
   var modal = document.getElementById('payModal');
   if (!modal) return;
@@ -10,11 +11,13 @@
   var ios = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (!android && !ios) return;                       // desktop / web: Pay stays hidden
 
-  var VPA = modal.getAttribute('data-upi'), QP = modal.getAttribute('data-qp');
+  var VPA = modal.getAttribute('data-upi');
   var rev = document.getElementById('revModal');
-  var noapp = modal.querySelector('.pay-noapp');
-  var KEY = 'bobby-pay-launch', DONE = 'bobby-rev-asked';
-  var lastFocus = null, timer = null, launched = 0, away = false, blurred = false, AWAY = 'bobby-pay-away';
+  var noapp = modal.querySelector('.pay-noapp'), copied = modal.querySelector('.pay-copied');
+  var PKG = { phonepe: 'com.phonepe.app', gpay: 'com.google.android.apps.nbu.paisa.user' };
+  var IOS = { phonepe: 'phonepe://', gpay: 'gpay://' };
+  var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked';
+  var lastFocus = null, timer = null, launched = 0, away = false, blurred = false;
 
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { return null; } }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -23,21 +26,35 @@
   document.querySelectorAll('[data-pay]').forEach(function (b) { b.hidden = false; });
   var bar = document.querySelector('.mbar'); if (bar) bar.classList.add('has-pay');
 
-  // exactly the payee details from BOBBY's own QR code: no amount / note (apps decline those for personal accounts)
-  function query() { return 'pa=' + encodeURIComponent(VPA).replace('%40', '@') + '&' + QP; }
-  function link() { return 'upi://pay?' + query(); }
-  function refresh() { document.querySelectorAll('[data-pay], #payModal [data-app]').forEach(function (a) { a.setAttribute('href', link()); }); }
-  refresh();
+  // opens the app's home screen (no payment pre-filled, so the app never declines it)
+  function appLink(app) {
+    if (ios) return IOS[app];
+    var back = location.href.split('#')[0] + '#pay-noapp';
+    return 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=' + PKG[app] +
+      ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
+  }
 
   function open(showNoapp) {
     if (!modal.classList.contains('open')) lastFocus = document.activeElement;
-    refresh(); if (noapp) noapp.hidden = !showNoapp; var qd = modal.querySelector('[data-qr]'); if (qd) qd.open = !!showNoapp;
+    if (noapp) noapp.hidden = !showNoapp;
+    var qd = modal.querySelector('[data-qr]'); if (qd && showNoapp) qd.open = true;
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
   }
   function close(m) {
     m = m || modal; m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
     if (!document.querySelector('.modal.open')) document.body.style.overflow = '';
     if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
+  }
+
+  function copy(text) {
+    return new Promise(function (ok) {
+      function fallback() {
+        var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+        try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); ok();
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+    });
   }
 
   // ---------- review request after coming back from the UPI app ----------
@@ -51,13 +68,12 @@
   }
   function returned() {
     var t = launched || +ss(KEY) || 0;
-    if (t && (away || ss(AWAY)) && Date.now() - t > 2500 && Date.now() - t < 45 * 60 * 1000) askReview();
+    if (t && (away || ss(AWAY)) && Date.now() - t > 4000 && Date.now() - t < 45 * 60 * 1000) askReview();
   }
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { if (timer) { clearTimeout(timer); timer = null; } if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } }   // the UPI app opened
+    if (document.hidden) { if (timer) { clearTimeout(timer); timer = null; } if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } }
     else returned();
   });
-  // Android's "Open with" app list (or the app itself) takes focus from the page: that means the UPI link worked
   window.addEventListener('blur', function () { if (launched) { blurred = true; if (timer) { clearTimeout(timer); timer = null; } } });
   window.addEventListener('pageshow', function (e) { if (e.persisted) returned(); });
   window.addEventListener('pagehide', function () { if (timer) { clearTimeout(timer); timer = null; } });
@@ -65,16 +81,25 @@
   // ---------- clicks ----------
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : null; if (!t) return;
-    var go = t.closest('[data-pay], #payModal [data-app]');
-    if (go) {                                                          // let the browser follow upi://pay
+    if (t.closest('[data-pay]')) {
+      e.preventDefault();
       var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
-      launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched)); if (noapp) noapp.hidden = true;
-      if (timer) clearTimeout(timer);
-      blurred = false;
-      timer = setTimeout(function () {                                 // nothing took over the screen: no UPI app on this phone
-        timer = null;
-        if (!document.hidden && !away && !blurred && document.hasFocus()) open(true);
-      }, 4000);
+      open(false); return;
+    }
+    var app = t.closest('#payModal [data-open]');
+    if (app) {
+      e.preventDefault();
+      var url = appLink(app.getAttribute('data-open'));
+      if (noapp) noapp.hidden = true;
+      copy(VPA).then(function () {
+        if (copied) copied.hidden = false;
+        launched = Date.now(); away = false; blurred = false; ss(AWAY, null); ss(KEY, String(launched));
+        if (timer) clearTimeout(timer);
+        if (ios) timer = setTimeout(function () {                    // iPhone: nothing opened -> app not installed
+          timer = null; if (!document.hidden && !away && !blurred && document.hasFocus()) { if (noapp) noapp.hidden = false; }
+        }, 3000);
+        setTimeout(function () { location.href = url; }, 350);        // let the customer see "UPI ID copied"
+      });
       return;
     }
     if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
@@ -87,7 +112,7 @@
     else if (modal.classList.contains('open')) { e.stopPropagation(); close(modal); }
   }, true);
 
-  // deep links: #pay opens the popup; #pay-noapp = Android fallback when the chosen app is not installed
+  // #pay opens the popup; #pay-noapp = Android fallback when the chosen app is not installed
   function hash() {
     if (location.hash === '#pay') open(false);
     else if (location.hash === '#pay-noapp') { launched = 0; away = false; ss(KEY, null); ss(AWAY, null); open(true); history.replaceState(null, '', location.pathname + location.search); }
