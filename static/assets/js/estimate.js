@@ -239,6 +239,12 @@
           doc.text(c[2][0], c[0] + 10.5, 274.2); doc.setTextColor.apply(doc, grey); doc.setFontSize(8.3); doc.text(c[2][1], c[0] + 10.5, 278.6);
         });
         doc.link(80, 270, 60, 5, { url: 'https://' + b.web });
+        var bw = 62, bxx = (W - bw) / 2, byy = 281.2;
+        doc.setFillColor(201, 101, 10); doc.roundedRect(bxx + 0.4, byy + 0.6, bw, 7.2, 3.6, 3.6, 'F');
+        doc.setFillColor(242, 133, 31); doc.roundedRect(bxx, byy, bw, 7.2, 3.6, 3.6, 'F');
+        doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(9.6);
+        doc.text('BOOK ONLINE  \u203A', W / 2, byy + 4.9, { align: 'center' });
+        doc.link(bxx, byy, bw, 7.2, { url: b.book });
         if (of > 1) { doc.setFontSize(7.5); doc.setTextColor.apply(doc, grey); doc.text('Page ' + n + ' of ' + of, W - M, 286, { align: 'right' }); }
         doc.addImage(FOOT, 'JPEG', 0, 290, W, 7, 'foot');
       }
@@ -292,14 +298,10 @@
       if (t.plus) { doc.setFont('helvetica', 'bolditalic'); doc.setFontSize(9); doc.setTextColor.apply(doc, grey); doc.text('+ Parts (if needed, charged extra)', M + 4, y + 2); y += 5; }
       doc.setDrawColor(16, 44, 80); doc.setLineWidth(0.6); doc.line(M, y + 1, W - M, y + 1); doc.setLineWidth(0.2);
       // booking
-      room(10); y += 9;
-      doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text('Book online: ', M, y);
-      var bx = M + doc.getTextWidth('Book online: '); doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(22, 136, 212);
-      doc.textWithLink(b.book, bx, y, { url: b.book }); doc.setDrawColor(22, 136, 212); doc.line(bx, y + 0.8, bx + doc.getTextWidth(b.book), y + 0.8);
       // thank you + estimate only
       var note = 'Please note: this is only an estimate, not the final price. The final price depends on the technician\'s inspection, the spare parts required and the service needed, and may vary. Spare-part prices are indicative market ranges (reviewed ' + DATA.partsReviewed + '). Work starts only after you approve the final quotation.';
       doc.setFontSize(9.2); var nl = doc.splitTextToSize(note, W - M * 2 - 10), bh = nl.length * 4.5 + 10;
-      room(bh + 22); y += 10;
+      room(bh + 22); y += 12;
       doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor.apply(doc, navy);
       doc.text('Thank you for choosing BOBBY AC Repair & Home Appliance Services', W / 2, y, { align: 'center' });
       y += 5;
