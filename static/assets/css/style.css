@@ -1308,3 +1308,4 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .pr-dl div{display:flex;justify-content:space-between;gap:12px}.pr-dl dt{color:#55697C;font-size:14px}.pr-dl dd{margin:0;font-weight:700;color:#102C50;word-break:break-all;text-align:right}
 .pr-card .btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .pr-card .btn-row .btn{min-height:46px}
+.pay-ppbtn{background:#5F259F!important;box-shadow:0 10px 24px rgba(95,37,159,.3)!important}
