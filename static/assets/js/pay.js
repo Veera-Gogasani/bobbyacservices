@@ -1,5 +1,5 @@
 /* BOBBY – UPI "Pay" popup (phones only) + Google review request after returning from the UPI app.
-   Android: intent:// links open Google Pay / PhonePe directly (Play Store-less fallback back to this page);
+   Android: intent:// links open Google Pay / PhonePe directly (fallback back to this page if the app is missing);
             "Other UPI apps" uses upi:// which shows Android's chooser of every installed UPI app.
    iPhone:  gpay:// and phonepe:// app links (iOS has no app chooser, so the customer picks the app here).
    The website never sees the payment result; the review popup appears when the customer comes back. */
@@ -90,8 +90,6 @@
       }, 2500);
       return;                                                          // let the browser follow the app link
     }
-    var cp = t.closest('#payModal [data-copy]');
-    if (cp) { copy(cp.getAttribute('data-copy'), cp); return; }
     if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
     if (t.closest('#revModal [data-rev-go]')) { ls('bobby-reviewed', '1'); setTimeout(function () { close(rev); }, 300); return; }
     if (t.closest('#revModal [data-close-rev]')) { close(rev); return; }
@@ -105,15 +103,6 @@
     if (rev && rev.classList.contains('open')) { e.stopPropagation(); close(rev); }
     else if (modal.classList.contains('open')) { e.stopPropagation(); close(modal); }
   }, true);
-
-  function copy(text, btn) {
-    function ok() { btn.classList.add('done'); setTimeout(function () { btn.classList.remove('done'); }, 1800); }
-    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(ok, fallback); } else fallback();
-    function fallback() {
-      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} document.body.removeChild(ta);
-    }
-  }
 
   // deep links: #pay opens the popup; #pay-noapp = Android fallback when the chosen app is not installed
   function hash() {

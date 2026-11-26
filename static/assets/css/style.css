@@ -1254,12 +1254,6 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .pay-noapp[hidden]{display:none}
 .pay-noapp svg,.pay-check svg{width:18px;height:18px;flex:none;margin-top:1px}
 .pay-check{display:flex;gap:8px;font-size:13.5px;color:#1B5E3A;background:#EEF8F1;border-radius:12px;padding:10px 12px;margin:8px 0 14px}
-.pay-manual{border-top:1px dashed #C9D9E8;padding-top:12px}
-.pay-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #EEF3F8}
-.pay-row span{display:flex;flex-direction:column;min-width:0}
-.pay-row small{font-size:12px;color:#55697C}.pay-row b{font-size:15px;color:#102C50;word-break:break-all}
-.pay-row .btn{min-height:40px;flex:none}
-[data-copy] .c2,[data-copy].done .c1{display:none}[data-copy].done .c2{display:inline}[data-copy].done{color:#13803F;border-color:#13803F}
 .pay-mini{font-size:12.5px;color:#55697C;margin:8px 0 0}
 .pay-safe{font-size:12px;color:#7A8C9C;margin:12px 0 0;text-align:center}
 .rv-panel{text-align:center}
@@ -1287,3 +1281,13 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
   .hero .tri-wave{filter:none}
   .airflow{filter:none}
 }
+.pay-qr{border-top:1px dashed #C9D9E8;padding-top:10px;text-align:center}
+.pay-qr summary{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;font-weight:700;font-size:14.5px;color:#102C50;cursor:pointer;list-style:none}
+.pay-qr summary::-webkit-details-marker{display:none}
+.pay-qr summary svg{width:16px;height:16px;color:#F2851F}
+.pay-qr summary::after{content:"";width:8px;height:8px;border:solid #55697C;border-width:0 2px 2px 0;transform:rotate(45deg);margin:-4px 0 0 6px;transition:transform .2s}
+.pay-qr[open] summary::after{transform:rotate(-135deg);margin-top:4px}
+.pay-qr img{display:block;width:220px;height:220px;margin:6px auto 4px;border-radius:14px;border:1px solid #DCE7F1}
+.pay-upi{font-weight:700;color:#102C50;margin:0 0 8px;font-size:15px}
+.pay-qr .btn{min-height:42px}
+.pay-check b{white-space:nowrap}

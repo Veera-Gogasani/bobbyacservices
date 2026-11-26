@@ -3,8 +3,8 @@
 UPI_ID: Bobby's real UPI ID exactly as shown in Google Pay / PhonePe (profile -> UPI ID).
 Leave '' to keep the Pay button hidden everywhere (a phone number alone cannot be used in a UPI payment link)."""
 import os
-UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@sbi')   # TEMPORARY placeholder from owner (26 Nov 2026) - replace with the real UPI ID
-UPI_NAME = 'Yalamanda Gogasani'                          # payee name shown in the UPI app
+UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@ibl')   # PhonePe UPI ID (KVB account), from owner's QR screen 26 Nov 2026
+UPI_NAME = 'G YALLAMANDA'                                # bank-registered name the customer's UPI app shows (from the QR)
 UPI_NUMBER = '8374889163'                                # Google Pay / PhonePe number (manual fallback)
 REVIEW_URL = ('https://www.google.com/maps/place//data=!4m3!3m2!1s0x3a4a8120cd16cd23:0x6713e7c4650facdb!12e1'
               '?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2')
@@ -24,20 +24,17 @@ def strings(name):
  'pay.amt.p': ('You can also enter or change the amount inside your app.', 'మొత్తాన్ని మీ యాప్‌లో కూడా నమోదు చేయవచ్చు లేదా మార్చవచ్చు.', 'आप राशि अपने ऐप में भी दर्ज या बदल सकते हैं।'),
  'pay.choose': ('Choose your payment app', 'మీ పేమెంట్ యాప్‌ను ఎంచుకోండి', 'अपना पेमेंट ऐप चुनें'),
  'pay.other': ('Other UPI apps', 'ఇతర UPI యాప్‌లు', 'अन्य UPI ऐप'),
- 'pay.noapp': ("Didn't open? The app may not be installed on this phone. Try the other app, or copy the UPI ID or number below and pay inside your app.",
-               'తెరుచుకోలేదా? ఆ యాప్ ఈ ఫోన్‌లో ఇన్‌స్టాల్ అయి ఉండకపోవచ్చు. మరో యాప్‌ను ప్రయత్నించండి, లేదా కింద ఉన్న UPI ID / నంబర్‌ను కాపీ చేసి మీ యాప్‌లో చెల్లించండి.',
-               'नहीं खुला? हो सकता है यह ऐप इस फ़ोन में इंस्टॉल न हो। दूसरा ऐप आज़माएं, या नीचे दिया UPI ID / नंबर कॉपी करके अपने ऐप में भुगतान करें।'),
+ 'pay.noapp': ("Didn't open? The app may not be installed on this phone. Try the other app, or pay with the QR code below.",
+               'తెరుచుకోలేదా? ఆ యాప్ ఈ ఫోన్‌లో ఇన్‌స్టాల్ అయి ఉండకపోవచ్చు. మరో యాప్‌ను ప్రయత్నించండి, లేదా కింద ఉన్న QR కోడ్‌తో చెల్లించండి.',
+               'नहीं खुला? हो सकता है यह ऐप इस फ़ोन में इंस्टॉल न हो। दूसरा ऐप आज़माएं, या नीचे दिए QR कोड से भुगतान करें।'),
+ 'pay.qr': ('Pay with QR code', 'QR కోడ్‌తో చెల్లించండి', 'QR कोड से भुगतान करें'),
+ 'pay.qr.p': ('Scan with any UPI app. On this phone: tap Save QR, then in Google Pay or PhonePe tap Scan and choose the QR from your gallery.',
+              'ఏ UPI యాప్‌తోనైనా స్కాన్ చేయండి. ఈ ఫోన్‌లో: Save QR నొక్కి, ఆపై Google Pay లేదా PhonePeలో Scan నొక్కి గ్యాలరీ నుండి QRను ఎంచుకోండి.',
+              'किसी भी UPI ऐप से स्कैन करें। इसी फ़ोन पर: Save QR दबाएं, फिर Google Pay या PhonePe में Scan दबाकर गैलरी से QR चुनें।'),
+ 'pay.qr.save': ('Save QR', 'QR సేవ్ చేయండి', 'QR सेव करें'),
  'pay.check': (f'Before you enter your UPI PIN, check that your app shows the name {b}.',
                f'UPI PIN నమోదు చేసే ముందు, మీ యాప్‌లో {b} పేరు కనిపిస్తోందో చూసుకోండి.',
                f'UPI PIN डालने से पहले देख लें कि आपके ऐप में {b} नाम दिख रहा है।'),
- 'pay.manual': ('Or pay manually', 'లేదా మాన్యువల్‌గా చెల్లించండి', 'या खुद भुगतान करें'),
- 'pay.upiid': ('UPI ID', 'UPI ID', 'UPI ID'),
- 'pay.num': ('Google Pay / PhonePe number', 'Google Pay / PhonePe నంబర్', 'Google Pay / PhonePe नंबर'),
- 'pay.copy': ('Copy', 'కాపీ', 'कॉपी'),
- 'pay.copied': ('Copied', 'కాపీ అయింది', 'कॉपी हो गया'),
- 'pay.manual.p': ('Open Google Pay or PhonePe, choose "Pay phone number" or "Pay UPI ID", and paste.',
-                  'Google Pay లేదా PhonePe తెరిచి, "Pay phone number" లేదా "Pay UPI ID" ఎంచుకుని పేస్ట్ చేయండి.',
-                  'Google Pay या PhonePe खोलें, "Pay phone number" या "Pay UPI ID" चुनें और पेस्ट करें।'),
  'pay.safe': ("Your payment goes from your UPI app straight to BOBBY's bank account. This website never sees your bank details or UPI PIN.",
               'మీ చెల్లింపు మీ UPI యాప్ నుండి నేరుగా BOBBY బ్యాంక్ ఖాతాకు వెళ్తుంది. మీ బ్యాంక్ వివరాలు లేదా UPI PIN ఈ వెబ్‌సైట్‌కు ఎప్పుడూ కనిపించవు.',
               'आपका भुगतान आपके UPI ऐप से सीधे BOBBY के बैंक खाते में जाता है। यह वेबसाइट आपकी बैंक जानकारी या UPI PIN कभी नहीं देखती।'),
