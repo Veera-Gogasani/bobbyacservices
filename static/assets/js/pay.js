@@ -1,97 +1,150 @@
-/* BOBBY – UPI "Pay" popup (phones only) + Google review request after the customer comes back.
-   UPI apps decline website-started payments to a personal account, and Android does not let a website open
-   another app's home screen, so the popup copies BOBBY's UPI ID in one tap and the customer pastes it inside
-   PhonePe / Google Pay (allowed). The QR code is the other option. The website never sees the payment result;
-   the review popup appears when the customer returns after leaving to pay. */
+/* BOBBY – Pay (phones) + Google review request.
+   PhonePe mode (when /api/phonepe/config says enabled): customer enters the bill amount, our Cloudflare function
+   creates a PhonePe Payment Gateway order and the customer is sent to PhonePe's checkout (PhonePe / any UPI app opens
+   with the amount filled in). PhonePe returns them to /payment/?order=…, where the status is checked server-side and
+   the Google review popup appears only after a confirmed successful payment.
+   Fallback mode (no PhonePe keys yet): copy BOBBY's UPI ID / QR code, review asked when the customer returns. */
 (function () {
-  var modal = document.getElementById('payModal');
-  if (!modal) return;
-  var ua = navigator.userAgent || '';
-  var android = /Android/i.test(ua);
-  var ios = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (!android && !ios) return;                       // desktop / web: Pay stays hidden
-
-  var VPA = modal.getAttribute('data-upi');
-  var rev = document.getElementById('revModal');
-  var copied = modal.querySelector('.pay-copied');
-  var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked';
-  var lastFocus = null, timer = null, launched = 0, away = false;
-
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { return null; } }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  function inr(n) { return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  var ORDER_RE = /^BOBBY-[0-9]{8}-[0-9]{6}-[A-Z0-9]{6}$/;
+  var modal = document.getElementById('payModal'), rev = document.getElementById('revModal');
+  var lastFocus = null;
 
-  // show every Pay button (they ship hidden so desktops never see them)
-  document.querySelectorAll('[data-pay]').forEach(function (b) { b.hidden = false; });
-  var bar = document.querySelector('.mbar'); if (bar) bar.classList.add('has-pay');
-
-  function open() {
-    if (!modal.classList.contains('open')) lastFocus = document.activeElement;
-    modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
-  }
-  function close(m) {
-    m = m || modal; m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
+  function show(m) { if (!m) return; lastFocus = document.activeElement; m.classList.add('open'); m.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+  function hide(m) {
+    if (!m) return; m.classList.remove('open'); m.setAttribute('aria-hidden', 'true');
     if (!document.querySelector('.modal.open')) document.body.style.overflow = '';
     if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
   }
-
-  function copy(text) {
-    return new Promise(function (ok) {
-      function fallback() {
-        var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
-        try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); ok();
-      }
-      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
-    });
-  }
-
-  // ---------- review request after coming back from the UPI app ----------
   function askReview() {
-    ss(KEY, null); ss(AWAY, null); launched = 0; away = false;
-    if (!rev || ss(DONE)) return;
-    ss(DONE, '1');
-    close(modal);
-    rev.classList.add('open'); rev.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    if (!rev) return;
+    if (modal) hide(modal);
+    show(rev);
     var b = rev.querySelector('[data-rev-go]'); if (b) setTimeout(function () { try { b.focus({ preventScroll: true }); } catch (e) {} }, 80);
   }
-  function returned() {
-    var t = launched || +ss(KEY) || 0;
-    if (t && (away || ss(AWAY)) && Date.now() - t > 4000 && Date.now() - t < 45 * 60 * 1000) askReview();
-  }
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { if (timer) { clearTimeout(timer); timer = null; } if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } }
-    else returned();
-  });
-  window.addEventListener('pageshow', function (e) { if (e.persisted) returned(); });
-  window.addEventListener('pagehide', function () { if (timer) { clearTimeout(timer); timer = null; } });
 
-  // ---------- clicks ----------
+  // ---------- shared clicks (all devices) ----------
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : null; if (!t) return;
-    if (t.closest('[data-pay]')) {
-      e.preventDefault();
-      var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
-      open(); return;
-    }
-    if (t.closest('#payModal [data-copy-upi]')) {
-      copy(VPA).then(function () {
-        if (copied) copied.hidden = false;
-        launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched));   // review asked when they come back
-      });
-      return;
-    }
-    if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
-    if (t.closest('#revModal [data-rev-go]')) { ls('bobby-reviewed', '1'); setTimeout(function () { close(rev); }, 300); return; }
-    if (t.closest('#revModal [data-close-rev]')) { close(rev); return; }
+    if (t.closest('[data-rev-go]')) { ls('bobby-reviewed', '1'); if (rev && rev.classList.contains('open')) setTimeout(function () { hide(rev); }, 300); return; }
+    if (t.closest('#revModal [data-close-rev]')) { hide(rev); return; }
+    if (t.closest('#payModal [data-close-pay]')) { hide(modal); return; }
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (rev && rev.classList.contains('open')) { e.stopPropagation(); close(rev); }
-    else if (modal.classList.contains('open')) { e.stopPropagation(); close(modal); }
+    if (rev && rev.classList.contains('open')) { e.stopPropagation(); hide(rev); }
+    else if (modal && modal.classList.contains('open')) { e.stopPropagation(); hide(modal); }
   }, true);
 
-  // #pay opens the popup
-  function hash() { if (location.hash === '#pay') open(); }
-  window.addEventListener('hashchange', hash); hash();
-  returned();   // page was reloaded after returning from the UPI app
+  // ---------- /payment/ result page (all devices) ----------
+  var card = document.getElementById('payResult');
+  if (card) {
+    var order = new URLSearchParams(location.search).get('order') || ss('bobby-pp-order') || '';
+    var set = function (st) { card.setAttribute('data-state', st); };
+    card.querySelectorAll('.pr-id').forEach(function (el) { el.textContent = order || '–'; });
+    if (!ORDER_RE.test(order)) { set('err'); }
+    else {
+      var tries = 0, errs = 0;
+      var check = function () {
+        tries++;
+        fetch('/api/phonepe/status?order=' + encodeURIComponent(order), { cache: 'no-store' })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) throw new Error('status');
+            var j = res.j;
+            if (j.amount != null) card.querySelectorAll('.pr-amt').forEach(function (el) { el.textContent = inr(j.amount); });
+            if (j.state === 'COMPLETED') {
+              set('ok'); ss('bobby-pp-order', null);
+              if (!ls('bobby-rev-' + order)) { ls('bobby-rev-' + order, '1'); setTimeout(askReview, 1400); }
+            } else if (j.state === 'FAILED') { set('fail'); ss('bobby-pp-order', null); }
+            else { set('pend'); if (tries < 40) setTimeout(check, tries < 10 ? 3000 : 6000); }
+          })
+          .catch(function () { errs++; if (errs < 4) setTimeout(check, 2500); else set('err'); });
+      };
+      check();
+    }
+  }
+
+  // ---------- Pay popup (phones only) ----------
+  if (!modal) return;
+  var ua = navigator.userAgent || '';
+  var phone = /Android/i.test(ua) || /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!phone) return;                                  // desktop / web: Pay stays hidden
+  document.querySelectorAll('[data-pay]').forEach(function (b) { b.hidden = false; });
+  var bar = document.querySelector('.mbar'); if (bar) bar.classList.add('has-pay');
+
+  var ppOn = false;
+  function setMode(on) { ppOn = !!on; modal.classList.toggle('pp-on', ppOn); }
+  var cachedMode = ss('bobby-pp-mode');
+  if (cachedMode) setMode(cachedMode === '1');
+  fetch('/api/phonepe/config', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { enabled: false }; })
+    .then(function (j) { setMode(j && j.enabled); ss('bobby-pp-mode', ppOn ? '1' : '0'); })
+    .catch(function () { setMode(false); });
+
+  function open() {
+    var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
+    show(modal);
+    var f = modal.querySelector(ppOn ? '.pp-form input[name=amount]' : '[data-copy-upi]');
+    if (f) setTimeout(function () { try { f.focus({ preventScroll: true }); } catch (e) {} }, 120);
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target : null; if (!t) return;
+    if (t.closest('[data-pay]')) { e.preventDefault(); open(); return; }
+    if (t.closest('#payModal [data-copy-upi]')) { copyUpi(); return; }
+  });
+  function hashOpen() { if (location.hash === '#pay') open(); }
+  window.addEventListener('hashchange', hashOpen); hashOpen();
+
+  // PhonePe checkout
+  var form = modal.querySelector('.pp-form');
+  if (form) {
+    var err = form.querySelector('.pp-err'), btn = form.querySelector('.pp-btn'), amt = form.elements.amount, mob = form.elements.mobile;
+    var msg = function (cls) { var m = form.querySelector('.pp-msgs .' + cls); err.textContent = m ? m.textContent : ''; err.hidden = false; };
+    amt.addEventListener('input', function () {
+      var v = amt.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^(\d*\.\d{0,2}).*$/, '$1');
+      if (v !== amt.value) amt.value = v; err.hidden = true;
+    });
+    mob.addEventListener('input', function () { var v = mob.value.replace(/\D/g, '').slice(0, 10); if (v !== mob.value) mob.value = v; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var a = parseFloat(amt.value);
+      if (!(a >= 1 && a <= 100000)) { msg('m-amt'); amt.focus(); return; }
+      var label = btn.innerHTML; btn.disabled = true; btn.textContent = '…';
+      fetch('/api/phonepe/pay', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: amt.value, mobile: mob.value }) })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok || !res.j.redirectUrl) throw new Error(res.j && res.j.error);
+          ss('bobby-pp-order', res.j.order);
+          location.href = res.j.redirectUrl;                         // PhonePe checkout: PhonePe / UPI app opens with the amount
+        })
+        .catch(function () { msg('m-gen'); btn.disabled = false; btn.innerHTML = label; });
+    });
+  }
+
+  // ---------- fallback (no PhonePe keys yet): copy UPI ID / QR ----------
+  var VPA = modal.getAttribute('data-upi'), copied = modal.querySelector('.pay-copied');
+  var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked', launched = 0, away = false;
+  function copyUpi() {
+    var done = function () { if (copied) copied.hidden = false; launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched)); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(VPA).then(done, fb); else fb();
+    function fb() {
+      var ta = document.createElement('textarea'); ta.value = VPA; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, VPA.length); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done();
+    }
+  }
+  function returned() {
+    if (ppOn) return;                                              // PhonePe mode: review only after confirmed payment
+    var t = launched || +ss(KEY) || 0;
+    if (t && (away || ss(AWAY)) && Date.now() - t > 4000 && Date.now() - t < 45 * 60 * 1000) {
+      ss(KEY, null); ss(AWAY, null); launched = 0; away = false;
+      if (!ss(DONE)) { ss(DONE, '1'); askReview(); }
+    }
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } } else returned();
+  });
+  window.addEventListener('pageshow', function (e) { if (e.persisted) returned(); });
+  returned();
 })();

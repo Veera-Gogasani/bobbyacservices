@@ -239,12 +239,19 @@ def pay_modal():
     return f'''<div class="modal pay-modal" id="payModal" aria-hidden="true" data-upi="{esc(PAY.UPI_ID)}" data-qp="{esc(PAY.UPI_QR_PARAMS)}"><div class="modal-bg" data-close-pay></div>
 <div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
-<div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
+<div class="pp-sec"><div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>BOBBY AC Repair &amp; Home Appliance Services</b><em>{tx('pp.secure')}</em></span></div>
+<form class="pp-form" novalidate><label class="pp-f"><span>{tx('pp.amt')}</span><span class="pp-in"><i>₹</i><input name="amount" type="text" inputmode="decimal" autocomplete="off" maxlength="9" required placeholder="{esc(plain('pp.amt.ph'))}" data-i18n-ph="pp.amt.ph"></span></label>
+<label class="pp-f"><span>{tx('pp.mob')}</span><span class="pp-in"><i>+91</i><input name="mobile" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="{esc(plain('pp.mob.ph'))}" data-i18n-ph="pp.mob.ph"></span></label>
+<p class="pp-err" role="alert" hidden></p><span class="pp-msgs" hidden>{tx('pp.err.amt', cls='m-amt')}{tx('pp.err', cls='m-gen')}</span>
+<button type="submit" class="btn pp-btn">{ic('rupee')}{tx('pp.btn')}</button></form>
+<p class="pay-mini pp-p">{tx('pp.p')}</p></div>
+<div class="fb-sec"><div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
 <button type="button" class="btn btn-orange pay-copy" data-copy-upi>{ic('check')}<span class="pc-a">{tx('pay.copybtn')}</span></button>
 <p class="pay-copied" role="status" hidden>{ic('check')}{tx('pay.copied')}</p>
 <ol class="pay-steps"><li>{tx('pay.s1')}</li><li>{tx('pay.s2')}</li><li>{tx('pay.s3')}</li></ol>
 <p class="pay-check">{ic('shield')}{tx('pay.check')}</p>
 <details class="pay-qr" data-qr><summary>{ic('rupee')}{tx('pay.qr')}</summary><img src="/assets/img/pay/bobby-upi-qr.png" width="220" height="220" alt="UPI QR code for {esc(PAY.UPI_NAME)}" loading="lazy"><p class="pay-upi">{esc(PAY.UPI_ID)}</p><a class="btn btn-line btn-sm" href="/assets/img/pay/bobby-upi-qr.png" download="BOBBY-UPI-QR.png">{tx('pay.qr.save')}</a><p class="pay-mini">{tx('pay.qr.p')}</p></details>
+</div>
 <p class="pay-safe">{tx('pay.safe')}</p></div></div>
 <div class="modal rv-modal" id="revModal" aria-hidden="true"><div class="modal-bg" data-close-rev></div>
 <div class="modal-panel rv-panel" role="dialog" aria-modal="true" aria-labelledby="rvTitle"><button type="button" class="modal-x" data-close-rev aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
@@ -1101,6 +1108,24 @@ def build_inner():
 <div class="btn-row" style="justify-content:center"><a class="btn btn-orange" href="/">{tx('btn.home')}</a><a class="btn btn-ghost" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a></div></div></section>
 <section class="sec"><div class="wrap">{quick_cards()}</div></section>''' + footer())
 
+    if PAY_ON:   # PhonePe payment result page (customer returns here from PhonePe); not indexed, not in sitemap
+        tick = '<svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        cross = '<svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M18 18l16 16M34 18L18 34" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>'
+        dl = f'<dl class="pr-dl"><div><dt>{tx("pr.amount")}</dt><dd class="pr-amt">–</dd></div><div><dt>{tx("pr.order")}</dt><dd class="pr-id">–</dd></div></dl>'
+        call = f'<a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic("phone")}{tx("btn.callnum")}</a>'
+        page('/payment/', head('Payment status | BOBBY AC Repair & Home Appliance Services', 'Payment status for BOBBY AC Repair & Home Appliance Services, Narasaraopet.', '/payment/', 'pr.title').replace('index, follow', 'noindex, nofollow') + header('') +
+             f'''<section class="sec pr-sec"><div class="wrap"><h1 class="sr-only">{tx('pr.title')}</h1>
+<div class="pr-card" id="payResult" data-state="check" aria-live="polite">
+<div class="pr-st pr-check"><span class="pr-spin" aria-hidden="true"></span><h2>{tx('pr.check.h')}</h2><p>{tx('pr.check.p')}</p></div>
+<div class="pr-st pr-ok"><span class="pr-ic ok">{tick}</span><h2>{tx('pr.ok.h')}</h2><p>{tx('pr.ok.p')}</p>{dl}
+<div class="btn-row"><a class="btn btn-orange" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener" data-rev-go>{ic('star')}{tx('pr.review')}</a><a class="btn btn-line" href="/">{tx('pr.home')}</a></div></div>
+<div class="pr-st pr-pend"><span class="pr-spin" aria-hidden="true"></span><h2>{tx('pr.pend.h')}</h2><p>{tx('pr.pend.p')}</p>{dl}</div>
+<div class="pr-st pr-fail"><span class="pr-ic bad">{cross}</span><h2>{tx('pr.fail.h')}</h2><p>{tx('pr.fail.p')}</p>
+<div class="btn-row"><a class="btn btn-orange" href="/#pay" data-pay="" hidden>{ic('rupee')}{tx('pr.retry')}</a>{call}<a class="btn btn-line" href="/">{tx('pr.home')}</a></div></div>
+<div class="pr-st pr-err"><span class="pr-ic bad">{cross}</span><h2>{tx('pr.err.h')}</h2><p>{tx('pr.err.p')}</p>{dl}
+<div class="btn-row">{call}<a class="btn btn-wa" href="{wa_default()}" target="_blank" rel="noopener">{wa_ic()}{tx('btn.wa')}</a></div></div>
+</div></div></section>''' + footer())
+
     sp_page.build(sys.modules[__name__])
 
 # ---------------- write ----------------
@@ -1173,7 +1198,7 @@ def write():
     os.makedirs(os.path.join(out, 'assets/i18n'), exist_ok=True)
     for i, l in enumerate(['en', 'te', 'hi']):
         json.dump({k: v[i] for k, v in S.items()}, open(os.path.join(out, 'assets/i18n/%s.json' % l), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    urls = [p for p in PAGES if p.endswith('/')]
+    urls = [p for p in PAGES if p.endswith('/') and p != '/payment/']
     pri = lambda p: '1.0' if p == '/' else ('0.9' if p in ('/ac-services/', '/contact/') else ('0.6' if p.startswith('/blog/') or p in ('/privacy-policy/', '/terms/', '/sitemap/') else '0.8'))
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
         f'<url><loc>{SITE}{u}</loc><lastmod>{lastmod(u)}</lastmod><priority>{pri(u)}</priority></url>\n' for u in urls) + '</urlset>\n'
