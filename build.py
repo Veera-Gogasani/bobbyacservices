@@ -246,7 +246,7 @@ def pay_modal():
 <button type="submit" class="btn pp-btn">{ic('rupee')}{tx('pp.btn')}</button></form>
 <p class="pay-mini pp-p">{tx('pp.p')}</p></div>
 <div class="fb-sec"><div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
-<button type="button" class="btn pay-copy pay-ppbtn" data-copy-upi>{ic('rupee')}<span class="pc-a">{tx('pay.copybtn')}</span></button>
+<a class="btn pay-copy pay-ppbtn" href="#" data-copy-upi>{ic('rupee')}<span class="pc-a">{tx('pay.copybtn')}</span></a>
 <p class="pay-copied" role="status" hidden>{ic('check')}{tx('pay.copied')}</p>
 <ol class="pay-steps"><li>{tx('pay.s1')}</li><li>{tx('pay.s2')}</li><li>{tx('pay.s3')}</li></ol>
 <p class="pay-check">{ic('shield')}{tx('pay.check')}</p>

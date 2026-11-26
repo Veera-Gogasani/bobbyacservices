@@ -126,24 +126,22 @@
   // ---------- fallback (no PhonePe keys yet): copy UPI ID / QR ----------
   var VPA = modal.getAttribute('data-upi'), copied = modal.querySelector('.pay-copied');
   var KEY = 'bobby-pay-launch', AWAY = 'bobby-pay-away', DONE = 'bobby-rev-asked', launched = 0, away = false;
-  // Open PhonePe's home screen (no payment pre-filled, so PhonePe never declines). Android: PhonePe's own link,
-  // falling back to its Play Store page (which has an "Open" button) if the phone refuses; iPhone: phonepe://
+  // The button itself is a link to PhonePe's home screen (no payment pre-filled, so PhonePe never declines).
+  // Android only lets a website open an app at the moment of the tap, so the copy happens synchronously in the
+  // same tap and the browser then follows the link. Android: PhonePe's link, with its Play Store page (which has
+  // an "Open" button) as the fallback; iPhone: phonepe://
   var IOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  function openPhonePe() {
-    location.href = IOS ? 'phonepe://' :
-      'intent://#Intent;scheme=phonepe;package=com.phonepe.app;S.browser_fallback_url=' +
-      encodeURIComponent('https://play.google.com/store/apps/details?id=com.phonepe.app') + ';end';
-  }
-  function copyUpi() {
-    var done = function () {
-      if (copied) copied.hidden = false; launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched));
-      setTimeout(openPhonePe, 600);                                  // let the customer see "UPI ID copied"
-    };
-    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(VPA).then(done, fb); else fb();
-    function fb() {
-      var ta = document.createElement('textarea'); ta.value = VPA; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, VPA.length); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done();
-    }
+  var PP_LINK = IOS ? 'phonepe://' : 'intent://#Intent;scheme=phonepe;package=com.phonepe.app;S.browser_fallback_url=' +
+    encodeURIComponent('https://play.google.com/store/apps/details?id=com.phonepe.app') + ';end';
+  modal.querySelectorAll('[data-copy-upi]').forEach(function (a) { a.setAttribute('href', PP_LINK); });
+  function copyUpi() {                                              // must stay synchronous (same tap as the app launch)
+    var ta = document.createElement('textarea'); ta.value = VPA; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, VPA.length);
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(VPA); } catch (e) {}
+    if (copied) copied.hidden = false;
+    launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched));
   }
   function returned() {
     if (ppOn) return;                                              // PhonePe mode: review only after confirmed payment
