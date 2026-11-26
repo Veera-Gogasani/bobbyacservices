@@ -79,7 +79,7 @@
   // ---------- clicks ----------
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : null; if (!t) return;
-    if (t.closest('[data-pay]')) { e.preventDefault(); open(false); return; }
+    if (t.closest('[data-pay]')) { e.preventDefault(); var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click(); open(false); return; }
     var app = t.closest('#payModal [data-app]');
     if (app) {
       app.setAttribute('href', link(app.getAttribute('data-app')));   // amount may have just changed

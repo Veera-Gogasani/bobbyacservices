@@ -239,10 +239,10 @@ def pay_modal():
     return f'''<div class="modal pay-modal" id="payModal" aria-hidden="true" data-upi="{esc(PAY.UPI_ID)}" data-pn="{esc(PAY.UPI_NAME)}"><div class="modal-bg" data-close-pay></div>
 <div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
-<div class="pay-to"><img src="/assets/img/logo-pdf-round.png" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services</em></span></div>
+<div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services</em></span></div>
 <label class="pay-amt"><span>{tx('pay.amt')}</span><span class="pay-amt-in"><i>₹</i><input type="text" inputmode="decimal" autocomplete="off" maxlength="9" placeholder="{esc(plain('pay.amt.ph'))}" data-i18n-ph="pay.amt.ph"></span><small>{tx('pay.amt.p')}</small></label>
 <p class="pay-h">{tx('pay.choose')}</p>
-<div class="pay-apps"><a class="pay-app pay-gpay" data-app="gpay" href="#"><span class="pa-dot" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Google Pay</a><a class="pay-app pay-pp" data-app="phonepe" href="#"><span class="pa-pp" aria-hidden="true">पे</span>PhonePe</a></div>
+<div class="pay-apps"><a class="pay-app pay-gpay" data-app="gpay" href="#"><span class="pa-dot" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Google Pay</a><a class="pay-app pay-pp" data-app="phonepe" href="#"><span class="pa-pp" aria-hidden="true">{ic('rupee')}</span>PhonePe</a></div>
 <a class="pay-other" data-app="upi" href="#">{tx('pay.other')}{ic('arrow')}</a>
 <p class="pay-noapp" role="alert" hidden>{ic('info')}{tx('pay.noapp')}</p>
 <p class="pay-check">{ic('shield')}{tx('pay.check')}</p>
@@ -253,7 +253,7 @@ def pay_modal():
 <p class="pay-safe">{tx('pay.safe')}</p></div></div>
 <div class="modal rv-modal" id="revModal" aria-hidden="true"><div class="modal-bg" data-close-rev></div>
 <div class="modal-panel rv-panel" role="dialog" aria-modal="true" aria-labelledby="rvTitle"><button type="button" class="modal-x" data-close-rev aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
-<img class="rv-logo" src="/assets/img/logo-pdf-round.png" width="72" height="72" alt="" loading="lazy"><h2 id="rvTitle">{tx('rv.h')}</h2>
+<img class="rv-logo" src="/assets/img/bobby-logo-160.webp" width="72" height="72" alt="" loading="lazy"><h2 id="rvTitle">{tx('rv.h')}</h2>
 <p class="rv-stars" aria-hidden="true">{ic('star')*5}</p><p class="rv-p">{tx('rv.p')}</p>
 <a class="btn btn-orange rv-go" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener" data-rev-go>{ic('star')}{tx('rev.btn')}</a>
 <p class="rv-steps">{tx('rv.steps')}</p><button type="button" class="rv-later" data-close-rev>{tx('rv.later')}</button></div></div>'''
@@ -489,7 +489,7 @@ def header(active):
 <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="{esc(plain('nav.menu'))}">
 <div class="drawer-top"><a class="logo" href="/"><img class="wm" src="/assets/img/bobby-wordmark-250.webp" srcset="/assets/img/bobby-wordmark-130.webp 130w, /assets/img/bobby-wordmark-250.webp 250w" sizes="(max-width: 560px) 108px, 122px" width="142" height="56" loading="lazy" alt="BOBBY AC Repair &amp; Home Appliance Services"></a><button class="drawer-x" type="button" data-close aria-label="{esc(plain('nav.close'))}" data-i18n-aria="nav.close">×</button></div>
 <nav aria-label="Mobile">{links}<a href="/blog/"{" aria-current=\"page\"" if active == "blog" else ""}>{tx('nav.blog')}</a></nav>
-<div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}</div>
+<div class="btns"><a class="btn btn-primary" href="tel:{PHONE_TEL}">{ic('phone')}{tx('btn.callnum')}</a>{book_a('', 'btn-wa', 'btn.bookservice')}{pay_btn('btn btn-orange dr-pay', 'pay.btn.long')}<a class="btn btn-line dr-rev" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx('rev.btn')}</a></div>
 </div></div>
 <main id="main">
 '''

@@ -3,7 +3,7 @@
 UPI_ID: Bobby's real UPI ID exactly as shown in Google Pay / PhonePe (profile -> UPI ID).
 Leave '' to keep the Pay button hidden everywhere (a phone number alone cannot be used in a UPI payment link)."""
 import os
-UPI_ID = os.environ.get('BOBBY_UPI_TEST', '')          # e.g. 'yalamanda.g@okaxis'  <-- set the real ID here
+UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@sbi')   # TEMPORARY placeholder from owner (26 Nov 2026) - replace with the real UPI ID
 UPI_NAME = 'Yalamanda Gogasani'                          # payee name shown in the UPI app
 UPI_NUMBER = '8374889163'                                # Google Pay / PhonePe number (manual fallback)
 REVIEW_URL = ('https://www.google.com/maps/place//data=!4m3!3m2!1s0x3a4a8120cd16cd23:0x6713e7c4650facdb!12e1'

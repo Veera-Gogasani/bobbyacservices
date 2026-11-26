@@ -4,6 +4,16 @@
   var WA = '918374889163';
   var HOME = [16.2371462, 80.0339778];          /* business location (Google listing) – map start point */
   var LANGS = { en: 'English', te: 'తెలుగు', hi: 'हिन्दी' };
+  function afterLoad(fn, delay) {
+    function go() { setTimeout(function () { (window.requestIdleCallback || function (f) { f(); })(fn, { timeout: 3000 }); }, delay || 0); }
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
+  }
+  /* phones: hold the decorative flag-wave SVG animation until the page has finished loading */
+  if (window.matchMedia && matchMedia('(max-width: 760px)').matches) {
+    var waves = [].slice.call(document.querySelectorAll('svg.tri-wave'));
+    waves.forEach(function (sv) { try { sv.pauseAnimations(); } catch (e) {} });
+    afterLoad(function () { waves.forEach(function (sv) { try { sv.unpauseAnimations(); } catch (e) {} }); }, 2500);
+  }
   var FONTS = {
     te: 'https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700;800&display=swap',
     hi: 'https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap'
@@ -569,7 +579,10 @@
 
   /* start */
   var saved = store('bobby-lang');
-  loadDict('en').then(function () { if (saved && saved !== 'en' && LANGS[saved]) setLang(saved, false); else { updateWaLinks(); document.querySelectorAll('.bookform').forEach(function (f) { f._renderLoc(); }); } }).catch(function () {});
+  function initLang() { loadDict('en').then(function () { if (saved && saved !== 'en' && LANGS[saved]) setLang(saved, false); else { updateWaLinks(); document.querySelectorAll('.bookform').forEach(function (f) { f._renderLoc(); }); } }).catch(function () {}); }
+  if (saved && saved !== 'en' && LANGS[saved]) initLang();            // Telugu / Hindi visitors: translate straight away
+  else afterLoad(initLang, 1200);                                     // English: page is already in English, load the dictionary later
+  ['pointerdown', 'keydown', 'focusin'].forEach(function (ev) { document.addEventListener(ev, function once() { document.removeEventListener(ev, once, true); loadDict('en').catch(function () {}); }, true); });
 
   /* ---------- review carousel component ---------- */
   document.querySelectorAll('[data-rc]').forEach(function (rc) {
