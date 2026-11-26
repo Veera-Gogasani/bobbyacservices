@@ -229,8 +229,37 @@ def booking_form(p, inline=False):
 <div class="book-done" hidden tabindex="-1"><span class="bd-ic">{ic('check')}</span>{tx('f.thanks.h', 'h3')}{tx('f.thanks.p', 'p')}<p class="bd-sign" data-i18n="f.thanks.sign">{en('f.thanks.sign')}</p><p class="bd-tip">{tx('f.thanks.tip')}</p>
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div><p class="bd-alt">{tx('wa.alt.h', 'b')} <a class="bd-sms" href="sms:+918374889163">{tx('wa.sms')}</a><a class="bd-tel" href="tel:+918374889163">{tx('wa.call')}: +91 83748 89163</a></p></div></form>'''
 
+def pay_btn(cls, key):
+    if not PAY_ON: return ''
+    return f'<a class="{cls}" href="#pay" data-pay="" hidden>{ic("rupee")}{tx(key)}</a>'
+
+def pay_modal():
+    if not PAY_ON: return ''
+    num = PAY.UPI_NUMBER
+    return f'''<div class="modal pay-modal" id="payModal" aria-hidden="true" data-upi="{esc(PAY.UPI_ID)}" data-pn="{esc(PAY.UPI_NAME)}"><div class="modal-bg" data-close-pay></div>
+<div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
+<h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
+<div class="pay-to"><img src="/assets/img/logo-pdf-round.png" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services</em></span></div>
+<label class="pay-amt"><span>{tx('pay.amt')}</span><span class="pay-amt-in"><i>₹</i><input type="text" inputmode="decimal" autocomplete="off" maxlength="9" placeholder="{esc(plain('pay.amt.ph'))}" data-i18n-ph="pay.amt.ph"></span><small>{tx('pay.amt.p')}</small></label>
+<p class="pay-h">{tx('pay.choose')}</p>
+<div class="pay-apps"><a class="pay-app pay-gpay" data-app="gpay" href="#"><span class="pa-dot" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Google Pay</a><a class="pay-app pay-pp" data-app="phonepe" href="#"><span class="pa-pp" aria-hidden="true">पे</span>PhonePe</a></div>
+<a class="pay-other" data-app="upi" href="#">{tx('pay.other')}{ic('arrow')}</a>
+<p class="pay-noapp" role="alert" hidden>{ic('info')}{tx('pay.noapp')}</p>
+<p class="pay-check">{ic('shield')}{tx('pay.check')}</p>
+<div class="pay-manual"><p class="pay-h">{tx('pay.manual')}</p>
+<div class="pay-row"><span><small>{tx('pay.upiid')}</small><b>{esc(PAY.UPI_ID)}</b></span><button type="button" class="btn btn-line btn-sm" data-copy="{esc(PAY.UPI_ID)}">{tx('pay.copy', cls='c1')}{tx('pay.copied', cls='c2')}</button></div>
+<div class="pay-row"><span><small>{tx('pay.num')}</small><b>{num[:5]} {num[5:]}</b></span><button type="button" class="btn btn-line btn-sm" data-copy="{num}">{tx('pay.copy', cls='c1')}{tx('pay.copied', cls='c2')}</button></div>
+<p class="pay-mini">{tx('pay.manual.p')}</p></div>
+<p class="pay-safe">{tx('pay.safe')}</p></div></div>
+<div class="modal rv-modal" id="revModal" aria-hidden="true"><div class="modal-bg" data-close-rev></div>
+<div class="modal-panel rv-panel" role="dialog" aria-modal="true" aria-labelledby="rvTitle"><button type="button" class="modal-x" data-close-rev aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
+<img class="rv-logo" src="/assets/img/logo-pdf-round.png" width="72" height="72" alt="" loading="lazy"><h2 id="rvTitle">{tx('rv.h')}</h2>
+<p class="rv-stars" aria-hidden="true">{ic('star')*5}</p><p class="rv-p">{tx('rv.p')}</p>
+<a class="btn btn-orange rv-go" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener" data-rev-go>{ic('star')}{tx('rev.btn')}</a>
+<p class="rv-steps">{tx('rv.steps')}</p><button type="button" class="rv-later" data-close-rev>{tx('rv.later')}</button></div></div>'''
+
 def modals():
-    return f'''<div class="modal est-modal" id="estModal" aria-hidden="true" data-src="/assets/data/estimate.json?v={EST_V}" data-logo="/assets/img/logo-pdf-round.png"><div class="modal-bg" data-close-est></div>
+    return pay_modal() + f'''<div class="modal est-modal" id="estModal" aria-hidden="true" data-src="/assets/data/estimate.json?v={EST_V}" data-logo="/assets/img/logo-pdf-round.png"><div class="modal-bg" data-close-est></div>
 <div class="modal-panel est-panel" role="dialog" aria-modal="true" aria-labelledby="estTitle"><button type="button" class="modal-x" data-close-est aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="estTitle">{ic('rupee')}{tx('est.h')}</h2><div class="est-body"></div></div></div>
 <div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
@@ -276,6 +305,10 @@ def crumbs_ld(items):
 import svc_pages as SVP
 import estimate_data as EST
 S.update(EST.EST_STRINGS)
+import pay_cfg as PAY
+S.update(PAY.strings(PAY.UPI_NAME))
+PAY_ON = bool(PAY.UPI_ID)
+GOOGLE_REVIEW_URL = PAY.REVIEW_URL
 S.update({
  'svp.lang': ("Detailed service information on this page is in English. You can call or WhatsApp us in Telugu, Hindi or English.",
               "ఈ పేజీలోని వివరమైన సమాచారం ఆంగ్లంలో ఉంది. తెలుగు, హిందీ లేదా ఆంగ్లంలో మాకు కాల్ లేదా వాట్సాప్ చేయవచ్చు.",
@@ -478,16 +511,16 @@ def footer():
 <li class="ci">{ic('phone')}<a href="tel:{PHONE_TEL}">{PHONE_TXT}</a></li>
 <li class="ci">{wa_ic()}<a href="{wa_default()}" data-wa="default" target="_blank" rel="noopener">{tx('c.wa.h')}</a></li>
 <li class="ci">{ic('pin')}<a href="{GMAPS_URL}" target="_blank" rel="noopener">{tx('addr.full')}</a></li><li class="ci">{ic('star')}{tx('hours.open')}</li>
-<li class="ci">{ic('radius')}{tx('ft.area')}</li></ul></div>
+<li class="ci">{ic('radius')}{tx('ft.area')}</li><li class="ft-acts">{pay_btn('btn btn-orange btn-sm ft-pay', 'pay.btn.long')}<a class="btn btn-line btn-sm ft-rev" href="{GOOGLE_REVIEW_URL}" target="_blank" rel="noopener">{ic('star')}{tx('rev.btn')}</a></li></ul></div>
 <div class="bottom" style="grid-column:1/-1">
 <div>© <span class="yr">2026</span> BOBBY AC Repair &amp; Home Appliance Services. {tx('ft.rights')}<p class="indep">{tx('ft.indep')}</p></div>
 <nav aria-label="Legal"><a href="/privacy-policy/">{tx('ft.privacy')}</a><a href="/terms/">{tx('ft.terms')}</a><a href="/sitemap/">{tx('ft.sitemap')}</a></nav>
 </div></div></footer>
 <div class="fab"><a class="w" href="{wa_default()}" data-wa="default" target="_blank" rel="noopener" aria-label="{esc(plain('btn.wachat'))}" data-i18n-aria="btn.wachat">{wa_ic()}</a><a class="c" href="tel:{PHONE_TEL}" aria-label="{esc(plain('btn.call'))}" data-i18n-aria="btn.call">{ic('phone')}</a></div>
-<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a></div>
+<div class="mbar"><a class="c" href="tel:{PHONE_TEL}">{ic('phone')}{tx('mbar.call')}</a><a class="w" href="/contact/#book" data-book="">{wa_ic()}{tx('mbar.book')}</a>{pay_btn('p', 'pay.btn')}</div>
 {modals()}
 <script src="/assets/js/main.js?v=17" defer></script>
-<script src="/assets/js/estimate.js?v=1" defer></script>
+<script src="/assets/js/estimate.js?v=1" defer></script>{'<script src="/assets/js/pay.js?v=1" defer></script>' if PAY_ON else ''}
 </body></html>
 '''
 
