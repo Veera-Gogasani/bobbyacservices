@@ -1,8 +1,7 @@
-/* BOBBY – UPI "Pay" popup (phones only) + Google review request after returning from the UPI app.
-   Android: intent:// links open Google Pay / PhonePe directly (fallback back to this page if the app is missing);
-            "Other UPI apps" uses upi:// which shows Android's chooser of every installed UPI app.
-   iPhone:  gpay:// and phonepe:// app links (iOS has no app chooser, so the customer picks the app here).
-   The website never sees the payment result; the review popup appears when the customer comes back. */
+/* BOBBY – UPI "Pay" (phones only) + Google review request after returning from the UPI app.
+   Tapping Pay opens upi://pay with BOBBY's exact QR details: Android shows every installed UPI app
+   (Google Pay, PhonePe, …) to choose from, iPhone opens the UPI app. If nothing opens, a small popup offers
+   the QR code instead. The website never sees the payment result; the review popup appears on return. */
 (function () {
   var modal = document.getElementById('payModal');
   if (!modal) return;
@@ -14,7 +13,6 @@
   var VPA = modal.getAttribute('data-upi'), QP = modal.getAttribute('data-qp');
   var rev = document.getElementById('revModal');
   var noapp = modal.querySelector('.pay-noapp');
-  var PKG = { gpay: 'com.google.android.apps.nbu.paisa.user', phonepe: 'com.phonepe.app' };
   var KEY = 'bobby-pay-launch', DONE = 'bobby-rev-asked';
   var lastFocus = null, timer = null, launched = 0, away = false, AWAY = 'bobby-pay-away';
 
@@ -27,20 +25,13 @@
 
   // exactly the payee details from BOBBY's own QR code: no amount / note (apps decline those for personal accounts)
   function query() { return 'pa=' + encodeURIComponent(VPA).replace('%40', '@') + '&' + QP; }
-  function link(app) {
-    var q = query();
-    if (app === 'upi') return 'upi://pay?' + q;
-    if (android) {
-      var back = location.href.split('#')[0] + '#pay-noapp';
-      return 'intent://pay?' + q + '#Intent;scheme=upi;package=' + PKG[app] + ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
-    }
-    return app === 'gpay' ? 'gpay://upi/pay?' + q : 'phonepe://pay?' + q;
-  }
-  function refresh() { modal.querySelectorAll('[data-app]').forEach(function (a) { a.setAttribute('href', link(a.getAttribute('data-app'))); }); }
+  function link() { return 'upi://pay?' + query(); }
+  function refresh() { document.querySelectorAll('[data-pay], #payModal [data-app]').forEach(function (a) { a.setAttribute('href', link()); }); }
+  refresh();
 
   function open(showNoapp) {
     if (!modal.classList.contains('open')) lastFocus = document.activeElement;
-    refresh(); if (noapp) noapp.hidden = !showNoapp;
+    refresh(); if (noapp) noapp.hidden = !showNoapp; var qd = modal.querySelector('[data-qr]'); if (qd) qd.open = !!showNoapp;
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
   }
   function close(m) {
@@ -72,15 +63,15 @@
   // ---------- clicks ----------
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : null; if (!t) return;
-    if (t.closest('[data-pay]')) { e.preventDefault(); var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click(); open(false); return; }
-    var app = t.closest('#payModal [data-app]');
-    if (app) {
+    var go = t.closest('[data-pay], #payModal [data-app]');
+    if (go) {                                                          // let the browser follow upi://pay
+      var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
       launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched)); if (noapp) noapp.hidden = true;
       if (timer) clearTimeout(timer);
-      timer = setTimeout(function () {                                 // still here after 2.5 s: app probably missing
-        timer = null; if (!document.hidden && !away && noapp) noapp.hidden = false;
+      timer = setTimeout(function () {                                 // still here after 2.5 s: no UPI app opened
+        timer = null; if (!document.hidden && !away) open(true);
       }, 2500);
-      return;                                                          // let the browser follow the app link
+      return;
     }
     if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
     if (t.closest('#revModal [data-rev-go]')) { ls('bobby-reviewed', '1'); setTimeout(function () { close(rev); }, 300); return; }

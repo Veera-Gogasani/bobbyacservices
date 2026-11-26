@@ -1233,16 +1233,6 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .pay-to span{display:flex;flex-direction:column;line-height:1.3}
 .pay-to small{font-size:12px;color:#55697C}.pay-to b{font-size:16.5px;color:#102C50}.pay-to em{font-style:normal;font-size:12.5px;color:#55697C}
 .pay-h{font-weight:700;font-size:14px;color:#102C50;margin:0 0 8px}
-.pay-apps{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pay-app{display:flex;align-items:center;justify-content:center;gap:9px;min-height:56px;border-radius:16px;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 6px 16px rgba(16,44,80,.1);transition:transform .15s}
-.pay-app:active{transform:scale(.97)}
-.pay-gpay{background:#fff;color:#202124;border:1.5px solid #DADCE0}
-.pa-dot{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:20px;height:20px}
-.pa-dot i{border-radius:50%}.pa-dot i:nth-child(1){background:#4285F4}.pa-dot i:nth-child(2){background:#EA4335}.pa-dot i:nth-child(3){background:#34A853}.pa-dot i:nth-child(4){background:#FBBC05}
-.pay-pp{background:#5F259F;color:#fff}
-.pa-pp{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#fff;color:#5F259F;font-size:12px;font-weight:800}
-.pay-other{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 4px;font-weight:600;font-size:14.5px;color:#1688D4;min-height:40px}
-.pay-other svg{width:16px;height:16px}
 .pay-noapp{display:flex;gap:8px;background:#FFF6EC;border:1px solid #F6D9B8;color:#7A4A12;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:6px 0}
 .pay-noapp[hidden]{display:none}
 .pay-noapp svg,.pay-check svg{width:18px;height:18px;flex:none;margin-top:1px}
@@ -1267,7 +1257,6 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .drawer-panel .btns .dr-rev{color:var(--navy,#102C50);border-color:#C9D9E8}
 .drawer-panel .btns .dr-rev svg{color:#F4B400}
 
-.pa-pp svg{width:14px;height:14px}
 /* mobile first paint: hero shows immediately (no entrance fade), lighter decorative effects */
 @media (max-width:760px){
   .hero-duo .hero .anim{animation:none;opacity:1;transform:none}
@@ -1286,3 +1275,5 @@ html[lang="te"] .lang-note,html[lang="hi"] .lang-note{display:block}
 .pay-check b{white-space:nowrap}
 
 .pay-cp{margin:-4px 0 10px}
+.pay-open{display:flex;width:100%;justify-content:center;min-height:56px;font-size:16.5px;gap:8px;color:#fff!important}
+.pay-open svg{width:20px;height:20px}

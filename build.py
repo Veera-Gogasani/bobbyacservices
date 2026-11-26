@@ -240,12 +240,10 @@ def pay_modal():
 <div class="modal-panel pay-panel" role="dialog" aria-modal="true" aria-labelledby="payTitle"><button type="button" class="modal-x" data-close-pay aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="payTitle">{ic('rupee')}{tx('pay.h')}</h2><p class="pay-sub">{tx('pay.sub')}</p>
 <div class="pay-to"><img src="/assets/img/bobby-logo-160.webp" width="48" height="48" alt="" loading="lazy"><span><small>{tx('pay.to')}</small><b>{esc(PAY.UPI_NAME)}</b><em>BOBBY AC Repair &amp; Home Appliance Services · {esc(PAY.UPI_ID)}</em></span></div>
-<p class="pay-h">{tx('pay.choose')}</p><p class="pay-mini pay-cp">{tx('pay.choose.p')}</p>
-<div class="pay-apps"><a class="pay-app pay-gpay" data-app="gpay" href="#"><span class="pa-dot" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Google Pay</a><a class="pay-app pay-pp" data-app="phonepe" href="#"><span class="pa-pp" aria-hidden="true">{ic('rupee')}</span>PhonePe</a></div>
-<a class="pay-other" data-app="upi" href="#">{tx('pay.other')}{ic('arrow')}</a>
+<a class="btn btn-orange pay-open" data-app="upi" href="#">{ic('rupee')}{tx('pay.open')}</a><p class="pay-mini pay-cp">{tx('pay.open.p')}</p>
 <p class="pay-noapp" role="alert" hidden>{ic('info')}{tx('pay.noapp')}</p>
 <p class="pay-check">{ic('shield')}{tx('pay.check')}</p>
-<details class="pay-qr"><summary>{ic('rupee')}{tx('pay.qr')}</summary><img src="/assets/img/pay/bobby-upi-qr.png" width="220" height="220" alt="UPI QR code for {esc(PAY.UPI_NAME)}" loading="lazy"><p class="pay-upi">{esc(PAY.UPI_ID)}</p><a class="btn btn-line btn-sm" href="/assets/img/pay/bobby-upi-qr.png" download="BOBBY-UPI-QR.png">{tx('pay.qr.save')}</a><p class="pay-mini">{tx('pay.qr.p')}</p></details>
+<details class="pay-qr" data-qr><summary>{ic('rupee')}{tx('pay.qr')}</summary><img src="/assets/img/pay/bobby-upi-qr.png" width="220" height="220" alt="UPI QR code for {esc(PAY.UPI_NAME)}" loading="lazy"><p class="pay-upi">{esc(PAY.UPI_ID)}</p><a class="btn btn-line btn-sm" href="/assets/img/pay/bobby-upi-qr.png" download="BOBBY-UPI-QR.png">{tx('pay.qr.save')}</a><p class="pay-mini">{tx('pay.qr.p')}</p></details>
 <p class="pay-safe">{tx('pay.safe')}</p></div></div>
 <div class="modal rv-modal" id="revModal" aria-hidden="true"><div class="modal-bg" data-close-rev></div>
 <div class="modal-panel rv-panel" role="dialog" aria-modal="true" aria-labelledby="rvTitle"><button type="button" class="modal-x" data-close-rev aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
