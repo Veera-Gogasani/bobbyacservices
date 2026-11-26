@@ -249,7 +249,7 @@
       }
       function inr0(n) { return inr(Math.round(n)); }
 
-      header(true); watermark();
+      header(true);
       doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(19);
       doc.text('Service Estimate / Quote', W / 2, y, { align: 'center' });
       doc.setDrawColor(242, 133, 31); doc.setLineWidth(0.8); doc.line(W / 2 - 14, y + 3, W / 2 + 14, y + 3); doc.setLineWidth(0.2);
@@ -292,11 +292,9 @@
       if (t.plus) { doc.setFont('helvetica', 'bolditalic'); doc.setFontSize(9); doc.setTextColor.apply(doc, grey); doc.text('+ Parts (if needed, charged extra)', M + 4, y + 2); y += 5; }
       doc.setDrawColor(16, 44, 80); doc.setLineWidth(0.6); doc.line(M, y + 1, W - M, y + 1); doc.setLineWidth(0.2);
       // booking
-      room(16); y += 9;
-      doc.setFontSize(10.5); doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold');
-      doc.text('Book your visit: call or WhatsApp ' + b.phone, M, y);
-      y += 6; doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.text('Or book online: ', M, y);
-      var bx = M + doc.getTextWidth('Or book online: '); doc.setTextColor(22, 136, 212);
+      room(10); y += 9;
+      doc.setTextColor.apply(doc, navy); doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text('Book online: ', M, y);
+      var bx = M + doc.getTextWidth('Book online: '); doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(22, 136, 212);
       doc.textWithLink(b.book, bx, y, { url: b.book }); doc.setDrawColor(22, 136, 212); doc.line(bx, y + 0.8, bx + doc.getTextWidth(b.book), y + 0.8);
       // thank you + estimate only
       var note = 'Please note: this is only an estimate, not the final price. The final price depends on the technician\'s inspection, the spare parts required and the service needed, and may vary. Spare-part prices are indicative market ranges (reviewed ' + DATA.partsReviewed + '). Work starts only after you approve the final quotation.';
