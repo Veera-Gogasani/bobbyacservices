@@ -3,7 +3,7 @@
 UPI_ID: Bobby's real UPI ID exactly as shown in Google Pay / PhonePe (profile -> UPI ID).
 Leave '' to keep the Pay button hidden everywhere (a phone number alone cannot be used in a UPI payment link)."""
 import os
-UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@axl')   # exactly as in the owner's PhonePe QR (KVB account); 8374889163@ibl is the same account
+UPI_ID = os.environ.get('BOBBY_UPI_TEST', '8374889163@ibl')   # owner's displayed PhonePe UPI ID (KVB a/c 2961); his QR image encodes the same account as @axl
 # Exact parameters decoded from the owner's own QR code. App buttons send these unchanged (no amount/note),
 # because UPI apps decline website-started payments to personal accounts when extra fields are added.
 UPI_QR_PARAMS = 'pn=G%20YALLAMANDA&mc=0000&mode=02&purpose=00'
