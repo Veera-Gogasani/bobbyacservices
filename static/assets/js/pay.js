@@ -14,7 +14,7 @@
   var rev = document.getElementById('revModal');
   var noapp = modal.querySelector('.pay-noapp');
   var KEY = 'bobby-pay-launch', DONE = 'bobby-rev-asked';
-  var lastFocus = null, timer = null, launched = 0, away = false, AWAY = 'bobby-pay-away';
+  var lastFocus = null, timer = null, launched = 0, away = false, blurred = false, AWAY = 'bobby-pay-away';
 
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { return null; } }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -57,6 +57,8 @@
     if (document.hidden) { if (timer) { clearTimeout(timer); timer = null; } if (launched || ss(KEY)) { away = true; ss(AWAY, '1'); } }   // the UPI app opened
     else returned();
   });
+  // Android's "Open with" app list (or the app itself) takes focus from the page: that means the UPI link worked
+  window.addEventListener('blur', function () { if (launched) { blurred = true; if (timer) { clearTimeout(timer); timer = null; } } });
   window.addEventListener('pageshow', function (e) { if (e.persisted) returned(); });
   window.addEventListener('pagehide', function () { if (timer) { clearTimeout(timer); timer = null; } });
 
@@ -68,9 +70,11 @@
       var dc = document.querySelector('.drawer.open [data-close]'); if (dc) dc.click();
       launched = Date.now(); away = false; ss(AWAY, null); ss(KEY, String(launched)); if (noapp) noapp.hidden = true;
       if (timer) clearTimeout(timer);
-      timer = setTimeout(function () {                                 // still here after 2.5 s: no UPI app opened
-        timer = null; if (!document.hidden && !away) open(true);
-      }, 2500);
+      blurred = false;
+      timer = setTimeout(function () {                                 // nothing took over the screen: no UPI app on this phone
+        timer = null;
+        if (!document.hidden && !away && !blurred && document.hasFocus()) open(true);
+      }, 4000);
       return;
     }
     if (t.closest('#payModal [data-close-pay]')) { close(modal); return; }
