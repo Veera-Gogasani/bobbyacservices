@@ -232,20 +232,26 @@
       }
       function footer(n, of) {
         doc.setDrawColor(40, 52, 66); doc.setLineWidth(0.9); doc.line(M, 266, W - M, 266); doc.setLineWidth(0.2);
-        var cols = [[M, I.phone, [b.phone, 'Call / WhatsApp']], [80, I.web, [b.web, b.email]], [142, I.pin, ['Arundelpet, Narasaraopet', 'Andhra Pradesh 522601']]];
-        cols.forEach(function (c) {
-          doc.addImage(c[1], 'PNG', c[0], 271, 8, 8);
-          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.8); doc.setTextColor.apply(doc, ink);
-          doc.text(c[2][0], c[0] + 10.5, 274.2); doc.setTextColor.apply(doc, grey); doc.setFontSize(8.3); doc.text(c[2][1], c[0] + 10.5, 278.6);
+        var cols = [[I.phone, [b.phone, 'Call / WhatsApp'], 'tel:' + b.phone.replace(/\s/g, '')], [I.web, [b.web, b.email], 'https://' + b.web],
+          [I.pin, ['Arundelpet, Narasaraopet', 'Andhra Pradesh 522601'], null]];
+        var BW = 34, ws = cols.map(function (c) {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.6); var a = doc.getTextWidth(c[1][0]); doc.setFontSize(8); return 10 + Math.max(a, doc.getTextWidth(c[1][1]));
         });
-        doc.link(80, 270, 60, 5, { url: 'https://' + b.web });
-        var bw = 62, bxx = (W - bw) / 2, byy = 281.2;
-        doc.setFillColor(201, 101, 10); doc.roundedRect(bxx + 0.4, byy + 0.6, bw, 7.2, 3.6, 3.6, 'F');
-        doc.setFillColor(242, 133, 31); doc.roundedRect(bxx, byy, bw, 7.2, 3.6, 3.6, 'F');
-        doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(9.6);
-        doc.text('BOOK ONLINE  \u203A', W / 2, byy + 4.9, { align: 'center' });
-        doc.link(bxx, byy, bw, 7.2, { url: b.book });
-        if (of > 1) { doc.setFontSize(7.5); doc.setTextColor.apply(doc, grey); doc.text('Page ' + n + ' of ' + of, W - M, 286, { align: 'right' }); }
+        var gap = (W - M * 2 - BW - ws[0] - ws[1] - ws[2]) / 3, x = M;
+        cols.forEach(function (c, i) {
+          doc.addImage(c[0], 'PNG', x, 270.5, 8, 8);
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(8.6); doc.setTextColor.apply(doc, ink); doc.text(c[1][0], x + 10, 273.8);
+          doc.setTextColor.apply(doc, grey); doc.setFontSize(8); doc.text(c[1][1], x + 10, 278);
+          if (c[2]) doc.link(x, 270, ws[i], 9, { url: c[2] });
+          x += ws[i] + gap;
+        });
+        x = W - M - BW;
+        doc.setFillColor(201, 101, 10); doc.roundedRect(x + 0.4, 271.1, BW, 8, 2, 2, 'F');
+        doc.setFillColor(242, 133, 31); doc.roundedRect(x, 270.5, BW, 8, 2, 2, 'F');
+        doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(9.2);
+        doc.text('BOOK ONLINE  \u203A', x + BW / 2, 275.6, { align: 'center' });
+        doc.link(x, 270.5, BW, 8, { url: b.book });
+        if (of > 1) { doc.setFontSize(7.5); doc.setTextColor.apply(doc, grey); doc.text('Page ' + n + ' of ' + of, W / 2, 285.5, { align: 'center' }); }
         doc.addImage(FOOT, 'JPEG', 0, 290, W, 7, 'foot');
       }
       function room(h) { if (y + h > BOTTOM) { doc.addPage(); header(false); } }
