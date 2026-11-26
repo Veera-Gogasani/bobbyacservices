@@ -230,7 +230,7 @@ def booking_form(p, inline=False):
 <div class="bd-btns"><a class="btn btn-wa bd-again" href="#" target="_blank" rel="noopener">{wa_ic()}{tx('f.thanks.again')}</a><button type="button" class="btn btn-line bd-new">{tx('f.thanks.new')}</button></div><p class="bd-alt">{tx('wa.alt.h', 'b')} <a class="bd-sms" href="sms:+918374889163">{tx('wa.sms')}</a><a class="bd-tel" href="tel:+918374889163">{tx('wa.call')}: +91 83748 89163</a></p></div></form>'''
 
 def modals():
-    return f'''<div class="modal est-modal" id="estModal" aria-hidden="true" data-src="/assets/data/estimate.json?v={EST_V}" data-logo="/assets/img/logo-pdf.png"><div class="modal-bg" data-close-est></div>
+    return f'''<div class="modal est-modal" id="estModal" aria-hidden="true" data-src="/assets/data/estimate.json?v={EST_V}" data-logo="/assets/img/logo-pdf-round.png"><div class="modal-bg" data-close-est></div>
 <div class="modal-panel est-panel" role="dialog" aria-modal="true" aria-labelledby="estTitle"><button type="button" class="modal-x" data-close-est aria-label="{esc(plain('f.close'))}" data-i18n-aria="f.close">×</button>
 <h2 id="estTitle">{ic('rupee')}{tx('est.h')}</h2><div class="est-body"></div></div></div>
 <div class="modal" id="bookModal" aria-hidden="true"><div class="modal-bg" data-close-modal></div>
@@ -375,7 +375,8 @@ import hashlib as _hl
 EST_JSON = EST.estimate_json()
 EST_JSON['biz'] = {'phone': PHONE_TXT, 'wa': WA_NUM, 'web': DOMAIN if DOMAIN_CONNECTED else SITE.replace('https://', ''),
                    'address': '%s, %s, Andhra Pradesh %s' % (ADDRESS['street'], ADDRESS['locality'], ADDRESS['postal']),
-                   'book': SITE + '/contact/#book'}
+                   'book': SITE + '/contact/#book', 'email': OWNER_EMAIL,
+                   'street': ADDRESS['street'], 'city': '%s, Andhra Pradesh %s' % (ADDRESS['locality'], ADDRESS['postal'])}
 for _c in EST_JSON['cats']: _c['svg'] = '<svg viewBox="0 0 24 24" aria-hidden="true">%s</svg>' % ICONS[_c['icon']]
 EST_V = _hl.md5(json.dumps(EST_JSON, sort_keys=True).encode()).hexdigest()[:8]
 I18N_V = _hl.md5(json.dumps(S, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
